@@ -97,7 +97,7 @@ class _MyHomePageState extends State<MyHomePage> {
     return page!;
   }
 
-  // 각 페이지를 반환하는 메서드 (추후 삭제)
+  // 각 페이지를 반환하는 메서드 (추후 삭제) 깃 연동 테스트 !!!!!!!!!
   Widget dummyPage() {
     return const SizedBox(
       height: 200,
