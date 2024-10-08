@@ -36,6 +36,7 @@ void main() {
   );
 }
 
+// 수정합니다
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
   @override
