@@ -7,7 +7,7 @@ import 'package:doctorviewapp/providers/hours_provider.dart';
 import 'package:doctorviewapp/providers/hreview_provider.dart';
 import 'package:doctorviewapp/providers/likes_provider.dart';
 import 'package:doctorviewapp/providers/member_provider.dart';
-import 'package:doctorviewapp/screens/join/mypage.dart';
+import 'package:doctorviewapp/screens/mypage/mypage.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:doctorviewapp/screens/hosp_doctor_list_screen.dart';
