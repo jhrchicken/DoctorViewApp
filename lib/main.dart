@@ -3,8 +3,11 @@ import 'package:doctorviewapp/providers/dreply_provider.dart';
 import 'package:doctorviewapp/providers/dreview_provider.dart';
 import 'package:doctorviewapp/providers/hashtag_provider.dart';
 import 'package:doctorviewapp/providers/hospital_provider.dart';
+import 'package:doctorviewapp/providers/hours_provider.dart';
 import 'package:doctorviewapp/providers/hreview_provider.dart';
 import 'package:doctorviewapp/providers/likes_provider.dart';
+import 'package:doctorviewapp/providers/member_provider.dart';
+import 'package:doctorviewapp/screens/join/mypage.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:doctorviewapp/screens/hosp_doctor_list_screen.dart';
@@ -21,6 +24,9 @@ void main() {
         ChangeNotifierProvider(create: (context) => HreviewProvider()),
         ChangeNotifierProvider(create: (context) => LikesProvider()),
         ChangeNotifierProvider(create: (context) => HashtagProvider()),
+        //회원관리
+        ChangeNotifierProvider(create: (context) => MemberProvider()),
+        ChangeNotifierProvider(create: (context) => HoursProvider()),
       ],
       child: const MyApp(),
     ),
@@ -91,7 +97,7 @@ class _MyHomePageState extends State<MyHomePage> {
         page = dummyPage();
         break;
       case 4:
-        page = dummyPage();
+        page = const MyPage();
         break;
     }
     return page!;
