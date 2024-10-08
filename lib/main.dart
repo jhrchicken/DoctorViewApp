@@ -1,3 +1,6 @@
+import 'package:doctorviewapp/body.dart';
+import 'package:doctorviewapp/providers/board_provider.dart';
+import 'package:doctorviewapp/providers/comment_provider.dart';
 import 'package:doctorviewapp/providers/doctor_provider.dart';
 import 'package:doctorviewapp/providers/dreply_provider.dart';
 import 'package:doctorviewapp/providers/dreview_provider.dart';
@@ -7,6 +10,8 @@ import 'package:doctorviewapp/providers/hours_provider.dart';
 import 'package:doctorviewapp/providers/hreview_provider.dart';
 import 'package:doctorviewapp/providers/likes_provider.dart';
 import 'package:doctorviewapp/providers/member_provider.dart';
+import 'package:doctorviewapp/providers/report_provider.dart';
+import 'package:doctorviewapp/screens/board/board_main_screen.dart';
 import 'package:doctorviewapp/screens/mypage/mypage.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -24,9 +29,13 @@ void main() {
         ChangeNotifierProvider(create: (context) => HreviewProvider()),
         ChangeNotifierProvider(create: (context) => LikesProvider()),
         ChangeNotifierProvider(create: (context) => HashtagProvider()),
-        //회원관리
+        // 회원 관리
         ChangeNotifierProvider(create: (context) => MemberProvider()),
         ChangeNotifierProvider(create: (context) => HoursProvider()),
+        // 게시판
+        ChangeNotifierProvider(create: (context) => BoardProvider()),
+        ChangeNotifierProvider(create: (context) => CommentProvider()),
+        ChangeNotifierProvider(create: (context) => ReportProvider()),
       ],
       child: const MyApp(),
     ),
@@ -85,7 +94,7 @@ class _MyHomePageState extends State<MyHomePage> {
     Widget? page;
     switch(_curIndex) {
       case 0:
-        page = dummyPage();
+        page = const Body();
         break;
       case 1:
         page = const HospDoctorListScreen();
@@ -94,7 +103,7 @@ class _MyHomePageState extends State<MyHomePage> {
         page = dummyPage();
         break;
       case 3:
-        page = dummyPage();
+        page = const BoardMainScreen();
         break;
       case 4:
         page = const MyPage();
