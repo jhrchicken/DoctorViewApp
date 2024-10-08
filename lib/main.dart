@@ -4,6 +4,7 @@ import 'package:doctorviewapp/providers/dreview_provider.dart';
 import 'package:doctorviewapp/providers/hashtag_provider.dart';
 import 'package:doctorviewapp/providers/hospital_provider.dart';
 import 'package:doctorviewapp/providers/hours_provider.dart';
+import 'package:doctorviewapp/providers/hreply_provider.dart';
 import 'package:doctorviewapp/providers/hreview_provider.dart';
 import 'package:doctorviewapp/providers/likes_provider.dart';
 import 'package:doctorviewapp/providers/member_provider.dart';
@@ -22,8 +23,10 @@ void main() {
         ChangeNotifierProvider(create: (context) => DreplyProvider()),
         ChangeNotifierProvider(create: (context) => HospitalProvider()),
         ChangeNotifierProvider(create: (context) => HreviewProvider()),
+        ChangeNotifierProvider(create: (context) => HreplyProvider()),
         ChangeNotifierProvider(create: (context) => LikesProvider()),
         ChangeNotifierProvider(create: (context) => HashtagProvider()),
+        
         //회원관리
         ChangeNotifierProvider(create: (context) => MemberProvider()),
         ChangeNotifierProvider(create: (context) => HoursProvider()),

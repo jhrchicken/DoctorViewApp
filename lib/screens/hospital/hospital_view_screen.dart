@@ -7,6 +7,7 @@ import 'package:doctorviewapp/providers/hashtag_provider.dart';
 import 'package:doctorviewapp/providers/hospital_provider.dart';
 import 'package:doctorviewapp/providers/hreview_provider.dart';
 import 'package:doctorviewapp/screens/hospital/hreview_list_screen.dart';
+import 'package:doctorviewapp/screens/hospital/hreview_write_screen.dart';
 import 'package:doctorviewapp/theme/colors.dart';
 import 'package:doctorviewapp/widgets/common/grey_button.dart';
 import 'package:doctorviewapp/widgets/common/primary_outline_button.dart';
@@ -239,7 +240,16 @@ class _HospitalViewScreenState extends State<HospitalViewScreen> {
                         const SizedBox(height: 10),
                         PrimaryOutlineButton(
                           text: '리뷰쓰기',
-                          onPressed: () {},
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => HreviewWriteScreen(
+                                  hospRef: hospital.id,
+                                ),
+                              ),
+                            );
+                          },
                           color: pointColor2,
                         ),
                       ],

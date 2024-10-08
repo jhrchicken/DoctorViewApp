@@ -1,19 +1,17 @@
-class Hreview {
-  int reviewIdx;
+class Hreply {
+  int replyIdx;
   DateTime date;
-  int score;
   String content;
   String rewrite;
   String writerRef;
-  String hospRef;
+  int reviewRef;
 
-  Hreview({
-    required this.reviewIdx,
+  Hreply({
+    required this.replyIdx,
     required this.date,
-    required this.score,
     required this.content,
     required this.rewrite,
     required this.writerRef,
-    required this.hospRef,
+    required this.reviewRef,
   });
 }

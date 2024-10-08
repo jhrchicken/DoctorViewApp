@@ -10,12 +10,10 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class DreviewItemWidget extends StatelessWidget {
-  final int docIdx;
   final int reviewIdx;
 
   const DreviewItemWidget({
     super.key,
-    required this.docIdx,
     required this.reviewIdx,
   });
 

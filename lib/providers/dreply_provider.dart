@@ -17,7 +17,6 @@ class DreplyProvider extends ChangeNotifier {
     ),
   ];
 
-
   // 의사 리뷰 답변 목록
   List<Dreply> listDreply(int reviewRef) {
     return _dreplyList.where((dreply) => dreply.reviewRef == reviewRef).toList();
