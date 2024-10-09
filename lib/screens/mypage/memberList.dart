@@ -58,8 +58,22 @@ class _MemberListState extends State<MemberList> {
                       children: hospitalHours.map((hours) {
                         return Padding(
                           padding: const EdgeInsets.symmetric(vertical: 2.0),
-                          child: Text(
-                              '${hours.week}: ${hours.startTime} - ${hours.endTime} (점심시간: ${hours.startBreak} - ${hours.endBreak})'),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text('주: ${hours.week}'),
+                              Text('시작 시간: ${hours.startTime}'),
+                              Text('종료 시간: ${hours.endTime}'),
+                              Text('점심 시작: ${hours.startBreak}'),
+                              Text('점심 종료: ${hours.endBreak}'),
+                              Text('마감 시간: ${hours.deadLine}'),
+                              Text('병원 참조: ${hours.hosp_ref}'),
+                              Text('주중 개방: ${hours.open_week}'),
+                              Text('주말: ${hours.weekend}'),
+                              Text('야간: ${hours.night}'),
+                              const SizedBox(height: 5),
+                            ],
+                          ),
                         );
                       }).toList(),
                     ),

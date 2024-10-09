@@ -3,7 +3,10 @@ import 'package:doctorviewapp/component/inputfield.dart';
 import 'package:doctorviewapp/component/secondary_outline_button.dart';
 import 'package:doctorviewapp/component/week_selector.dart';
 import 'package:doctorviewapp/header.dart';
+import 'package:doctorviewapp/models/doctor.dart';
+import 'package:doctorviewapp/models/hours.dart';
 import 'package:doctorviewapp/models/member.dart';
+import 'package:doctorviewapp/providers/doctor_provider.dart';
 import 'package:doctorviewapp/providers/hours_provider.dart';
 import 'package:doctorviewapp/providers/member_provider.dart';
 import 'package:doctorviewapp/theme/colors.dart';
@@ -18,7 +21,7 @@ class JoinHosp extends StatefulWidget {
 }
 
 class _JoinHospState extends State<JoinHosp> {
-  /// ***** 의료진 폼 관리 ******
+  // ***** 의료진 폼 관리 ******
   // 컨트롤러
   List<TextEditingController> doctorNameController = [];
   List<TextEditingController> majorController = []; 
@@ -191,10 +194,20 @@ class _JoinHospState extends State<JoinHosp> {
     
     doctorFields.add(buildDoctorInput(0)); // 첫 번째 입력 폼 추가
   }
-  /// *********************
+  // *********************
 
-  // 선택된 요일을 저장할 리스트
+  // ***** 병원 근무 시간 관리 ******
   List<String> selectedDays = [];
+
+  // String? startTime, endTime, startBreak, endBreak, deadLine;
+  String startTime = '00:00', endTime = '00:00', startBreak = '00:00', endBreak = '00:00', deadLine = '00:00';
+  final List<String> timeSlots = [
+    for (int i = 0; i < 24; i++) '${i.toString().padLeft(2, '0')}:00',
+  ];
+  // *********************
+
+
+
   // 폼값 유효성 검증 Key
   final _formKey = GlobalKey<FormState>();
   // 약관 체크 데이터
@@ -223,17 +236,14 @@ class _JoinHospState extends State<JoinHosp> {
   @override
   Widget build(BuildContext context) {
     final memberProvider = Provider.of<MemberProvider>(context);
+    final doctorProvider = Provider.of<DoctorProvider>(context);
     final hoursProvider = Provider.of<HoursProvider>(context);
 
     
     // 약관내용
     const String termsContent = "'닥터뷰'(이하 '회사')는 회원가입 절차에서 필요한 최소한의 개인정보를 수집하고 있습니다. 회사는 수집한 개인정보를 다음의 목적을 위해 사용하며, 사용 목적 외 다른 용도로는 절대 사용하지 않습니다. '닥터뷰'(이하 '회사')는 회원가입 절차에서 필요한 최소한의 개인정보를 수집하고 있습니다. 회사는 수집한 개인정보를 다음의 목적을 위해 사용하며, 사용 목적 외 다른 용도로는 절대 사용하지 않습니다.";
 
-    // 드롭다운버튼 선택 값 저장
-    String? startTime, endTime, startBreak, endBreak, deadLine;
-    final List<String> timeSlots = [
-      for (int i = 0; i < 24; i++) '${i.toString().padLeft(2, '0')}:00',
-    ];
+    
 
     return Scaffold(
       // 헤더
@@ -241,567 +251,623 @@ class _JoinHospState extends State<JoinHosp> {
 
       // 바디
       body:SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.all(40),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-
-            children: [
-              Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  //아이디
-                  InputField(
-                    focusNode: idFocus,
-                    controller: idController,
-                    labelText: "아이디",
-                    hintText: '아이디* (영문/숫자, 6~15자)',
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return '아이디를 입력하세요';
-                      } else if (value.length < 6) {
-                        return '아이디는 최소 6자 이상이어야 합니다';
-                      } else if (!RegExp(r'^[a-zA-Z0-9]+$').hasMatch(value)) {
-                        return '아이디는 영문과 숫자만 입력 가능합니다';
-                      }
-                      return null;
-                    },
-                    onChanged: (value) => debugPrint('아이디 변경 $value'),
-                    maxLength: 15,
-                  ),
-
-                  const SizedBox(height: 10),
-
-                  // 비밀번호
-                  InputField(
-                    focusNode: passwordFocus,
-                    controller: passwordController,
-                    obscureText: true,
-                    labelText: "비밀번호",
-                    hintText: '비밀번호* (영문+숫자, 특수문자(선택), 8~20자)',
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return '비밀번호를 입력하세요';
-                      } else if (value.length < 8) {
-                        return '비밀번호 최소 8자 이상이어야 합니다';
-                      } else if (!RegExp(r'^(?=.*[a-zA-Z])(?=.*\d)').hasMatch(value)) {
-                        return '비밀번호는 영문자와 숫자가 포함되어야 합니다';
-                      }
-                      return null;
-                    },
-                    onChanged: (value) => debugPrint('비밀번호 변경 $value'),
-                    maxLength: 20,
-                  ),
-                  
-                  const SizedBox(height: 10),
-
-                  // 비밀번호체크
-                  InputField(
-                    focusNode: passwordCheckFocus,
-                    controller: passwordCheckController,
-                    obscureText: true,
-                    labelText: "비밀번호 확인",
-                    hintText: '비밀번호확인을 진행하세요*',
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return '비밀번호를 확인하세요';
-                      } else if (value != passwordController.text) {
-                        return '비밀번호가 일치하지 않습니다';
-                      }
-                      return null; 
-                    },
-                    onChanged: (value) => debugPrint('비밀번호 확인 $value'),
-                  ),
-
-                  const SizedBox(height: 10),
-
-                  // 이름
-                  InputField(
-                    focusNode: nameFocus,
-                    controller: nameController,
-                    labelText: "병원명",
-                    hintText: '병원명*',
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return '병원명을 입력하세요.';
-                      }
-                      return null; 
-                    },
-                    onChanged: (value) => debugPrint('이름 $value'),
-                  ),
-
-                  const SizedBox(height: 10),
-
-                  //전화번호
-                  InputField(
-                    focusNode: telFocus,
-                    controller: telController,
-                    labelText: "전화번호",
-                    hintText: '전화번호*',
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return '전화번호를 입력하세요.';
-                      }
-                      return null; 
-                    },
-                    onChanged: (value) => debugPrint('전화번호 $value'),
-                  ),
-
-                  const SizedBox(height: 10),
-
-                  //주소
-                  InputField(
-                    focusNode: addressFocus,
-                    controller: addressController,
-                    labelText: "주소",
-                    hintText: '주소*',
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return '주소를 입력하세요.';
-                      }
-                      return null; 
-                    },
-                    onChanged: (value) => debugPrint('주소 $value'),
-                  ),
-
-                  const SizedBox(height: 10),
-
-                  //진료과목
-                  InputField(
-                    focusNode: departmentFocus,
-                    controller: departmentController,
-                    labelText: "진료과목",
-                    hintText: '진료과목*',
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return '진료과목을 입력하세요.';
-                      }
-                      return null; 
-                    },
-                    onChanged: (value) => debugPrint('진료과목 $value'),
-                  ),
-
-                  const SizedBox(height: 10),
-
-                  //사업자번호
-                  InputField(
-                    focusNode: taxidFocus,
-                    controller: taxidController,
-                    labelText: "사업자번호",
-                    hintText: '사업자번호*',
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return '사업자번호를 입력하세요.';
-                      }
-                      return null; 
-                    },
-                    onChanged: (value) => debugPrint('사업자번호 $value'),
-                  ),
-
-                  const SizedBox(height: 30),
-
-                  // 진료시간
-                  Column(
-                    children: [
-                      // 안내멘트
-                      const SizedBox (
-                        width: 300,
-                        child: Text(
-                          '진료시간',
-                          textAlign: TextAlign.left,
-                          style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-                        ),
-                      ),
-                      const SizedBox(height: 10),
-                      const SizedBox (
-                        width: 300,
-                        child: Text(
-                          '접수마감시간이 오후 8시이후인 경우\n야간 진료 가능으로 표시됩니다.',
-                          textAlign: TextAlign.left,
-                          style: TextStyle(fontSize: 15, fontWeight: FontWeight.w500, color: gray500),
-                        ),
-                      ),
-                      const SizedBox(height: 20),
-                      
-                      // 요일
-                      WeekdaySelector(
-                        onSelectedDaysChanged: (selectedDays) {
-                          // 선택된 요일을 처리하는 로직
-                          setState(() {
-                            this.selectedDays = selectedDays; // 선택된 요일을 저장
-                          });
-                        },
-                      ),
-                      
-                      const SizedBox(height: 10),
-                      
-                      // 진료시간
-                      Row(
-                        children: [
-                          const SizedBox(
-                            width: 50,
-                            child: Text(
-                              '진료시간',
-                              textAlign: TextAlign.left,
-                              style: TextStyle(fontSize: 15, fontWeight: FontWeight.w500),
-                            ),
-                          ),
-                        
-                          const SizedBox(width: 20), 
-                      
-                          // 시작시간
-                          DropdownButton<String>(
-                            value: startTime, // 선택된 값
-                            hint: const Text("시작시간"), // 선택 전 힌트
-                            items: timeSlots.map((String value) {
-                              return DropdownMenuItem<String>(
-                                value: value,
-                                child: Text(value),
-                              );
-                            }).toList(),
-                            onChanged: (newValue) {
-                              setState(() {
-                                startTime = newValue; // 선택값 업데이트
-                              });
-                            },
-                          ),
-                      
-                          const SizedBox(width: 10), 
-                          const SizedBox(
-                            width: 20,
-                            child: Text(
-                              '~',
-                              textAlign: TextAlign.center,
-                              style: TextStyle(fontSize: 15, fontWeight: FontWeight.w500),
-                            ),
-                          ),
-                          const SizedBox(width: 10), 
-                          
-                          // 종료시간
-                          DropdownButton<String>(
-                            value: endTime, // 선택된 값
-                            hint: const Text("종료시간"), // 선택 전 힌트
-                            items: timeSlots.map((String value) {
-                              return DropdownMenuItem<String>(
-                                value: value,
-                                child: Text(value),
-                              );
-                            }).toList(),
-                            onChanged: (newValue) {
-                              setState(() {
-                                endTime = newValue; // 선택값 업데이트
-                              });
-                            },
-                          ),
-                                    
-                        ],
-                      ),
-                      
-                      const SizedBox(height: 10),
-                      
-                      // 휴게시간
-                      Row(
-                        children: [
-                          const SizedBox(
-                            width: 50,
-                            child: Text(
-                              '휴게시간',
-                              textAlign: TextAlign.left,
-                              style: TextStyle(fontSize: 15, fontWeight: FontWeight.w500),
-                            ),
-                          ),
-                        
-                          const SizedBox(width: 20), 
-                      
-                          // 시작시간
-                          DropdownButton<String>(
-                            value: startBreak, // 선택된 값
-                            hint: const Text("시작시간"), // 선택 전 힌트
-                            items: timeSlots.map((String value) {
-                              return DropdownMenuItem<String>(
-                                value: value,
-                                child: Text(value),
-                              );
-                            }).toList(),
-                            onChanged: (newValue) {
-                              setState(() {
-                                startBreak = newValue; // 선택값 업데이트
-                              });
-                            },
-                          ),
-                      
-                          const SizedBox(width: 10), 
-                          const SizedBox(
-                            width: 20,
-                            child: Text(
-                              '~',
-                              textAlign: TextAlign.center,
-                              style: TextStyle(fontSize: 15, fontWeight: FontWeight.w500),
-                            ),
-                          ),
-                          const SizedBox(width: 10), 
-                          
-                          // 종료시간
-                          DropdownButton<String>(
-                            value: endBreak, // 선택된 값
-                            hint: const Text("종료시간"), // 선택 전 힌트
-                            items: timeSlots.map((String value) {
-                              return DropdownMenuItem<String>(
-                                value: value,
-                                child: Text(value),
-                              );
-                            }).toList(),
-                            onChanged: (newValue) {
-                              setState(() {
-                                endBreak = newValue; // 선택값 업데이트
-                              });
-                            },
-                          ),
-                                    
-                        ],
-                      ),
-                      
-                      const SizedBox(height: 10),
-                      
-                      // 접수 마감
-                      Row(
-                        children: [
-                          const SizedBox(
-                            width: 50,
-                            child: Text(
-                              '접수 마감',
-                              textAlign: TextAlign.left,
-                              style: TextStyle(fontSize: 15, fontWeight: FontWeight.w500),
-                            ),
-                          ),
-                        
-                          const SizedBox(width: 20), 
-                      
-                          // 시작시간
-                          DropdownButton<String>(
-                            value: deadLine, // 선택된 값
-                            hint: const Text("마감시간"), // 선택 전 힌트
-                            items: timeSlots.map((String value) {
-                              return DropdownMenuItem<String>(
-                                value: value,
-                                child: Text(value),
-                              );
-                            }).toList(),
-                            onChanged: (newValue) {
-                              setState(() {
-                                deadLine = newValue; // 선택값 업데이트
-                              });
-                            },
-                          ),
-                      
-                                    
-                        ],
-                      ),
-                    ],
-                  ),
-                  
-                  const SizedBox(height: 30),
-
-                  // 의료진
-                  Row(
-                    children: [
-                      // 안내멘트
-                      const SizedBox (
-                        width: 50,
-                        child: Text(
-                          '의료진',
-                          textAlign: TextAlign.left,
-                          style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-                        ),
-                      ),
-                  
-                      const SizedBox(width: 5),
-                  
-                      // 버튼
-                      SizedBox(
-                        width: 40, 
-                        height: 20,
-                        child: ElevatedButton(
-                          onPressed: () {
-                            print('터치');
-                            addDoctorField(); // + 버튼 클릭 시 새로운 입력 폼 추가
-                          },
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: const Color(0xff005ad5),
-                            padding: const EdgeInsets.all(0),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(5), 
-                            ),
-                          ),
-                          child: const Icon(
-                            Icons.add,
-                            color: Colors.white, 
-                            size: 15, 
-                          ),
-                        ),
-                      ), 
-
-                    ],
-                  ),
-                  const SizedBox(height: 10),
-                  Column(
-                    children: doctorFields, 
-                  ),
-
-                  const SizedBox(height: 30),
-
-                   //약관
-                  Container(
-                    width: 300,
-                    padding: const EdgeInsets.only(top: 15, left: 15, right: 15, bottom: 20,),
-                    decoration: BoxDecoration(
-                      border: Border.all(
-                        color: const Color(0xff666666),
-                        width: 1,
-                      ),
-                      borderRadius: BorderRadius.circular(5), 
+        child: Form (
+          child: Padding(
+            key: _formKey,
+            padding: const EdgeInsets.all(40),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+          
+              children: [
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    //아이디
+                    InputField(
+                      focusNode: idFocus,
+                      controller: idController,
+                      labelText: "아이디",
+                      hintText: '아이디* (영문/숫자, 6~15자)',
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return '아이디를 입력하세요';
+                        } else if (value.length < 6) {
+                          return '아이디는 최소 6자 이상이어야 합니다';
+                        } else if (!RegExp(r'^[a-zA-Z0-9]+$').hasMatch(value)) {
+                          return '아이디는 영문과 숫자만 입력 가능합니다';
+                        }
+                        return null;
+                      },
+                      onChanged: (value) => debugPrint('아이디 변경 $value'),
+                      maxLength: 15,
                     ),
-                    child: Column(
+          
+                    const SizedBox(height: 10),
+          
+                    // 비밀번호
+                    InputField(
+                      focusNode: passwordFocus,
+                      controller: passwordController,
+                      obscureText: true,
+                      labelText: "비밀번호",
+                      hintText: '비밀번호* (영문+숫자, 특수문자(선택), 8~20자)',
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return '비밀번호를 입력하세요';
+                        } else if (value.length < 8) {
+                          return '비밀번호 최소 8자 이상이어야 합니다';
+                        } else if (!RegExp(r'^(?=.*[a-zA-Z])(?=.*\d)').hasMatch(value)) {
+                          return '비밀번호는 영문자와 숫자가 포함되어야 합니다';
+                        }
+                        return null;
+                      },
+                      onChanged: (value) => debugPrint('비밀번호 변경 $value'),
+                      maxLength: 20,
+                    ),
+                    
+                    const SizedBox(height: 10),
+          
+                    // 비밀번호체크
+                    InputField(
+                      focusNode: passwordCheckFocus,
+                      controller: passwordCheckController,
+                      obscureText: true,
+                      labelText: "비밀번호 확인",
+                      hintText: '비밀번호확인을 진행하세요*',
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return '비밀번호를 확인하세요';
+                        } else if (value != passwordController.text) {
+                          return '비밀번호가 일치하지 않습니다';
+                        }
+                        return null; 
+                      },
+                      onChanged: (value) => debugPrint('비밀번호 확인 $value'),
+                    ),
+          
+                    const SizedBox(height: 10),
+          
+                    // 이름
+                    InputField(
+                      focusNode: nameFocus,
+                      controller: nameController,
+                      labelText: "병원명",
+                      hintText: '병원명*',
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return '병원명을 입력하세요.';
+                        }
+                        return null; 
+                      },
+                      onChanged: (value) => debugPrint('이름 $value'),
+                    ),
+          
+                    const SizedBox(height: 10),
+          
+                    //전화번호
+                    InputField(
+                      focusNode: telFocus,
+                      controller: telController,
+                      labelText: "전화번호",
+                      hintText: '전화번호*',
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return '전화번호를 입력하세요.';
+                        }
+                        return null; 
+                      },
+                      onChanged: (value) => debugPrint('전화번호 $value'),
+                    ),
+          
+                    const SizedBox(height: 10),
+          
+                    //주소
+                    InputField(
+                      focusNode: addressFocus,
+                      controller: addressController,
+                      labelText: "주소",
+                      hintText: '주소*',
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return '주소를 입력하세요.';
+                        }
+                        return null; 
+                      },
+                      onChanged: (value) => debugPrint('주소 $value'),
+                    ),
+          
+                    const SizedBox(height: 10),
+          
+                    //진료과목
+                    InputField(
+                      focusNode: departmentFocus,
+                      controller: departmentController,
+                      labelText: "진료과목",
+                      hintText: '진료과목*',
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return '진료과목을 입력하세요.';
+                        }
+                        return null; 
+                      },
+                      onChanged: (value) => debugPrint('진료과목 $value'),
+                    ),
+          
+                    const SizedBox(height: 10),
+          
+                    //사업자번호
+                    InputField(
+                      focusNode: taxidFocus,
+                      controller: taxidController,
+                      labelText: "사업자번호",
+                      hintText: '사업자번호*',
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return '사업자번호를 입력하세요.';
+                        }
+                        return null; 
+                      },
+                      onChanged: (value) => debugPrint('사업자번호 $value'),
+                    ),
+          
+                    const SizedBox(height: 30),
+          
+                    // 진료시간
+                    Column(
                       children: [
-                        // 약관 제목
+                        // 안내멘트
                         const SizedBox (
                           width: 300,
                           child: Text(
-                            '회원가입 약관',
+                            '진료시간',
                             textAlign: TextAlign.left,
-                            style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                            style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                           ),
                         ),
-                    
-                        const SizedBox(height: 10), 
-                    
-                        // 약관 내용
-                        SizedBox (
+                        const SizedBox(height: 10),
+                        const SizedBox (
                           width: 300,
-                          height: 100,
-                          child: Container (
-                            decoration: BoxDecoration(
-                              color: const Color.fromARGB(255, 240, 240, 240),
-                              borderRadius: BorderRadius.circular(5), 
-                            ),
-                            child: const Padding(
-                              padding: EdgeInsets.all(8.0),
-                              child: SingleChildScrollView(
-                                child: Text(
-                                  termsContent,
-                                  textAlign: TextAlign.left, 
-                                ),
-                              ),
-                            ),
+                          child: Text(
+                            '접수마감시간이 오후 8시이후인 경우\n야간 진료 가능으로 표시됩니다.',
+                            textAlign: TextAlign.left,
+                            style: TextStyle(fontSize: 15, fontWeight: FontWeight.w500, color: gray500),
                           ),
                         ),
-                    
-                        const SizedBox(height: 10), 
-
-                        // 약관동의 체크박스
+                        const SizedBox(height: 20),
+                        
+                        // 요일
+                        WeekdaySelector(
+                          onSelectedDaysChanged: (selectedDays) {
+                            // 선택된 요일을 처리하는 로직
+                            setState(() {
+                              this.selectedDays = selectedDays; // 선택된 요일을 저장
+                            });
+                          },
+                        ),
+                        
+                        const SizedBox(height: 10),
+                        
+                        // 진료시간
                         Row(
-                          mainAxisAlignment: MainAxisAlignment.start, 
                           children: [
-                            // 체크박스
-                            SizedBox(
-                              width: 20,
-                              height: 20,
-                              child: CustomCheckbox(
-                                value: isChecked,
-                                onChanged: (bool? value) {
-                                  setState(() {
-                                    isChecked = value ?? false;
-                                  });
-                                },
-                              )
-                            ),
-
-                            const SizedBox(width: 8),
-
                             const SizedBox(
+                              width: 50,
                               child: Text(
-                                '동의하기',
-                                style: TextStyle(
-                                  color: Color(0xE5001F3F),
-                                  fontSize: 13,
-                                  fontWeight: FontWeight.w700,
-                                  height: 0,
-                                  letterSpacing: -0.40,
-                                ),
+                                '진료시간',
+                                textAlign: TextAlign.left,
+                                style: TextStyle(fontSize: 15, fontWeight: FontWeight.w500),
                               ),
                             ),
+                          
+                            const SizedBox(width: 20), 
+                        
+                            // 시작시간
+                            DropdownButton<String>(
+                              value: startTime,
+                              hint: const Text("시작시간"), 
+                              items: timeSlots.map((String value) {
+                                return DropdownMenuItem<String>(
+                                  value: value,
+                                  child: Text(value),
+                                );
+                              }).toList(),
+                              onChanged: (select) {
+                                setState(() {
+                                  if (select != null){
+                                    startTime = select;
+                                    print("사용자가 선택한 값:$select");
+                                    print("설정된 시작시간:$startTime");
+                                  }
+                                });
+                              },
+                            ),
+                        
+                            const SizedBox(width: 10), 
+                            const SizedBox(
+                              width: 20,
+                              child: Text(
+                                '~',
+                                textAlign: TextAlign.center,
+                                style: TextStyle(fontSize: 15, fontWeight: FontWeight.w500),
+                              ),
+                            ),
+                            const SizedBox(width: 10), 
+                            
+                            // 종료시간
+                            DropdownButton<String>(
+                              value: endTime, // 선택된 값
+                              hint: const Text("종료시간"), // 선택 전 힌트
+                              items: timeSlots.map((String value) {
+                                return DropdownMenuItem<String>(
+                                  value: value,
+                                  child: Text(value),
+                                );
+                              }).toList(),
+                              onChanged: (select) {
+                                setState(() {
+                                  if (select != null){
+                                    endTime = select;
+                                    print("사용자가 선택한 값:$select");
+                                    print("설정된 종료시간:$endTime");
+                                  }
+                                });
+                              },
+                            ),
+                                      
+                          ],
+                        ),
+                        
+                        const SizedBox(height: 10),
+                        
+                        // 휴게시간
+                        Row(
+                          children: [
+                            const SizedBox(
+                              width: 50,
+                              child: Text(
+                                '휴게시간',
+                                textAlign: TextAlign.left,
+                                style: TextStyle(fontSize: 15, fontWeight: FontWeight.w500),
+                              ),
+                            ),
+                          
+                            const SizedBox(width: 20), 
+                        
+                            // 시작시간
+                            DropdownButton<String>(
+                              value: startBreak, // 선택된 값
+                              hint: const Text("시작시간"), // 선택 전 힌트
+                              items: timeSlots.map((String value) {
+                                return DropdownMenuItem<String>(
+                                  value: value,
+                                  child: Text(value),
+                                );
+                              }).toList(),
+                              onChanged: (select) {
+                                setState(() {
+                                  if (select != null){
+                                    startBreak = select;
+                                    print("사용자가 선택한 값:$select");
+                                    print("설정된 종료시간:$startBreak");
+                                  }
+                                });
+                              },
+                            ),
+                        
+                            const SizedBox(width: 10), 
+                            const SizedBox(
+                              width: 20,
+                              child: Text(
+                                '~',
+                                textAlign: TextAlign.center,
+                                style: TextStyle(fontSize: 15, fontWeight: FontWeight.w500),
+                              ),
+                            ),
+                            const SizedBox(width: 10), 
+                            
+                            // 종료시간
+                            DropdownButton<String>(
+                              value: endBreak, // 선택된 값
+                              hint: const Text("종료시간"), // 선택 전 힌트
+                              items: timeSlots.map((String value) {
+                                return DropdownMenuItem<String>(
+                                  value: value,
+                                  child: Text(value),
+                                );
+                              }).toList(),
+                              onChanged: (select) {
+                                setState(() {
+                                  if (select != null){
+                                    endBreak = select;
+                                    print("사용자가 선택한 값:$select");
+                                    print("설정된 종료시간:$endBreak");
+                                  }
+                                });
+                              },
+                            ),
+                                      
+                          ],
+                        ),
+                        
+                        const SizedBox(height: 10),
+                        
+                        // 접수 마감
+                        Row(
+                          children: [
+                            const SizedBox(
+                              width: 50,
+                              child: Text(
+                                '접수 마감',
+                                textAlign: TextAlign.left,
+                                style: TextStyle(fontSize: 15, fontWeight: FontWeight.w500),
+                              ),
+                            ),
+                          
+                            const SizedBox(width: 20), 
+                        
+                            // 시작시간
+                            DropdownButton<String>(
+                              value: deadLine, // 선택된 값
+                              hint: const Text("마감시간"), // 선택 전 힌트
+                              items: timeSlots.map((String value) {
+                                return DropdownMenuItem<String>(
+                                  value: value,
+                                  child: Text(value),
+                                );
+                              }).toList(),
+                              onChanged: (select) {
+                                setState(() {
+                                  if (select != null){
+                                    deadLine = select;
+                                    print("사용자가 선택한 값:$select");
+                                    print("설정된 종료시간:$deadLine");
+                                  }
+                                });
+                              },
+                            ),
+                        
+                                      
                           ],
                         ),
                       ],
                     ),
-                  ),
-
-                  const SizedBox(height: 30),
-
-                  // submit 버튼
-                  SizedBox(
-                    width: 300,
-                    height: 50,
-                    child: SecondaryOutlineButton(
-                      text: '회원가입',
-                      onPressed: () {
-                        // 요일 체크 검증
-                        if (selectedDays.isEmpty) {
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(content: Text('하나 이상의 요일을 선택해야 합니다.')),
-                          );
-                          return;
-                        }
-
-                        // member insert
-                        memberProvider.insertMember(
-                          Member(
-                            id: idController.text,
-                            password: passwordController.text,
-                            name: nameController.text,
-                            nickname: nameController.text,
-                            tel: telController.text,
-                            address: addressController.text,
-                            department: departmentController.text,
-                            taxid: taxidController.text,
-                            enable: 0,
-                            auth: 'ROLE_HOSP',
-                          )
-                        );
-                        // hours insert
-
-                        // 의료진 정보 출력 (예시)
-                        for (int i = 0; i < doctorNameController.length; i++) {
-                          print('의료진 ${i + 1} 이름: ${doctorNameController[i].text}');
-                          print('의료진 ${i + 1} 전공: ${majorController[i].text}');
-                          print('의료진 ${i + 1} 경력: ${careerController[i].text}');
-                          print('의료진 ${i + 1} 진료시간: ${doctorHoursController[i].text}');
-                        }
-
-                        print('선택된 요일: $selectedDays'); // 선택된 요일 출력
-                        
-                        // print('id:' + idController.text);
-                        // print('pass:' + passwordController.text);
-                        // print('name:' + nameController.text);
-                        // print('tel:' + telController.text);
-                        // print('address:' + addressController.text);
-                        // print('department:' + departmentController.text);
-                        // print('taxid:' + taxidController.text);
-                        // Navigator.of(context).pushNamed('/member/join/hosp/success.do');
-                      },
-                      color: Colors.blue, 
+                    
+                    const SizedBox(height: 30),
+          
+                    // 의료진
+                    Row(
+                      children: [
+                        // 안내멘트
+                        const SizedBox (
+                          width: 50,
+                          child: Text(
+                            '의료진',
+                            textAlign: TextAlign.left,
+                            style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                          ),
+                        ),
+                    
+                        const SizedBox(width: 5),
+                    
+                        // 버튼
+                        SizedBox(
+                          width: 40, 
+                          height: 20,
+                          child: ElevatedButton(
+                            onPressed: () {
+                              print('터치');
+                              addDoctorField(); // + 버튼 클릭 시 새로운 입력 폼 추가
+                            },
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: const Color(0xff005ad5),
+                              padding: const EdgeInsets.all(0),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(5), 
+                              ),
+                            ),
+                            child: const Icon(
+                              Icons.add,
+                              color: Colors.white, 
+                              size: 15, 
+                            ),
+                          ),
+                        ), 
+          
+                      ],
                     ),
-                  ),
-                  
+                    const SizedBox(height: 10),
+                    Column(
+                      children: doctorFields, 
+                    ),
+          
+                    const SizedBox(height: 30),
+          
+                     //약관
+                    Container(
+                      width: 300,
+                      padding: const EdgeInsets.only(top: 15, left: 15, right: 15, bottom: 20,),
+                      decoration: BoxDecoration(
+                        border: Border.all(
+                          color: const Color(0xff666666),
+                          width: 1,
+                        ),
+                        borderRadius: BorderRadius.circular(5), 
+                      ),
+                      child: Column(
+                        children: [
+                          // 약관 제목
+                          const SizedBox (
+                            width: 300,
+                            child: Text(
+                              '회원가입 약관',
+                              textAlign: TextAlign.left,
+                              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                            ),
+                          ),
+                      
+                          const SizedBox(height: 10), 
+                      
+                          // 약관 내용
+                          SizedBox (
+                            width: 300,
+                            height: 100,
+                            child: Container (
+                              decoration: BoxDecoration(
+                                color: const Color.fromARGB(255, 240, 240, 240),
+                                borderRadius: BorderRadius.circular(5), 
+                              ),
+                              child: const Padding(
+                                padding: EdgeInsets.all(8.0),
+                                child: SingleChildScrollView(
+                                  child: Text(
+                                    termsContent,
+                                    textAlign: TextAlign.left, 
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                      
+                          const SizedBox(height: 10), 
+          
+                          // 약관동의 체크박스
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.start, 
+                            children: [
+                              // 체크박스
+                              SizedBox(
+                                width: 20,
+                                height: 20,
+                                child: CustomCheckbox(
+                                  value: isChecked,
+                                  onChanged: (bool? value) {
+                                    setState(() {
+                                      isChecked = value ?? false;
+                                    });
+                                  },
+                                )
+                              ),
+          
+                              const SizedBox(width: 8),
+          
+                              const SizedBox(
+                                child: Text(
+                                  '동의하기',
+                                  style: TextStyle(
+                                    color: Color(0xE5001F3F),
+                                    fontSize: 13,
+                                    fontWeight: FontWeight.w700,
+                                    height: 0,
+                                    letterSpacing: -0.40,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
+          
+                    const SizedBox(height: 30),
+          
+                    // submit 버튼
+                    SizedBox(
+                      width: 300,
+                      height: 50,
+                      child: SecondaryOutlineButton(
+                        text: '회원가입',
+                        onPressed: () {
+                          // 요일 체크 검증
+                          if (selectedDays.isEmpty) {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(content: Text('하나 이상의 요일을 선택해야 합니다.')),
+                            );
+                            return;
+                          }
+          
+                          // if(_formKey.currentState!.validate()){
+                          // member insert
+                          memberProvider.insertMember(
+                            Member(
+                              id: idController.text,
+                              password: passwordController.text,
+                              name: nameController.text,
+                              nickname: nameController.text,
+                              tel: telController.text,
+                              address: addressController.text,
+                              department: departmentController.text,
+                              taxid: taxidController.text,
+                              enable: 0,
+                              auth: 'ROLE_HOSP',
+                            )
+                          );
+        
+                          print('member insert 완료');
+        
+                          // doctor insert
+                          for (int i = 0; i < doctorNameController.length; i++) {
+                            doctorProvider.insertDoctor(
+                              Doctor(
+                                // docIdx는 provider에서 처리
+                                docIdx: 0,
+                                name: doctorNameController[i].text,
+                                major: majorController[i].text,
+                                career: careerController[i].text,
+                                hours: doctorHoursController[i].text,
+                                hospRef: idController.text,
+                              )
+                            );
+                          }
+        
+                          print('doctor insert 완료');
 
+                          // hours insert
+                          hoursProvider.initHours(idController.text);
+                          for (int i = 0; i < selectedDays.length; i++) {
+                            String weekend = (selectedDays[i] == '토요일' || selectedDays[i] == '일요일') ? 'T' : 'F';
+                            
+                            DateTime deadlineTime = DateTime.parse('2023-01-01 $deadLine');
+                            DateTime compareTime = DateTime.parse('2023-01-01 20:00'); 
+                            String night = (deadlineTime.isAfter(compareTime) || deadlineTime.isAtSameMomentAs(compareTime)) ? 'T' : 'F';
 
-
-
-                ],
-              ),
-            ]
-
+                            
+                            hoursProvider.updateHours(
+                              Hours(
+                                hoursIdx: 0,
+                                week: selectedDays[i],
+                                startTime: startTime,
+                                endTime: endTime,
+                                startBreak: startBreak,
+                                endBreak: endBreak,
+                                deadLine: deadLine,
+                                hosp_ref: idController.text,
+                                open_week: 'T',
+                                weekend: weekend,
+                                night: night,
+                              ),
+                            );
+                          }
+        
+                          print('hours insert 완료');
+                          // }
+          
+                          // 화면 이동
+                          Navigator.of(context).pushNamed('/member/join/hosp/success.do');
+                        },
+                        color: Colors.blue, 
+                      ),
+                    ),
+                    
+          
+          
+          
+          
+                  ],
+                ),
+              ]
+          
+            ),
           ),
         ),
       ),

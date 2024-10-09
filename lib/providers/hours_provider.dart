@@ -2,7 +2,7 @@ import 'package:doctorviewapp/models/hours.dart';
 import 'package:flutter/material.dart';
 
 class HoursProvider extends ChangeNotifier {
-  int hoursCount = 8;
+  int _seqHoursIdx = 8;
   
   final List<Hours> _hoursList = [
     Hours (
@@ -106,14 +106,40 @@ class HoursProvider extends ChangeNotifier {
     return _hoursList.where((hours) => hours.hosp_ref == hospRef && hours.open_week == 'T').toList();
   }
 
-  // 시간 추가
-  void insertHours() {
-    notifyListeners();
+  // 기본 시간 추가
+  void initHours(String hospRef) {
+  List<String> weeks = ['월요일', '화요일', '수요일', '목요일', '금요일', '토요일', '일요일'];
+
+  for (String week in weeks) {
+    Hours newHour = Hours(
+      hoursIdx: _seqHoursIdx++,
+      week: week,
+      startTime: '00:00',
+      endTime: '00:00',
+      startBreak: '00:00',
+      endBreak: '00:00',
+      deadLine: '00:00',
+      hosp_ref: hospRef, 
+      open_week: 'F',
+      weekend: 'F',
+      night: 'F',
+    );
+    hoursList.add(newHour);
   }
 
+  notifyListeners(); 
+}
 
-
-  
+  // 근무 시간 업데이트
+  void updateHours(Hours hours){
+    for (int i = 0; i < _hoursList.length; i++) {
+      if (_hoursList[i].hosp_ref == hours.hosp_ref && _hoursList[i].week == hours.week) {
+        _hoursList[i] = hours;
+        break;
+      }
+    }
+    notifyListeners();
+  }
 
 
 }
