@@ -1,4 +1,4 @@
-import 'package:doctorviewapp/screens/board/qnaboard/qnaboard_list_screen.dart';
+import 'package:doctorviewapp/screens/board/board_list_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:doctorviewapp/theme/colors.dart';
 
@@ -563,7 +563,9 @@ class _BodyState extends State<Body> {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => const QnaboardListScreen(),
+                            builder: (context) => const BoardListScreen(
+                              boardName: 'qnaboard',
+                            ),
                           ),
                         );
                       },

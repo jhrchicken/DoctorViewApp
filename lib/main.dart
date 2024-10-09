@@ -63,6 +63,15 @@ class MyApp extends StatelessWidget {
   }
 }
 
+
+class CustomTextStyles {
+  static TextStyle appbarText = TextStyle(
+    color: Colors.grey[900],
+    fontSize: 18,
+    fontWeight: FontWeight.w700,
+  );
+}
+
 class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key, required this.title});
   final String title;

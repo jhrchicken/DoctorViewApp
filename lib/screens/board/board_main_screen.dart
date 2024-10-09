@@ -1,5 +1,4 @@
-import 'package:doctorviewapp/screens/board/freeboard/freeboard_list_screen.dart';
-import 'package:doctorviewapp/screens/board/qnaboard/qnaboard_list_screen.dart';
+import 'package:doctorviewapp/screens/board/board_list_screen.dart';
 import 'package:doctorviewapp/theme/colors.dart';
 import 'package:flutter/material.dart';
 
@@ -42,7 +41,7 @@ class _BoardMainScreenState extends State<BoardMainScreen> {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => const FreeboardListScreen()),
+                    builder: (context) => const BoardListScreen(boardName: 'freeboard')),
                 );
               },
               child: Container(
@@ -79,7 +78,7 @@ class _BoardMainScreenState extends State<BoardMainScreen> {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => const QnaboardListScreen()),
+                    builder: (context) => const BoardListScreen(boardName: 'qnaboard',)),
                 );
               },
               child: Container(
