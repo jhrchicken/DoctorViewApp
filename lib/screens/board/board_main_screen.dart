@@ -12,7 +12,6 @@ class BoardMainScreen extends StatefulWidget {
 
 class _BoardMainScreenState extends State<BoardMainScreen> {
 
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -21,12 +20,12 @@ class _BoardMainScreenState extends State<BoardMainScreen> {
           onPressed: () {
             Navigator.pop(context);
           },
-          icon: Icon(
+          icon: const Icon(
             Icons.arrow_back,
             color: Colors.white,
             ),
         ),
-        title: Text(
+        title: const Text(
           '게시판',
           style:  TextStyle(color: Colors.white)
         ),
@@ -43,19 +42,19 @@ class _BoardMainScreenState extends State<BoardMainScreen> {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => FreeboardListScreen(boardName: 'freeboard')),
+                    builder: (context) => const FreeboardListScreen()),
                 );
               },
               child: Container(
-                padding: EdgeInsets.all(20),
-                decoration: BoxDecoration(
+                padding: const EdgeInsets.all(20),
+                decoration: const BoxDecoration(
                   color: Colors.white,
                   border: Border(
                     bottom: BorderSide(color: border),
                   ),
                 ),
-                child: Row(
-                  children: const [
+                child: const Row(
+                  children: [
                     Icon(
                       Icons.menu_book_rounded,
                       size: 18,
@@ -80,19 +79,19 @@ class _BoardMainScreenState extends State<BoardMainScreen> {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => QnaboardListScreen(boardName: 'qnaboard')),
+                    builder: (context) => const QnaboardListScreen()),
                 );
               },
               child: Container(
-                padding: EdgeInsets.all(20),
-                decoration: BoxDecoration(
+                padding: const EdgeInsets.all(20),
+                decoration: const BoxDecoration(
                   color: Colors.white,
                   border: Border(
                     bottom: BorderSide(color: border),
                   ),
                 ),
-                child: Row(
-                  children: const [
+                child: const Row(
+                  children: [
                     Icon(
                       Icons.question_answer_rounded,
                       size: 18,

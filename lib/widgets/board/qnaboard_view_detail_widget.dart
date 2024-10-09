@@ -38,7 +38,7 @@ class _QnaboardViewDetailWidgetState extends State<QnaboardViewDetailWidget> {
     }
 
     return Container(
-      decoration: BoxDecoration(
+      decoration: const BoxDecoration(
         border: Border(
           bottom: BorderSide(color: border, width: 2),
         ),
@@ -53,18 +53,18 @@ class _QnaboardViewDetailWidgetState extends State<QnaboardViewDetailWidget> {
               children: [
                 Row(
                   children: [
-                    Icon(Icons.account_box_rounded, size: 50),
-                    SizedBox(width: 10),
+                    const Icon(Icons.account_box_rounded, size: 50),
+                    const SizedBox(width: 10),
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
                           qnaboard!.writerRef!,
-                          style: TextStyle(fontSize: 14, fontWeight: FontWeight.w700),
+                          style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w700),
                         ),
                         Text(
-                          qnaboard.date,
-                          style: TextStyle(fontSize: 10, color: gray500),
+                          qnaboard.postdate.toString(),
+                          style: const TextStyle(fontSize: 10, color: gray500),
                         ),
                       ],
                     ),
@@ -75,15 +75,15 @@ class _QnaboardViewDetailWidgetState extends State<QnaboardViewDetailWidget> {
                     // 좋아요 버튼
                     OutlinedButton(
                       style: OutlinedButton.styleFrom(
-                        padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-                        side: BorderSide(color: border),
-                        minimumSize: Size(15, 10),
+                        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                        side: const BorderSide(color: border),
+                        minimumSize: const Size(15, 10),
                       ),
                       onPressed: () {
                         
                       },
-                      child: Row(
-                        children: const [
+                      child: const Row(
+                        children: [
                           Icon(Icons.favorite, color: Colors.red, size: 12),
                           SizedBox(width: 5),
                           Text(
@@ -94,24 +94,24 @@ class _QnaboardViewDetailWidgetState extends State<QnaboardViewDetailWidget> {
                       ),
                     ),
                     
-                    SizedBox(width: 10),
+                    const SizedBox(width: 10),
                     // 신고 버튼
                     QnaboardReportWidget(boardIdx: widget.boardIdx),
                   ],
                 ),
               ],
             ),
-            SizedBox(height: 8),
+            const SizedBox(height: 8),
             Text(
               qnaboard.title,
-              style: TextStyle(fontSize: 14, fontWeight: FontWeight.w700),
+              style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w700),
             ),
-            SizedBox(height: 5),
+            const SizedBox(height: 5),
             Text(
               qnaboard.content,
-              style: TextStyle(fontSize: 12),
+              style: const TextStyle(fontSize: 12),
             ),
-            SizedBox(height: 10),
+            const SizedBox(height: 10),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -119,33 +119,33 @@ class _QnaboardViewDetailWidgetState extends State<QnaboardViewDetailWidget> {
                   children: [
                     Row(
                       children: [
-                        Icon(Icons.mode_comment_outlined, size: 10, color: Colors.teal),
-                        SizedBox(width: 5),
+                        const Icon(Icons.mode_comment_outlined, size: 10, color: Colors.teal),
+                        const SizedBox(width: 5),
                         Text(
                           commentProvider.commentCount(widget.boardIdx).toString(),
-                          style: TextStyle(fontSize: 10, color: gray400),
+                          style: const TextStyle(fontSize: 10, color: gray400),
                         ),
                       ],
                     ),
-                    SizedBox(width: 10),
+                    const SizedBox(width: 10),
                     Row(
                       children: [
-                        Icon(Icons.favorite_border_outlined, size: 10, color: Colors.red),
-                        SizedBox(width: 5),
+                        const Icon(Icons.favorite_border_outlined, size: 10, color: Colors.red),
+                        const SizedBox(width: 5),
                         Text(
                           '$likeCount',
-                          style: TextStyle(fontSize: 10, color: gray400),
+                          style: const TextStyle(fontSize: 10, color: gray400),
                         ),
                       ],
                     ),
-                    SizedBox(width: 10),
+                    const SizedBox(width: 10),
                     Row(
                       children: [
-                        Icon(Icons.visibility_rounded, size: 10, color: Color(0xffbbbbbb)),
-                        SizedBox(width: 5),
+                        const Icon(Icons.visibility_rounded, size: 10, color: Color(0xffbbbbbb)),
+                        const SizedBox(width: 5),
                         Text(
                           qnaboard.visitcount.toString(),
-                          style: TextStyle(fontSize: 10, color: gray400),
+                          style: const TextStyle(fontSize: 10, color: gray400),
                         ),
                       ],
                     ),
@@ -156,41 +156,43 @@ class _QnaboardViewDetailWidgetState extends State<QnaboardViewDetailWidget> {
                     // 수정 버튼
                     OutlinedButton(
                       style: OutlinedButton.styleFrom(
-                        padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-                        side: BorderSide(color: Colors.transparent),
+                        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                        side: const BorderSide(color: Colors.transparent),
                         backgroundColor: pointColor1,
-                        minimumSize: Size(15, 10),
+                        minimumSize: const Size(15, 10),
                       ),
                       onPressed: () {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => QnaboardEditScreen(board: qnaboard)
+                            builder: (context) => QnaboardEditScreen(
+                              boardIdx: qnaboard.boardIdx
+                            ),
                           ),
                         );
                       },
-                      child: Text(
+                      child: const Text(
                         '수정하기',
                         style: TextStyle(color: Colors.white, fontSize: 12),
                       ),
                     ),
-                    SizedBox(width: 10),
+                    const SizedBox(width: 10),
                     // 삭제 버튼
                     OutlinedButton(
                       style: OutlinedButton.styleFrom(
-                        padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-                        side: BorderSide(color: Colors.transparent),
+                        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                        side: const BorderSide(color: Colors.transparent),
                         backgroundColor: pointColor1,
-                        minimumSize: Size(15, 10),
+                        minimumSize: const Size(15, 10),
                       ),
                       onPressed: () {
                         showDialog(
                           context: context,
                           builder: (BuildContext context) {
                             return AlertDialog(
-                              insetPadding: EdgeInsets.all(20),
-                              title: Padding(
-                                padding: const EdgeInsets.symmetric(vertical: 10),
+                              insetPadding: const EdgeInsets.all(20),
+                              title: const Padding(
+                                padding: EdgeInsets.symmetric(vertical: 10),
                                 child: Text(
                                   '해당 게시글을 삭제하시겠습니까?',
                                   style: TextStyle(fontSize: 14),
@@ -201,10 +203,10 @@ class _QnaboardViewDetailWidgetState extends State<QnaboardViewDetailWidget> {
                                 TextButton(
                                   style: TextButton.styleFrom(
                                     backgroundColor: pointColor2,
-                                    minimumSize: Size(10, 5),
+                                    minimumSize: const Size(10, 5),
                                   ),
                                   onPressed: () { Navigator.of(context).pop(); },
-                                  child: Text(
+                                  child: const Text(
                                     '취소',
                                     style: TextStyle(
                                       fontSize: 12, color: Colors.white,
@@ -214,14 +216,14 @@ class _QnaboardViewDetailWidgetState extends State<QnaboardViewDetailWidget> {
                                 TextButton(
                                   style: TextButton.styleFrom(
                                     backgroundColor: pointColor2,
-                                    minimumSize: Size(10, 5),
+                                    minimumSize: const Size(10, 5),
                                   ),
                                   onPressed: () {
                                     boardProvider.deleteBoard(qnaboard.boardIdx);
                                     Navigator.of(context).pop();
                                     Navigator.of(context).pop();
                                   },
-                                  child: Text(
+                                  child: const Text(
                                     '확인',
                                     style: TextStyle(
                                       fontSize: 12, color: Colors.white,
@@ -233,7 +235,7 @@ class _QnaboardViewDetailWidgetState extends State<QnaboardViewDetailWidget> {
                           }
                         );
                       },
-                      child: Text(
+                      child: const Text(
                         '삭제하기',
                         style: TextStyle(color: Colors.white, fontSize: 12),
                       ),

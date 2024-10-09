@@ -6,11 +6,11 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class FreeboardEditScreen extends StatefulWidget {
-  final Board board;
+  final int boardIdx;
 
   const FreeboardEditScreen({
     super.key,
-    required this.board,
+    required this.boardIdx,
   });
 
   @override
@@ -24,8 +24,14 @@ class _FreeboardEditScreenState extends State<FreeboardEditScreen> {
   @override
   void initState() {
     super.initState();
-    _titleController.text = widget.board.title;
-    _contentController.text = widget.board.content;
+
+    final boardProvider = Provider.of<BoardProvider>(context);
+    Board? board = boardProvider.selectBoard(widget.boardIdx);
+
+    if (board != null) {
+        _titleController.text = board.title;
+      _contentController.text = board.content;
+    }
   }
 
   @override
@@ -39,18 +45,20 @@ class _FreeboardEditScreenState extends State<FreeboardEditScreen> {
   Widget build(BuildContext context) {
     final boardProvider = Provider.of<BoardProvider>(context);
 
+    Board? board = boardProvider.selectBoard(widget.boardIdx);
+
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
           onPressed: () {
             Navigator.pop(context);
           },
-          icon: Icon(
+          icon: const Icon(
             Icons.arrow_back,
             color: Colors.white,
           ),
         ),
-        title: Text(
+        title: const Text(
           '글 수정하기',
           style: TextStyle(color: Colors.white),
         ),
@@ -74,53 +82,49 @@ class _FreeboardEditScreenState extends State<FreeboardEditScreen> {
       child: Column(
         children: [
           Container(
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
               border: Border(bottom: BorderSide(color: border),
               ),
             ),
             child: TextField(
               controller: _titleController,
-              decoration: InputDecoration(
+              decoration: const InputDecoration(
                 contentPadding: EdgeInsets.all(15),
                 border: InputBorder.none,
                 hintText: '제목을 입력해주세요',
                 hintStyle: TextStyle(color: gray400, fontSize: 12),
               ),
-              style: TextStyle(fontSize: 12),
+              style: const TextStyle(fontSize: 12),
             ),
           ),
           TextField(
             controller: _contentController,
-            decoration: InputDecoration(
+            decoration: const InputDecoration(
               contentPadding: EdgeInsets.all(15),
               border: InputBorder.none,
               hintText: '내용을 입력해주세요',
               hintStyle: TextStyle(color: gray400, fontSize: 12),
             ),
             maxLines: 10,
-            style: TextStyle(fontSize: 12),
+            style: const TextStyle(fontSize: 12),
           ),
-          // 완료 버튼
+          // 수정 완료
           Padding(
             padding: const EdgeInsets.all(20),
             child: PrimaryButton(
               text: '완료',
               onPressed: () {
-                // 수정된 게시글로 업데이트
-                Board updatedBoard = Board(
-                  boardIdx: widget.board.boardIdx,
-                  boardName: widget.board.boardName,
-                  date: widget.board.date,
-                  title: _titleController.text,
-                  content: _contentController.text,
-                  visitcount: widget.board.visitcount,
-                  writerRef: widget.board.writerRef,
+                boardProvider.updateBoard(
+                  Board(
+                    boardIdx: board!.boardIdx,
+                    boardName: board.boardName,
+                    postdate: board.postdate,
+                    title: _titleController.text,
+                    content: _contentController.text,
+                    visitcount: board.visitcount,
+                    writerRef: board.writerRef,
+                  )
                 );
-      
-                // 게시판에 게시글 추가
-                boardProvider.updateBoard(updatedBoard);
-      
-                // 게시글 수정 후 상세보기로 이동
                 Navigator.pop(context);
               },
               color: pointColor1,

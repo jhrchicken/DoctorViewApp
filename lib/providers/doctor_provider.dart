@@ -52,7 +52,8 @@ class DoctorProvider extends ChangeNotifier {
   Doctor? selectDoctor(int docIdx) {
     try {
       return _doctorList.firstWhere((doctor) => doctor.docIdx == docIdx);
-    } catch (e) {
+    }
+    catch (e) {
       return null;
     }
   }

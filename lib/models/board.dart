@@ -1,7 +1,7 @@
 class Board {
   int boardIdx;
   String boardName;
-  String date;
+  DateTime postdate;
   String title;
   String content;
   int visitcount;
@@ -10,7 +10,7 @@ class Board {
   Board ({
     required this.boardIdx,
     required this.boardName,
-    required this.date,
+    required this.postdate,
     required this.title,
     required this.content,
     required this.visitcount,

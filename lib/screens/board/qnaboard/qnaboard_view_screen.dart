@@ -36,12 +36,12 @@ class _QnaboardViewScreenState extends State<QnaboardViewScreen> {
           onPressed: () {
             Navigator.pop(context);
           },
-          icon: Icon(
+          icon: const Icon(
             Icons.arrow_back,
             color: Colors.white,
             ),
         ),
-        title: Text(
+        title: const Text(
           '자유게시판',
           style: TextStyle(color: Colors.white),
         ),
@@ -66,7 +66,7 @@ class _QnaboardViewScreenState extends State<QnaboardViewScreen> {
                   children: [
                     CommentListItemWidget(commIdx: comment.commIdx),
                     if (index < commentList.length - 1)
-                      Divider(color: border),
+                      const Divider(color: border),
                   ],
                 );
               },
@@ -74,7 +74,9 @@ class _QnaboardViewScreenState extends State<QnaboardViewScreen> {
             
  
             // 댓글 입력창
-            BoardViewCommentWidget(boardIdx: qnaboard.boardIdx),
+            BoardViewCommentWidget(
+              boardIdx: qnaboard.boardIdx
+            ),
       
           ],
         ),

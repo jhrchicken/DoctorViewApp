@@ -20,7 +20,6 @@ class FreeboardListItemWidget extends StatefulWidget {
 
 class _FreeboardListItemWidgetState extends State<FreeboardListItemWidget> {
   // 댓글, 좋아요 구현하면 수정
-  int commentCount = 3;
   int likeCount = 5;
 
   @override
@@ -41,7 +40,7 @@ class _FreeboardListItemWidgetState extends State<FreeboardListItemWidget> {
       },
       child: Container(
         width: double.infinity,
-        padding: EdgeInsets.symmetric(vertical: 15, horizontal: 20),
+        padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 20),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -50,39 +49,39 @@ class _FreeboardListItemWidgetState extends State<FreeboardListItemWidget> {
               children: [
                 Text(
                   freeboard!.title,
-                  style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600),
+                  style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w600),
                 ),
                 Row(
                   children: [
                     Row(
                       children: [
-                        Icon(Icons.mode_comment_outlined, size: 10, color: Colors.teal),
-                        SizedBox(width: 5),
+                        const Icon(Icons.mode_comment_outlined, size: 10, color: Colors.teal),
+                        const SizedBox(width: 5),
                         Text(
                           commentProvider.commentCount(widget.boardIdx).toString(),
-                          style: TextStyle(fontSize: 10, color: gray400)
+                          style: const TextStyle(fontSize: 10, color: gray400)
                         ),
                       ],
                     ),
-                    SizedBox(width: 10),
+                    const SizedBox(width: 10),
                     Row(
                       children: [
-                        Icon(Icons.favorite_border_outlined, size: 10, color: Colors.red),
-                        SizedBox(width: 5),
+                        const Icon(Icons.favorite_border_outlined, size: 10, color: Colors.red),
+                        const SizedBox(width: 5),
                         Text(
                           '$likeCount',
-                          style: TextStyle(fontSize: 10, color: gray400),
+                          style: const TextStyle(fontSize: 10, color: gray400),
                         ),
                       ],
                     ),
-                    SizedBox(width: 10),
+                    const SizedBox(width: 10),
                     Row(
                       children: [
-                        Icon(Icons.visibility_rounded, size: 10, color: Color(0xffbbbbbb)),
-                        SizedBox(width: 5),
+                        const Icon(Icons.visibility_rounded, size: 10, color: Color(0xffbbbbbb)),
+                        const SizedBox(width: 5),
                         Text(
                           freeboard.visitcount.toString(),
-                          style: TextStyle(fontSize: 10, color: gray400),
+                          style: const TextStyle(fontSize: 10, color: gray400),
                         ),
                       ],
                     ),
@@ -90,19 +89,19 @@ class _FreeboardListItemWidgetState extends State<FreeboardListItemWidget> {
                 ),
               ],
             ),
-            SizedBox(height: 2),
+            const SizedBox(height: 2),
             Text(
               freeboard.content,
               maxLines: 1, overflow: TextOverflow.ellipsis,    // 말줄임 처리
-              style: TextStyle(fontSize: 12, fontWeight: FontWeight.w500, color: gray500),
+              style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w500, color: gray500),
             ),
-            SizedBox(height: 3),
+            const SizedBox(height: 3),
             Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
                 Text(
                   freeboard.writerRef!,
-                  style: TextStyle(fontSize: 10, color: gray400),
+                  style: const TextStyle(fontSize: 10, color: gray400),
                 ),
               ],
             ),

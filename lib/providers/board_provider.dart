@@ -10,50 +10,50 @@ class BoardProvider extends ChangeNotifier {
     Board(
       boardIdx: 1,
       boardName: 'freeboard',
-      date: '2024-10-07',
+      postdate: DateTime.now(),
       title: '제목입니다.',
       content: '내용입니다.',
       visitcount: 0,
-      writerRef: '이회리',
+      writerRef: 'leehr',
     ),
     Board(
       boardIdx: 2,
       boardName: 'qnaboard',
-      date: '2024-10-06',
+      postdate: DateTime.now(),
       title: '제목입니다.',
       content: '내용입니다.',
       visitcount: 0,
-      writerRef: '정하림',
+      writerRef: 'harim',
     ),
     Board(
       boardIdx: 3,
       boardName: 'freeboard',
-      date: '2024-10-05',
+      postdate: DateTime.now(),
       title: '제목입니다.',
       content: '내용입니다.',
       visitcount: 0,
-      writerRef: '부다영',
+      writerRef: 'harim',
     ),
     Board(
       boardIdx: 4,
       boardName: 'qnaboard',
-      date: '2024-10-04',
+      postdate: DateTime.now(),
       title: '제목입니다.',
       content: '내용입니다.',
       visitcount: 0,
-      writerRef: '낙자사발',
+      writerRef: 'dayeong',
     ),
   ];
 
-  // 게시판 리스트 가져오기
+  // 게시물 전체 목록
   List<Board> get boardList => _boardList;
 
-  // 게시판 목록
+  // 자유/상담 게시물 목록
   List<Board> listBoard(String boardName) {
     return _boardList.where((board) => board.boardName == boardName).toList();
   }
 
-  // 상세보기
+  // 게시물 조회
   Board? selectBoard(int boardIdx) {
     try {
       return _boardList.firstWhere((board) => board.boardIdx == boardIdx);
@@ -63,20 +63,20 @@ class BoardProvider extends ChangeNotifier {
     }
   }
 
-  // 작성하기
+  // 게시물 작성
   void insertBoard(Board board) {
     board.boardIdx = _seqBoardIdx++;
     _boardList.add(board);
     notifyListeners();
   }
 
-  // 삭제하기
+  // 게시물 삭제
   void deleteBoard(int boardIdx) {
     _boardList.removeWhere((board) => board.boardIdx == boardIdx);
     notifyListeners();
   }
 
-  // 수정하기
+  // 게시물 수정
   void updateBoard(Board board) {
     for (int i = 0; i < _boardList.length; i++) {
       if (_boardList[i].boardIdx == board.boardIdx) {
@@ -87,7 +87,7 @@ class BoardProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  // 조회수 증가
+  // 게시물 조회수 증가
   void updateVisitCount(int boardIdx) {
     try {
       final board = _boardList.firstWhere((board) => board.boardIdx == boardIdx);
@@ -95,7 +95,7 @@ class BoardProvider extends ChangeNotifier {
       notifyListeners();
     }
     catch (e) {
-      return null;
+      return;
     }
   }
 }

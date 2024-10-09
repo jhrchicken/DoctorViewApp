@@ -8,11 +8,9 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class FreeboardListScreen extends StatefulWidget {
-  final String boardName;
 
   const FreeboardListScreen({
     super.key,
-    required this.boardName,
   });
 
   @override
@@ -23,7 +21,7 @@ class _FreeboardListScreenState extends State<FreeboardListScreen> {
   @override
   Widget build(BuildContext context) {
     final boardProvider = Provider.of<BoardProvider>(context);
-    List<Board> freeboardList = boardProvider.listBoard(widget.boardName);
+    List<Board> freeboardList = boardProvider.listBoard('freeboard');
 
     return Scaffold(
       appBar: AppBar(
@@ -31,12 +29,12 @@ class _FreeboardListScreenState extends State<FreeboardListScreen> {
           onPressed: () {
             Navigator.pop(context);
           },
-          icon: Icon(
+          icon: const Icon(
             Icons.arrow_back,
             color: Colors.white,
             ),
         ),
-        title: Text(
+        title: const Text(
           '자유게시판',
           style: TextStyle(color: Colors.white),
         ),
@@ -57,7 +55,7 @@ class _FreeboardListScreenState extends State<FreeboardListScreen> {
                 return Column(
                   children: [
                     FreeboardListItemWidget(boardIdx: freeboard.boardIdx),
-                    Divider(color: border),
+                    const Divider(color: border),
                   ],
                 );
               },
@@ -72,7 +70,7 @@ class _FreeboardListScreenState extends State<FreeboardListScreen> {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => FreeboardWriteScreen(),
+                      builder: (context) => const FreeboardWriteScreen(),
                     ),
                   );
                 },

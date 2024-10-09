@@ -1,4 +1,3 @@
-import 'package:doctorviewapp/body.dart';
 import 'package:doctorviewapp/providers/board_provider.dart';
 import 'package:doctorviewapp/providers/comment_provider.dart';
 import 'package:doctorviewapp/providers/doctor_provider.dart';
@@ -39,13 +38,13 @@ void main() {
         ChangeNotifierProvider(create: (context) => BoardProvider()),
         ChangeNotifierProvider(create: (context) => CommentProvider()),
         ChangeNotifierProvider(create: (context) => ReportProvider()),
+        
       ],
       child: const MyApp(),
     ),
   );
 }
 
-// 수정합니다 수정 2
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
   @override
@@ -107,7 +106,7 @@ class _MyHomePageState extends State<MyHomePage> {
         page = dummyPage();
         break;
       case 3:
-        page = dummyPage();
+        page = const BoardMainScreen();
         break;
       case 4:
         page = const MyPage();

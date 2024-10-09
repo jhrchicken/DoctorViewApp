@@ -7,7 +7,9 @@ import 'package:provider/provider.dart';
 
 class FreeboardWriteScreen extends StatefulWidget {
 
-  const FreeboardWriteScreen({super.key});
+  const FreeboardWriteScreen({
+    super.key
+  });
 
   @override
   State<FreeboardWriteScreen> createState() => _FreeboardWriteScreenState();
@@ -28,7 +30,6 @@ class _FreeboardWriteScreenState extends State<FreeboardWriteScreen> {
   @override
   Widget build(BuildContext context) {
     final boardProvider = Provider.of<BoardProvider>(context);
-    String userId = '김환자';
 
     return Scaffold(
       appBar: AppBar(
@@ -36,12 +37,12 @@ class _FreeboardWriteScreenState extends State<FreeboardWriteScreen> {
           onPressed: () {
             Navigator.pop(context);
           },
-          icon: Icon(
+          icon: const Icon(
             Icons.arrow_back,
             color: Colors.white,
           ),
         ),
-        title: Text(
+        title: const Text(
           '글 작성하기',
           style: TextStyle(color: Colors.white),
         ),
@@ -65,31 +66,31 @@ class _FreeboardWriteScreenState extends State<FreeboardWriteScreen> {
             child: Column(
               children: [
                 Container(
-                  decoration: BoxDecoration(
+                  decoration: const BoxDecoration(
                     border: Border(bottom: BorderSide(color: border),
                     ),
                   ),
                   child: TextField(
                     controller: _titleController,
-                    decoration: InputDecoration(
+                    decoration: const InputDecoration(
                       contentPadding: EdgeInsets.all(15),
                       border: InputBorder.none,
                       hintText: '제목을 입력해주세요',
                       hintStyle: TextStyle(color: gray400, fontSize: 12),
                     ),
-                    style: TextStyle(fontSize: 12),
+                    style: const TextStyle(fontSize: 12),
                   ),
                 ),
                 TextField(
                   controller: _contentController,
-                  decoration: InputDecoration(
+                  decoration: const InputDecoration(
                     contentPadding: EdgeInsets.all(15),
                     border: InputBorder.none,
                     hintText: '내용을 입력해주세요',
                     hintStyle: TextStyle(color: gray400, fontSize: 12),
                   ),
                   maxLines: 10,
-                  style: TextStyle(fontSize: 12),
+                  style: const TextStyle(fontSize: 12),
                 ),
                 // 완료 버튼
                 Padding(
@@ -97,21 +98,18 @@ class _FreeboardWriteScreenState extends State<FreeboardWriteScreen> {
                   child: PrimaryButton(
                     text: '완료',
                     onPressed: () {
-                      // 새로운 Board 인스턴스 생성
-                      final newBoard = Board(
-                        boardIdx: 0, // 초기값, provider에서 업데이트 됨
-                        boardName: 'freeboard',
-                        date: DateTime.now().toString().split(' ')[0], // 현재 날짜 설정
-                        title: _titleController.text,
-                        content: _contentController.text,
-                        visitcount: 0,
-                        writerRef: '$userId',
-                      );
-            
                       // 게시판에 게시글 추가
-                      boardProvider.insertBoard(newBoard);
-            
-                      // 게시글 추가 후 게시판 목록으로 이동
+                      boardProvider.insertBoard(
+                        Board(
+                          boardIdx: 0,
+                          boardName: 'freeboard',
+                          postdate: DateTime.now(),
+                          title: _titleController.text,
+                          content: _contentController.text,
+                          visitcount: 0,
+                          writerRef: 'harim',
+                        )
+                      );
                       Navigator.pop(context);
                     },
                     color: pointColor1,

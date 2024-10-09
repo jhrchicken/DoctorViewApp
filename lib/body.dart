@@ -16,13 +16,13 @@ class _BodyState extends State<Body> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SingleChildScrollView(
-        padding: EdgeInsets.only(bottom: 50),
+        padding: const EdgeInsets.only(bottom: 50),
         child: Column(
           children: [
             
             // 메인 이미지
             Container(
-              padding: EdgeInsets.fromLTRB(80, 50, 80, 0),
+              padding: const EdgeInsets.fromLTRB(80, 50, 80, 0),
               child: Image.asset(
                 'assets/images/logo.png',
                 height: 130,
@@ -34,7 +34,7 @@ class _BodyState extends State<Body> {
             Padding(
               padding: const EdgeInsets.fromLTRB(20, 0, 20, 20),
               child: Container(
-                margin: EdgeInsets.only(top: 15),
+                margin: const EdgeInsets.only(top: 15),
                 decoration: BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.circular(20),
@@ -49,12 +49,12 @@ class _BodyState extends State<Body> {
                 child: TextField(
                   decoration: InputDecoration(
                     hintText: '병원을 검색해보세요.',
-                    hintStyle: TextStyle(color: border),
+                    hintStyle: const TextStyle(color: border),
                     border: InputBorder.none,
-                    contentPadding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                    contentPadding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
                     suffixIcon: IconButton(
                       onPressed: () { print('검색 버튼 클릭됨'); },
-                      icon: Icon(Icons.search),
+                      icon: const Icon(Icons.search),
                     ),
                   ),
                 ),
@@ -63,7 +63,7 @@ class _BodyState extends State<Body> {
 
             // 병원찾기 / 의사찾기
             Padding(
-              padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
               child: Row(
                 children: [
                   // 병원 찾기
@@ -73,8 +73,8 @@ class _BodyState extends State<Body> {
                       onPressed: () { /* 병원 찾기 페이지로 이동 */ },
                       style: OutlinedButton.styleFrom(
                         backgroundColor: pointColor2,
-                        padding: EdgeInsets.symmetric(vertical: 15, horizontal: 20),
-                        side: BorderSide(
+                        padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 20),
+                        side: const BorderSide(
                           color: Colors.transparent,
                         ),
                         shape: RoundedRectangleBorder(
@@ -84,9 +84,9 @@ class _BodyState extends State<Body> {
                       child: Column(
                         children: [
                           // 텍스트
-                          Row(
+                          const Row(
                             mainAxisAlignment: MainAxisAlignment.start,
-                            children: const[
+                            children: [
                               Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
@@ -109,7 +109,7 @@ class _BodyState extends State<Body> {
                               ),
                             ],
                           ),
-                          SizedBox(height: 30),
+                          const SizedBox(height: 30),
                           // 이미지
                           Row(
                             mainAxisAlignment: MainAxisAlignment.end,
@@ -125,7 +125,7 @@ class _BodyState extends State<Body> {
                       ),
                     ),
                   ),
-                  SizedBox(width: 20),
+                  const SizedBox(width: 20),
                   // 의사 찾기
                   Expanded(
                     flex: 1,
@@ -133,8 +133,8 @@ class _BodyState extends State<Body> {
                       onPressed: () { /* 병원 찾기 페이지로 이동 */ },
                       style: OutlinedButton.styleFrom(
                         backgroundColor: pointColor2,
-                        padding: EdgeInsets.symmetric(vertical: 15, horizontal: 20),
-                        side: BorderSide(
+                        padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 20),
+                        side: const BorderSide(
                           color: Colors.transparent,
                         ),
                         shape: RoundedRectangleBorder(
@@ -144,9 +144,9 @@ class _BodyState extends State<Body> {
                       child: Column(
                         children: [
                           // 텍스트
-                          Row(
+                          const Row(
                             mainAxisAlignment: MainAxisAlignment.start,
-                            children: const [
+                            children: [
                               Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
@@ -169,7 +169,7 @@ class _BodyState extends State<Body> {
                               ),
                             ],
                           ),
-                          SizedBox(height: 30),
+                          const SizedBox(height: 30),
                           // 이미지
                           Row(
                             mainAxisAlignment: MainAxisAlignment.end,
@@ -192,9 +192,9 @@ class _BodyState extends State<Body> {
 
             // 빠른 검색
             Padding(
-              padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
               child: Container(
-                padding: EdgeInsets.fromLTRB(10, 20, 10, 10),
+                padding: const EdgeInsets.fromLTRB(10, 20, 10, 10),
                 decoration: BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.circular(15),
@@ -219,11 +219,11 @@ class _BodyState extends State<Body> {
                                   backgroundColor: Colors.transparent,
                                 ),
                               ),
-                              Text('$major'),
+                              Text(major),
                             ],
                           ),
                         ),
-                        SizedBox(width: 10),
+                        const SizedBox(width: 10),
                         // 버튼 하나
                         Expanded(
                           flex: 1,
@@ -238,11 +238,11 @@ class _BodyState extends State<Body> {
                                   backgroundColor: Colors.transparent,
                                 ),
                               ),
-                              Text('감기'),
+                              const Text('감기'),
                             ],
                           ),
                         ),
-                        SizedBox(width: 10),
+                        const SizedBox(width: 10),
                         // 버튼 하나
                         Expanded(
                           flex: 1,
@@ -257,11 +257,11 @@ class _BodyState extends State<Body> {
                                   backgroundColor: Colors.transparent,
                                 ),
                               ),
-                              Text('감기'),
+                              const Text('감기'),
                             ],
                           ),
                         ),
-                        SizedBox(width: 10),
+                        const SizedBox(width: 10),
                         // 버튼 하나
                         Expanded(
                           flex: 1,
@@ -276,13 +276,13 @@ class _BodyState extends State<Body> {
                                   backgroundColor: Colors.transparent,
                                 ),
                               ),
-                              Text('감기'),
+                              const Text('감기'),
                             ],
                           ),
                         ),
                       ],
                     ),
-                    SizedBox(height: 10),
+                    const SizedBox(height: 10),
                     // 버튼 한 줄
                     Row(
                       children: [
@@ -300,11 +300,11 @@ class _BodyState extends State<Body> {
                                   backgroundColor: Colors.transparent,
                                 ),
                               ),
-                              Text('감기'),
+                              const Text('감기'),
                             ],
                           ),
                         ),
-                        SizedBox(width: 10),
+                        const SizedBox(width: 10),
                         // 버튼 하나
                         Expanded(
                           flex: 1,
@@ -319,11 +319,11 @@ class _BodyState extends State<Body> {
                                   backgroundColor: Colors.transparent,
                                 ),
                               ),
-                              Text('감기'),
+                              const Text('감기'),
                             ],
                           ),
                         ),
-                        SizedBox(width: 10),
+                        const SizedBox(width: 10),
                         // 버튼 하나
                         Expanded(
                           flex: 1,
@@ -338,11 +338,11 @@ class _BodyState extends State<Body> {
                                   backgroundColor: Colors.transparent,
                                 ),
                               ),
-                              Text('감기'),
+                              const Text('감기'),
                             ],
                           ),
                         ),
-                        SizedBox(width: 10),
+                        const SizedBox(width: 10),
                         // 버튼 하나
                         Expanded(
                           flex: 1,
@@ -357,13 +357,13 @@ class _BodyState extends State<Body> {
                                   backgroundColor: Colors.transparent,
                                 ),
                               ),
-                              Text('감기'),
+                              const Text('감기'),
                             ],
                           ),
                         ),
                       ],
                     ),
-                    SizedBox(height: 10),
+                    const SizedBox(height: 10),
                     // 버튼 한 줄
                     Row(
                       children: [
@@ -381,11 +381,11 @@ class _BodyState extends State<Body> {
                                   backgroundColor: Colors.transparent,
                                 ),
                               ),
-                              Text('감기'),
+                              const Text('감기'),
                             ],
                           ),
                         ),
-                        SizedBox(width: 10),
+                        const SizedBox(width: 10),
                         // 버튼 하나
                         Expanded(
                           flex: 1,
@@ -400,11 +400,11 @@ class _BodyState extends State<Body> {
                                   backgroundColor: Colors.transparent,
                                 ),
                               ),
-                              Text('감기'),
+                              const Text('감기'),
                             ],
                           ),
                         ),
-                        SizedBox(width: 10),
+                        const SizedBox(width: 10),
                         // 버튼 하나
                         Expanded(
                           flex: 1,
@@ -419,11 +419,11 @@ class _BodyState extends State<Body> {
                                   backgroundColor: Colors.transparent,
                                 ),
                               ),
-                              Text('감기'),
+                              const Text('감기'),
                             ],
                           ),
                         ),
-                        SizedBox(width: 10),
+                        const SizedBox(width: 10),
                         // 버튼 하나
                         Expanded(
                           flex: 1,
@@ -438,13 +438,13 @@ class _BodyState extends State<Body> {
                                   backgroundColor: Colors.transparent,
                                 ),
                               ),
-                              Text('감기'),
+                              const Text('감기'),
                             ],
                           ),
                         ),
                       ],
                     ),
-                    SizedBox(height: 10),
+                    const SizedBox(height: 10),
                     // 버튼 한 줄
                     Row(
                       children: [
@@ -462,11 +462,11 @@ class _BodyState extends State<Body> {
                                   backgroundColor: Colors.transparent,
                                 ),
                               ),
-                              Text('감기'),
+                              const Text('감기'),
                             ],
                           ),
                         ),
-                        SizedBox(width: 10),
+                        const SizedBox(width: 10),
                         // 버튼 하나
                         Expanded(
                           flex: 1,
@@ -481,11 +481,11 @@ class _BodyState extends State<Body> {
                                   backgroundColor: Colors.transparent,
                                 ),
                               ),
-                              Text('감기'),
+                              const Text('감기'),
                             ],
                           ),
                         ),
-                        SizedBox(width: 10),
+                        const SizedBox(width: 10),
                         // 버튼 하나
                         Expanded(
                           flex: 1,
@@ -500,11 +500,11 @@ class _BodyState extends State<Body> {
                                   backgroundColor: Colors.transparent,
                                 ),
                               ),
-                              Text('감기'),
+                              const Text('감기'),
                             ],
                           ),
                         ),
-                        SizedBox(width: 10),
+                        const SizedBox(width: 10),
                         // 버튼 하나
                         Expanded(
                           flex: 1,
@@ -519,13 +519,13 @@ class _BodyState extends State<Body> {
                                   backgroundColor: Colors.transparent,
                                 ),
                               ),
-                              Text('감기'),
+                              const Text('감기'),
                             ],
                           ),
                         ),
                       ],
                     ),
-                    SizedBox(height: 20),
+                    const SizedBox(height: 20),
                     // 전체보기 버튼
                     SizedBox(
                       width: double.infinity,
@@ -533,14 +533,14 @@ class _BodyState extends State<Body> {
                         onPressed: () { /* 병원 찾기 페이지로 */ },
                         style: OutlinedButton.styleFrom(
                           foregroundColor: gray500,
-                          side: BorderSide(
+                          side: const BorderSide(
                             color: border,
                           ),
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(10),
                           ),
                         ),
-                        child: Text(
+                        child: const Text(
                           '전체보기',
                           style: TextStyle(fontSize: 15)),
                       ),
@@ -552,7 +552,7 @@ class _BodyState extends State<Body> {
 
             // 커뮤니티
             Padding(
-              padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
               child: Row(
                 children: [
                   // 병원 찾기
@@ -563,14 +563,14 @@ class _BodyState extends State<Body> {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => QnaboardListScreen(boardName: 'qnaboad'),
+                            builder: (context) => const QnaboardListScreen(),
                           ),
                         );
                       },
                       style: OutlinedButton.styleFrom(
                         backgroundColor: Colors.white,
-                        padding: EdgeInsets.all(15),
-                        side: BorderSide(
+                        padding: const EdgeInsets.all(15),
+                        side: const BorderSide(
                           color: border,
                         ),
                         shape: RoundedRectangleBorder(
@@ -581,8 +581,8 @@ class _BodyState extends State<Body> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           // 텍스트
-                          Row(
-                            children: const[
+                          const Row(
+                            children: [
                               Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
@@ -624,7 +624,7 @@ class _BodyState extends State<Body> {
                       ),
                     ),
                   ),
-                  SizedBox(width: 20),
+                  const SizedBox(width: 20),
                   // 의사 찾기
                   Expanded(
                     flex: 1,
@@ -632,8 +632,8 @@ class _BodyState extends State<Body> {
                       onPressed: () { /* 병원 찾기 페이지로 이동 */ },
                       style: OutlinedButton.styleFrom(
                         backgroundColor: Colors.white,
-                        padding: EdgeInsets.all(15),
-                        side: BorderSide(
+                        padding: const EdgeInsets.all(15),
+                        side: const BorderSide(
                           color: border,
                         ),
                         shape: RoundedRectangleBorder(
@@ -644,8 +644,8 @@ class _BodyState extends State<Body> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           // 텍스트
-                          Row(
-                            children: const[
+                          const Row(
+                            children: [
                               Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
@@ -672,7 +672,7 @@ class _BodyState extends State<Body> {
                               ),
                             ],
                           ),
-                          SizedBox(width: 25),
+                          const SizedBox(width: 25),
                           // 이미지
                           Row(
                             mainAxisAlignment: MainAxisAlignment.end,

@@ -8,11 +8,9 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class QnaboardListScreen extends StatefulWidget {
-  final String boardName;
 
   const QnaboardListScreen({
     super.key,
-    required this.boardName,
   });
 
   @override
@@ -23,7 +21,7 @@ class _QnaboardListScreenState extends State<QnaboardListScreen> {
   @override
   Widget build(BuildContext context) {
     final boardProvider = Provider.of<BoardProvider>(context);
-    List<Board> qnaboardList = boardProvider.listBoard(widget.boardName);
+    List<Board> qnaboardList = boardProvider.listBoard('qnaboard');
 
     return Scaffold(
       appBar: AppBar(
@@ -31,12 +29,12 @@ class _QnaboardListScreenState extends State<QnaboardListScreen> {
           onPressed: () {
             Navigator.pop(context);
           },
-          icon: Icon(
+          icon: const Icon(
             Icons.arrow_back,
             color: Colors.white,
             ),
         ),
-        title: Text(
+        title: const Text(
           '상담게시판',
           style: TextStyle(color: Colors.white),
         ),
@@ -57,7 +55,7 @@ class _QnaboardListScreenState extends State<QnaboardListScreen> {
                 return Column(
                   children: [
                     QnaboardListItemWidget(boardIdx: qnaboard.boardIdx),
-                    Divider(color: border),
+                    const Divider(color: border),
                   ],
                 );
               },
@@ -72,11 +70,11 @@ class _QnaboardListScreenState extends State<QnaboardListScreen> {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => QnaboardWriteScreen(),
+                      builder: (context) => const QnaboardWriteScreen(),
                     ),
                   );
                 },
-                color: pointColor1
+                color: pointColor1,
               ),
             ),
           ],
