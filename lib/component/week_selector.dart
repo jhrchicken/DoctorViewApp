@@ -1,10 +1,15 @@
 import 'package:doctorviewapp/component/checkbox.dart';
+import 'package:doctorviewapp/models/hours.dart';
+import 'package:doctorviewapp/providers/hours_provider.dart';
+import 'package:doctorviewapp/providers/member_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class WeekdaySelector extends StatefulWidget {
-  final Function(List<String>) onSelectedDaysChanged; // 선택된 요일을 외부에 전달하기 위한 콜백
+  final Function(List<String>) onSelectedDaysChanged;
+  final List<String>? preSelectedDays; // 사전에 선택된 요일 리스트 (회원 정보 수정 시 사용)
 
-  WeekdaySelector({required this.onSelectedDaysChanged});
+  const WeekdaySelector({super.key, required this.onSelectedDaysChanged, this.preSelectedDays});
 
   @override
   _WeekdaySelectorState createState() => _WeekdaySelectorState();
@@ -21,14 +26,27 @@ class _WeekdaySelectorState extends State<WeekdaySelector> {
     '일',
   ];
 
-  List<bool> selectedDays = List.filled(7, false); // 기본값은 모두 선택되지 않음
+  List<bool> selectedDays = List.filled(7, false);
+
+  @override
+  void initState() {
+    super.initState();
+
+    // 사전에 선택된 요일이 있을 경우 초기화
+    if (widget.preSelectedDays != null) {
+      for (int i = 0; i < daysOfWeek.length; i++) {
+        if (widget.preSelectedDays!.contains('${daysOfWeek[i]}요일')) {
+          selectedDays[i] = true;
+        }
+      }
+    }
+  }
 
   void onDaySelected(bool? value, int index) {
     setState(() {
-      selectedDays[index] = value ?? false; // 체크 상태 업데이트
+      selectedDays[index] = value ?? false;
     });
 
-    // 선택된 요일을 외부로 전달
     widget.onSelectedDaysChanged(getSelectedDaysWithSuffix());
   }
 
@@ -36,7 +54,7 @@ class _WeekdaySelectorState extends State<WeekdaySelector> {
     List<String> result = [];
     for (int i = 0; i < selectedDays.length; i++) {
       if (selectedDays[i]) {
-        result.add('${daysOfWeek[i]}요일'); // 요일 뒤에 "-요일" 추가
+        result.add('${daysOfWeek[i]}요일');
       }
     }
     return result;
@@ -53,9 +71,9 @@ class _WeekdaySelectorState extends State<WeekdaySelector> {
             child: Wrap(
               children: [
                 CustomCheckbox(value: selectedDays[index], onChanged: (value) => onDaySelected(value, index)),
-                SizedBox(width: 2),
+                const SizedBox(width: 2),
                 SizedBox(child: Text(daysOfWeek[index])),
-                SizedBox(width: 8),
+                const SizedBox(width: 8),
               ],
             ),
           );

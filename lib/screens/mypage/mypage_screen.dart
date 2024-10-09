@@ -1,6 +1,7 @@
 import 'package:doctorviewapp/header.dart';
 import 'package:doctorviewapp/providers/member_provider.dart';
 import 'package:doctorviewapp/screens/mypage/edit/check/check_member.dart';
+import 'package:doctorviewapp/screens/mypage/edit/edit_hosp.dart';
 import 'package:doctorviewapp/screens/mypage/edit/edit_user.dart';
 import 'package:doctorviewapp/screens/mypage/join/find/find_id.dart';
 import 'package:doctorviewapp/screens/mypage/join/find/find_id_success.dart';
@@ -41,7 +42,8 @@ class MyPage extends StatelessWidget {
         '/member/findPass.do': (context) => const FindPass(),
         '/member/findPassSuccess.do': (context) => const FindPassSuccess(),
         '/member/checkMember.do': (context) => const CheckMember(),
-        '/member/editMember.do': (context) => const EditUser(),
+        '/member/editUser.do': (context) => const EditUser(),
+        '/member/editHosp.do': (context) => const EditHosp(),
         '/member/listMember.do': (context) => const MemberList(),
       },
       // home: const MyHomePage(title: '앱 바 타이틀'),
@@ -403,66 +405,244 @@ class _MyHomePageState extends State<MyHomePage> {
                           ],
                         ),
                       ),
-
-                      /**************** 수정: 마이페이지로 이동 필요 ****************/
-                      SizedBox(
-                        width: 200,
-                        height: 100,
-                        child: ElevatedButton(
-                          onPressed: () {
-                            memberProvider.logoutMember();
-                            Navigator.of(context).pushNamed("/");
-                          },
-                          style: ElevatedButton.styleFrom(
-                            textStyle: const TextStyle(fontWeight: FontWeight.w500, fontSize: 25),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(30),
-                            ),
-                          ),
-                          child: const Text('유저 로그아웃'),
-                        ),
-                      ),
-                      
-                      
                     ]
 
 
                     // 병원
                     else if (loginMember.auth == 'ROLE_HOSP') ...[
-                      SizedBox(
-                        width: 200,
-                        height: 100,
-                        child: ElevatedButton(
-                          onPressed: () {
-                            memberProvider.logoutMember();
-                            Navigator.of(context).pushNamed("/");
-                          },
-                          style: ElevatedButton.styleFrom(
-                            textStyle: const TextStyle(fontWeight: FontWeight.w500, fontSize: 25),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(30),
+                      // 회원관리
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            '${loginMember.name} 님',
+                            style: TextStyle(
+                              color: Colors.grey[900],
+                              fontWeight: FontWeight.w500,
+                              fontSize: 30,
                             ),
                           ),
-                          child: const Text('병원 로그아웃'),
-                        ),
-                      ),
-                    
-                      SizedBox(
-                        width: 200,
-                        height: 100,
-                        child: ElevatedButton(
-                          onPressed: () {
-                            Navigator.of(context).pushNamed("/member/checkMember.do");
-                          },
-                          style: ElevatedButton.styleFrom(
-                            textStyle: const TextStyle(fontWeight: FontWeight.w500, fontSize: 30.0),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(30),
-                            ),
+
+                          const SizedBox(width: 20,),
+                          
+                          // 회원수정 버튼
+                          IconButton(
+                            icon: Icon(Icons.settings, color: Colors.grey[900]),
+                            iconSize: 30,
+                            onPressed: () {
+                              Navigator.of(context).pushNamed("/member/checkMember.do");
+                            },
                           ),
-                          child: const Text('마이페이지-회원인증'),
+                        ],
+                      ),
+                      const SizedBox(height: 30,),
+                      SizedBox(
+                        height: 100,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Expanded(
+                              child: GestureDetector(
+                                onTap: () {
+                                  Navigator.of(context).pushNamed("/"); // 예약정보 확인 페이지로 이동
+                                },
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    const Icon(
+                                      Icons.list_alt,
+                                      color: pointColor2,
+                                      size: 30,
+                                    ),
+                                    const SizedBox(height: 15),
+                                    Text('예약 리스트', style: TextStyle(fontSize: 18, color: Colors.grey[900],)),
+                                  ],
+                                ),
+                              ),
+                            ),
+
+                            SizedBox(
+                              height: 50, 
+                              child: VerticalDivider(
+                                color: Colors.grey[100],
+                                thickness: 1.0,
+                              ),
+                            ),
+
+                            Expanded(
+                              child: GestureDetector(
+                                onTap: () {
+                                  Navigator.of(context).pushNamed("/"); // 의사관리 페이지로 이동
+                                },
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    const Icon(
+                                      Icons.group,
+                                      color: pointColor2,
+                                      size: 30,
+                                    ),
+                                    const SizedBox(height: 15),
+                                    Text('의료진 관리', style: TextStyle(fontSize: 18, color: Colors.grey[900])),
+                                  ],
+                                ),
+                              ),
+                            ),
+
+                            SizedBox(
+                              height: 50, 
+                              child: VerticalDivider(
+                                color: Colors.grey[100],
+                                thickness: 1.0,
+                              ),
+                            ),
+
+                            Expanded(
+                              child: GestureDetector(
+                                onTap: () {
+                                  Navigator.of(context).pushNamed("/"); // 예약관리 페이지로 이동
+                                },
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    const Icon(
+                                      Icons.today,
+                                      color: pointColor2,
+                                      size: 30,
+                                    ),
+                                    const SizedBox(height: 15),
+                                    Text('예약관리', style: TextStyle(fontSize: 18, color: Colors.grey[900])),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ],
                         ),
                       ),
+                      const SizedBox(height: 10,),
+
+                      Divider(
+                        color: Colors.grey[300],
+                        thickness: 1.0
+                      ),
+                      const SizedBox(height: 20,),
+
+                      // 추가기능
+                      Text(
+                        '😎 이런 기능도 있어요',
+                        style: TextStyle(
+                          color: Colors.grey[900],
+                          fontWeight: FontWeight.w500,
+                          fontSize: 25,
+                        ),
+                      ),
+                      const SizedBox(height: 20,),
+                      Container(
+                        padding: const EdgeInsets.symmetric(vertical: 10), // 상하 패딩 추가
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Expanded(
+                              child: Text(
+                                '출석체크',
+                                style: TextStyle(
+                                  color: Colors.grey[900],
+                                  fontWeight: FontWeight.w300,
+                                  fontSize: 18,
+                                ),
+                              ),
+                            ),
+                            Icon(
+                              Icons.arrow_forward_ios,
+                              color: Colors.grey[500],
+                              size: 18,
+                            ),
+                          ],
+                        ),
+                      ),
+                      Container(
+                        padding: const EdgeInsets.symmetric(vertical: 10), // 상하 패딩 추가
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Expanded(
+                              child: Text(
+                                '나의 이모지',
+                                style: TextStyle(
+                                  color: Colors.grey[900],
+                                  fontWeight: FontWeight.w300,
+                                  fontSize: 18,
+                                ),
+                              ),
+                            ),
+                            Icon(
+                              Icons.arrow_forward_ios,
+                              color: Colors.grey[500],
+                              size: 18,
+                            ),
+                          ],
+                        ),
+                      ),
+                      Container(
+                        padding: const EdgeInsets.symmetric(vertical: 10), // 상하 패딩 추가
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Expanded(
+                              child: Text(
+                                '상점',
+                                style: TextStyle(
+                                  color: Colors.grey[900],
+                                  fontWeight: FontWeight.w300,
+                                  fontSize: 18,
+                                ),
+                              ),
+                            ),
+                            Icon(
+                              Icons.arrow_forward_ios,
+                              color: Colors.grey[500],
+                              size: 18,
+                            ),
+                          ],
+                        ),
+                      ),
+                      const SizedBox(height: 30,),
+                      Text(
+                        '💬 채팅',
+                        style: TextStyle(
+                          color: Colors.grey[900],
+                          fontWeight: FontWeight.w500,
+                          fontSize: 25,
+                        ),
+                      ),
+                      const SizedBox(height: 20,),
+                      Container(
+                        padding: const EdgeInsets.symmetric(vertical: 10), // 상하 패딩 추가
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Expanded(
+                              child: Text(
+                                '내 질문',
+                                style: TextStyle(
+                                  color: Colors.grey[900],
+                                  fontWeight: FontWeight.w300,
+                                  fontSize: 18,
+                                ),
+                              ),
+                            ),
+                            Icon(
+                              Icons.arrow_forward_ios,
+                              color: Colors.grey[500],
+                              size: 18,
+                            ),
+                          ],
+                        ),
+                      ),
+
                     ] 
                   ],
                   

@@ -39,7 +39,7 @@ class _LoginState extends State<Login> {
         child: Form(
           key: _formKey,
           child: Padding(
-            padding: EdgeInsets.only(top: 50),
+            padding: const EdgeInsets.only(top: 50),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.center,
@@ -57,7 +57,7 @@ class _LoginState extends State<Login> {
                   },
                 ),
               
-                SizedBox(height: 10), 
+                const SizedBox(height: 10), 
             
                 // 비밀번호
                 InputField(
@@ -73,7 +73,7 @@ class _LoginState extends State<Login> {
                   },
                 ),
             
-                SizedBox(height: 10), 
+                const SizedBox(height: 10), 
 
                 // 아이디 저장
                 SizedBox(
@@ -96,9 +96,9 @@ class _LoginState extends State<Login> {
                       ),
                       
                   
-                      SizedBox(width: 7),
+                      const SizedBox(width: 7),
                   
-                      SizedBox(
+                      const SizedBox(
                         child: Text(
                           '아이디 저장',
                           style: TextStyle(
@@ -114,7 +114,7 @@ class _LoginState extends State<Login> {
                   ),
                 ),
             
-                SizedBox(height: 30), 
+                const SizedBox(height: 30), 
               
                 // 로그인 버튼
                 SizedBox(
@@ -125,7 +125,7 @@ class _LoginState extends State<Login> {
                     onPressed: () {
                       if(_formKey.currentState!.validate()){
                         // 폼값 전달
-                        final member = memberProvider.selectMember(
+                        final member = memberProvider.searchMember(
                           idController.text,
                           passwordController.text
                         );
@@ -134,7 +134,7 @@ class _LoginState extends State<Login> {
                           Navigator.of(context).pushNamed('/');
                         } else {
                           ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(content: Text('아이디 또는 비밀번호가 잘못되었습니다.')),
+                            const SnackBar(content: Text('아이디 또는 비밀번호가 잘못되었습니다.')),
                           );
                         }
                       }  
@@ -143,7 +143,7 @@ class _LoginState extends State<Login> {
                   ),
                 ),
                 
-                SizedBox(height: 10), 
+                const SizedBox(height: 10), 
             
                 // 로그인 외 메뉴
                 SizedBox(
@@ -155,31 +155,31 @@ class _LoginState extends State<Login> {
                         onTap: () {
                           Navigator.of(context).pushNamed('/member/findId.do');
                         },
-                        child: Text(
+                        child: const Text(
                           '아이디 찾기   |',
                           style: TextStyle(color: Color(0xff999999)),
                         ),
                       ),
           
-                      SizedBox(width: 10),
+                      const SizedBox(width: 10),
           
                       GestureDetector(
                         onTap: () {
                           Navigator.of(context).pushNamed('/member/findPass.do');
                         },
-                        child: Text(
+                        child: const Text(
                           '비밀번호 찾기   |',
                           style: TextStyle(color: Color(0xff999999)),
                         ),
                       ),
           
-                      SizedBox(width: 10),
+                      const SizedBox(width: 10),
           
                       GestureDetector(
                         onTap: () {
                           Navigator.of(context).pushNamed('/member/join.do');
                         },
-                        child: Text(
+                        child: const Text(
                           '회원가입',
                           style: TextStyle(color: Color(0xff999999)),
                         ),

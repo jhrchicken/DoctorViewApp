@@ -25,11 +25,11 @@ class _CheckMemberState extends State<CheckMember> {
   @override
   Widget build(BuildContext context) {
     final memberProvider = Provider.of<MemberProvider>(context);
-    
+    final loginMember = memberProvider.loginMember;
     
     return Scaffold(
       // 헤더
-      appBar: Header('아이디 찾기'), 
+      appBar: Header('회원 인증'), 
 
       body: Center(
         child: Padding(
@@ -85,9 +85,12 @@ class _CheckMemberState extends State<CheckMember> {
                   text: '회원인증', 
                   onPressed: () {
                     final checkMemberResult = memberProvider.checkMember(passwordController.text);
-                    if(checkMemberResult) {
-                      /********* 회원 수정 페이지로 이동 수정 필요 *********/
-                      Navigator.of(context).pushNamed('/member/editMember.do'); 
+                    if (checkMemberResult) {
+                      if (loginMember!.auth == 'ROLE_USER') {
+                        Navigator.of(context).pushNamed('/member/editUser.do'); 
+                      } else {
+                        Navigator.of(context).pushNamed('/member/editHosp.do'); 
+                      }
                     } else {
                       ScaffoldMessenger.of(context).showSnackBar(
                         const SnackBar(content: Text('비밀번호가 일치하지 않습니다.')),
