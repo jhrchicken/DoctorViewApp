@@ -145,10 +145,7 @@ class _DoctorViewScreenState extends State<DoctorViewScreen> {
                         final dreview = dreviewList[index];
                         return Column(
                           children: [
-                            DreviewItemWidget(
-                              docIdx: doctor.docIdx,
-                              reviewIdx: dreview.reviewIdx
-                            ),
+                            DreviewItemWidget(reviewIdx: dreview.reviewIdx),
                             if (index < dreviewList.length - 1)
                               Divider(color: Colors.grey[100], thickness: 1.0),
                           ],

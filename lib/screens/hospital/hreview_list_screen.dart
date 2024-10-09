@@ -1,5 +1,6 @@
 import 'package:doctorviewapp/models/hreview.dart';
 import 'package:doctorviewapp/providers/hreview_provider.dart';
+import 'package:doctorviewapp/screens/hospital/hreview_write_screen.dart';
 import 'package:doctorviewapp/theme/colors.dart';
 import 'package:doctorviewapp/widgets/common/primary_outline_button.dart';
 import 'package:doctorviewapp/widgets/hospital/hreview_item_widget.dart';
@@ -23,7 +24,6 @@ class _HreviewListScreenState extends State<HreviewListScreen> {
 
   @override
   Widget build(BuildContext context) {
-
     final hreviewProvider = Provider.of<HreviewProvider>(context);
 
     List<Hreview> hreviewList = hreviewProvider.listHreview(widget.hospRef);
@@ -109,7 +109,15 @@ class _HreviewListScreenState extends State<HreviewListScreen> {
                         PrimaryOutlineButton(
                           text: '리뷰쓰기',
                           onPressed: () {
-                          },
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => HreviewWriteScreen(
+                                    hospRef: widget.hospRef,
+                                  ),
+                                ),
+                              );
+                            },
                           color: pointColor2,
                         ),
                       ],

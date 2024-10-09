@@ -1,29 +1,29 @@
-import 'package:doctorviewapp/models/dreply.dart';
-import 'package:doctorviewapp/providers/dreply_provider.dart';
-import 'package:doctorviewapp/widgets/doctor/dreply_action_sheet.dart';
+import 'package:doctorviewapp/models/hreply.dart';
+import 'package:doctorviewapp/providers/hreply_provider.dart';
+import 'package:doctorviewapp/widgets/hospital/hreply_action_sheet.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class DreplyItemWidget extends StatefulWidget {
+class HreplyItemWidget extends StatefulWidget {
   final int replyIdx;
 
-  const DreplyItemWidget({
+  const HreplyItemWidget({
     super.key,
     required this.replyIdx,
   });
 
   @override
-  State<DreplyItemWidget> createState() => _DreplyItemWidgetState();
+  State<HreplyItemWidget> createState() => _HreplyItemWidgetState();
 }
 
-class _DreplyItemWidgetState extends State<DreplyItemWidget> {
+class _HreplyItemWidgetState extends State<HreplyItemWidget> {
 
   @override
   Widget build(BuildContext context) {
+    
+    final hreplyProvider = Provider.of<HreplyProvider>(context);
 
-    final dreplyProvider = Provider.of<DreplyProvider>(context);
-
-    Dreply? dreply = dreplyProvider.selectDreply(widget.replyIdx);
+    Hreply? hreply = hreplyProvider.selectHreply(widget.replyIdx);
 
     return Container(
       padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
@@ -53,7 +53,7 @@ class _DreplyItemWidgetState extends State<DreplyItemWidget> {
                         children: [
                           const SizedBox(width: 2),
                           Text(
-                            dreply!.writerRef,
+                            hreply!.writerRef,
                             style: TextStyle(
                               fontSize: 12,
                               color: Colors.grey[900],
@@ -63,7 +63,7 @@ class _DreplyItemWidgetState extends State<DreplyItemWidget> {
                           const SizedBox(width: 10),
                           // 작성일
                           Text(
-                            '${dreply.date.year}.${dreply.date.month}.${dreply.date.day}',
+                            '${hreply.date.year}.${hreply.date.month}.${hreply.date.day}',
                             style: TextStyle(
                               fontSize: 12,
                               color: Colors.grey[500],
@@ -75,15 +75,15 @@ class _DreplyItemWidgetState extends State<DreplyItemWidget> {
                   ),
                 ],
               ),
-              DreplyActionSheet(
-                replyIdx: dreply.replyIdx,
+              HreplyActionSheet(
+                replyIdx: hreply.replyIdx,
               ),
             ],
           ),
           const SizedBox(height: 10),
           // 내용
           Text(
-            dreply.content,
+            hreply.content,
             style: TextStyle(
               fontSize: 12,
               color: Colors.grey[900],

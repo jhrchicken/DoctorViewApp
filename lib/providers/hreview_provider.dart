@@ -2,11 +2,13 @@ import 'package:doctorviewapp/models/hreview.dart';
 import 'package:flutter/material.dart';
 
 class HreviewProvider extends ChangeNotifier {
+  // 병원 리뷰 시퀀스
+  int _seqHreviewIdx = 4;
+
   // 병원 리뷰 더미데이터
   final List<Hreview> _hreviewList = [
     Hreview(
       reviewIdx: 1,
-      originalIdx: 1,
       date: DateTime.now(),
       score: 1,
       content: '여기 가지 마세요;;',
@@ -16,7 +18,6 @@ class HreviewProvider extends ChangeNotifier {
     ),
     Hreview(
       reviewIdx: 2,
-      originalIdx: 2,
       date: DateTime.now(),
       score: 4,
       content: '괜찮네요',
@@ -26,7 +27,6 @@ class HreviewProvider extends ChangeNotifier {
     ),
     Hreview(
       reviewIdx: 3,
-      originalIdx: 3,
       date: DateTime.now(),
       score: 5,
       content: '최고 최고',
@@ -55,9 +55,11 @@ class HreviewProvider extends ChangeNotifier {
   }
 
   // 병원 리뷰 작성
-  void insertHreview(Hreview hreview) {
+  int insertHreview(Hreview hreview) {
+    hreview.reviewIdx = _seqHreviewIdx++;
     _hreviewList.add(hreview);
     notifyListeners();
+    return hreview.reviewIdx;
   }
 
   // 병원 리뷰 삭제
@@ -76,11 +78,5 @@ class HreviewProvider extends ChangeNotifier {
     }
     notifyListeners();
   }
-
-
-
-
-
-
 
 }

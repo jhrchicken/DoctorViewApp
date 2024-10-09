@@ -132,10 +132,7 @@ class _DreviewListScreenState extends State<DreviewListScreen> {
                         final dreview = dreviewList[index];
                         return Column(
                           children: [
-                            DreviewItemWidget(
-                              docIdx: widget.docIdx,
-                              reviewIdx: dreview.reviewIdx
-                            ),
+                            DreviewItemWidget(reviewIdx: dreview.reviewIdx),
                             if (index < dreviewList.length - 1)
                               Divider(color: Colors.grey[100], thickness: 1.0),
                           ],
