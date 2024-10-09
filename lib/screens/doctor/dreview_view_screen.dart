@@ -134,7 +134,7 @@ class _DreviewViewScreenState extends State<DreviewViewScreen> {
               child: TextField(
                 controller: _replyController,
                 decoration: InputDecoration(
-                  hintText: '답변을 입력하세요...',
+                  hintText: '댓글을 입력하세요',
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(8),
                   ),

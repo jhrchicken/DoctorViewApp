@@ -2,14 +2,14 @@ import 'package:doctorviewapp/screens/board/board_list_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:doctorviewapp/theme/colors.dart';
 
-class Body extends StatefulWidget {
-  const Body({super.key});
+class HomeScreen extends StatefulWidget {
+  const HomeScreen({super.key});
 
   @override
-  State<Body> createState() => _BodyState();
+  State<HomeScreen> createState() => _HomeScreenState();
 }
 
-class _BodyState extends State<Body> {
+class _HomeScreenState extends State<HomeScreen> {
   String major = '정형외과';
   
   @override

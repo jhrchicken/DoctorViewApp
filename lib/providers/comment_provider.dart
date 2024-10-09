@@ -9,44 +9,43 @@ class CommentProvider extends ChangeNotifier {
   final List<Comment> _commList = [
     Comment(
       commIdx: 1,
-      date: '2024-10-08',
+      postdate: DateTime.now(),
       content: '댓글이에욧',
       boardRef: 1,
-      writerRef: '부다영',
+      writerRef: 'dayeong',
     ),
     Comment(
       commIdx: 2,
-      date: '2024-10-08',
+      postdate: DateTime.now(),
       content: '댓글이에욧',
       boardRef: 1,
-      writerRef: '정하림',
+      writerRef: 'harim',
     ),
     Comment(
       commIdx: 3,
-      date: '2024-10-08',
+      postdate: DateTime.now(),
       content: '댓글이에욧',
       boardRef: 2,
-      writerRef: '이회리',
+      writerRef: 'harim',
     ),
     Comment(
       commIdx: 4,
-      date: '2024-10-08',
+      postdate: DateTime.now(),
       content: '댓글이에욧',
       boardRef: 3,
-      writerRef: '정하림',
+      writerRef: 'leehr',
     ),
   ];
 
-  // 댓글 리스트 가져오기
+  // 댓글 전체 목록
   List<Comment> get commList => _commList;
 
-
-  // 댓글 목록
+  // 특정 게시물 댓글 목록
   List<Comment> listComment(int boardRef) {
     return _commList.where((comment) => comment.boardRef == boardRef).toList();
   }
 
-  // 댓글
+  // 댓글 조회
   Comment? selectComment(int commIdx) {
     try {
       return _commList.firstWhere((comment) => comment.commIdx == commIdx);
@@ -56,20 +55,20 @@ class CommentProvider extends ChangeNotifier {
     }
   }
 
-  // 작성하기
+  // 댓글 작성
   void insertComment(Comment comment) {
     comment.commIdx = _seqCommIdx++;
     _commList.add(comment);
     notifyListeners();
   }
 
-  // 삭제하기
+  // 댓글 삭제
   void deleteComment(int commIdx) {
     _commList.removeWhere((comment) => comment.commIdx == commIdx);
     notifyListeners();
   }
 
-  // 수정하기
+  // 댓글 수정
   void updateComment(Comment comment) {
     for (int i = 0; i < _commList.length; i++) {
       if (_commList[i].commIdx == comment.commIdx) {
@@ -78,10 +77,5 @@ class CommentProvider extends ChangeNotifier {
       }
     }
     notifyListeners();
-  }
-
-  // 댓글 갯수
-  int commentCount(int boardRef) {
-    return _commList.where((comment) => comment.boardRef == boardRef).length;
   }
 }

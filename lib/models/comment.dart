@@ -1,13 +1,13 @@
 class Comment {
   int commIdx;
-  String date;
+  DateTime postdate;
   String content;
   int boardRef;
   String? writerRef;
 
   Comment ({
     required this.commIdx,
-    required this.date,
+    required this.postdate,
     required this.content,
     required this.boardRef,
     this.writerRef,
