@@ -77,7 +77,8 @@ class MemberProvider extends ChangeNotifier {
     } catch (e) {
       return null;
     }
-  } 
+  }
+
 
   // 로그아웃
   void logoutMember() {
