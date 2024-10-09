@@ -10,6 +10,7 @@ import 'package:doctorviewapp/providers/hreply_provider.dart';
 import 'package:doctorviewapp/providers/hreview_provider.dart';
 import 'package:doctorviewapp/providers/likes_provider.dart';
 import 'package:doctorviewapp/providers/member_provider.dart';
+import 'package:doctorviewapp/screens/home/home_screen.dart';
 import 'package:doctorviewapp/screens/mypage/mypage_screen.dart';
 import 'package:doctorviewapp/providers/report_provider.dart';
 import 'package:doctorviewapp/screens/board/board_main_screen.dart';
@@ -106,7 +107,7 @@ class _MyHomePageState extends State<MyHomePage> {
     Widget? page;
     switch(_curIndex) {
       case 0:
-        page = dummyPage();
+        page = const HomeScreen();
         break;
       case 1:
         page = const HospDoctorListScreen();
