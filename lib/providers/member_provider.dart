@@ -91,6 +91,22 @@ class MemberProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  // 회원 수정
+  void updateMember(Member member){
+    if (_loginMember != null) {
+      final index = _memberList.indexWhere((member) => member.id == _loginMember!.id);
+      if (index != -1) {
+        _memberList[index] = member;
+        _loginMember = member; 
+        notifyListeners();
+      }
+    }
+  }
+
+
+
+
+
   // 아이디찾기
   String? findId(String email, String password) {
     try {

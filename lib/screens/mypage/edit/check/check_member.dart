@@ -13,8 +13,6 @@ class CheckMember extends StatefulWidget {
 }
 
 class _CheckMemberState extends State<CheckMember> {
-  bool isChecked = false; 
-
   // 컨트롤러
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
@@ -28,20 +26,21 @@ class _CheckMemberState extends State<CheckMember> {
   Widget build(BuildContext context) {
     final memberProvider = Provider.of<MemberProvider>(context);
     
+    
     return Scaffold(
       // 헤더
       appBar: Header('아이디 찾기'), 
 
       body: Center(
         child: Padding(
-          padding: EdgeInsets.only(top: 50),
+          padding: const EdgeInsets.only(top: 50),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
 
               // 회원인증 안내
-              SizedBox (
+              const SizedBox (
                 width: 300,
                 child: Text(
                   '회원 인증',
@@ -50,18 +49,18 @@ class _CheckMemberState extends State<CheckMember> {
                 ),
               ),
 
-              SizedBox(height: 10), 
+              const SizedBox(height: 10), 
 
-              SizedBox (
+              const SizedBox (
                 width: 300,
                 child: Text(
-                  '로그인한 회원의\n 비밀번호를 입력하세요.',
+                  '로그인한 회원의\n비밀번호를 입력하세요.',
                   textAlign: TextAlign.left,
                   style: TextStyle(fontSize: 15, fontWeight: FontWeight.w400),
                 ),
               ),
             
-              SizedBox(height: 10), 
+              const SizedBox(height: 10), 
               
               // 비밀번호
               InputField(
@@ -74,10 +73,9 @@ class _CheckMemberState extends State<CheckMember> {
                   } 
                   return null;
                 },
-                onChanged: (value) => debugPrint('비밀번호찾기: 비밀번호 -  $value'),
               ),
           
-              SizedBox(height: 30), 
+              const SizedBox(height: 30), 
             
               // 회원인증 버튼
               SizedBox(
@@ -89,10 +87,10 @@ class _CheckMemberState extends State<CheckMember> {
                     final checkMemberResult = memberProvider.checkMember(passwordController.text);
                     if(checkMemberResult) {
                       /********* 회원 수정 페이지로 이동 수정 필요 *********/
-                      Navigator.of(context).pushNamed('/'); 
+                      Navigator.of(context).pushNamed('/member/editMember.do'); 
                     } else {
                       ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(content: Text('비밀번호가 일치하지 않습니다.')),
+                        const SnackBar(content: Text('비밀번호가 일치하지 않습니다.')),
                       );
                     }
                   },
