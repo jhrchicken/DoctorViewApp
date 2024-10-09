@@ -11,7 +11,7 @@ class InputField extends StatefulWidget {
   bool obscureText;
   int? maxLength;
   double? width;
-  // bool? enabled; 
+  bool readOnly;
 
   InputField({
     super.key,
@@ -25,7 +25,7 @@ class InputField extends StatefulWidget {
     this.obscureText = false,
     this.maxLength,
     this.width,
-    // this.enabled = true,
+    this.readOnly = false,
   });
 
   @override
@@ -40,6 +40,7 @@ class _InputFieldState extends State<InputField> {
     return SizedBox(
       width: widget.width ?? 300,
       child: TextFormField(
+        readOnly: widget.readOnly,
         key: _formFieldKey, // 추가됨^^
         focusNode: widget.focusNode ?? FocusNode(), // focusNode가 없으면 기본 FocusNode 사용
         controller: widget.controller, 

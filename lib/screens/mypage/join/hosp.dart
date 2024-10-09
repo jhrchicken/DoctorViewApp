@@ -21,6 +21,9 @@ class JoinHosp extends StatefulWidget {
 }
 
 class _JoinHospState extends State<JoinHosp> {
+  // 폼값 유효성 검증 Key
+  final _formKey = GlobalKey<FormState>();
+
   // ***** 의료진 폼 관리 ******
   // 컨트롤러
   List<TextEditingController> doctorNameController = [];
@@ -199,17 +202,13 @@ class _JoinHospState extends State<JoinHosp> {
   // ***** 병원 근무 시간 관리 ******
   List<String> selectedDays = [];
 
-  // String? startTime, endTime, startBreak, endBreak, deadLine;
   String startTime = '00:00', endTime = '00:00', startBreak = '00:00', endBreak = '00:00', deadLine = '00:00';
   final List<String> timeSlots = [
     for (int i = 0; i < 24; i++) '${i.toString().padLeft(2, '0')}:00',
   ];
   // *********************
 
-
-
-  // 폼값 유효성 검증 Key
-  final _formKey = GlobalKey<FormState>();
+  
   // 약관 체크 데이터
   bool isChecked = false; 
 
@@ -238,12 +237,9 @@ class _JoinHospState extends State<JoinHosp> {
     final memberProvider = Provider.of<MemberProvider>(context);
     final doctorProvider = Provider.of<DoctorProvider>(context);
     final hoursProvider = Provider.of<HoursProvider>(context);
-
     
     // 약관내용
     const String termsContent = "'닥터뷰'(이하 '회사')는 회원가입 절차에서 필요한 최소한의 개인정보를 수집하고 있습니다. 회사는 수집한 개인정보를 다음의 목적을 위해 사용하며, 사용 목적 외 다른 용도로는 절대 사용하지 않습니다. '닥터뷰'(이하 '회사')는 회원가입 절차에서 필요한 최소한의 개인정보를 수집하고 있습니다. 회사는 수집한 개인정보를 다음의 목적을 위해 사용하며, 사용 목적 외 다른 용도로는 절대 사용하지 않습니다.";
-
-    
 
     return Scaffold(
       // 헤더
@@ -252,8 +248,8 @@ class _JoinHospState extends State<JoinHosp> {
       // 바디
       body:SingleChildScrollView(
         child: Form (
+          key: _formKey,
           child: Padding(
-            key: _formKey,
             padding: const EdgeInsets.all(40),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -279,12 +275,10 @@ class _JoinHospState extends State<JoinHosp> {
                         }
                         return null;
                       },
-                      onChanged: (value) => debugPrint('아이디 변경 $value'),
                       maxLength: 15,
                     ),
-          
                     const SizedBox(height: 10),
-          
+
                     // 비밀번호
                     InputField(
                       focusNode: passwordFocus,
@@ -302,10 +296,8 @@ class _JoinHospState extends State<JoinHosp> {
                         }
                         return null;
                       },
-                      onChanged: (value) => debugPrint('비밀번호 변경 $value'),
                       maxLength: 20,
                     ),
-                    
                     const SizedBox(height: 10),
           
                     // 비밀번호체크
@@ -323,9 +315,7 @@ class _JoinHospState extends State<JoinHosp> {
                         }
                         return null; 
                       },
-                      onChanged: (value) => debugPrint('비밀번호 확인 $value'),
                     ),
-          
                     const SizedBox(height: 10),
           
                     // 이름
@@ -340,9 +330,7 @@ class _JoinHospState extends State<JoinHosp> {
                         }
                         return null; 
                       },
-                      onChanged: (value) => debugPrint('이름 $value'),
                     ),
-          
                     const SizedBox(height: 10),
           
                     //전화번호
@@ -357,9 +345,7 @@ class _JoinHospState extends State<JoinHosp> {
                         }
                         return null; 
                       },
-                      onChanged: (value) => debugPrint('전화번호 $value'),
                     ),
-          
                     const SizedBox(height: 10),
           
                     //주소
@@ -374,9 +360,7 @@ class _JoinHospState extends State<JoinHosp> {
                         }
                         return null; 
                       },
-                      onChanged: (value) => debugPrint('주소 $value'),
                     ),
-          
                     const SizedBox(height: 10),
           
                     //진료과목
@@ -391,9 +375,7 @@ class _JoinHospState extends State<JoinHosp> {
                         }
                         return null; 
                       },
-                      onChanged: (value) => debugPrint('진료과목 $value'),
                     ),
-          
                     const SizedBox(height: 10),
           
                     //사업자번호
@@ -408,9 +390,7 @@ class _JoinHospState extends State<JoinHosp> {
                         }
                         return null; 
                       },
-                      onChanged: (value) => debugPrint('사업자번호 $value'),
                     ),
-          
                     const SizedBox(height: 30),
           
                     // 진료시간
@@ -476,8 +456,6 @@ class _JoinHospState extends State<JoinHosp> {
                                 setState(() {
                                   if (select != null){
                                     startTime = select;
-                                    print("사용자가 선택한 값:$select");
-                                    print("설정된 시작시간:$startTime");
                                   }
                                 });
                               },
@@ -508,8 +486,6 @@ class _JoinHospState extends State<JoinHosp> {
                                 setState(() {
                                   if (select != null){
                                     endTime = select;
-                                    print("사용자가 선택한 값:$select");
-                                    print("설정된 종료시간:$endTime");
                                   }
                                 });
                               },
@@ -548,8 +524,6 @@ class _JoinHospState extends State<JoinHosp> {
                                 setState(() {
                                   if (select != null){
                                     startBreak = select;
-                                    print("사용자가 선택한 값:$select");
-                                    print("설정된 종료시간:$startBreak");
                                   }
                                 });
                               },
@@ -580,8 +554,6 @@ class _JoinHospState extends State<JoinHosp> {
                                 setState(() {
                                   if (select != null){
                                     endBreak = select;
-                                    print("사용자가 선택한 값:$select");
-                                    print("설정된 종료시간:$endBreak");
                                   }
                                 });
                               },
@@ -620,8 +592,6 @@ class _JoinHospState extends State<JoinHosp> {
                                 setState(() {
                                   if (select != null){
                                     deadLine = select;
-                                    print("사용자가 선택한 값:$select");
-                                    print("설정된 종료시간:$deadLine");
                                   }
                                 });
                               },
@@ -632,7 +602,6 @@ class _JoinHospState extends State<JoinHosp> {
                         ),
                       ],
                     ),
-                    
                     const SizedBox(height: 30),
           
                     // 의료진
@@ -680,7 +649,6 @@ class _JoinHospState extends State<JoinHosp> {
                     Column(
                       children: doctorFields, 
                     ),
-          
                     const SizedBox(height: 30),
           
                      //약관
@@ -768,7 +736,6 @@ class _JoinHospState extends State<JoinHosp> {
                         ],
                       ),
                     ),
-          
                     const SizedBox(height: 30),
           
                     // submit 버튼
@@ -778,82 +745,97 @@ class _JoinHospState extends State<JoinHosp> {
                       child: SecondaryOutlineButton(
                         text: '회원가입',
                         onPressed: () {
-                          // 요일 체크 검증
-                          if (selectedDays.isEmpty) {
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              const SnackBar(content: Text('하나 이상의 요일을 선택해야 합니다.')),
-                            );
-                            return;
-                          }
-          
-                          // if(_formKey.currentState!.validate()){
-                          // member insert
-                          memberProvider.insertMember(
-                            Member(
-                              id: idController.text,
-                              password: passwordController.text,
-                              name: nameController.text,
-                              nickname: nameController.text,
-                              tel: telController.text,
-                              address: addressController.text,
-                              department: departmentController.text,
-                              taxid: taxidController.text,
-                              enable: 0,
-                              auth: 'ROLE_HOSP',
-                            )
-                          );
-        
-                          print('member insert 완료');
-        
-                          // doctor insert
-                          for (int i = 0; i < doctorNameController.length; i++) {
-                            doctorProvider.insertDoctor(
-                              Doctor(
-                                // docIdx는 provider에서 처리
-                                docIdx: 0,
-                                name: doctorNameController[i].text,
-                                major: majorController[i].text,
-                                career: careerController[i].text,
-                                hours: doctorHoursController[i].text,
-                                hospRef: idController.text,
+                          if(_formKey.currentState!.validate()){
+                            // 약관 체크 검증
+                            if(isChecked == false){
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(content: Text('약관 동의는 필수사항입니다.')),
+                              );
+                              return;
+                            }
+
+                            // 요일 체크 검증
+                            if (selectedDays.isEmpty) {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(content: Text('하나 이상의 요일을 선택해야 합니다.')),
+                              );
+                              return;
+                            }
+
+                            // 시간 선택 검증
+                            if (startTime == '00:00' && endTime == '00:00' && startBreak == '00:00' && endBreak == '00:00' && deadLine == '00:00') {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(content: Text('모든 시간 입력이 필수입니다.')),
+                              );
+                              return;
+                            }
+
+                            // member insert
+                            memberProvider.insertMember(
+                              Member(
+                                id: idController.text,
+                                password: passwordController.text,
+                                name: nameController.text,
+                                nickname: nameController.text,
+                                tel: telController.text,
+                                address: addressController.text,
+                                department: departmentController.text,
+                                taxid: taxidController.text,
+                                enable: 0,
+                                auth: 'ROLE_HOSP',
                               )
                             );
-                          }
-        
-                          print('doctor insert 완료');
+          
+                            print('member insert 완료');
+          
+                            // doctor insert
+                            for (int i = 0; i < doctorNameController.length; i++) {
+                              doctorProvider.insertDoctor(
+                                Doctor(
+                                  // docIdx는 provider에서 처리
+                                  docIdx: 0,
+                                  name: doctorNameController[i].text,
+                                  major: majorController[i].text,
+                                  career: careerController[i].text,
+                                  hours: doctorHoursController[i].text,
+                                  hospRef: idController.text,
+                                )
+                              );
+                            }
+          
+                            print('doctor insert 완료');
 
-                          // hours insert
-                          hoursProvider.initHours(idController.text);
-                          for (int i = 0; i < selectedDays.length; i++) {
-                            String weekend = (selectedDays[i] == '토요일' || selectedDays[i] == '일요일') ? 'T' : 'F';
-                            
-                            DateTime deadlineTime = DateTime.parse('2023-01-01 $deadLine');
-                            DateTime compareTime = DateTime.parse('2023-01-01 20:00'); 
-                            String night = (deadlineTime.isAfter(compareTime) || deadlineTime.isAtSameMomentAs(compareTime)) ? 'T' : 'F';
+                            // hours insert
+                            hoursProvider.initHours(idController.text);
+                            for (int i = 0; i < selectedDays.length; i++) {
+                              String weekend = (selectedDays[i] == '토요일' || selectedDays[i] == '일요일') ? 'T' : 'F';
+                              
+                              DateTime deadlineTime = DateTime.parse('2023-01-01 $deadLine');
+                              DateTime compareTime = DateTime.parse('2023-01-01 20:00'); 
+                              String night = (deadlineTime.isAfter(compareTime) || deadlineTime.isAtSameMomentAs(compareTime)) ? 'T' : 'F';
 
-                            
-                            hoursProvider.updateHours(
-                              Hours(
-                                hoursIdx: 0,
-                                week: selectedDays[i],
-                                startTime: startTime,
-                                endTime: endTime,
-                                startBreak: startBreak,
-                                endBreak: endBreak,
-                                deadLine: deadLine,
-                                hosp_ref: idController.text,
-                                open_week: 'T',
-                                weekend: weekend,
-                                night: night,
-                              ),
-                            );
+                              
+                              hoursProvider.updateHours(
+                                Hours(
+                                  hoursIdx: 0,
+                                  week: selectedDays[i],
+                                  startTime: startTime,
+                                  endTime: endTime,
+                                  startBreak: startBreak,
+                                  endBreak: endBreak,
+                                  deadLine: deadLine,
+                                  hosp_ref: idController.text,
+                                  open_week: 'T',
+                                  weekend: weekend,
+                                  night: night,
+                                ),
+                              );
+                            }
+          
+                            Navigator.of(context).pushNamed('/member/join/hosp/success.do');
                           }
-        
-                          print('hours insert 완료');
-                          // }
           
                           // 화면 이동
-                          Navigator.of(context).pushNamed('/member/join/hosp/success.do');
                         },
                         color: Colors.blue, 
                       ),

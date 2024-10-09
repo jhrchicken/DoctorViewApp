@@ -96,7 +96,7 @@ void initState() {
                       controller: idController,
                       labelText: "아이디",
                       maxLength: 15,
-                      // enabled: false,
+                      readOnly: true,
                     ),
           
                     const SizedBox(height: 10),
@@ -291,6 +291,21 @@ void initState() {
                         color: Colors.blue,
                       ),
                     ),
+                  
+                    const SizedBox(height: 30),
+
+                    // 로그아웃
+                    GestureDetector(
+                      onTap: () {
+                        memberProvider.logoutMember();
+                        Navigator.of(context).pushNamed("/");
+                      },
+                      child: const Text(
+                        '로그아웃',
+                        style: TextStyle(color: Color(0xff999999), fontSize: 12),
+                      ),
+                    ),
+
                   ],
                 ),
               ]

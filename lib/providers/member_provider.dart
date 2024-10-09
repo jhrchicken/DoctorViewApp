@@ -68,12 +68,20 @@ class MemberProvider extends ChangeNotifier {
     return _memberList;
   }
 
-  // 회원 찾기 (로그인)
-  Member? selectMember(String id, String password) {
+  // 회원 찾기
+  Member? searchMember(String id, [String? password]) {
     try {
-      _loginMember = _memberList.firstWhere((member) => member.id == id && member.password == password);
-      notifyListeners();
-      return _loginMember;
+      Member? searchMember;
+
+      if (password == null) {
+        searchMember = _memberList.firstWhere((member) => member.id == id);
+        return searchMember;
+      } else {
+        // 로그인
+        _loginMember = _memberList.firstWhere((member) => member.id == id && member.password == password);
+        notifyListeners();
+        return _loginMember;
+      }
     } catch (e) {
       return null;
     }

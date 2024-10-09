@@ -130,11 +130,17 @@ class HoursProvider extends ChangeNotifier {
   notifyListeners(); 
 }
 
+  // 근무 시간 초기화
+  void resetHours(String hospRef){
+
+  }
+
   // 근무 시간 업데이트
   void updateHours(Hours hours){
     for (int i = 0; i < _hoursList.length; i++) {
       if (_hoursList[i].hosp_ref == hours.hosp_ref && _hoursList[i].week == hours.week) {
-        _hoursList[i] = hours;
+        // _hoursList[i].startTime = hours.endTime,
+
         break;
       }
     }

@@ -87,7 +87,7 @@ class _JoinUserState extends State<JoinUser> {
                       maxLength: 15,
                     ),
           
-                    SizedBox(height: 10),
+                    const SizedBox(height: 10),
           
                     // 비밀번호
                     InputField(
@@ -109,7 +109,7 @@ class _JoinUserState extends State<JoinUser> {
                       maxLength: 20,
                     ),
                     
-                    SizedBox(height: 10),
+                    const SizedBox(height: 10),
           
                     // 비밀번호체크
                     InputField(
@@ -129,7 +129,7 @@ class _JoinUserState extends State<JoinUser> {
                       onChanged: (value) => debugPrint('비밀번호 확인 $value'),
                     ),
           
-                    SizedBox(height: 10),
+                    const SizedBox(height: 10),
           
                     // 이름
                     InputField(
@@ -146,7 +146,7 @@ class _JoinUserState extends State<JoinUser> {
                       onChanged: (value) => debugPrint('이름 $value'),
                     ),
           
-                    SizedBox(height: 10),
+                    const SizedBox(height: 10),
           
                     // 닉네임
                     Row(
@@ -168,7 +168,7 @@ class _JoinUserState extends State<JoinUser> {
                           ),
                         ),
                       
-                        SizedBox(width: 10), 
+                        const SizedBox(width: 10), 
                       
                         // 버튼
                         SizedBox(
@@ -180,13 +180,13 @@ class _JoinUserState extends State<JoinUser> {
                               nicknameController.text = randomNickname;
                             },
                             style: ElevatedButton.styleFrom(
-                              backgroundColor: Color(0xff005ad5),
-                              padding: EdgeInsets.all(0),
+                              backgroundColor: const Color(0xff005ad5),
+                              padding: const EdgeInsets.all(0),
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(5), 
                               ),
                             ),
-                            child: Icon(
+                            child: const Icon(
                               Icons.restart_alt,
                               color: Colors.white, 
                               size: 20, 
@@ -196,7 +196,7 @@ class _JoinUserState extends State<JoinUser> {
                       ],
                     ),
           
-                    SizedBox(height: 10),
+                    const SizedBox(height: 10),
           
                     //전화번호
                     InputField(
@@ -212,7 +212,7 @@ class _JoinUserState extends State<JoinUser> {
                       },
                     ),
           
-                    SizedBox(height: 10),
+                    const SizedBox(height: 10),
           
                     //이메일
                     InputField(
@@ -229,7 +229,7 @@ class _JoinUserState extends State<JoinUser> {
                       onChanged: (value) => debugPrint('이메일 $value'),
                     ),
           
-                    SizedBox(height: 10),
+                    const SizedBox(height: 10),
                     
                     //주소
                     InputField(
@@ -246,7 +246,7 @@ class _JoinUserState extends State<JoinUser> {
                       onChanged: (value) => debugPrint('주소 $value'),
                     ),
           
-                    SizedBox(height: 10),
+                    const SizedBox(height: 10),
                     
                     //주민등록번호
                     InputField(
@@ -263,15 +263,15 @@ class _JoinUserState extends State<JoinUser> {
                       onChanged: (value) => debugPrint('주민등록번호 $value'),
                     ),
           
-                    SizedBox(height: 10),
+                    const SizedBox(height: 10),
           
                     //약관
                     Container(
                       width: 300,
-                      padding: EdgeInsets.only(top: 15, left: 15, right: 15, bottom: 20,),
+                      padding: const EdgeInsets.only(top: 15, left: 15, right: 15, bottom: 20,),
                       decoration: BoxDecoration(
                         border: Border.all(
-                          color: Color(0xff666666),
+                          color: const Color(0xff666666),
                           width: 1,
                         ),
                         borderRadius: BorderRadius.circular(5), 
@@ -279,7 +279,7 @@ class _JoinUserState extends State<JoinUser> {
                       child: Column(
                         children: [
                           // 약관 제목
-                          SizedBox (
+                          const SizedBox (
                             width: 300,
                             child: Text(
                               '회원가입 약관',
@@ -288,7 +288,7 @@ class _JoinUserState extends State<JoinUser> {
                             ),
                           ),
                       
-                          SizedBox(height: 10), 
+                          const SizedBox(height: 10), 
                       
                           // 약관 내용
                           SizedBox (
@@ -299,8 +299,8 @@ class _JoinUserState extends State<JoinUser> {
                                 color: const Color.fromARGB(255, 240, 240, 240),
                                 borderRadius: BorderRadius.circular(5), 
                               ),
-                              child: Padding(
-                                padding: const EdgeInsets.all(8.0),
+                              child: const Padding(
+                                padding: EdgeInsets.all(8.0),
                                 child: SingleChildScrollView(
                                   child: Text(
                                     termsContent,
@@ -311,7 +311,7 @@ class _JoinUserState extends State<JoinUser> {
                             ),
                           ),
                       
-                          SizedBox(height: 10), 
+                          const SizedBox(height: 10), 
           
                           // 약관동의 체크박스
                           Row(
@@ -331,9 +331,9 @@ class _JoinUserState extends State<JoinUser> {
                                 )
                               ),
           
-                              SizedBox(width: 8),
+                              const SizedBox(width: 8),
           
-                              SizedBox(
+                              const SizedBox(
                                 child: Text(
                                   '동의하기',
                                   style: TextStyle(
@@ -351,7 +351,7 @@ class _JoinUserState extends State<JoinUser> {
                       ),
                     ),
                   
-                    SizedBox(height: 30),
+                    const SizedBox(height: 30),
           
                     // submit 버튼
                     SizedBox(
@@ -364,7 +364,7 @@ class _JoinUserState extends State<JoinUser> {
                           if(_formKey.currentState!.validate()){ 
                             if(isChecked == false){
                               ScaffoldMessenger.of(context).showSnackBar(
-                                SnackBar(content: Text('약관 동의는 필수사항입니다.')),
+                                const SnackBar(content: Text('약관 동의는 필수사항입니다.')),
                               );
                               return;
                             }
