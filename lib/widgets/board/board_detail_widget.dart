@@ -7,6 +7,7 @@ import 'package:doctorviewapp/providers/comment_provider.dart';
 import 'package:doctorviewapp/providers/likes_provider.dart';
 import 'package:doctorviewapp/providers/member_provider.dart';
 import 'package:doctorviewapp/theme/colors.dart';
+import 'package:doctorviewapp/widgets/board/board_reaction_button.dart';
 import 'package:doctorviewapp/widgets/board/post_action_sheet.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -34,7 +35,7 @@ class _BoardDetailWidgetState extends State<BoardDetailWidget> {
 
     Board? board = boardProvider.selectBoard(widget.boardIdx);
     List<Comment> commentList = commentProvider.listComment(board!.boardIdx);
-    List<Likes> likesList = likesProvider.selectLikes(board.boardName, board.boardIdx.toString());
+    List<Likes> likesList = likesProvider.selectLikes('board', board.boardIdx.toString());
     Member? loginMember = memberProvider.loginMember;
     Member? member = memberProvider.selectMember(board.writerRef.toString());
 
@@ -182,6 +183,22 @@ class _BoardDetailWidgetState extends State<BoardDetailWidget> {
                   ),
                 ),
               ],
+            ),
+          ],
+        ),
+        const SizedBox(
+          height: 10,
+        ),
+        // 좋아요 및 신고
+        Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            const SizedBox(
+              width: 7,
+            ),
+            BoardReactionButton(
+              boardIdx: board.boardIdx,
             ),
           ],
         )

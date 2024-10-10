@@ -28,6 +28,24 @@ class _BoardViewScreenState extends State<BoardViewScreen> {
   final TextEditingController _commentController = TextEditingController();
 
   @override
+  void initState() {
+    super.initState();
+    // 프레임이 끝난 후 조회수 증가 함수 호출
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _increaseViewCount();
+    });
+  }
+
+  // 조회수 증가 함수
+  void _increaseViewCount() {
+    final boardProvider = Provider.of<BoardProvider>(context, listen: false);
+    final memberProvider = Provider.of<MemberProvider>(context, listen: false);
+    if (memberProvider.loginMember != null) {
+      boardProvider.updateVisitCount(widget.boardIdx);
+    }
+  }
+
+  @override
   void dispose() {
     _commentController.dispose();
     super.dispose();

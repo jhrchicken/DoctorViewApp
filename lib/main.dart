@@ -31,7 +31,6 @@ void main() {
         ChangeNotifierProvider(create: (context) => HreplyProvider()),
         ChangeNotifierProvider(create: (context) => LikesProvider()),
         ChangeNotifierProvider(create: (context) => HashtagProvider()),
-        
         //회원관리
         ChangeNotifierProvider(create: (context) => MemberProvider()),
         ChangeNotifierProvider(create: (context) => HoursProvider()),

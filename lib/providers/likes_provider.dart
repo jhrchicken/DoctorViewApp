@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 
 class LikesProvider extends ChangeNotifier {
   // 좋아요 일련번호 시퀀스
-  final int _seqLikesIdx = 8;
+  int _seqLikesIdx = 8;
 
   // 좋아요 더미데이터
   final List<Likes> _likesList = [
@@ -66,47 +66,31 @@ class LikesProvider extends ChangeNotifier {
     return _likesList.where((likes) => likes.tablename == tablename && likes.recodenum == recodenum).toList();
   }
 
+  // 좋아요 존재 여부 확인
+  bool checkLikes(String tablename, String memberRef, String recodenum) {
+    return _likesList.any((likes) => likes.tablename == tablename && likes.memberRef == memberRef && likes.recodenum == recodenum);
+  }
+
+  // 좋아요 증가
+  void plusLikes(Likes likes) {
+    likes.likeIdx = _seqLikesIdx++;
+    _likesList.add(likes);
+    notifyListeners();
+  }
+
+  // 좋아요 취소
+  void minusLikes(String tablename, String memberRef, String recodenum) {
+    _likesList.removeWhere((likes) => likes.tablename == tablename && likes.memberRef == memberRef && likes.recodenum == recodenum);
+    notifyListeners();
+  }
 
 
 
+  // 특정 테이블의 특정 레코드의 모든 좋아요 삭제
+  void deleteAllLikes(String tablename, String recodenum) {
+    _likesList.removeWhere((likes) => likes.tablename == tablename && likes.recodenum == recodenum);
+  }
 
-
-
-
-
-
-  // // 병원 리뷰 조회
-  // Hreview? selectHreview(int reviewIdx) {
-  //   try {
-  //     return _hreviewList.firstWhere((hreview) => hreview.reviewIdx == reviewIdx);
-  //   }
-  //   catch (e) {
-  //     return null;
-  //   }
-  // }
-
-  // // 병원 리뷰 작성
-  // void insertHreview(Hreview hreview) {
-  //   _hreviewList.add(hreview);
-  //   notifyListeners();
-  // }
-
-  // // 병원 리뷰 삭제
-  // void deleteHreview(int reviewIdx) {
-  //   _hreviewList.removeWhere((hreview) => hreview.reviewIdx == reviewIdx);
-  //   notifyListeners();
-  // }
-
-  // // 병원 리뷰 수정
-  // void updateHreview(Hreview hreview) {
-  //   for (int i = 0; i < _hreviewList.length; i++) {
-  //     if (_hreviewList[i].reviewIdx == hreview.reviewIdx) {
-  //       _hreviewList[i] = hreview;
-  //       break;
-  //     }
-  //   }
-  //   notifyListeners();
-  // }
 
 
 
