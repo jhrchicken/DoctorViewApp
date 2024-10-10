@@ -34,7 +34,7 @@ class _BoardEditScreenState extends State<BoardEditScreen> {
   void initState() {
     super.initState();
 
-    final boardProvider = Provider.of<BoardProvider>(context);
+    final boardProvider = Provider.of<BoardProvider>(context, listen: false);
     Board? board = boardProvider.selectBoard(widget.boardIdx);
 
     if (board != null) {
@@ -115,7 +115,7 @@ class _BoardEditScreenState extends State<BoardEditScreen> {
                 if (_formKey.currentState!.validate()) {
                   final String title = _titleController.text;
                   final String content = _contentController.text;
-                  boardProvider.insertBoard(
+                  boardProvider.updateBoard(
                     Board(
                       boardIdx: board.boardIdx,
                       boardName: board.boardName,
@@ -126,6 +126,7 @@ class _BoardEditScreenState extends State<BoardEditScreen> {
                       writerRef: board.writerRef,
                     ),
                   );
+                  Navigator.pop(context);
                   Navigator.pop(context);
                 }
               },

@@ -33,7 +33,7 @@ class _BoardItemWidgetState extends State<BoardItemWidget> {
 
     Board? board = boardProvider.selectBoard(widget.boardIdx);
     List<Comment> commentList = commentProvider.listComment(board!.boardIdx);
-    List<Likes> likesList = likesProvider.listLikes(board.boardName, board.boardIdx.toString());
+    List<Likes> likesList = likesProvider.selectLikes('board', board.boardIdx.toString());
     Member? member = memberProvider.selectMember(board.writerRef.toString());
 
     return GestureDetector(

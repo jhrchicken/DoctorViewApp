@@ -25,7 +25,7 @@ class DoctorItemWidget extends StatelessWidget {
 
     Doctor? doctor = doctorProvider.selectDoctor(docIdx);
     Hospital? hospital = hospitalProvider.selectHosp(doctor!.hospRef);
-    List<Likes> likesList = likesProvider.listLikes('doctor', doctor.docIdx.toString());
+    List<Likes> likesList = likesProvider.selectLikes('doctor', doctor.docIdx.toString());
 
     return GestureDetector(
       onTap: () {

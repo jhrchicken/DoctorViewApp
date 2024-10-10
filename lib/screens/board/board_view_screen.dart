@@ -1,3 +1,4 @@
+import 'package:doctorviewapp/main.dart';
 import 'package:doctorviewapp/models/board.dart';
 import 'package:doctorviewapp/models/comment.dart';
 import 'package:doctorviewapp/models/member.dart';
@@ -24,6 +25,13 @@ class BoardViewScreen extends StatefulWidget {
 }
 
 class _BoardViewScreenState extends State<BoardViewScreen> {
+  final TextEditingController _commentController = TextEditingController();
+
+  @override
+  void dispose() {
+    _commentController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -31,40 +39,60 @@ class _BoardViewScreenState extends State<BoardViewScreen> {
     final commentProvider = Provider.of<CommentProvider>(context);
     final memberProvider = Provider.of<MemberProvider>(context, listen: false);
 
-    Board? board = boardProvider.selectBoard(widget.boardIdx);
-    List<Comment> commentList = commentProvider.listComment(board!.boardIdx);
     Member? loginMember = memberProvider.loginMember;
-
+    Board? board = boardProvider.selectBoard(widget.boardIdx);
+    
     // 로그인 하지 않은 경우
-    // if (loginMember == null) {
-    //   WidgetsBinding.instance.addPostFrameCallback((_) {
-    //     Navigator.pushReplacement(
-    //       context,
-    //       MaterialPageRoute(
-    //         builder: (context) => const Login(),
-    //       ),
-    //     );
-    //   });
-    // }
+    if (loginMember == null) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(
+            builder: (context) => const Login(),
+          ),
+        );
+      });
+      return const SizedBox();
+    }
+
+    if (board == null) {
+      return Scaffold(
+        // 상단바
+        appBar: AppBar(
+          backgroundColor: Colors.white,
+          title: board!.boardName == 'freeboard' 
+            ? Text(
+                '자유게시판',
+                style: CustomTextStyles.appbarText,
+              )
+            : Text(
+                '상담게시판',
+                style: CustomTextStyles.appbarText,
+              ),
+        ),
+        body: const Center(
+          child: Text('해당 게시물을 찾을 수 없습니다.'),
+        ),
+      );
+    }
+
+    List<Comment> commentList = commentProvider.listComment(board.boardIdx);
 
     return Scaffold(
+      // 상단바
       appBar: AppBar(
-        leading: IconButton(
-          onPressed: () {
-            Navigator.pop(context);
-          },
-          icon: const Icon(
-            Icons.arrow_back,
-            color: Colors.white,
+        backgroundColor: Colors.white,
+        title: board.boardName == 'freeboard' 
+          ? Text(
+              '자유게시판',
+              style: CustomTextStyles.appbarText,
+            )
+          : Text(
+              '상담게시판',
+              style: CustomTextStyles.appbarText,
             ),
-        ),
-        title: const Text(
-          '자유게시판',
-          style: TextStyle(color: Colors.white),
-        ),
-        backgroundColor: pointColor2,
       ),
-    
+      
       body: SingleChildScrollView(
         child: Column(
           children: [
@@ -81,6 +109,13 @@ class _BoardViewScreenState extends State<BoardViewScreen> {
                   boardIdx: board.boardIdx
                 ),
               ),
+            ),
+
+            Divider(
+              color: Colors.grey[300],
+              thickness: 1.0,
+              indent: 20.0,
+              endIndent: 20.0,
             ),
 
             // 댓글 목록
@@ -102,18 +137,78 @@ class _BoardViewScreenState extends State<BoardViewScreen> {
                         CommentItemWidget(
                           commIdx: comment.commIdx,
                         ),
-                        if (index < commentList.length - 1)
-                          const Divider(color: border),
+                        const SizedBox(
+                          height: 10,
+                        ),
                       ],
                     );
                   },
                 ),
               ),
             ),
- 
-            // 댓글 입력창 ************ 수정 *************
-            // BoardViewCommentWidget(boardIdx: freeboard.boardIdx),
-      
+          ],
+        ),
+      ),
+
+      // 하단에 답변 입력창 고정
+      bottomNavigationBar: Padding(
+        padding: const EdgeInsets.symmetric(
+          horizontal: 16, vertical: 10
+        ),
+        child: Row(
+          children: [
+            Expanded(
+              child: TextField(
+                controller: _commentController,
+                style: TextStyle(
+                  color: Colors.grey[900],
+                  fontSize: 14,
+                ),
+                decoration: InputDecoration(
+                  hintText: '댓글을 입력하세요',
+                  hintStyle: TextStyle(
+                    color: Colors.grey[500],
+                    fontSize: 14,
+                  ),
+                  filled: true,
+                  fillColor: Colors.grey[100],
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(8),
+                    borderSide: BorderSide.none,
+                  ),
+                  contentPadding: const EdgeInsets.symmetric(
+                    horizontal: 16,
+                    vertical: 5
+                  ),
+                  // 아이콘
+                  suffixIcon: IconButton(
+                    icon: const Icon(
+                      Icons.send_rounded,
+                      color: pointColor2,
+                    ),
+                    onPressed: () {
+                      if (_commentController.text.isNotEmpty) {
+                        commentProvider.insertComment(
+                          Comment(
+                            commIdx: 0,
+                            postdate: DateTime.now(),
+                            content: _commentController.text,
+                            boardRef: board.boardIdx,
+                            writerRef: loginMember.id,
+                          ),
+                        );
+                        _commentController.clear();
+
+                        // 상태 갱신
+                        setState(() {
+                          commentList = commentProvider.listComment(board.boardIdx);
+                        });
+                      }
+                    },
+                  ),
+                ),
+              ),
+            ),
           ],
         ),
       ),

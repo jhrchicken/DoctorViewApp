@@ -54,6 +54,7 @@ class _BoardWriteScreenState extends State<BoardWriteScreen> {
           ),
         );
       });
+      return const SizedBox();
     }
 
     return Scaffold(
@@ -81,7 +82,7 @@ class _BoardWriteScreenState extends State<BoardWriteScreen> {
                       title: title,
                       content: content,
                       visitcount: 0,
-                      writerRef: loginMember!.id,
+                      writerRef: loginMember.id,
                     ),
                   );
                   Navigator.pop(context);

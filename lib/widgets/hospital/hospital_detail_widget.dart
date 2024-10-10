@@ -31,7 +31,7 @@ class _HospitalDetailWidgetState extends State<HospitalDetailWidget> {
     final hreviewProvider = Provider.of<HreviewProvider>(context);
 
     Hospital? hospital = hospitalProvider.selectHosp(widget.id);
-    List<Likes> likesList = likesProvider.listLikes('hospital', hospital!.id);
+    List<Likes> likesList = likesProvider.selectLikes('hospital', hospital!.id);
     List<Hreview> hreviewList = hreviewProvider.listHreview(hospital.id);
 
     return Column(
