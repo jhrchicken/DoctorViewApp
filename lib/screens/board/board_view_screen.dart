@@ -78,13 +78,8 @@ class _BoardViewScreenState extends State<BoardViewScreen> {
         // 상단바
         appBar: AppBar(
           backgroundColor: Colors.white,
-          title: board!.boardName == 'freeboard' 
-            ? Text(
-                '자유게시판',
-                style: CustomTextStyles.appbarText,
-              )
-            : Text(
-                '상담게시판',
+          title: Text(
+                '게시판',
                 style: CustomTextStyles.appbarText,
               ),
         ),
