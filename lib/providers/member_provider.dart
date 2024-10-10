@@ -87,6 +87,16 @@ class MemberProvider extends ChangeNotifier {
     }
   }
 
+  // 회원 조회
+  Member? selectMember(String id) {
+    try {
+      return _memberList.firstWhere((member) => member.id == id);
+    }
+    catch (e) {
+      return null;
+    }
+  }
+
 
   // 로그아웃
   void logoutMember() {

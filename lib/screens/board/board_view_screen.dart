@@ -3,6 +3,7 @@ import 'package:doctorviewapp/models/comment.dart';
 import 'package:doctorviewapp/providers/board_provider.dart';
 import 'package:doctorviewapp/providers/comment_provider.dart';
 import 'package:doctorviewapp/theme/colors.dart';
+import 'package:doctorviewapp/widgets/board/board_detail_widget.dart';
 import 'package:doctorviewapp/widgets/board/comment_item_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -59,7 +60,7 @@ class _BoardViewScreenState extends State<BoardViewScreen> {
                 decoration: const BoxDecoration(
                   color: Colors.white,
                 ),
-                child: BoardViewScreen(
+                child: BoardDetailWidget(
                   boardIdx: board.boardIdx
                 ),
               ),
