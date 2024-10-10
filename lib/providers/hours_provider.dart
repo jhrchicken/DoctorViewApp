@@ -101,9 +101,14 @@ class HoursProvider extends ChangeNotifier {
   List<Hours> get hoursList => _hoursList;
 
 
-  // 시간 반환
+  // 근무 시간 반환
   List<Hours> getHospHours(String hospRef) {
     return _hoursList.where((hours) => hours.hosp_ref == hospRef && hours.open_week == 'T').toList();
+  }
+
+  // 모든 시간 반환 (디버깅용)
+  List<Hours> allHospHours(String hospRef) {
+    return _hoursList.where((hours) => hours.hosp_ref == hospRef).toList();
   }
 
   // 기본 시간 추가
@@ -132,20 +137,43 @@ class HoursProvider extends ChangeNotifier {
 
   // 근무 시간 초기화
   void resetHours(String hospRef){
-
+    List<Hours> hospHoursInfo = _hoursList.where((hour) => hour.hosp_ref == hospRef).toList();
+    for (int i = 0; i < hospHoursInfo.length; i++) {
+      hospHoursInfo[i].startTime = '00:00';
+      hospHoursInfo[i].endTime = '00:00';
+      hospHoursInfo[i].startBreak = '00:00';
+      hospHoursInfo[i].endBreak = '00:00';
+      hospHoursInfo[i].deadLine = '00:00';
+      hospHoursInfo[i].open_week = 'F';
+      hospHoursInfo[i].weekend = 'F';
+      hospHoursInfo[i].night = 'F';
+    }
   }
 
   // 근무 시간 업데이트
-  void updateHours(Hours hours){
+  void updateHours(Hours hours) {
     for (int i = 0; i < _hoursList.length; i++) {
       if (_hoursList[i].hosp_ref == hours.hosp_ref && _hoursList[i].week == hours.week) {
-        // _hoursList[i].startTime = hours.endTime,
+        String weekend = (hours.week == '토요일' || hours.week == '일요일') ? 'T' : 'F';
+        DateTime deadlineTime = DateTime.parse('2023-01-01 ${hours.deadLine}');
+        DateTime compareTime = DateTime.parse('2023-01-01 20:00');
+        String night = (deadlineTime.isAfter(compareTime) || deadlineTime.isAtSameMomentAs(compareTime)) ? 'T' : 'F';
 
-        break;
+        _hoursList[i].startTime = hours.startTime;
+        _hoursList[i].endTime = hours.endTime;
+        _hoursList[i].startBreak = hours.startBreak;
+        _hoursList[i].endBreak = hours.endBreak;
+        _hoursList[i].deadLine = hours.deadLine;
+        _hoursList[i].open_week = hours.open_week;
+        _hoursList[i].weekend = weekend;
+        _hoursList[i].night = night;
+        
+        break; 
       }
     }
     notifyListeners();
   }
+
 
 
 }

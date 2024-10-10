@@ -84,6 +84,8 @@ class _EditHospState extends State<EditHosp> {
   final TextEditingController addressController = TextEditingController();
   final TextEditingController departmentController = TextEditingController();
   final TextEditingController taxidController = TextEditingController();
+  // detail
+  final TextEditingController introController = TextEditingController();
 
   // 포커스
   FocusNode idFocus = FocusNode();
@@ -94,6 +96,7 @@ class _EditHospState extends State<EditHosp> {
   FocusNode addressFocus = FocusNode();
   FocusNode departmentFocus = FocusNode();
   FocusNode taxidFocus = FocusNode();
+  FocusNode introFocus = FocusNode();
 
   
   @override
@@ -252,20 +255,240 @@ class _EditHospState extends State<EditHosp> {
                         return null; 
                       },
                     ),
-                    const SizedBox(height: 10),
+                    const SizedBox(height: 30),
+
+                    // 진료시간
+                    Column(
+                      children: [
+                        // 안내멘트
+                        const SizedBox (
+                          width: 300,
+                          child: Text(
+                            '진료시간',
+                            textAlign: TextAlign.left,
+                            style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                          ),
+                        ),
+                        const SizedBox(height: 10),
+                        const SizedBox (
+                          width: 300,
+                          child: Text(
+                            '접수마감시간이 오후 8시이후인 경우\n야간 진료 가능으로 표시됩니다.',
+                            textAlign: TextAlign.left,
+                            style: TextStyle(fontSize: 15, fontWeight: FontWeight.w500, color: gray500),
+                          ),
+                        ),
+                        const SizedBox(height: 20),
 
 
 
 
-    
-// 진료시간
+
+
+                    // 요일
+                    WeekdaySelector(
+                      preSelectedDays: selectedDays,
+                      onSelectedDaysChanged: (selectedDays) {
+                        setState(() {
+                            this.selectedDays = selectedDays; // 선택된 요일을 저장
+                          });
+                      },
+                    ),
+
+
+
+                      
+
+
+                        
+                        const SizedBox(height: 10),
+                        
+                        // 진료시간
+                        Row(
+                          children: [
+                            const SizedBox(
+                              width: 50,
+                              child: Text(
+                                '진료시간',
+                                textAlign: TextAlign.left,
+                                style: TextStyle(fontSize: 15, fontWeight: FontWeight.w500),
+                              ),
+                            ),
+                          
+                            const SizedBox(width: 20), 
+                        
+                            // 시작시간
+                            DropdownButton<String>(
+                              value: startTime,
+                              hint: const Text("시작시간"), 
+                              items: timeSlots.map((String value) {
+                                return DropdownMenuItem<String>(
+                                  value: value,
+                                  child: Text(value),
+                                );
+                              }).toList(),
+                              onChanged: (select) {
+                                setState(() {
+                                  if (select != null){
+                                    startTime = select;
+                                  }
+                                });
+                              },
+                            ),
+                        
+                            const SizedBox(width: 10), 
+                            const SizedBox(
+                              width: 20,
+                              child: Text(
+                                '~',
+                                textAlign: TextAlign.center,
+                                style: TextStyle(fontSize: 15, fontWeight: FontWeight.w500),
+                              ),
+                            ),
+                            const SizedBox(width: 10), 
+                            
+                            // 종료시간
+                            DropdownButton<String>(
+                              value: endTime, // 선택된 값
+                              hint: const Text("종료시간"), // 선택 전 힌트
+                              items: timeSlots.map((String value) {
+                                return DropdownMenuItem<String>(
+                                  value: value,
+                                  child: Text(value),
+                                );
+                              }).toList(),
+                              onChanged: (select) {
+                                setState(() {
+                                  if (select != null){
+                                    endTime = select;
+                                  }
+                                });
+                              },
+                            ),
+                                      
+                          ],
+                        ),
+                        
+                        const SizedBox(height: 10),
+                        
+                        // 휴게시간
+                        Row(
+                          children: [
+                            const SizedBox(
+                              width: 50,
+                              child: Text(
+                                '휴게시간',
+                                textAlign: TextAlign.left,
+                                style: TextStyle(fontSize: 15, fontWeight: FontWeight.w500),
+                              ),
+                            ),
+                          
+                            const SizedBox(width: 20), 
+                        
+                            // 시작시간
+                            DropdownButton<String>(
+                              value: startBreak, // 선택된 값
+                              hint: const Text("시작시간"), // 선택 전 힌트
+                              items: timeSlots.map((String value) {
+                                return DropdownMenuItem<String>(
+                                  value: value,
+                                  child: Text(value),
+                                );
+                              }).toList(),
+                              onChanged: (select) {
+                                setState(() {
+                                  if (select != null){
+                                    startBreak = select;
+                                  }
+                                });
+                              },
+                            ),
+                        
+                            const SizedBox(width: 10), 
+                            const SizedBox(
+                              width: 20,
+                              child: Text(
+                                '~',
+                                textAlign: TextAlign.center,
+                                style: TextStyle(fontSize: 15, fontWeight: FontWeight.w500),
+                              ),
+                            ),
+                            const SizedBox(width: 10), 
+                            
+                            // 종료시간
+                            DropdownButton<String>(
+                              value: endBreak, // 선택된 값
+                              hint: const Text("종료시간"), // 선택 전 힌트
+                              items: timeSlots.map((String value) {
+                                return DropdownMenuItem<String>(
+                                  value: value,
+                                  child: Text(value),
+                                );
+                              }).toList(),
+                              onChanged: (select) {
+                                setState(() {
+                                  if (select != null){
+                                    endBreak = select;
+                                  }
+                                });
+                              },
+                            ),
+                                      
+                          ],
+                        ),
+                        
+                        const SizedBox(height: 10),
+                        
+                        // 접수 마감
+                        Row(
+                          children: [
+                            const SizedBox(
+                              width: 50,
+                              child: Text(
+                                '접수 마감',
+                                textAlign: TextAlign.left,
+                                style: TextStyle(fontSize: 15, fontWeight: FontWeight.w500),
+                              ),
+                            ),
+                          
+                            const SizedBox(width: 20), 
+                        
+                            // 시작시간
+                            DropdownButton<String>(
+                              value: deadLine, // 선택된 값
+                              hint: const Text("마감시간"), // 선택 전 힌트
+                              items: timeSlots.map((String value) {
+                                return DropdownMenuItem<String>(
+                                  value: value,
+                                  child: Text(value),
+                                );
+                              }).toList(),
+                              onChanged: (select) {
+                                setState(() {
+                                  if (select != null){
+                                    deadLine = select;
+                                  }
+                                });
+                              },
+                            ),
+                        
+                                      
+                          ],
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 30),
+
+                    /********** 수정: 의사 관리 페이지로 이동버튼 추가 **********/
+
+
 Column(
   children: [
     // 안내멘트
     const SizedBox (
       width: 300,
       child: Text(
-        '진료시간',
+        '병원소개',
         textAlign: TextAlign.left,
         style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
       ),
@@ -280,207 +503,163 @@ Column(
       ),
     ),
     const SizedBox(height: 20),
-    
-    // 요일
 
-WeekdaySelector(
-  preSelectedDays: selectedDays,
-  onSelectedDaysChanged: (selectedDays) {
-    // 선택된 요일 처리
-  },
-),
+    // 소개
+    Row(
+      children: [
+        const SizedBox(
+          width: 50,
+          child: Text(
+            '소개',
+            textAlign: TextAlign.left,
+            style: TextStyle(fontSize: 15, fontWeight: FontWeight.w500),
+          ),
+        ),
+      
+        const SizedBox(width: 10), 
 
-    
+        InputField(
+          width: 200,
+          focusNode: introFocus,
+          controller: introController,
+          labelText: "소개",
+        ),
+        const SizedBox(height: 10),
+      ],
+    ),
     const SizedBox(height: 10),
-    
-    // 진료시간
+
+    // 오시는 길
     Row(
       children: [
         const SizedBox(
           width: 50,
           child: Text(
-            '진료시간',
+            '오시는 길',
             textAlign: TextAlign.left,
             style: TextStyle(fontSize: 15, fontWeight: FontWeight.w500),
           ),
         ),
       
-        const SizedBox(width: 20), 
-    
-        // 시작시간
-        DropdownButton<String>(
-          value: startTime,
-          hint: const Text("시작시간"), 
-          items: timeSlots.map((String value) {
-            return DropdownMenuItem<String>(
-              value: value,
-              child: Text(value),
-            );
-          }).toList(),
-          onChanged: (select) {
-            setState(() {
-              if (select != null){
-                startTime = select;
-              }
-            });
-          },
-        ),
-    
         const SizedBox(width: 10), 
-        const SizedBox(
-          width: 20,
-          child: Text(
-            '~',
-            textAlign: TextAlign.center,
-            style: TextStyle(fontSize: 15, fontWeight: FontWeight.w500),
-          ),
+
+        InputField(
+          width: 200,
+          focusNode: introFocus,
+          controller: introController,
+          labelText: "오시는 길",
         ),
-        const SizedBox(width: 10), 
-        
-        // 종료시간
-        DropdownButton<String>(
-          value: endTime, // 선택된 값
-          hint: const Text("종료시간"), // 선택 전 힌트
-          items: timeSlots.map((String value) {
-            return DropdownMenuItem<String>(
-              value: value,
-              child: Text(value),
-            );
-          }).toList(),
-          onChanged: (select) {
-            setState(() {
-              if (select != null){
-                endTime = select;
-              }
-            });
-          },
-        ),
-                  
+        const SizedBox(height: 10),
       ],
     ),
-    
     const SizedBox(height: 10),
-    
-    // 휴게시간
+
+    /********** 수정: 라디오버튼으로 **********/
+    // 주차
     Row(
       children: [
         const SizedBox(
           width: 50,
           child: Text(
-            '휴게시간',
+            '주차',
             textAlign: TextAlign.left,
             style: TextStyle(fontSize: 15, fontWeight: FontWeight.w500),
           ),
         ),
       
-        const SizedBox(width: 20), 
-    
-        // 시작시간
-        DropdownButton<String>(
-          value: startBreak, // 선택된 값
-          hint: const Text("시작시간"), // 선택 전 힌트
-          items: timeSlots.map((String value) {
-            return DropdownMenuItem<String>(
-              value: value,
-              child: Text(value),
-            );
-          }).toList(),
-          onChanged: (select) {
-            setState(() {
-              if (select != null){
-                startBreak = select;
-              }
-            });
-          },
-        ),
-    
         const SizedBox(width: 10), 
-        const SizedBox(
-          width: 20,
-          child: Text(
-            '~',
-            textAlign: TextAlign.center,
-            style: TextStyle(fontSize: 15, fontWeight: FontWeight.w500),
-          ),
+
+        InputField(
+          width: 200,
+          focusNode: introFocus,
+          controller: introController,
+          labelText: "소개",
         ),
-        const SizedBox(width: 10), 
-        
-        // 종료시간
-        DropdownButton<String>(
-          value: endBreak, // 선택된 값
-          hint: const Text("종료시간"), // 선택 전 힌트
-          items: timeSlots.map((String value) {
-            return DropdownMenuItem<String>(
-              value: value,
-              child: Text(value),
-            );
-          }).toList(),
-          onChanged: (select) {
-            setState(() {
-              if (select != null){
-                endBreak = select;
-              }
-            });
-          },
-        ),
-                  
+        const SizedBox(height: 10),
       ],
     ),
-    
     const SizedBox(height: 10),
-    
-    // 접수 마감
+
+    // PCR 검사
     Row(
       children: [
         const SizedBox(
           width: 50,
           child: Text(
-            '접수 마감',
+            'PCR 검사',
             textAlign: TextAlign.left,
             style: TextStyle(fontSize: 15, fontWeight: FontWeight.w500),
           ),
         ),
       
-        const SizedBox(width: 20), 
-    
-        // 시작시간
-        DropdownButton<String>(
-          value: deadLine, // 선택된 값
-          hint: const Text("마감시간"), // 선택 전 힌트
-          items: timeSlots.map((String value) {
-            return DropdownMenuItem<String>(
-              value: value,
-              child: Text(value),
-            );
-          }).toList(),
-          onChanged: (select) {
-            setState(() {
-              if (select != null){
-                deadLine = select;
-              }
-            });
-          },
+        const SizedBox(width: 10), 
+
+        InputField(
+          width: 200,
+          focusNode: introFocus,
+          controller: introController,
+          labelText: "오시는 길",
         ),
-    
-                  
+        const SizedBox(height: 10),
       ],
     ),
+    const SizedBox(height: 10),
+
+    // 입원여부
+    Row(
+      children: [
+        const SizedBox(
+          width: 50,
+          child: Text(
+            '입원',
+            textAlign: TextAlign.left,
+            style: TextStyle(fontSize: 15, fontWeight: FontWeight.w500),
+          ),
+        ),
+      
+        const SizedBox(width: 10), 
+
+        InputField(
+          width: 200,
+          focusNode: introFocus,
+          controller: introController,
+          labelText: "오시는 길",
+        ),
+        const SizedBox(height: 10),
+      ],
+    ),
+    const SizedBox(height: 10),
+
+    // 예약 방문
+    Row(
+      children: [
+        const SizedBox(
+          width: 50,
+          child: Text(
+            '예약 방문',
+            textAlign: TextAlign.left,
+            style: TextStyle(fontSize: 15, fontWeight: FontWeight.w500),
+          ),
+        ),
+      
+        const SizedBox(width: 10), 
+
+        InputField(
+          width: 200,
+          focusNode: introFocus,
+          controller: introController,
+          labelText: "오시는 길",
+        ),
+        const SizedBox(height: 10),
+      ],
+    ),
+    const SizedBox(height: 10),
   ],
 ),
-const SizedBox(height: 30),
-
-
-                  
-
-
-
-
 
                     
-                    
-
-                    const SizedBox(height: 30),
           
+                    const SizedBox(height: 30),
                     // submit 버튼
                     SizedBox(
                       width: 300,
@@ -489,7 +668,7 @@ const SizedBox(height: 30),
                         text: '회원수정', 
                         onPressed: () {
                           /************ 수정: 폼값 판단(nn & password) 필요 *************/
-                          //회원수정
+                          // member update
                           memberProvider.updateMember(
                             Member(
                               id: memberId,
@@ -505,15 +684,9 @@ const SizedBox(height: 30),
                             )
                           );
 
-                          // hours insert
+                          // hours update
+                          hoursProvider.resetHours(memberId); // 선택해제한 날짜 reset을 위함
                           for (int i = 0; i < selectedDays.length; i++) {
-                            String weekend = (selectedDays[i] == '토요일' || selectedDays[i] == '일요일') ? 'T' : 'F';
-                            
-                            DateTime deadlineTime = DateTime.parse('2023-01-01 $deadLine');
-                            DateTime compareTime = DateTime.parse('2023-01-01 20:00'); 
-                            String night = (deadlineTime.isAfter(compareTime) || deadlineTime.isAtSameMomentAs(compareTime)) ? 'T' : 'F';
-
-                            
                             hoursProvider.updateHours(
                               Hours(
                                 hoursIdx: 0,
@@ -525,19 +698,17 @@ const SizedBox(height: 30),
                                 deadLine: deadLine,
                                 hosp_ref: idController.text,
                                 open_week: 'T',
-                                weekend: weekend,
-                                night: night,
+                                weekend: '',
+                                night: '',
                               ),
                             );
                           }
-
-                    
                           
-                            Navigator.of(context).pushNamed('/member/editMember.do');
-                            ScaffoldMessenger.of(context).showSnackBar(
-                                const SnackBar(content: Text('회원정보가 수정되었습니다.')),
-                            );
-                          },
+                          Navigator.of(context).pushNamed('/member/editHosp.do');
+                          ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(content: Text('회원정보가 수정되었습니다.')),
+                          );
+                        },
                         color: Colors.blue,
                       ),
                     ),

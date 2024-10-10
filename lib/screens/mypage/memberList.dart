@@ -30,7 +30,7 @@ class _MemberListState extends State<MemberList> {
 
           // 병원 회원인 경우, 병원의 영업시간 정보를 가져옴
           if (member.auth == 'ROLE_HOSP') {
-            hospitalHours = hoursProvider.getHospHours(member.id);
+            hospitalHours = hoursProvider.allHospHours(member.id);
           }
 
           return Card(

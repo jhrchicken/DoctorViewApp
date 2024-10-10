@@ -419,7 +419,6 @@ class _JoinHospState extends State<JoinHosp> {
                         // 요일
                         WeekdaySelector(
                           onSelectedDaysChanged: (selectedDays) {
-                            // 선택된 요일을 처리하는 로직
                             setState(() {
                               this.selectedDays = selectedDays; // 선택된 요일을 저장
                             });
@@ -808,13 +807,6 @@ class _JoinHospState extends State<JoinHosp> {
                             // hours insert
                             hoursProvider.initHours(idController.text);
                             for (int i = 0; i < selectedDays.length; i++) {
-                              String weekend = (selectedDays[i] == '토요일' || selectedDays[i] == '일요일') ? 'T' : 'F';
-                              
-                              DateTime deadlineTime = DateTime.parse('2023-01-01 $deadLine');
-                              DateTime compareTime = DateTime.parse('2023-01-01 20:00'); 
-                              String night = (deadlineTime.isAfter(compareTime) || deadlineTime.isAtSameMomentAs(compareTime)) ? 'T' : 'F';
-
-                              
                               hoursProvider.updateHours(
                                 Hours(
                                   hoursIdx: 0,
@@ -826,8 +818,8 @@ class _JoinHospState extends State<JoinHosp> {
                                   deadLine: deadLine,
                                   hosp_ref: idController.text,
                                   open_week: 'T',
-                                  weekend: weekend,
-                                  night: night,
+                                  weekend: '',
+                                  night: '',
                                 ),
                               );
                             }
