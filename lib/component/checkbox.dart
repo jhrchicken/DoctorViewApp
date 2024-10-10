@@ -3,14 +3,14 @@ import 'package:flutter/material.dart';
 class CustomCheckbox extends StatefulWidget {
   final bool value;
   final ValueChanged<bool?> onChanged;
-   final double? size; 
+  final double? size; 
 
   const CustomCheckbox({
-    Key? key,
+    super.key,
     required this.value,
     required this.onChanged,
     this.size,
-  }) : super(key: key);
+  });
 
   @override
   State<CustomCheckbox> createState() => _CustomCheckboxState();

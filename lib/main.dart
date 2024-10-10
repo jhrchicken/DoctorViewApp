@@ -1,5 +1,7 @@
+import 'package:doctorviewapp/models/detail.dart';
 import 'package:doctorviewapp/providers/board_provider.dart';
 import 'package:doctorviewapp/providers/comment_provider.dart';
+import 'package:doctorviewapp/providers/detail_provider.dart';
 import 'package:doctorviewapp/providers/doctor_provider.dart';
 import 'package:doctorviewapp/providers/dreply_provider.dart';
 import 'package:doctorviewapp/providers/dreview_provider.dart';
@@ -35,6 +37,7 @@ void main() {
         //회원관리
         ChangeNotifierProvider(create: (context) => MemberProvider()),
         ChangeNotifierProvider(create: (context) => HoursProvider()),
+        ChangeNotifierProvider(create: (context) => DetailProvider()),
         // 게시판
         ChangeNotifierProvider(create: (context) => BoardProvider()),
         ChangeNotifierProvider(create: (context) => CommentProvider()),

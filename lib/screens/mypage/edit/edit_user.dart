@@ -268,26 +268,29 @@ void initState() {
                         text: '회원수정', 
                         onPressed: () {
                           /************ 수정: 폼값 판단(nn & password) 필요 *************/
-                          //회원수정
-                          memberProvider.updateMember(
-                            Member(
-                              id: memberId,
-                              password: passwordController.text,
-                              name: nameController.text,
-                              nickname: nicknameController.text,
-                              tel: telController.text,
-                              email: emailController.text,
-                              rrn: memberRRN,
-                              address: addressController.text,
-                              enable: 1,
-                              auth: 'ROLE_USER'
-                            ),
-                          );
-                            Navigator.of(context).pushNamed('/member/editMember.do');
+                          if(_formKey.currentState!.validate()){
+                            //회원수정
+                            memberProvider.updateMember(
+                              Member(
+                                id: memberId,
+                                password: passwordController.text,
+                                name: nameController.text,
+                                nickname: nicknameController.text,
+                                tel: telController.text,
+                                email: emailController.text,
+                                rrn: memberRRN,
+                                address: addressController.text,
+                                enable: 1,
+                                auth: 'ROLE_USER'
+                              ),
+                            );
+
                             ScaffoldMessenger.of(context).showSnackBar(
                                 const SnackBar(content: Text('회원정보가 수정되었습니다.')),
                             );
-                          },
+                            Navigator.pushReplacementNamed(context, '/member/editUser.do');
+                          }
+                        },
                         color: Colors.blue,
                       ),
                     ),

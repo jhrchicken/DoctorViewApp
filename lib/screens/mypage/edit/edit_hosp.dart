@@ -2,11 +2,14 @@ import 'package:doctorviewapp/component/inputfield.dart';
 import 'package:doctorviewapp/component/secondary_outline_button.dart';
 import 'package:doctorviewapp/component/week_selector.dart';
 import 'package:doctorviewapp/header.dart';
+import 'package:doctorviewapp/models/detail.dart';
 import 'package:doctorviewapp/models/hours.dart';
 import 'package:doctorviewapp/models/member.dart';
+import 'package:doctorviewapp/providers/detail_provider.dart';
 import 'package:doctorviewapp/providers/hours_provider.dart';
 import 'package:doctorviewapp/providers/member_provider.dart';
 import 'package:doctorviewapp/theme/colors.dart';
+import 'package:doctorviewapp/widgets/member/bool_radio_button.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -27,8 +30,17 @@ class _EditHospState extends State<EditHosp> {
   ];
   // *********************
 
+  // ***** Detail 라디오버튼 관리 ******  
+  String _parkingValue = 'F';
+  String _pcrValue = 'F';
+  String _hospitalizeValue = 'F';
+  String _systemValue = 'F';
+  // *********************
+
+
   String memberId ='';
 
+  // 해당 병원 정보를 가져오기 위한 초기화
   @override
   void initState() {
     super.initState();
@@ -57,7 +69,6 @@ class _EditHospState extends State<EditHosp> {
     }
     if (loginHospHours.isNotEmpty) {
       final firstHour = loginHospHours.first;
-      
       // setState(() {
         // startTime, endTime 등 값을 설정
         startTime = firstHour.startTime;
@@ -67,10 +78,22 @@ class _EditHospState extends State<EditHosp> {
         deadLine = firstHour.deadLine;
       // });
     }
+
+    // detail
+    final detailProvider = Provider.of<DetailProvider>(context, listen: false); 
+    final hospDetail = detailProvider.getHospDetail(memberId);
+    if (hospDetail != null) {
+      introController.text = hospDetail.introduce ?? '';
+      trafficController.text = hospDetail.traffic ?? '';
+      _parkingValue = hospDetail.parking ?? '';
+      _pcrValue = hospDetail.pcr ?? '';
+      _hospitalizeValue = hospDetail.hospitalize ?? '';
+      _systemValue = hospDetail.system ?? '';
+    }
+
     
   }
 
-  // 전체 폼값 유효성 검증 Key
   final _formKey = GlobalKey<FormState>();
   // 약관 체크 데이터
   bool isChecked = false; 
@@ -86,6 +109,8 @@ class _EditHospState extends State<EditHosp> {
   final TextEditingController taxidController = TextEditingController();
   // detail
   final TextEditingController introController = TextEditingController();
+  final TextEditingController trafficController = TextEditingController();
+  final TextEditingController parkingController = TextEditingController();
 
   // 포커스
   FocusNode idFocus = FocusNode();
@@ -96,16 +121,16 @@ class _EditHospState extends State<EditHosp> {
   FocusNode addressFocus = FocusNode();
   FocusNode departmentFocus = FocusNode();
   FocusNode taxidFocus = FocusNode();
+  // detail
   FocusNode introFocus = FocusNode();
+  FocusNode trafficFocus = FocusNode();
 
   
   @override
   Widget build(BuildContext context) {
     final memberProvider = Provider.of<MemberProvider>(context);
-    final loginMember = memberProvider.loginMember;
-
     final hoursProvider = Provider.of<HoursProvider>(context, listen: false);
-    final loginHospHours = hoursProvider.getHospHours(memberId);
+    final detailProvider = Provider.of<DetailProvider>(context, listen: false);
 
     return Scaffold(
       // 헤더
@@ -479,185 +504,225 @@ class _EditHospState extends State<EditHosp> {
                     ),
                     const SizedBox(height: 30),
 
-                    /********** 수정: 의사 관리 페이지로 이동버튼 추가 **********/
+                    // 병원 소개
+                    Column(
+                      children: [
+                        // 안내멘트
+                        const SizedBox (
+                          width: 300,
+                          child: Text(
+                            '병원소개',
+                            textAlign: TextAlign.left,
+                            style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                          ),
+                        ),
+                        const SizedBox(height: 20),
+
+                        // 소개
+                        Row(
+                          children: [
+                            const SizedBox(
+                              width: 50,
+                              child: Text(
+                                '소개',
+                                textAlign: TextAlign.left,
+                                style: TextStyle(fontSize: 15, fontWeight: FontWeight.w500),
+                              ),
+                            ),
+                          
+                            const SizedBox(width: 10), 
+
+                            InputField(
+                              width: 200,
+                              focusNode: introFocus,
+                              controller: introController,
+                              labelText: "소개",
+                            ),
+                            const SizedBox(height: 10),
+                          ],
+                        ),
+                        const SizedBox(height: 10),
+
+                        // 오시는 길
+                        Row(
+                          children: [
+                            const SizedBox(
+                              width: 50,
+                              child: Text(
+                                '오시는 길',
+                                textAlign: TextAlign.left,
+                                style: TextStyle(fontSize: 15, fontWeight: FontWeight.w500),
+                              ),
+                            ),
+                          
+                            const SizedBox(width: 10), 
+
+                            InputField(
+                              width: 200,
+                              focusNode: trafficFocus,
+                              controller: trafficController,
+                              labelText: "오시는 길",
+                            ),
+                            const SizedBox(height: 10),
+                          ],
+                        ),
+                        const SizedBox(height: 10),
+
+                        // 주차
+                        Row(
+                          children: [
+                            const SizedBox(
+                              width: 60,
+                              child: Text(
+                                '주차',
+                                textAlign: TextAlign.left,
+                                style: TextStyle(fontSize: 15, fontWeight: FontWeight.w500),
+                              ),
+                            ),
+
+                            const SizedBox(width: 10), 
+
+                            BoolRadioButton(
+                              groupValue: _parkingValue, 
+                              value: 'T', 
+                              title: '가능', 
+                              onChanged: (value){
+                                setState(() {
+                                  _parkingValue = value!;
+                                });
+                              }),
+                            const SizedBox(width: 40),
+                            BoolRadioButton(
+                              groupValue: _parkingValue, 
+                              value: 'F', 
+                              title: '불가능',
+                              onChanged: (value){
+                                setState(() {
+                                  _parkingValue = value!;
+                                });
+                              }),
+                            const SizedBox(height: 10),
+                          ],
+                        ),
+                        const SizedBox(height: 10),
+
+                        // PCR 검사
+                        Row(
+                          children: [
+                            const SizedBox(
+                              width: 60,
+                              child: Text(
+                                'PCR 검사',
+                                textAlign: TextAlign.left,
+                                style: TextStyle(fontSize: 15, fontWeight: FontWeight.w500),
+                              ),
+                            ),
+                          
+                            const SizedBox(width: 10), 
+
+                            BoolRadioButton(
+                              groupValue: _pcrValue, 
+                              value: 'T', 
+                              title: '가능', 
+                              onChanged: (value){
+                                setState(() {
+                                  _pcrValue = value!;
+                                });
+                              }),
+                            const SizedBox(width: 40),
+                            BoolRadioButton(
+                              groupValue: _pcrValue, 
+                              value: 'F', 
+                              title: '불가능',
+                              onChanged: (value){
+                                setState(() {
+                                  _pcrValue = value!;
+                                });
+                              }),
+                            const SizedBox(height: 10),
+                          ],
+                        ),
+                        const SizedBox(height: 10),
+
+                        // 입원여부
+                        Row(
+                          children: [
+                            const SizedBox(
+                              width: 60,
+                              child: Text(
+                                '입원',
+                                textAlign: TextAlign.left,
+                                style: TextStyle(fontSize: 15, fontWeight: FontWeight.w500),
+                              ),
+                            ),
+                          
+                            const SizedBox(width: 10), 
+
+                            BoolRadioButton(
+                              groupValue: _hospitalizeValue, 
+                              value: 'T', 
+                              title: '가능', 
+                              onChanged: (value){
+                                setState(() {
+                                  _hospitalizeValue = value!;
+                                });
+                              }),
+                            const SizedBox(width: 40),
+                            BoolRadioButton(
+                              groupValue: _hospitalizeValue, 
+                              value: 'F', 
+                              title: '불가능',
+                              onChanged: (value){
+                                setState(() {
+                                  _hospitalizeValue = value!;
+                                });
+                              }),
+                            const SizedBox(height: 10),
+                          ],
+                        ),
+                        const SizedBox(height: 10),
+
+                        // 예약 방문
+                        Row(
+                          children: [
+                            const SizedBox(
+                              width: 60,
+                              child: Text(
+                                '예약 방문',
+                                textAlign: TextAlign.left,
+                                style: TextStyle(fontSize: 15, fontWeight: FontWeight.w500),
+                              ),
+                            ),
+                          
+                            const SizedBox(width: 10), 
+
+                            BoolRadioButton(
+                              groupValue: _systemValue, 
+                              value: 'T', 
+                              title: '가능', 
+                              onChanged: (value){
+                                setState(() {
+                                  _systemValue = value!;
+                                });
+                              }),
+                            const SizedBox(width: 40),
+                            BoolRadioButton(
+                              groupValue: _systemValue, 
+                              value: 'F', 
+                              title: '불가능',
+                              onChanged: (value){
+                                setState(() {
+                                  _systemValue = value!;
+                                });
+                              }),
+                            const SizedBox(height: 10),
+                          ],
+                        ),
+                        const SizedBox(height: 10),
 
 
-Column(
-  children: [
-    // 안내멘트
-    const SizedBox (
-      width: 300,
-      child: Text(
-        '병원소개',
-        textAlign: TextAlign.left,
-        style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-      ),
-    ),
-    const SizedBox(height: 10),
-    const SizedBox (
-      width: 300,
-      child: Text(
-        '접수마감시간이 오후 8시이후인 경우\n야간 진료 가능으로 표시됩니다.',
-        textAlign: TextAlign.left,
-        style: TextStyle(fontSize: 15, fontWeight: FontWeight.w500, color: gray500),
-      ),
-    ),
-    const SizedBox(height: 20),
-
-    // 소개
-    Row(
-      children: [
-        const SizedBox(
-          width: 50,
-          child: Text(
-            '소개',
-            textAlign: TextAlign.left,
-            style: TextStyle(fontSize: 15, fontWeight: FontWeight.w500),
-          ),
-        ),
-      
-        const SizedBox(width: 10), 
-
-        InputField(
-          width: 200,
-          focusNode: introFocus,
-          controller: introController,
-          labelText: "소개",
-        ),
-        const SizedBox(height: 10),
-      ],
-    ),
-    const SizedBox(height: 10),
-
-    // 오시는 길
-    Row(
-      children: [
-        const SizedBox(
-          width: 50,
-          child: Text(
-            '오시는 길',
-            textAlign: TextAlign.left,
-            style: TextStyle(fontSize: 15, fontWeight: FontWeight.w500),
-          ),
-        ),
-      
-        const SizedBox(width: 10), 
-
-        InputField(
-          width: 200,
-          focusNode: introFocus,
-          controller: introController,
-          labelText: "오시는 길",
-        ),
-        const SizedBox(height: 10),
-      ],
-    ),
-    const SizedBox(height: 10),
-
-    /********** 수정: 라디오버튼으로 **********/
-    // 주차
-    Row(
-      children: [
-        const SizedBox(
-          width: 50,
-          child: Text(
-            '주차',
-            textAlign: TextAlign.left,
-            style: TextStyle(fontSize: 15, fontWeight: FontWeight.w500),
-          ),
-        ),
-      
-        const SizedBox(width: 10), 
-
-        InputField(
-          width: 200,
-          focusNode: introFocus,
-          controller: introController,
-          labelText: "소개",
-        ),
-        const SizedBox(height: 10),
-      ],
-    ),
-    const SizedBox(height: 10),
-
-    // PCR 검사
-    Row(
-      children: [
-        const SizedBox(
-          width: 50,
-          child: Text(
-            'PCR 검사',
-            textAlign: TextAlign.left,
-            style: TextStyle(fontSize: 15, fontWeight: FontWeight.w500),
-          ),
-        ),
-      
-        const SizedBox(width: 10), 
-
-        InputField(
-          width: 200,
-          focusNode: introFocus,
-          controller: introController,
-          labelText: "오시는 길",
-        ),
-        const SizedBox(height: 10),
-      ],
-    ),
-    const SizedBox(height: 10),
-
-    // 입원여부
-    Row(
-      children: [
-        const SizedBox(
-          width: 50,
-          child: Text(
-            '입원',
-            textAlign: TextAlign.left,
-            style: TextStyle(fontSize: 15, fontWeight: FontWeight.w500),
-          ),
-        ),
-      
-        const SizedBox(width: 10), 
-
-        InputField(
-          width: 200,
-          focusNode: introFocus,
-          controller: introController,
-          labelText: "오시는 길",
-        ),
-        const SizedBox(height: 10),
-      ],
-    ),
-    const SizedBox(height: 10),
-
-    // 예약 방문
-    Row(
-      children: [
-        const SizedBox(
-          width: 50,
-          child: Text(
-            '예약 방문',
-            textAlign: TextAlign.left,
-            style: TextStyle(fontSize: 15, fontWeight: FontWeight.w500),
-          ),
-        ),
-      
-        const SizedBox(width: 10), 
-
-        InputField(
-          width: 200,
-          focusNode: introFocus,
-          controller: introController,
-          labelText: "오시는 길",
-        ),
-        const SizedBox(height: 10),
-      ],
-    ),
-    const SizedBox(height: 10),
-  ],
-),
-
-                    
+                      ],
+                    ),
           
                     const SizedBox(height: 30),
                     // submit 버튼
@@ -667,47 +732,76 @@ Column(
                       child: SecondaryOutlineButton(
                         text: '회원수정', 
                         onPressed: () {
-                          /************ 수정: 폼값 판단(nn & password) 필요 *************/
-                          // member update
-                          memberProvider.updateMember(
-                            Member(
-                              id: memberId,
-                              password: passwordController.text,
-                              name: nameController.text,
-                              nickname: nameController.text,
-                              tel: telController.text,
-                              address: addressController.text,
-                              department: departmentController.text,
-                              taxid: taxidController.text,
-                              enable: 0,
-                              auth: 'ROLE_HOSP',
-                            )
-                          );
-
-                          // hours update
-                          hoursProvider.resetHours(memberId); // 선택해제한 날짜 reset을 위함
-                          for (int i = 0; i < selectedDays.length; i++) {
-                            hoursProvider.updateHours(
-                              Hours(
-                                hoursIdx: 0,
-                                week: selectedDays[i],
-                                startTime: startTime,
-                                endTime: endTime,
-                                startBreak: startBreak,
-                                endBreak: endBreak,
-                                deadLine: deadLine,
-                                hosp_ref: idController.text,
-                                open_week: 'T',
-                                weekend: '',
-                                night: '',
-                              ),
+                          if(_formKey.currentState!.validate()){
+                            // member update
+                            memberProvider.updateMember(
+                              Member(
+                                id: memberId,
+                                password: passwordController.text,
+                                name: nameController.text,
+                                nickname: nameController.text,
+                                tel: telController.text,
+                                address: addressController.text,
+                                department: departmentController.text,
+                                taxid: taxidController.text,
+                                enable: 0,
+                                auth: 'ROLE_HOSP',
+                              )
                             );
+
+                            // hours update
+                            hoursProvider.resetHours(memberId); // 선택해제한 날짜 reset을 위함
+                            for (int i = 0; i < selectedDays.length; i++) {
+                              hoursProvider.updateHours(
+                                Hours(
+                                  hoursIdx: 0,
+                                  week: selectedDays[i],
+                                  startTime: startTime,
+                                  endTime: endTime,
+                                  startBreak: startBreak,
+                                  endBreak: endBreak,
+                                  deadLine: deadLine,
+                                  hosp_ref: idController.text,
+                                  open_week: 'T',
+                                  weekend: '',
+                                  night: '',
+                                ),
+                              );
+                            }
+                            
+                            // detail update
+                            if(detailProvider.getHospDetail(memberId) == null){
+                              detailProvider.insertDetail(
+                                Detail(
+                                idx: 0,
+                                introduce: introController.text,
+                                traffic: trafficController.text,
+                                parking: _parkingValue,
+                                pcr: _pcrValue,
+                                hospitalize: _hospitalizeValue,
+                                system: _systemValue,
+                                hosp_ref: memberId,
+                              ));
+                            } else {
+                              detailProvider.updateDetail(
+                                Detail(
+                                  idx: 0,
+                                  introduce: introController.text,
+                                  traffic: trafficController.text,
+                                  parking: _parkingValue,
+                                  pcr: _pcrValue,
+                                  hospitalize: _hospitalizeValue,
+                                  system: _systemValue,
+                                  hosp_ref: memberId,
+                                )
+                              );
+                            }
+                            
+                            ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(content: Text('회원정보가 수정되었습니다.')),
+                            );
+                            Navigator.pushReplacementNamed(context, '/member/editHosp.do');
                           }
-                          
-                          Navigator.of(context).pushNamed('/member/editHosp.do');
-                          ScaffoldMessenger.of(context).showSnackBar(
-                              const SnackBar(content: Text('회원정보가 수정되었습니다.')),
-                          );
                         },
                         color: Colors.blue,
                       ),
