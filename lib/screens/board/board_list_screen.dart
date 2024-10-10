@@ -25,6 +25,7 @@ class _BoardListScreenState extends State<BoardListScreen> {
   @override
   Widget build(BuildContext context) {
     final boardProvider = Provider.of<BoardProvider>(context);
+
     List<Board> boardList = boardProvider.listBoard(widget.boardName);
   
     return Scaffold(

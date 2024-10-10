@@ -1,6 +1,5 @@
 import 'package:doctorviewapp/main.dart';
 import 'package:doctorviewapp/screens/board/board_list_screen.dart';
-import 'package:doctorviewapp/theme/colors.dart';
 import 'package:flutter/material.dart';
 
 class BoardMainScreen extends StatefulWidget {
@@ -26,7 +25,6 @@ class _BoardMainScreenState extends State<BoardMainScreen> {
           ),
         ),
       ),
-
       
       body: Center(
         child: Column(

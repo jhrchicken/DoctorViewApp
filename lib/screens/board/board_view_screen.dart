@@ -1,7 +1,10 @@
 import 'package:doctorviewapp/models/board.dart';
 import 'package:doctorviewapp/models/comment.dart';
+import 'package:doctorviewapp/models/member.dart';
 import 'package:doctorviewapp/providers/board_provider.dart';
 import 'package:doctorviewapp/providers/comment_provider.dart';
+import 'package:doctorviewapp/providers/member_provider.dart';
+import 'package:doctorviewapp/screens/mypage/join/login.dart';
 import 'package:doctorviewapp/theme/colors.dart';
 import 'package:doctorviewapp/widgets/board/board_detail_widget.dart';
 import 'package:doctorviewapp/widgets/board/comment_item_widget.dart';
@@ -26,9 +29,23 @@ class _BoardViewScreenState extends State<BoardViewScreen> {
   Widget build(BuildContext context) {
     final boardProvider = Provider.of<BoardProvider>(context);
     final commentProvider = Provider.of<CommentProvider>(context);
+    final memberProvider = Provider.of<MemberProvider>(context, listen: false);
 
     Board? board = boardProvider.selectBoard(widget.boardIdx);
     List<Comment> commentList = commentProvider.listComment(board!.boardIdx);
+    Member? loginMember = memberProvider.loginMember;
+
+    // 로그인 하지 않은 경우
+    // if (loginMember == null) {
+    //   WidgetsBinding.instance.addPostFrameCallback((_) {
+    //     Navigator.pushReplacement(
+    //       context,
+    //       MaterialPageRoute(
+    //         builder: (context) => const Login(),
+    //       ),
+    //     );
+    //   });
+    // }
 
     return Scaffold(
       appBar: AppBar(

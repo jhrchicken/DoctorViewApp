@@ -1,7 +1,10 @@
 import 'package:doctorviewapp/component/secondary_outline_button.dart';
 import 'package:doctorviewapp/main.dart';
 import 'package:doctorviewapp/models/board.dart';
+import 'package:doctorviewapp/models/member.dart';
 import 'package:doctorviewapp/providers/board_provider.dart';
+import 'package:doctorviewapp/providers/member_provider.dart';
+import 'package:doctorviewapp/screens/mypage/join/login.dart';
 import 'package:doctorviewapp/theme/colors.dart';
 import 'package:doctorviewapp/widgets/common/content_input_field.dart';
 import 'package:doctorviewapp/widgets/common/title_input_field.dart';
@@ -37,13 +40,28 @@ class _BoardWriteScreenState extends State<BoardWriteScreen> {
   @override
   Widget build(BuildContext context) {
     final boardProvider = Provider.of<BoardProvider>(context);
+    final memberProvider = Provider.of<MemberProvider>(context, listen: false);
+
+    Member? loginMember = memberProvider.loginMember;
+
+    // 로그인 하지 않은 경우
+    if (loginMember == null) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(
+            builder: (context) => const Login(),
+          ),
+        );
+      });
+    }
 
     return Scaffold(
       // 상단바
       appBar: AppBar(
         backgroundColor: Colors.white,
         title: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween, // Text와 Button을 양 끝으로 배치
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
               '글 쓰기',
@@ -63,7 +81,7 @@ class _BoardWriteScreenState extends State<BoardWriteScreen> {
                       title: title,
                       content: content,
                       visitcount: 0,
-                      writerRef: 'harim',
+                      writerRef: loginMember!.id,
                     ),
                   );
                   Navigator.pop(context);

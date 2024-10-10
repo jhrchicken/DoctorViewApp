@@ -1,7 +1,10 @@
 import 'package:doctorviewapp/component/secondary_outline_button.dart';
 import 'package:doctorviewapp/main.dart';
 import 'package:doctorviewapp/models/board.dart';
+import 'package:doctorviewapp/models/member.dart';
 import 'package:doctorviewapp/providers/board_provider.dart';
+import 'package:doctorviewapp/providers/member_provider.dart';
+import 'package:doctorviewapp/screens/mypage/join/login.dart';
 import 'package:doctorviewapp/theme/colors.dart';
 import 'package:doctorviewapp/widgets/common/content_input_field.dart';
 import 'package:doctorviewapp/widgets/common/title_input_field.dart';
@@ -50,8 +53,50 @@ class _BoardEditScreenState extends State<BoardEditScreen> {
   @override
   Widget build(BuildContext context) {
     final boardProvider = Provider.of<BoardProvider>(context);
+    final memberProvider = Provider.of<MemberProvider>(context);
 
     Board? board = boardProvider.selectBoard(widget.boardIdx);
+    Member? loginMember = memberProvider.loginMember;
+    Member? member = memberProvider.selectMember(board!.writerRef.toString());
+
+    // 로그인 하지 않은 경우
+    if (loginMember == null) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(
+            builder: (context) => const Login(),
+          ),
+        );
+      });
+    }
+
+    // 글 작성자가 탈퇴하거나 로그인 사용자와 글 작성자가 다른 경우
+    if (member == null || loginMember!.id != member.id) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return AlertDialog(
+              // title: const Text('알림'),
+              content: const Text('글 작성자만 수정할 수 있습니다.'),
+              actions: [
+                TextButton(
+                  child: const Text('확인'),
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                    Navigator.of(context).pop();
+                  },
+                ),
+              ],
+            );
+          },
+        );
+      });
+    }
+
+
+
 
     return Scaffold(
       // 상단바
@@ -72,7 +117,7 @@ class _BoardEditScreenState extends State<BoardEditScreen> {
                   final String content = _contentController.text;
                   boardProvider.insertBoard(
                     Board(
-                      boardIdx: board!.boardIdx,
+                      boardIdx: board.boardIdx,
                       boardName: board.boardName,
                       postdate: board.postdate,
                       title: title,

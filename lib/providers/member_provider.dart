@@ -36,7 +36,7 @@ class MemberProvider extends ChangeNotifier {
       auth: 'ROLE_USER'
       ),
       Member(
-      id: 'leeehr', 
+      id: 'leehr', 
       password: '12341234', 
       name: '이회리', 
       nickname: '소극적인 양배추', 
