@@ -6,10 +6,12 @@ import 'package:provider/provider.dart';
 
 class CommentActionSheet extends StatefulWidget {
   final int commIdx;
+  final VoidCallback onEdit;
 
   const CommentActionSheet({
     super.key,
     required this.commIdx,
+    required this.onEdit,
   });
 
   @override
@@ -17,12 +19,11 @@ class CommentActionSheet extends StatefulWidget {
 }
 
 class _CommentActionSheetState extends State<CommentActionSheet> {
-
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        dreviewActionSheet(context);
+        _showActionSheet(context);
       },
       child: Icon(
         Icons.more_vert_sharp,
@@ -32,8 +33,8 @@ class _CommentActionSheetState extends State<CommentActionSheet> {
     );
   }
 
-  void dreviewActionSheet(BuildContext context) {
-    final commentProvider = Provider.of<CommentProvider>(context, listen:  false);
+  void _showActionSheet(BuildContext context) {
+    final commentProvider = Provider.of<CommentProvider>(context, listen: false);
     Comment? comment = commentProvider.selectComment(widget.commIdx);
 
     showCupertinoModalPopup(
@@ -57,15 +58,8 @@ class _CommentActionSheetState extends State<CommentActionSheet> {
               // 수정
               CupertinoActionSheetAction(
                 onPressed: () {
-                  // ****************** 수정 필요 ****************** 
-                  // Navigator.push(
-                  //   context,
-                  //   MaterialPageRoute(
-                  //     builder: (context) => DreviewEditScreen(
-                  //       reviewIdx: dreview!.reviewIdx,
-                  //     ),
-                  //   ),
-                  // );
+                  Navigator.pop(context);
+                  widget.onEdit();  // 수정 버튼 클릭 시 onEdit 호출
                 },
                 child: Text(
                   '수정',

@@ -4,6 +4,7 @@ import 'package:doctorviewapp/providers/comment_provider.dart';
 import 'package:doctorviewapp/providers/member_provider.dart';
 import 'package:doctorviewapp/theme/colors.dart';
 import 'package:doctorviewapp/widgets/board/comment_action_sheet.dart';
+import 'package:doctorviewapp/widgets/common/title_input_field.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -20,84 +21,153 @@ class CommentItemWidget extends StatefulWidget {
 }
 
 class _CommentItemWidgetState extends State<CommentItemWidget> {
+  bool isEditing = false; // 수정 상태를 관리하는 변수
+  final TextEditingController _editingController = TextEditingController();
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  final FocusNode _editingFocusNode = FocusNode();
+
+  @override
+  void initState() {
+    super.initState();
+    // 초기화 시 댓글 내용을 컨트롤러에 설정
+    final commentProvider = Provider.of<CommentProvider>(context, listen: false);
+    Comment? comment = commentProvider.selectComment(widget.commIdx);
+    _editingController.text = comment?.content ?? '';
+  }
 
   @override
   Widget build(BuildContext context) {
-
     final commentProvider = Provider.of<CommentProvider>(context);
     final memberProvider = Provider.of<MemberProvider>(context);
-    
+
     Comment? comment = commentProvider.selectComment(widget.commIdx);
     Member? loginMember = memberProvider.loginMember;
     Member? member = memberProvider.selectMember(comment!.writerRef.toString());
 
-    return Container(
-      padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
-      decoration: BoxDecoration(
-        color: Colors.grey[100],
-        borderRadius: BorderRadius.circular(8),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Row(
-                children: [
-                  Icon(
-                    Icons.account_circle,
-                    color: Colors.grey[300],
-                    size: 30,
+    return Material(
+      child: Container(
+        padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
+        decoration: BoxDecoration(
+          color: Colors.grey[100],
+          borderRadius: BorderRadius.circular(8),
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Row(
+                  children: [
+                    Icon(
+                      Icons.account_circle,
+                      color: Colors.grey[300],
+                      size: 30,
+                    ),
+                    const SizedBox(width: 8),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Row(
+                          children: [
+                            const SizedBox(width: 2),
+                            Text(
+                              member?.nickname ?? '알 수 없음',
+                              style: TextStyle(
+                                fontSize: 14,
+                                color: (member?.id != null && loginMember?.id != null && member!.id != loginMember!.id) 
+                                  ? Colors.grey[900] 
+                                  : pointColor2,
+                                fontWeight: FontWeight.w700,
+                              ),
+                            ),
+                            const SizedBox(width: 10),
+                            // 작성일
+                            Text(
+                              '${comment.postdate.year}-${comment.postdate.month}-${comment.postdate.day}',
+                              style: TextStyle(
+                                fontSize: 12,
+                                color: Colors.grey[500],
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+                CommentActionSheet(
+                  commIdx: comment.commIdx,
+                  onEdit: () {
+                    setState(() {
+                      isEditing = true;
+                    });
+                  },
+                ),
+              ],
+            ),
+            const SizedBox(height: 10),
+            // 내용
+            isEditing
+              ? TitleInputField(
+                focusNode: _editingFocusNode,
+                controller: _editingController,
+                labelText: '',
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return '내용 입력은 필수사항입니다.';
+                  }
+                  return null;
+                },
+              )
+              : Text(
+                  comment.content,
+                  style: TextStyle(
+                    fontSize: 14,
+                    color: Colors.grey[900],
                   ),
-                  const SizedBox(width: 8),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Row(
-                        children: [
-                          const SizedBox(width: 2),
-                          Text(
-                            member?.nickname ?? '알 수 없음',
-                            style: TextStyle(
-                              fontSize: 14,
-                              color: (member?.id != null && loginMember?.id != null && member!.id != loginMember!.id) 
-                                ? Colors.grey[900] 
-                                : pointColor2,
-                              fontWeight: FontWeight.w700,
-                            ),
-                          ),
-                          const SizedBox(width: 10),
-                          // 작성일
-                          Text(
-                            '${comment.postdate.year}.${comment.postdate.month}.${comment.postdate.day}',
-                            style: TextStyle(
-                              fontSize: 14,
-                              color: Colors.grey[500],
-                            ),
-                          ),
-                        ],
-                      ),
-                    ],
+                ),
+            // 수정 상태일 때 저장 및 취소 버튼 추가
+            if (isEditing)
+              Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  TextButton(
+                    onPressed: () {
+                      commentProvider.updateComment(
+                        Comment(
+                          commIdx: comment.commIdx,
+                          postdate: comment.postdate,
+                          content: _editingController.text,
+                          boardRef: comment.boardRef,
+                          writerRef: comment.writerRef,
+                        ),
+                      );
+                      setState(() {
+                        isEditing = false;
+                      });
+                    },
+                    style: TextButton.styleFrom(
+                      foregroundColor: pointColor2,
+                    ),
+                    child: const Text('확인'),
+                  ),
+                  TextButton(
+                    onPressed: () {
+                      setState(() {
+                        isEditing = false;
+                      });
+                    },
+                    style: TextButton.styleFrom(
+                      foregroundColor: pointColor2,
+                    ),
+                    child: const Text('취소'),
                   ),
                 ],
               ),
-              CommentActionSheet(
-                commIdx: comment.commIdx
-              ),
-            ],
-          ),
-          const SizedBox(height: 10),
-          // 내용
-          Text(
-            comment.content,
-            style: TextStyle(
-              fontSize: 14,
-              color: Colors.grey[900],
-            ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

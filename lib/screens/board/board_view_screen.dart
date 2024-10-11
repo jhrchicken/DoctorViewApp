@@ -119,7 +119,7 @@ class _BoardViewScreenState extends State<BoardViewScreen> {
                   color: Colors.white,
                 ),
                 child: BoardDetailWidget(
-                  boardIdx: board.boardIdx
+                  boardIdx: board.boardIdx,
                 ),
               ),
             ),
