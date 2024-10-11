@@ -66,6 +66,7 @@ class _CheckMemberState extends State<CheckMember> {
               InputField(
                 focusNode: passwordFocus,
                 controller: passwordController,
+                obscureText: true,
                 labelText: "비밀번호",
                 validator: (value) {
                   if (value == null || value.isEmpty) {

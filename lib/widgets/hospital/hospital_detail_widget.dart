@@ -4,6 +4,7 @@ import 'package:doctorviewapp/models/likes.dart';
 import 'package:doctorviewapp/providers/hospital_provider.dart';
 import 'package:doctorviewapp/providers/hreview_provider.dart';
 import 'package:doctorviewapp/providers/likes_provider.dart';
+import 'package:doctorviewapp/screens/reserve/reserve_proceed_screen.dart';
 import 'package:doctorviewapp/theme/colors.dart';
 import 'package:doctorviewapp/widgets/common/primary_button.dart';
 import 'package:doctorviewapp/widgets/common/secondary_button.dart';
@@ -271,7 +272,17 @@ class _HospitalDetailWidgetState extends State<HospitalDetailWidget> {
         ),
         PrimaryButton(
           text: '예약',
-          onPressed: () {},
+          // onPressed: () {},
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => ReserveProceedScreen(
+                  hospRef: hospital.id,
+                ),
+              ),
+            );
+          },
           color: pointColor2,
         ),
       ],

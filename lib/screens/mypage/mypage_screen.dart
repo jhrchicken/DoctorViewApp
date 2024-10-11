@@ -1,8 +1,10 @@
 import 'package:doctorviewapp/header.dart';
+import 'package:doctorviewapp/models/doctor.dart';
 import 'package:doctorviewapp/providers/member_provider.dart';
 import 'package:doctorviewapp/screens/mypage/edit/check/check_member.dart';
 import 'package:doctorviewapp/screens/mypage/edit/edit_hosp.dart';
 import 'package:doctorviewapp/screens/mypage/edit/edit_user.dart';
+import 'package:doctorviewapp/screens/mypage/hosp_mypage/list_doctor.dart';
 import 'package:doctorviewapp/screens/mypage/join/find/find_id.dart';
 import 'package:doctorviewapp/screens/mypage/join/find/find_id_success.dart';
 import 'package:doctorviewapp/screens/mypage/join/find/find_pass.dart';
@@ -13,8 +15,10 @@ import 'package:doctorviewapp/screens/mypage/join/join_hosp_success.dart';
 import 'package:doctorviewapp/screens/mypage/join/join_user_success.dart';
 import 'package:doctorviewapp/screens/mypage/join/login.dart';
 import 'package:doctorviewapp/screens/mypage/join/user.dart';
-import 'package:doctorviewapp/screens/mypage/memberList.dart';
+import 'package:doctorviewapp/screens/mypage/testpage/memberList.dart';
+import 'package:doctorviewapp/screens/mypage/testpage/reserveList.dart';
 import 'package:doctorviewapp/theme/colors.dart';
+import 'package:doctorviewapp/widgets/member/mypage_menu.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -44,7 +48,11 @@ class MyPage extends StatelessWidget {
         '/member/checkMember.do': (context) => const CheckMember(),
         '/member/editUser.do': (context) => const EditUser(),
         '/member/editHosp.do': (context) => const EditHosp(),
+        '/member/doctorInfo.do': (context) => const DoctorList(),
+
+        /****************** 디버깅용 ******************/
         '/member/listMember.do': (context) => const MemberList(),
+        '/member/listReserve.do': (context) => const ReserveList(),
       },
       // home: const MyHomePage(title: '앱 바 타이틀'),
     );
@@ -120,8 +128,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                         Navigator.of(context).pushNamed("/member/login.do");
                                       },
                                       style: ElevatedButton.styleFrom(
-                                        /********** 수정: point2 로 변경 필요 **********/
-                                        backgroundColor: const Color(0xff005ad5),
+                                        backgroundColor: pointColor2,
                                         foregroundColor: Colors.white,
                                         textStyle: const TextStyle(fontWeight: FontWeight.w500, fontSize: 25),
                                         shape: RoundedRectangleBorder(
@@ -153,6 +160,8 @@ class _MyHomePageState extends State<MyHomePage> {
                                       child: const Text('회원가입'),
                                     ),
                                   ),
+
+                                  
                               
                               
                                 ]
@@ -163,17 +172,39 @@ class _MyHomePageState extends State<MyHomePage> {
                       ),
                     ),
 
-                    
+                    const SizedBox(height: 40,),
 
-                    
+                    // 추가기능
+                    Text(
+                      '상담 및 안내',
+                      style: TextStyle(
+                        color: Colors.grey[600],
+                        fontWeight: FontWeight.w500,
+                        fontSize: 18,
+                      ),
+                    ),
+                    const SizedBox(height: 10,),
+                    MypageMenu(title: '고객센터'),
+
+                    const SizedBox(height: 40,),
+                    Text(
+                      '앱 정보',
+                      style: TextStyle(
+                        color: Colors.grey[600],
+                        fontWeight: FontWeight.w500,
+                        fontSize: 18,
+                      ),
+                    ),
+                    const SizedBox(height: 10,),
+                    MypageMenu(title: '환경설정'),
+                    MypageMenu(title: '약관 및 정책'),
+                    MypageMenu(title: '현재 앱 버전'),
                   ]
 
                   // 로그인 후
                   else ...[
-                    // 유저
-                    if (loginMember.auth == 'ROLE_USER') ...[
 
-                      // 회원관리
+                    // 회원관리
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
@@ -199,6 +230,10 @@ class _MyHomePageState extends State<MyHomePage> {
                         ],
                       ),
                       const SizedBox(height: 30,),
+
+
+                    // 유저
+                    if (loginMember.auth == 'ROLE_USER') ...[
                       SizedBox(
                         height: 100,
                         child: Row(
@@ -304,7 +339,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       ),
                       const SizedBox(height: 20,),
                       Container(
-                        padding: const EdgeInsets.symmetric(vertical: 10), // 상하 패딩 추가
+                        padding: const EdgeInsets.symmetric(vertical: 10), 
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
@@ -327,7 +362,7 @@ class _MyHomePageState extends State<MyHomePage> {
                         ),
                       ),
                       Container(
-                        padding: const EdgeInsets.symmetric(vertical: 10), // 상하 패딩 추가
+                        padding: const EdgeInsets.symmetric(vertical: 10),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
@@ -350,7 +385,7 @@ class _MyHomePageState extends State<MyHomePage> {
                         ),
                       ),
                       Container(
-                        padding: const EdgeInsets.symmetric(vertical: 10), // 상하 패딩 추가
+                        padding: const EdgeInsets.symmetric(vertical: 10), 
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
@@ -383,7 +418,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       ),
                       const SizedBox(height: 20,),
                       Container(
-                        padding: const EdgeInsets.symmetric(vertical: 10), // 상하 패딩 추가
+                        padding: const EdgeInsets.symmetric(vertical: 10), 
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
@@ -410,32 +445,6 @@ class _MyHomePageState extends State<MyHomePage> {
 
                     // 병원
                     else if (loginMember.auth == 'ROLE_HOSP') ...[
-                      // 회원관리
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            '${loginMember.name} 님',
-                            style: TextStyle(
-                              color: Colors.grey[900],
-                              fontWeight: FontWeight.w500,
-                              fontSize: 30,
-                            ),
-                          ),
-
-                          const SizedBox(width: 20,),
-                          
-                          // 회원수정 버튼
-                          IconButton(
-                            icon: Icon(Icons.settings, color: Colors.grey[900]),
-                            iconSize: 30,
-                            onPressed: () {
-                              Navigator.of(context).pushNamed("/member/checkMember.do");
-                            },
-                          ),
-                        ],
-                      ),
-                      const SizedBox(height: 30,),
                       SizedBox(
                         height: 100,
                         child: Row(
@@ -473,7 +482,7 @@ class _MyHomePageState extends State<MyHomePage> {
                             Expanded(
                               child: GestureDetector(
                                 onTap: () {
-                                  Navigator.of(context).pushNamed("/"); // 의사관리 페이지로 이동
+                                  Navigator.of(context).pushNamed("/member/doctorInfo.do"); // 의사관리 페이지로 이동
                                 },
                                 child: Column(
                                   mainAxisAlignment: MainAxisAlignment.center,
@@ -541,7 +550,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       ),
                       const SizedBox(height: 20,),
                       Container(
-                        padding: const EdgeInsets.symmetric(vertical: 10), // 상하 패딩 추가
+                        padding: const EdgeInsets.symmetric(vertical: 10), 
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
@@ -564,7 +573,7 @@ class _MyHomePageState extends State<MyHomePage> {
                         ),
                       ),
                       Container(
-                        padding: const EdgeInsets.symmetric(vertical: 10), // 상하 패딩 추가
+                        padding: const EdgeInsets.symmetric(vertical: 10), 
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
@@ -587,7 +596,7 @@ class _MyHomePageState extends State<MyHomePage> {
                         ),
                       ),
                       Container(
-                        padding: const EdgeInsets.symmetric(vertical: 10), // 상하 패딩 추가
+                        padding: const EdgeInsets.symmetric(vertical: 10), 
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
@@ -620,7 +629,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       ),
                       const SizedBox(height: 20,),
                       Container(
-                        padding: const EdgeInsets.symmetric(vertical: 10), // 상하 패딩 추가
+                        padding: const EdgeInsets.symmetric(vertical: 10),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
@@ -646,22 +655,42 @@ class _MyHomePageState extends State<MyHomePage> {
                     ] 
                   ],
                   
+                  /****************** 디버깅용 ******************/
                   SizedBox(
-                      width: 200,
-                      height: 100,
-                      child: ElevatedButton(
-                        onPressed: () {
-                          Navigator.of(context).pushNamed("/member/listMember.do");
-                        },
-                        style: ElevatedButton.styleFrom(
-                          textStyle: const TextStyle(fontWeight: FontWeight.w500, fontSize: 30.0),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(30),
-                          ),
+                    width: 200,
+                    height: 100,
+                    child: ElevatedButton(
+                      onPressed: () {
+                        Navigator.of(context).pushNamed("/member/listMember.do");
+                      },
+                      style: ElevatedButton.styleFrom(
+                        textStyle: const TextStyle(fontWeight: FontWeight.w500, fontSize: 30.0),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(30),
                         ),
-                        child: const Text('회원목록'),
                       ),
+                      child: const Text('회원목록'),
                     ),
+                  ),
+                  SizedBox(
+                    width: 200,
+                    height: 100,
+                    child: ElevatedButton(
+                      onPressed: () {
+                        Navigator.of(context).pushNamed("/member/listReserve.do");
+                      },
+                      style: ElevatedButton.styleFrom(
+                        textStyle: const TextStyle(fontWeight: FontWeight.w500, fontSize: 30.0),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(30),
+                        ),
+                      ),
+                      child: const Text('예약목록'),
+                    ),
+                  ),
+
+
+
                 ],
               ),
             ),

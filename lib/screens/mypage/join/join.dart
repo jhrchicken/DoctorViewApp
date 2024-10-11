@@ -1,4 +1,5 @@
 import 'package:doctorviewapp/header.dart';
+import 'package:doctorviewapp/theme/colors.dart';
 import 'package:flutter/material.dart';
 
 
@@ -61,7 +62,9 @@ Widget JoinButton({
         Navigator.of(context).pushNamed(nextPage);
       },
       style: ElevatedButton.styleFrom(
-        textStyle: const TextStyle(fontWeight: FontWeight.w700, fontSize: 30.0),
+        backgroundColor: pointColor2,
+        foregroundColor: Colors.white,
+        textStyle: const TextStyle(fontWeight: FontWeight.w500, fontSize: 30.0,),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(30),
         ),

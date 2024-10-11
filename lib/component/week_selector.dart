@@ -7,7 +7,7 @@ import 'package:provider/provider.dart';
 
 class WeekdaySelector extends StatefulWidget {
   final Function(List<String>) onSelectedDaysChanged;
-  final List<String>? preSelectedDays; // 사전에 선택된 요일 리스트 (회원 정보 수정 시 사용)
+  final List<String>? preSelectedDays; // 회원정보 수정용
 
   const WeekdaySelector({super.key, required this.onSelectedDaysChanged, this.preSelectedDays});
 
@@ -32,7 +32,6 @@ class _WeekdaySelectorState extends State<WeekdaySelector> {
   void initState() {
     super.initState();
 
-    // 사전에 선택된 요일이 있을 경우 초기화
     if (widget.preSelectedDays != null) {
       for (int i = 0; i < daysOfWeek.length; i++) {
         if (widget.preSelectedDays!.contains('${daysOfWeek[i]}요일')) {

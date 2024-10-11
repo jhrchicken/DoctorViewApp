@@ -12,6 +12,7 @@ class InputField extends StatefulWidget {
   int? maxLength;
   double? width;
   bool readOnly;
+  int maxLines;
 
   InputField({
     super.key,
@@ -26,6 +27,7 @@ class InputField extends StatefulWidget {
     this.maxLength,
     this.width,
     this.readOnly = false,
+    this.maxLines = 1,
   });
 
   @override
