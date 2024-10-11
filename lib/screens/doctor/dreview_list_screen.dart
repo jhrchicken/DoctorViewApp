@@ -1,3 +1,4 @@
+import 'package:doctorviewapp/main.dart';
 import 'package:doctorviewapp/models/dreview.dart';
 import 'package:doctorviewapp/providers/dreview_provider.dart';
 import 'package:doctorviewapp/screens/doctor/dreview_write_screen.dart';
@@ -34,11 +35,7 @@ class _DreviewListScreenState extends State<DreviewListScreen> {
         backgroundColor: Colors.white,
         title: Text(
           '리뷰',
-          style: TextStyle(
-            color: Colors.grey[900],
-            fontSize: 16,
-            fontWeight: FontWeight.w700,
-          ),
+          style: CustomTextStyles.appbarText,
         ),
         actions: [
           IconButton(
@@ -70,7 +67,7 @@ class _DreviewListScreenState extends State<DreviewListScreen> {
                           '후기',
                           style: TextStyle(
                             color: Colors.grey[900],
-                            fontSize: 16,
+                            fontSize: 18,
                             fontWeight: FontWeight.w900,
                           ),
                         ),
@@ -79,7 +76,7 @@ class _DreviewListScreenState extends State<DreviewListScreen> {
                           dreviewList.length.toString(),
                           style: const TextStyle(
                             color: pointColor2,
-                            fontSize: 16,
+                            fontSize: 18,
                             fontWeight: FontWeight.w900,
                           ),
                         ),

@@ -1,3 +1,4 @@
+import 'package:doctorviewapp/main.dart';
 import 'package:doctorviewapp/models/doctor.dart';
 import 'package:doctorviewapp/models/dreview.dart';
 import 'package:doctorviewapp/models/hashtag.dart';
@@ -51,11 +52,7 @@ class _DreviewWriteScreenState extends State<DreviewWriteScreen> {
         backgroundColor: Colors.white,
         title: Text(
           '리뷰 작성',
-          style: TextStyle(
-            color: Colors.grey[900],
-            fontSize: 16,
-            fontWeight: FontWeight.w700,
-          ),
+          style: CustomTextStyles.appbarText,
         ),
         actions: [
           IconButton(
@@ -80,7 +77,7 @@ class _DreviewWriteScreenState extends State<DreviewWriteScreen> {
                 '  ${doctor!.name} 의사',
                 style: TextStyle(
                   color: Colors.grey[900],
-                  fontSize: 16,
+                  fontSize: 18,
                   fontWeight: FontWeight.w900,
                 ),
               ),
@@ -191,9 +188,6 @@ class _DreviewWriteScreenState extends State<DreviewWriteScreen> {
                                   ),
                                 );
                               }
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                const SnackBar(content: Text('리뷰가 작성되었습니다')),
-                              );
                               Navigator.pop(context);
                             }
                           },

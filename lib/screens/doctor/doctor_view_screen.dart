@@ -84,17 +84,17 @@ class _DoctorViewScreenState extends State<DoctorViewScreen> {
     Member? loginMember = memberProvider.loginMember;
 
     // 로그인 하지 않은 경우
-    // if (loginMember == null) {
-    //   WidgetsBinding.instance.addPostFrameCallback((_) {
-    //     Navigator.pushReplacement(
-    //       context,
-    //       MaterialPageRoute(
-    //         builder: (context) => const Login(),
-    //       ),
-    //     );
-    //   });
-    //   return const SizedBox();
-    // }
+    if (loginMember == null) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(
+            builder: (context) => const Login(),
+          ),
+        );
+      });
+      return const SizedBox();
+    }
 
     return Scaffold(
       appBar: AppBar(

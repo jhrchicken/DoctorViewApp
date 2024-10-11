@@ -1,5 +1,8 @@
 import 'package:doctorviewapp/models/dreply.dart';
+import 'package:doctorviewapp/models/member.dart';
 import 'package:doctorviewapp/providers/dreply_provider.dart';
+import 'package:doctorviewapp/providers/member_provider.dart';
+import 'package:doctorviewapp/theme/colors.dart';
 import 'package:doctorviewapp/widgets/doctor/dreply_action_sheet.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -20,10 +23,12 @@ class _DreplyItemWidgetState extends State<DreplyItemWidget> {
 
   @override
   Widget build(BuildContext context) {
-
     final dreplyProvider = Provider.of<DreplyProvider>(context);
+    final memberProvider = Provider.of<MemberProvider>(context);
 
     Dreply? dreply = dreplyProvider.selectDreply(widget.replyIdx);
+    Member? loginMember = memberProvider.loginMember;
+    Member? member = memberProvider.selectMember(dreply!.writerRef);
 
     return Container(
       padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
@@ -52,18 +57,21 @@ class _DreplyItemWidgetState extends State<DreplyItemWidget> {
                       Row(
                         children: [
                           const SizedBox(width: 2),
+                          // 작성자
                           Text(
-                            dreply!.writerRef,
+                            member?.nickname ?? '(알 수 없음)',
                             style: TextStyle(
-                              fontSize: 12,
-                              color: Colors.grey[900],
+                              fontSize: 14,
+                              color: (member?.id != null && loginMember?.id != null && member!.id != loginMember!.id) 
+                                ? Colors.grey[900] 
+                                : pointColor2,
                               fontWeight: FontWeight.w700,
                             ),
                           ),
                           const SizedBox(width: 10),
                           // 작성일
                           Text(
-                            '${dreply.date.year}.${dreply.date.month}.${dreply.date.day}',
+                            '${dreply.date.year}-${dreply.date.month}-${dreply.date.day}',
                             style: TextStyle(
                               fontSize: 12,
                               color: Colors.grey[500],
@@ -83,9 +91,9 @@ class _DreplyItemWidgetState extends State<DreplyItemWidget> {
           const SizedBox(height: 10),
           // 내용
           Text(
-            dreply.content,
+            '  ${dreply.content}',
             style: TextStyle(
-              fontSize: 12,
+              fontSize: 14,
               color: Colors.grey[900],
             ),
           ),

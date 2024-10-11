@@ -1,9 +1,14 @@
+import 'package:doctorviewapp/models/dreply.dart';
 import 'package:doctorviewapp/models/dreview.dart';
 import 'package:doctorviewapp/models/hashtag.dart';
 import 'package:doctorviewapp/models/likes.dart';
+import 'package:doctorviewapp/models/member.dart';
+import 'package:doctorviewapp/providers/dreply_provider.dart';
 import 'package:doctorviewapp/providers/dreview_provider.dart';
 import 'package:doctorviewapp/providers/hashtag_provider.dart';
 import 'package:doctorviewapp/providers/likes_provider.dart';
+import 'package:doctorviewapp/providers/member_provider.dart';
+import 'package:doctorviewapp/theme/colors.dart';
 import 'package:doctorviewapp/widgets/common/grey_button.dart';
 import 'package:doctorviewapp/widgets/doctor/dreview_action_sheet.dart';
 import 'package:flutter/material.dart';
@@ -28,10 +33,15 @@ class _DreviewDetailWidgetState extends State<DreviewDetailWidget> {
     final dreviewProvider = Provider.of<DreviewProvider>(context);
     final likesProvider = Provider.of<LikesProvider>(context);
     final hashtagProvider = Provider.of<HashtagProvider>(context);
+    final memberProvider = Provider.of<MemberProvider>(context);
+    final dreplyProvider = Provider.of<DreplyProvider>(context);
 
     Dreview? dreview = dreviewProvider.selectDreview(widget.reviewIdx);
     List<Likes> likesList = likesProvider.selectLikes('dreview', dreview!.reviewIdx.toString());
     List<Hashtag> hashtagList = hashtagProvider.listReviewHashtag(dreview.reviewIdx);
+    Member? loginMember = memberProvider.loginMember;
+    Member? member = memberProvider.selectMember(dreview.writerRef);
+    List<Dreply> dreplyList = dreplyProvider.listDreply(dreview.reviewIdx);
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -44,7 +54,7 @@ class _DreviewDetailWidgetState extends State<DreviewDetailWidget> {
                 Icon(
                   Icons.account_circle,
                   color: Colors.grey[300],
-                  size: 30,
+                  size: 50,
                 ),
                 const SizedBox(
                   width: 8,
@@ -58,10 +68,12 @@ class _DreviewDetailWidgetState extends State<DreviewDetailWidget> {
                           width: 2,
                         ),
                         Text(
-                          dreview.writerRef,
+                          member?.nickname ?? '(알 수 없음)',
                           style: TextStyle(
-                            fontSize: 12,
-                            color: Colors.grey[900],
+                            fontSize: 16,
+                            color: (member?.id != null && loginMember?.id != null && member!.id != loginMember!.id) 
+                              ? Colors.grey[900] 
+                              : pointColor2,
                             fontWeight: FontWeight.w700,
                           ),
                         ),
@@ -70,7 +82,7 @@ class _DreviewDetailWidgetState extends State<DreviewDetailWidget> {
                         ),
                         // 작성일
                         Text(
-                          '${dreview.date.year}.${dreview.date.month}.${dreview.date.day}',
+                          '${dreview.date.year}-${dreview.date.month}-${dreview.date.day}',
                           style: TextStyle(
                             fontSize: 12,
                             color: Colors.grey[500],
@@ -91,7 +103,7 @@ class _DreviewDetailWidgetState extends State<DreviewDetailWidget> {
                             return Icon(
                               Icons.star_rounded,
                               color: index < dreview.score ? Colors.amber : Colors.grey[300],
-                              size: 16,
+                              size: 18,
                             );
                           }),
                         ),
@@ -128,9 +140,9 @@ class _DreviewDetailWidgetState extends State<DreviewDetailWidget> {
         
         // 내용
         Text(
-          dreview.content,
+          '  ${dreview.content}',
           style: TextStyle(
-            fontSize: 12,
+            fontSize: 14,
             color: Colors.grey[900],
           ),
         ),
@@ -140,46 +152,49 @@ class _DreviewDetailWidgetState extends State<DreviewDetailWidget> {
         ),
 
         // 좋아요수 리뷰수
-        Row(
+        const Row(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            Row(
-              children: [
-                Icon(
-                  Icons.favorite_border_rounded,
-                  color: Colors.grey[500],
-                  size: 20,
-                ),
-                const SizedBox(width: 4),
-                Text(
-                  likesList.length.toString(),
-                  style: TextStyle(
-                    fontSize: 14,
-                    color: Colors.grey[700],
-                  ),
-                ),
-              ],
+            SizedBox(
+              width: 7,
             ),
-            const SizedBox(
-              width: 5,
-            ),
-            Row(
-              children: [
-                Icon(
-                  Icons.favorite_border_rounded,
-                  color: Colors.grey[500],
-                  size: 20,
-                ),
-                const SizedBox(width: 4),
-                Text(
-                  likesList.length.toString(),
-                  style: TextStyle(
-                    fontSize: 14,
-                    color: Colors.grey[700],
-                  ),
-                ),
-              ],
-            ),
+            // Row(
+            //   children: [
+            //     Icon(
+            //       Icons.favorite_border_rounded,
+            //       color: Colors.grey[500],
+            //       size: 20,
+            //     ),
+            //     const SizedBox(width: 4),
+            //     Text(
+            //       likesList.length.toString(),
+            //       style: TextStyle(
+            //         fontSize: 14,
+            //         color: Colors.grey[700],
+            //       ),
+            //     ),
+            //   ],
+            // ),
+            // const SizedBox(
+            //   width: 10,
+            // ),
+            // Row(
+            //   children: [
+            //     Icon(
+            //       Icons.mode_comment_outlined,
+            //       color: Colors.grey[500],
+            //       size: 20,
+            //     ),
+            //     const SizedBox(width: 4),
+            //     Text(
+            //       dreplyList.length.toString(),
+            //       style: TextStyle(
+            //         fontSize: 14,
+            //         color: Colors.grey[700],
+            //       ),
+            //     ),
+            //   ],
+            // ),
           ],
         )
       ],
