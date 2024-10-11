@@ -1,6 +1,10 @@
+import 'package:doctorviewapp/main.dart';
 import 'package:doctorviewapp/models/hospital.dart';
 import 'package:doctorviewapp/providers/hospital_provider.dart';
 import 'package:doctorviewapp/screens/reserve/reserve_check_screen.dart';
+import 'package:doctorviewapp/theme/colors.dart';
+import 'package:doctorviewapp/widgets/common/primary_button.dart';
+import 'package:doctorviewapp/widgets/reserve/reserve_select_date_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -22,18 +26,14 @@ class _ReserveProceedScreenState extends State<ReserveProceedScreen> {
   @override
   Widget build(BuildContext context) {
     final hospitalProvider = Provider.of<HospitalProvider>(context);
-    Hospital? hospital = hospitalProvider.selectHosp(widget.hospRef);
+    // Hospital? hospital = hospitalProvider.selectHosp(widget.hospRef);
     
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,
         title: Text(
           '예약하기',
-          style: TextStyle(
-            color: Colors.grey[900],
-            fontSize: 16,
-            fontWeight: FontWeight.w700,
-          ),
+          style: CustomTextStyles.appbarText,
         ),
       ),
       body: SingleChildScrollView(
@@ -57,34 +57,19 @@ class _ReserveProceedScreenState extends State<ReserveProceedScreen> {
                     fontWeight: FontWeight.w800,
                   ),
                 ),
-                const SizedBox(height: 16),
+                const SizedBox(height: 30),
 
-                // 선택한 날짜
-                Text(
-                  '${_selectedDate != null ? _selectedDate!.month : DateTime.now().month}월 ${_selectedDate != null ? _selectedDate!.day : DateTime.now().day}일',
-                ),
-              
+                const ReserveSelectDateWidget(),
 
-                const SizedBox(height: 16),
 
-                ElevatedButton(
-                  onPressed: () async {
-                    DateTime? pickedDate = await showDatePicker(
-                      context: context,
-                      initialDate: DateTime.now(),
-                      firstDate: DateTime(2000),
-                      lastDate: DateTime(2101),
-                    );
-                    if (pickedDate != null && pickedDate != _selectedDate) {
-                      setState(() {
-                        _selectedDate = pickedDate;
-                      });
-                    }
-                  },
-                  child: const Text('날짜 선택'),
-                ),
 
-                ElevatedButton(
+
+
+
+
+                const SizedBox(height: 30),
+                PrimaryButton(
+                  text: '예약하기',
                   onPressed: () {
                     Navigator.push(
                       context,
@@ -93,8 +78,7 @@ class _ReserveProceedScreenState extends State<ReserveProceedScreen> {
                       ),
                     );
                   },
-                  child: const Text('예약하기'),
-                ),
+                  color: pointColor2)
 
                 
               ],

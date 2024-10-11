@@ -1,5 +1,6 @@
 import 'package:doctorviewapp/component/secondary_outline_button.dart';
 import 'package:doctorviewapp/header.dart';
+import 'package:doctorviewapp/screens/reserve/reserve_complete_screen.dart';
 import 'package:doctorviewapp/theme/colors.dart';
 import 'package:doctorviewapp/widgets/common/primary_button.dart';
 import 'package:doctorviewapp/widgets/reserve/reserve_check_text_widget.dart';
@@ -94,7 +95,18 @@ class _ReserveCheckScreenState extends State<ReserveCheckScreen> {
               ),
               
               const SizedBox(height: 30),
-              PrimaryButton(text: '다음', onPressed: (){}, color: pointColor2),
+              PrimaryButton(
+                text: '다음', 
+                onPressed: () {
+                  Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const ReserveCompleteScreen()
+                    ),
+                  );
+                },
+                color: pointColor2
+              ),
             ],
           ),
         ),
