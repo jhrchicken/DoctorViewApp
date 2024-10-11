@@ -82,7 +82,7 @@ class _DreviewDetailWidgetState extends State<DreviewDetailWidget> {
                         ),
                         // 작성일
                         Text(
-                          '${dreview.date.year}.${dreview.date.month}.${dreview.date.day}',
+                          '${dreview.date.year}-${dreview.date.month}-${dreview.date.day}',
                           style: TextStyle(
                             fontSize: 12,
                             color: Colors.grey[500],

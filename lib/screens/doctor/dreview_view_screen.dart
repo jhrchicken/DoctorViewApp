@@ -1,8 +1,10 @@
 import 'package:doctorviewapp/main.dart';
+import 'package:doctorviewapp/models/doctor.dart';
 import 'package:doctorviewapp/models/dreply.dart';
 import 'package:doctorviewapp/models/dreview.dart';
 import 'package:doctorviewapp/models/likes.dart';
 import 'package:doctorviewapp/models/member.dart';
+import 'package:doctorviewapp/providers/doctor_provider.dart';
 import 'package:doctorviewapp/providers/dreply_provider.dart';
 import 'package:doctorviewapp/providers/dreview_provider.dart';
 import 'package:doctorviewapp/providers/likes_provider.dart';
@@ -79,8 +81,11 @@ class _DreviewViewScreenState extends State<DreviewViewScreen> {
   Widget build(BuildContext context) {
     final dreviewProvider = Provider.of<DreviewProvider>(context);
     final dreplyProvider = Provider.of<DreplyProvider>(context);
+    final memberProvider = Provider.of<MemberProvider>(context);
+    final doctorProvider = Provider.of<DoctorProvider>(context);
 
     Dreview? dreview = dreviewProvider.selectDreview(widget.reviewIdx);
+    Member? loginMember = memberProvider.loginMember;
 
     if (dreview == null) {
       return Scaffold(
@@ -98,6 +103,7 @@ class _DreviewViewScreenState extends State<DreviewViewScreen> {
     }
 
     List<Dreply> dreplyList = dreplyProvider.listDreply(dreview.reviewIdx);
+    Doctor? doctor = doctorProvider.selectDoctor(dreview.docRef);
 
     return Scaffold(
       appBar: AppBar(
@@ -112,7 +118,7 @@ class _DreviewViewScreenState extends State<DreviewViewScreen> {
               isLike ? Icons.favorite_rounded : Icons.favorite_border_rounded,
               size: 24,
             ),
-            color: Colors.grey[700],
+            color: isLike ? Colors.red : Colors.grey[700],
             onPressed: _toggleLike,
           ),
         ],
@@ -174,68 +180,69 @@ class _DreviewViewScreenState extends State<DreviewViewScreen> {
       ),
 
       // 하단에 답변 입력창 고정
-      bottomNavigationBar: Padding(
-        padding: const EdgeInsets.symmetric(
-          horizontal: 16, vertical: 10
-        ),
-        child: Row(
-          children: [
-            Expanded(
-              child: TextField(
-                controller: _replyController,
-                style: TextStyle(
-                  color: Colors.grey[900],
-                  fontSize: 14,
-                ),
-                decoration: InputDecoration(
-                  hintText: '댓글을 입력하세요',
-                  hintStyle: TextStyle(
-                    color: Colors.grey[500],
+      bottomNavigationBar: (loginMember != null &&  loginMember.auth == 'ROLE_HOSP' && loginMember.id == doctor!.hospRef) ?
+        Padding(
+          padding: const EdgeInsets.symmetric(
+            horizontal: 16, vertical: 10
+          ),
+          child: Row(
+            children: [
+              Expanded(
+                child: TextField(
+                  controller: _replyController,
+                  style: TextStyle(
+                    color: Colors.grey[900],
                     fontSize: 14,
                   ),
-                  filled: true,
-                  fillColor: Colors.grey[100],
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(8),
-                    borderSide: BorderSide.none, // 외곽선 제거
-                  ),
-                  contentPadding: const EdgeInsets.symmetric(
-                    horizontal: 16,
-                    vertical: 5
-                  ),
-                  // 아이콘
-                  suffixIcon: IconButton(
-                    icon: const Icon(
-                      Icons.send_rounded,
-                      color: pointColor2
+                  decoration: InputDecoration(
+                    hintText: '댓글을 입력하세요',
+                    hintStyle: TextStyle(
+                      color: Colors.grey[500],
+                      fontSize: 14,
                     ),
-                    onPressed: () {
-                      if (_replyController.text.isNotEmpty) {
-                        dreplyProvider.insertDreply(
-                          Dreply(
-                            replyIdx: 0,
-                            date: DateTime.now(),
-                            content: _replyController.text,
-                            rewrite: 'F',
-                            writerRef: 'harim',
-                            reviewRef: dreview.reviewIdx,
-                          ),
-                        );
-                        _replyController.clear();
+                    filled: true,
+                    fillColor: Colors.grey[100],
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(8),
+                      borderSide: BorderSide.none, // 외곽선 제거
+                    ),
+                    contentPadding: const EdgeInsets.symmetric(
+                      horizontal: 16,
+                      vertical: 5
+                    ),
+                    // 아이콘
+                    suffixIcon: IconButton(
+                      icon: const Icon(
+                        Icons.send_rounded,
+                        color: pointColor2
+                      ),
+                      onPressed: () {
+                        if (_replyController.text.isNotEmpty) {
+                          dreplyProvider.insertDreply(
+                            Dreply(
+                              replyIdx: 0,
+                              date: DateTime.now(),
+                              content: _replyController.text,
+                              rewrite: 'F',
+                              writerRef: loginMember.id,
+                              reviewRef: dreview.reviewIdx,
+                            ),
+                          );
+                          _replyController.clear();
 
-                        // 상태 갱신
-                        setState(() {
-                          dreplyList = dreplyProvider.listDreply(dreview.reviewIdx);
-                        });
-                      }
-                    },
+                          // 상태 갱신
+                          setState(() {
+                            dreplyList = dreplyProvider.listDreply(dreview.reviewIdx);
+                          });
+                        }
+                      },
+                    ),
                   ),
                 ),
               ),
-            ),
-          ],
-        ),
-      ),
+            ],
+          ),
+      ) : null,
     );
   }
 }

@@ -188,9 +188,6 @@ class _DreviewWriteScreenState extends State<DreviewWriteScreen> {
                                   ),
                                 );
                               }
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                const SnackBar(content: Text('리뷰가 작성되었습니다')),
-                              );
                               Navigator.pop(context);
                             }
                           },
