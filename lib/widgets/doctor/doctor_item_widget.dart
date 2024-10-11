@@ -1,15 +1,17 @@
 import 'package:doctorviewapp/models/doctor.dart';
 import 'package:doctorviewapp/models/hospital.dart';
 import 'package:doctorviewapp/models/likes.dart';
+import 'package:doctorviewapp/models/member.dart';
 import 'package:doctorviewapp/providers/doctor_provider.dart';
 import 'package:doctorviewapp/providers/hospital_provider.dart';
 import 'package:doctorviewapp/providers/likes_provider.dart';
+import 'package:doctorviewapp/providers/member_provider.dart';
 import 'package:doctorviewapp/screens/doctor/doctor_view_screen.dart';
 import 'package:doctorviewapp/theme/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class DoctorItemWidget extends StatelessWidget {
+class DoctorItemWidget extends StatefulWidget {
   final int docIdx;
 
   const DoctorItemWidget({
@@ -18,14 +20,59 @@ class DoctorItemWidget extends StatelessWidget {
   });
 
   @override
+  State<DoctorItemWidget> createState() => _DoctorItemWidgetState();
+}
+
+class _DoctorItemWidgetState extends State<DoctorItemWidget> {
+  bool isLike = false;
+  Member? loginMember;
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    final likesProvider = Provider.of<LikesProvider>(context, listen: false);
+    final memberProvider = Provider.of<MemberProvider>(context, listen: false);
+
+    loginMember = memberProvider.loginMember;
+    if (loginMember != null) {
+      setState(() {
+        isLike = likesProvider.checkLikes('doctor', loginMember!.id, widget.docIdx.toString());
+      });
+    }
+  }
+
+  void _toggleLike() {
+    final likesProvider = Provider.of<LikesProvider>(context, listen: false);
+    final memberProvider = Provider.of<MemberProvider>(context, listen: false);
+
+    loginMember = memberProvider.loginMember;
+    if (loginMember != null) {
+      if (isLike) {
+        likesProvider.minusLikes('doctor', loginMember!.id, widget.docIdx.toString());
+      }
+      else {
+        likesProvider.plusLikes(
+          Likes(
+            likeIdx: 0,
+            memberRef: loginMember!.id,
+            tablename: 'doctor',
+            recodenum: widget.docIdx.toString(),
+          ),
+        );
+      }
+      setState(() {
+        isLike = !isLike;
+      });
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
     final doctorProvider = Provider.of<DoctorProvider>(context);
     final hospitalProvider = Provider.of<HospitalProvider>(context);
-    final likesProvider = Provider.of<LikesProvider>(context);
 
-    Doctor? doctor = doctorProvider.selectDoctor(docIdx);
+    Doctor? doctor = doctorProvider.selectDoctor(widget.docIdx);
     Hospital? hospital = hospitalProvider.selectHosp(doctor!.hospRef);
-    List<Likes> likesList = likesProvider.selectLikes('doctor', doctor.docIdx.toString());
 
     return GestureDetector(
       onTap: () {
@@ -55,7 +102,7 @@ class DoctorItemWidget extends StatelessWidget {
                       '${doctor.name} 의사',
                       style: TextStyle(
                         color: Colors.grey[900],
-                        fontSize: 16,
+                        fontSize: 18,
                         fontWeight: FontWeight.w700,
                       ),
                     ),
@@ -70,24 +117,13 @@ class DoctorItemWidget extends StatelessWidget {
                   ],
                 ),
                 GestureDetector(
-                  onTap: () {
-                    // 버튼 클릭 시의 동작
-                  },
+                  onTap: _toggleLike,
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
-                      const Icon(
-                        Icons.bookmark_border_rounded,
-                        color: pointColor1,
-                      ),
-                      const SizedBox(width: 4),
-                      Text(
-                        likesList.length.toString(),
-                        style: TextStyle(
-                          color: Colors.grey[700],
-                          fontSize: 14,
-                          fontWeight: FontWeight.w700,
-                        ),
+                      Icon(
+                        isLike ? Icons.bookmark : Icons.bookmark_border_rounded,
+                        color: pointColor2,
                       ),
                     ],
                   ),
@@ -105,7 +141,7 @@ class DoctorItemWidget extends StatelessWidget {
                       '전공',
                       style: TextStyle(
                         color: Colors.grey[700],
-                        fontSize: 12,
+                        fontSize: 14,
                         fontWeight: FontWeight.w700,
                       ),
                     ),
@@ -114,13 +150,12 @@ class DoctorItemWidget extends StatelessWidget {
                       doctor.major,
                       style: TextStyle(
                         color: Colors.grey[500],
-                        fontSize: 12,
+                        fontSize: 14,
                         fontWeight: FontWeight.w700,
                       ),
                     ),
                   ],
                 ),
-                const SizedBox(height: 5),
                 // 경력
                 Row(
                   children: [
@@ -128,7 +163,7 @@ class DoctorItemWidget extends StatelessWidget {
                       '경력',
                       style: TextStyle(
                         color: Colors.grey[700],
-                        fontSize: 12,
+                        fontSize: 14,
                         fontWeight: FontWeight.w700,
                       ),
                     ),
@@ -137,13 +172,12 @@ class DoctorItemWidget extends StatelessWidget {
                       doctor.career,
                       style: TextStyle(
                         color: Colors.grey[500],
-                        fontSize: 12,
+                        fontSize: 14,
                         fontWeight: FontWeight.w700,
                       ),
                     ),
                   ],
                 ),
-                const SizedBox(height: 5),
                 // 진료시간
                 Row(
                   children: [
@@ -151,7 +185,7 @@ class DoctorItemWidget extends StatelessWidget {
                       '진료시간',
                       style: TextStyle(
                         color: Colors.grey[700],
-                        fontSize: 12,
+                        fontSize: 14,
                         fontWeight: FontWeight.w700,
                       ),
                     ),
@@ -160,7 +194,7 @@ class DoctorItemWidget extends StatelessWidget {
                       doctor.hours,
                       style: TextStyle(
                         color: Colors.grey[500],
-                        fontSize: 12,
+                        fontSize: 14,
                         fontWeight: FontWeight.w700,
                       ),
                     ),
