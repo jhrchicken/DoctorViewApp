@@ -1,9 +1,11 @@
 import 'package:doctorviewapp/models/board.dart';
 import 'package:doctorviewapp/models/comment.dart';
 import 'package:doctorviewapp/models/likes.dart';
+import 'package:doctorviewapp/models/member.dart';
 import 'package:doctorviewapp/providers/board_provider.dart';
 import 'package:doctorviewapp/providers/comment_provider.dart';
 import 'package:doctorviewapp/providers/likes_provider.dart';
+import 'package:doctorviewapp/providers/member_provider.dart';
 import 'package:doctorviewapp/screens/board/board_view_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -27,10 +29,12 @@ class _BoardItemWidgetState extends State<BoardItemWidget> {
     final boardProvider = Provider.of<BoardProvider>(context);
     final commentProvider = Provider.of<CommentProvider>(context);
     final likesProvider = Provider.of<LikesProvider>(context);
+    final memberProvider = Provider.of<MemberProvider>(context);
 
     Board? board = boardProvider.selectBoard(widget.boardIdx);
     List<Comment> commentList = commentProvider.listComment(board!.boardIdx);
-    List<Likes> likesList = likesProvider.listLikes(board.boardName, board.boardIdx.toString());
+    List<Likes> likesList = likesProvider.selectLikes('board', board.boardIdx.toString());
+    Member? member = memberProvider.selectMember(board.writerRef.toString());
 
     return GestureDetector(
       behavior: HitTestBehavior.opaque,
@@ -138,12 +142,12 @@ class _BoardItemWidgetState extends State<BoardItemWidget> {
             ),
             const SizedBox(height: 3),
             Text(
-              '${board.postdate.toString().split(" ")[0]}  |  ${board.writerRef}',
+              '${board.postdate.toString().split(" ")[0]}  |  ${member?.nickname ?? "알 수 없음"}',
               style: TextStyle(
                 fontSize: 12,
                 color: Colors.grey[500],
               ),
-            ),
+            )
           ],
         ),
       ),

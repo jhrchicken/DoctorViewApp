@@ -30,7 +30,7 @@ class _DreviewDetailWidgetState extends State<DreviewDetailWidget> {
     final hashtagProvider = Provider.of<HashtagProvider>(context);
 
     Dreview? dreview = dreviewProvider.selectDreview(widget.reviewIdx);
-    List<Likes> likesList = likesProvider.listLikes('dreview', dreview!.reviewIdx.toString());
+    List<Likes> likesList = likesProvider.selectLikes('dreview', dreview!.reviewIdx.toString());
     List<Hashtag> hashtagList = hashtagProvider.listReviewHashtag(dreview.reviewIdx);
 
     return Column(

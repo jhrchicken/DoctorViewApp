@@ -30,7 +30,7 @@ class _HreviewItemWidgetState extends State<HreviewItemWidget> {
     final hashtagProvider = Provider.of<HashtagProvider>(context);
 
     Hreview? hreview = hreviewProvider.selectHreview(widget.reviewIdx);
-    List<Likes> likesList = likesProvider.listLikes('hreview', hreview!.reviewIdx.toString());
+    List<Likes> likesList = likesProvider.selectLikes('hreview', hreview!.reviewIdx.toString());
     List<Hashtag> hashtagList = hashtagProvider.listReviewHashtag(hreview.reviewIdx);
 
     return GestureDetector(

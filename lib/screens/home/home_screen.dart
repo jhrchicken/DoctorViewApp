@@ -631,7 +631,16 @@ class _HomeScreenState extends State<HomeScreen> {
                   Expanded(
                     flex: 1,
                     child: OutlinedButton(
-                      onPressed: () { /* 병원 찾기 페이지로 이동 */ },
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const BoardListScreen(
+                              boardName: 'freeboard',
+                            ),
+                          ),
+                        );
+                      },
                       style: OutlinedButton.styleFrom(
                         backgroundColor: Colors.white,
                         padding: const EdgeInsets.all(15),

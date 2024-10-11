@@ -21,7 +21,7 @@ class HospitalItemWidget extends StatelessWidget {
     final likesProvider = Provider.of<LikesProvider>(context);
 
     Hospital? hospital = hospitalProvider.selectHosp(id);
-    List<Likes> likesList = likesProvider.listLikes('hospital', hospital!.id);
+    List<Likes> likesList = likesProvider.selectLikes('hospital', hospital!.id);
 
     return GestureDetector(
       onTap: () {

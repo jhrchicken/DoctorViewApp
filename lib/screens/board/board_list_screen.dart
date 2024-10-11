@@ -25,7 +25,8 @@ class _BoardListScreenState extends State<BoardListScreen> {
   @override
   Widget build(BuildContext context) {
     final boardProvider = Provider.of<BoardProvider>(context);
-    List<Board> boardList = boardProvider.listBoard(widget.boardName);
+
+    List<Board> boardList = boardProvider.listBoard(widget.boardName).reversed.toList();
   
     return Scaffold(
       // 상단바
@@ -77,24 +78,22 @@ class _BoardListScreenState extends State<BoardListScreen> {
       ),
 
       // 글 작성하기 버튼
-      floatingActionButton: Align(
-        alignment: Alignment.bottomCenter,
-        child: Padding(
-          padding: const EdgeInsets.only(bottom: 10),
-          child: SecondaryButton(
-            text: '글 작성하기',
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => BoardWriteScreen(
-                    boardName: widget.boardName,
-                  ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+      floatingActionButton: Padding(
+      padding: const EdgeInsets.only(bottom: 10),
+        child: SecondaryButton(
+          text: '글 작성하기',
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => BoardWriteScreen(
+                  boardName: widget.boardName,
                 ),
-              );
-            },
-            color: pointColor1,
-          ),
+              ),
+            );
+          },
+          color: pointColor1,
         ),
       ),
     );

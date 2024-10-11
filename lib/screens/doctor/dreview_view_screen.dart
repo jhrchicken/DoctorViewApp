@@ -2,6 +2,7 @@ import 'package:doctorviewapp/models/dreply.dart';
 import 'package:doctorviewapp/models/dreview.dart';
 import 'package:doctorviewapp/providers/dreply_provider.dart';
 import 'package:doctorviewapp/providers/dreview_provider.dart';
+import 'package:doctorviewapp/theme/colors.dart';
 import 'package:doctorviewapp/widgets/doctor/dreply_item_widget.dart';
 import 'package:doctorviewapp/widgets/doctor/dreview_detail_widget.dart';
 import 'package:flutter/material.dart';
@@ -126,43 +127,63 @@ class _DreviewViewScreenState extends State<DreviewViewScreen> {
 
       // 하단에 답변 입력창 고정
       bottomNavigationBar: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+        padding: const EdgeInsets.symmetric(
+          horizontal: 16, vertical: 10
+        ),
         child: Row(
           children: [
-            // *************** 이거 이쁘게 꾸미기 ***************
             Expanded(
               child: TextField(
                 controller: _replyController,
+                style: TextStyle(
+                  color: Colors.grey[900],
+                  fontSize: 14,
+                ),
                 decoration: InputDecoration(
                   hintText: '댓글을 입력하세요',
+                  hintStyle: TextStyle(
+                    color: Colors.grey[500],
+                    fontSize: 14,
+                  ),
+                  filled: true,
+                  fillColor: Colors.grey[100],
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(8),
+                    borderSide: BorderSide.none, // 외곽선 제거
+                  ),
+                  contentPadding: const EdgeInsets.symmetric(
+                    horizontal: 16,
+                    vertical: 5
+                  ),
+                  // 아이콘
+                  suffixIcon: IconButton(
+                    icon: const Icon(
+                      Icons.send_rounded,
+                      color: pointColor2
+                    ),
+                    onPressed: () {
+                      if (_replyController.text.isNotEmpty) {
+                        dreplyProvider.insertDreply(
+                          Dreply(
+                            replyIdx: 0,
+                            date: DateTime.now(),
+                            content: _replyController.text,
+                            rewrite: 'F',
+                            writerRef: 'harim',
+                            reviewRef: dreview.reviewIdx,
+                          ),
+                        );
+                        _replyController.clear();
+
+                        // 상태 갱신
+                        setState(() {
+                          dreplyList = dreplyProvider.listDreply(dreview.reviewIdx);
+                        });
+                      }
+                    },
                   ),
                 ),
               ),
-            ),
-            IconButton(
-              icon: Icon(Icons.send, color: Theme.of(context).primaryColor),
-              onPressed: () {
-                if (_replyController.text.isNotEmpty) {
-                  dreplyProvider.insertDreply(
-                    Dreply(
-                      replyIdx: 0,
-                      date: DateTime.now(),
-                      content: _replyController.text,
-                      rewrite: 'F',
-                      writerRef: 'harim',
-                      reviewRef: dreview.reviewIdx,
-                    ),
-                  );
-                  _replyController.clear();
-
-                  // 상태 갱신
-                  setState(() {
-                    dreplyList = dreplyProvider.listDreply(dreview.reviewIdx);
-                  });
-                }
-              },
             ),
           ],
         ),

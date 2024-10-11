@@ -77,7 +77,7 @@ class BoardProvider extends ChangeNotifier {
       title: '오늘 점심 뭐냐면',
       content: '텐동',
       visitcount: 0,
-      writerRef: 'dayoeng',
+      writerRef: 'dayeong',
     ),
     Board(
       boardIdx: 9,
@@ -86,7 +86,7 @@ class BoardProvider extends ChangeNotifier {
       title: '네~모',
       content: '세~모',
       visitcount: 0,
-      writerRef: 'dayoeng',
+      writerRef: 'dayeong',
     ),
     Board(
       boardIdx: 10,
@@ -95,7 +95,7 @@ class BoardProvider extends ChangeNotifier {
       title: '곱창전골 기대된다',
       content: '맛있겠다',
       visitcount: 0,
-      writerRef: 'dayoeng',
+      writerRef: 'dayeong',
     ),
     Board(
       boardIdx: 11,
@@ -104,7 +104,7 @@ class BoardProvider extends ChangeNotifier {
       title: '내 앞에',
       content: '뿌진스',
       visitcount: 0,
-      writerRef: 'dayoeng',
+      writerRef: 'dayeong',
     ),
   ];
 
