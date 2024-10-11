@@ -23,8 +23,9 @@ class _WaitcommentListScreenState extends State<WaitcommentListScreen> {
     List<Board> boardList = boardProvider.boardList;
     // 댓글 수가 0인 게시물
     List<Board> waitcommentList = boardList
-      .where((board) => commentProvider.listComment(board.boardIdx).length >= 3)
+      .where((board) => commentProvider.listComment(board.boardIdx).isEmpty)
       .toList();
+    waitcommentList = waitcommentList.reversed.toList();
     
     // 작성한 게시글이 없는 경우
     if (waitcommentList.isEmpty) {

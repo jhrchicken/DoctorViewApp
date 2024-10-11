@@ -27,6 +27,7 @@ class _BestboardListScreenState extends State<BestboardListScreen> {
     List<Board> bestboardList = boardList
       .where((board) => likesProvider.selectLikes('board', board.boardIdx.toString()).length >= 3)
       .toList();
+    bestboardList = bestboardList.reversed.toList();
 
     // 베스트 게시물이 없는 경우
     if (bestboardList.isEmpty) {

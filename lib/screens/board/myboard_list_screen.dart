@@ -72,6 +72,8 @@ class _MyboardListScreenState extends State<MyboardListScreen> {
       }).toList();
     }
 
+    myboardList = myboardList.reversed.toList();
+
     // 작성한 게시글이 없는 경우
     if (myboardList.isEmpty) {
       return Scaffold(
