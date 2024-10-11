@@ -21,9 +21,8 @@ class CommentItemWidget extends StatefulWidget {
 }
 
 class _CommentItemWidgetState extends State<CommentItemWidget> {
-  bool isEditing = false; // 수정 상태를 관리하는 변수
+  bool isEditing = false;
   final TextEditingController _editingController = TextEditingController();
-  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final FocusNode _editingFocusNode = FocusNode();
 
   @override
@@ -97,14 +96,16 @@ class _CommentItemWidgetState extends State<CommentItemWidget> {
                     ),
                   ],
                 ),
-                CommentActionSheet(
-                  commIdx: comment.commIdx,
-                  onEdit: () {
-                    setState(() {
-                      isEditing = true;
-                    });
-                  },
-                ),
+                (member != null && member.id == loginMember!.id)
+                ? CommentActionSheet(
+                    commIdx: comment.commIdx,
+                    onEdit: () {
+                      setState(() {
+                        isEditing = true;
+                      });
+                    },
+                  )
+                : const SizedBox.shrink(),
               ],
             ),
             const SizedBox(height: 10),

@@ -91,9 +91,9 @@ class _BoardDetailWidgetState extends State<BoardDetailWidget> {
             ),
 
             // 수정 삭제 모달
-            PostActionSheet(
-              boardIdx: board.boardIdx,
-            ),
+            (member!.id == loginMember!.id)
+              ? PostActionSheet(boardIdx: board.boardIdx)
+              : const SizedBox.shrink(),
           ],
         ),
         const SizedBox(
