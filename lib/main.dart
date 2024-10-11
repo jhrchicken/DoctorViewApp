@@ -12,6 +12,7 @@ import 'package:doctorviewapp/providers/hreply_provider.dart';
 import 'package:doctorviewapp/providers/hreview_provider.dart';
 import 'package:doctorviewapp/providers/likes_provider.dart';
 import 'package:doctorviewapp/providers/member_provider.dart';
+import 'package:doctorviewapp/providers/reserve_provider.dart';
 import 'package:doctorviewapp/screens/home/home_screen.dart';
 import 'package:doctorviewapp/screens/mypage/mypage_screen.dart';
 import 'package:doctorviewapp/providers/report_provider.dart';
@@ -41,7 +42,8 @@ void main() {
         ChangeNotifierProvider(create: (context) => BoardProvider()),
         ChangeNotifierProvider(create: (context) => CommentProvider()),
         ChangeNotifierProvider(create: (context) => ReportProvider()),
-        
+        //예약
+        ChangeNotifierProvider(create: (context) => ReserveProvider()),
       ],
       child: const MyApp(),
     ),

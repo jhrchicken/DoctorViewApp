@@ -15,7 +15,8 @@ import 'package:doctorviewapp/screens/mypage/join/join_hosp_success.dart';
 import 'package:doctorviewapp/screens/mypage/join/join_user_success.dart';
 import 'package:doctorviewapp/screens/mypage/join/login.dart';
 import 'package:doctorviewapp/screens/mypage/join/user.dart';
-import 'package:doctorviewapp/screens/mypage/memberList.dart';
+import 'package:doctorviewapp/screens/mypage/testpage/memberList.dart';
+import 'package:doctorviewapp/screens/mypage/testpage/reserveList.dart';
 import 'package:doctorviewapp/theme/colors.dart';
 import 'package:doctorviewapp/widgets/member/mypage_menu.dart';
 import 'package:flutter/material.dart';
@@ -51,6 +52,7 @@ class MyPage extends StatelessWidget {
 
         /****************** 디버깅용 ******************/
         '/member/listMember.do': (context) => const MemberList(),
+        '/member/listReserve.do': (context) => const ReserveList(),
       },
       // home: const MyHomePage(title: '앱 바 타이틀'),
     );
@@ -654,22 +656,38 @@ class _MyHomePageState extends State<MyHomePage> {
                   ],
                   
                   /****************** 디버깅용 ******************/
-                  // SizedBox(
-                  //   width: 200,
-                  //   height: 100,
-                  //   child: ElevatedButton(
-                  //     onPressed: () {
-                  //       Navigator.of(context).pushNamed("/member/listMember.do");
-                  //     },
-                  //     style: ElevatedButton.styleFrom(
-                  //       textStyle: const TextStyle(fontWeight: FontWeight.w500, fontSize: 30.0),
-                  //       shape: RoundedRectangleBorder(
-                  //         borderRadius: BorderRadius.circular(30),
-                  //       ),
-                  //     ),
-                  //     child: const Text('회원목록'),
-                  //   ),
-                  // ),
+                  SizedBox(
+                    width: 200,
+                    height: 100,
+                    child: ElevatedButton(
+                      onPressed: () {
+                        Navigator.of(context).pushNamed("/member/listMember.do");
+                      },
+                      style: ElevatedButton.styleFrom(
+                        textStyle: const TextStyle(fontWeight: FontWeight.w500, fontSize: 30.0),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(30),
+                        ),
+                      ),
+                      child: const Text('회원목록'),
+                    ),
+                  ),
+                  SizedBox(
+                    width: 200,
+                    height: 100,
+                    child: ElevatedButton(
+                      onPressed: () {
+                        Navigator.of(context).pushNamed("/member/listReserve.do");
+                      },
+                      style: ElevatedButton.styleFrom(
+                        textStyle: const TextStyle(fontWeight: FontWeight.w500, fontSize: 30.0),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(30),
+                        ),
+                      ),
+                      child: const Text('예약목록'),
+                    ),
+                  ),
 
 
 
