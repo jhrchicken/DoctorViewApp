@@ -4,7 +4,7 @@ import 'package:doctorviewapp/providers/member_provider.dart';
 import 'package:doctorviewapp/screens/mypage/edit/check/check_member.dart';
 import 'package:doctorviewapp/screens/mypage/edit/edit_hosp.dart';
 import 'package:doctorviewapp/screens/mypage/edit/edit_user.dart';
-import 'package:doctorviewapp/screens/mypage/hosp_mypage/doctor_list.dart';
+import 'package:doctorviewapp/screens/mypage/hosp_mypage/list_doctor.dart';
 import 'package:doctorviewapp/screens/mypage/join/find/find_id.dart';
 import 'package:doctorviewapp/screens/mypage/join/find/find_id_success.dart';
 import 'package:doctorviewapp/screens/mypage/join/find/find_pass.dart';
@@ -126,8 +126,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                         Navigator.of(context).pushNamed("/member/login.do");
                                       },
                                       style: ElevatedButton.styleFrom(
-                                        /********** 수정: point2 로 변경 필요 **********/
-                                        backgroundColor: const Color(0xff005ad5),
+                                        backgroundColor: pointColor2,
                                         foregroundColor: Colors.white,
                                         textStyle: const TextStyle(fontWeight: FontWeight.w500, fontSize: 25),
                                         shape: RoundedRectangleBorder(
@@ -654,22 +653,26 @@ class _MyHomePageState extends State<MyHomePage> {
                     ] 
                   ],
                   
-                  SizedBox(
-                      width: 200,
-                      height: 100,
-                      child: ElevatedButton(
-                        onPressed: () {
-                          Navigator.of(context).pushNamed("/member/listMember.do");
-                        },
-                        style: ElevatedButton.styleFrom(
-                          textStyle: const TextStyle(fontWeight: FontWeight.w500, fontSize: 30.0),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(30),
-                          ),
-                        ),
-                        child: const Text('회원목록'),
-                      ),
-                    ),
+                  /****************** 디버깅용 ******************/
+                  // SizedBox(
+                  //   width: 200,
+                  //   height: 100,
+                  //   child: ElevatedButton(
+                  //     onPressed: () {
+                  //       Navigator.of(context).pushNamed("/member/listMember.do");
+                  //     },
+                  //     style: ElevatedButton.styleFrom(
+                  //       textStyle: const TextStyle(fontWeight: FontWeight.w500, fontSize: 30.0),
+                  //       shape: RoundedRectangleBorder(
+                  //         borderRadius: BorderRadius.circular(30),
+                  //       ),
+                  //     ),
+                  //     child: const Text('회원목록'),
+                  //   ),
+                  // ),
+
+
+
                 ],
               ),
             ),

@@ -273,6 +273,11 @@ class _JoinHospState extends State<JoinHosp> {
                         } else if (!RegExp(r'^[a-zA-Z0-9]+$').hasMatch(value)) {
                           return '아이디는 영문과 숫자만 입력 가능합니다';
                         }
+
+                        if (memberProvider.selectMember(value) != null){
+                          return '사용할 수 없는 아이디입니다.';
+                        }
+
                         return null;
                       },
                       maxLength: 15,

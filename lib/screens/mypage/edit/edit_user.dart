@@ -267,7 +267,6 @@ void initState() {
                       child: SecondaryOutlineButton(
                         text: '회원수정', 
                         onPressed: () {
-                          /************ 수정: 폼값 판단(nn & password) 필요 *************/
                           if(_formKey.currentState!.validate()){
                             //회원수정
                             memberProvider.updateMember(
