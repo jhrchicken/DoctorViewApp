@@ -47,7 +47,8 @@ class _BoardReactionButtonState extends State<BoardReactionButton> {
     if (loginMember != null) {
       if (isLike) {
         likesProvider.minusLikes('board', loginMember!.id, widget.boardIdx.toString());
-      } else {
+      }
+      else {
         if (isReport) {
           reportProvider.minusReport(loginMember!.id, widget.boardIdx);
         }
