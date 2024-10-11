@@ -42,15 +42,15 @@ class _DoctorDetailWidgetState extends State<DoctorDetailWidget> {
           style: TextStyle(
             color: Colors.grey[900],
             fontSize: 20,
-            fontWeight: FontWeight.bold,
+            fontWeight: FontWeight.w700,
           ),
         ),
         Text(
           hospital!.name,
           style: const TextStyle(
             color: pointColor2,
-            fontSize: 14,
-            fontWeight: FontWeight.w500,
+            fontSize: 12,
+            fontWeight: FontWeight.w700,
           ),
         ),
 
@@ -79,7 +79,7 @@ class _DoctorDetailWidgetState extends State<DoctorDetailWidget> {
                       '전공',
                       style: TextStyle(
                         color: Colors.grey[700],
-                        fontSize: 12,
+                        fontSize: 14,
                         fontWeight: FontWeight.w700,
                       ),
                     ),
@@ -88,14 +88,14 @@ class _DoctorDetailWidgetState extends State<DoctorDetailWidget> {
                       doctor.major,
                       style: TextStyle(
                         color: Colors.grey[500],
-                        fontSize: 12,
+                        fontSize: 14,
                         fontWeight: FontWeight.w700,
                       ),
                     ),
                   ],
                 ),
                 const SizedBox(
-                  height: 5,
+                  height: 2,
                 ),
                 // 경력
                 Row(
@@ -104,7 +104,7 @@ class _DoctorDetailWidgetState extends State<DoctorDetailWidget> {
                       '경력',
                       style: TextStyle(
                         color: Colors.grey[700],
-                        fontSize: 12,
+                        fontSize: 14,
                         fontWeight: FontWeight.w700,
                       ),
                     ),
@@ -115,14 +115,14 @@ class _DoctorDetailWidgetState extends State<DoctorDetailWidget> {
                       doctor.career,
                       style: TextStyle(
                         color: Colors.grey[500],
-                        fontSize: 12,
+                        fontSize: 14,
                         fontWeight: FontWeight.w700,
                       ),
                     ),
                   ],
                 ),
                 const SizedBox(
-                  height: 5,
+                  height: 2,
                 ),
                 // 진료시간
                 Row(
@@ -131,7 +131,7 @@ class _DoctorDetailWidgetState extends State<DoctorDetailWidget> {
                       '진료시간',
                       style: TextStyle(
                         color: Colors.grey[700],
-                        fontSize: 12,
+                        fontSize: 14,
                         fontWeight: FontWeight.w700,
                       ),
                     ),
@@ -142,7 +142,7 @@ class _DoctorDetailWidgetState extends State<DoctorDetailWidget> {
                       doctor.hours,
                       style: TextStyle(
                         color: Colors.grey[500],
-                        fontSize: 12,
+                        fontSize: 14,
                         fontWeight: FontWeight.w700,
                       ),
                     ),

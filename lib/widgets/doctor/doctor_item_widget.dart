@@ -70,11 +70,9 @@ class _DoctorItemWidgetState extends State<DoctorItemWidget> {
   Widget build(BuildContext context) {
     final doctorProvider = Provider.of<DoctorProvider>(context);
     final hospitalProvider = Provider.of<HospitalProvider>(context);
-    final likesProvider = Provider.of<LikesProvider>(context);
 
     Doctor? doctor = doctorProvider.selectDoctor(widget.docIdx);
     Hospital? hospital = hospitalProvider.selectHosp(doctor!.hospRef);
-    List<Likes> likesList = likesProvider.selectLikes('doctor', doctor.docIdx.toString());
 
     return GestureDetector(
       onTap: () {
@@ -125,7 +123,7 @@ class _DoctorItemWidgetState extends State<DoctorItemWidget> {
                     children: [
                       Icon(
                         isLike ? Icons.bookmark : Icons.bookmark_border_rounded,
-                      color: pointColor2,
+                        color: pointColor2,
                       ),
                     ],
                   ),

@@ -1,7 +1,13 @@
+import 'package:doctorviewapp/main.dart';
+import 'package:doctorviewapp/models/likes.dart';
+import 'package:doctorviewapp/models/member.dart';
 import 'package:doctorviewapp/providers/doctor_provider.dart';
 import 'package:doctorviewapp/providers/dreview_provider.dart';
+import 'package:doctorviewapp/providers/likes_provider.dart';
+import 'package:doctorviewapp/providers/member_provider.dart';
 import 'package:doctorviewapp/screens/doctor/dreview_list_screen.dart';
 import 'package:doctorviewapp/screens/doctor/dreview_write_screen.dart';
+import 'package:doctorviewapp/screens/mypage/join/login.dart';
 import 'package:doctorviewapp/widgets/common/primary_outline_button.dart';
 import 'package:doctorviewapp/models/doctor.dart';
 import 'package:doctorviewapp/models/dreview.dart';
@@ -25,30 +31,86 @@ class DoctorViewScreen extends StatefulWidget {
 }
 
 class _DoctorViewScreenState extends State<DoctorViewScreen> {
+  bool isLike = false;
+  Member? loginMember;
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    final likesProvider = Provider.of<LikesProvider>(context, listen: false);
+    final memberProvider = Provider.of<MemberProvider>(context, listen: false);
+
+    loginMember = memberProvider.loginMember;
+    if (loginMember != null) {
+      setState(() {
+        isLike = likesProvider.checkLikes('doctor', loginMember!.id, widget.docIdx.toString());
+      });
+    }
+  }
+
+  void _toggleLike() {
+    final likesProvider = Provider.of<LikesProvider>(context, listen: false);
+    final memberProvider = Provider.of<MemberProvider>(context, listen: false);
+
+    loginMember = memberProvider.loginMember;
+    if (loginMember != null) {
+      if (isLike) {
+        likesProvider.minusLikes('doctor', loginMember!.id, widget.docIdx.toString());
+      }
+      else {
+        likesProvider.plusLikes(
+          Likes(
+            likeIdx: 0,
+            memberRef: loginMember!.id,
+            tablename: 'doctor',
+            recodenum: widget.docIdx.toString(),
+          ),
+        );
+      }
+      setState(() {
+        isLike = !isLike;
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final doctorProvider = Provider.of<DoctorProvider>(context);
     final dreviewProvider = Provider.of<DreviewProvider>(context);
+    final memberProvider = Provider.of<MemberProvider>(context);
 
     Doctor? doctor = doctorProvider.selectDoctor(widget.docIdx);
     List<Dreview> dreviewList = dreviewProvider.listDreview(doctor!.docIdx);
+    Member? loginMember = memberProvider.loginMember;
+
+    // 로그인 하지 않은 경우
+    // if (loginMember == null) {
+    //   WidgetsBinding.instance.addPostFrameCallback((_) {
+    //     Navigator.pushReplacement(
+    //       context,
+    //       MaterialPageRoute(
+    //         builder: (context) => const Login(),
+    //       ),
+    //     );
+    //   });
+    //   return const SizedBox();
+    // }
 
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,
         title: Text(
           '${doctor.name} 의사',
-          style: TextStyle(
-            color: Colors.grey[900],
-            fontSize: 16,
-            fontWeight: FontWeight.w700,
-          ),
+          style: CustomTextStyles.appbarText,
         ),
         actions: [
           IconButton(
-            icon: Icon(Icons.bookmark_border_rounded, color: Colors.grey[900]),
-            onPressed: () {
-            },
+            icon: Icon(
+              isLike ? Icons.bookmark : Icons.bookmark_border_rounded,
+              size: 24,
+            ),
+            color: Colors.grey[700],
+            onPressed: _toggleLike,
           ),
         ],
       ),
@@ -65,7 +127,7 @@ class _DoctorViewScreenState extends State<DoctorViewScreen> {
               ),
             ),
 
-            // 의사 리뷰
+            // 후기
             Padding(
               padding: const EdgeInsets.all(20.0),
               child: Container(
@@ -83,7 +145,7 @@ class _DoctorViewScreenState extends State<DoctorViewScreen> {
                           '후기',
                           style: TextStyle(
                             color: Colors.grey[900],
-                            fontSize: 16,
+                            fontSize: 18,
                             fontWeight: FontWeight.w900,
                           ),
                         ),
@@ -92,7 +154,7 @@ class _DoctorViewScreenState extends State<DoctorViewScreen> {
                           dreviewList.length.toString(),
                           style: const TextStyle(
                             color: pointColor2,
-                            fontSize: 16,
+                            fontSize: 18,
                             fontWeight: FontWeight.w900,
                           ),
                         ),
