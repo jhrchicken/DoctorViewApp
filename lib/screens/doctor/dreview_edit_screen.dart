@@ -220,10 +220,7 @@ class _DreviewEditScreenState extends State<DreviewEditScreen> {
                                   ),
                                 );
                               }
-
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                const SnackBar(content: Text('리뷰가 수정되었습니다')),
-                              );
+                              Navigator.pop(context);
                               Navigator.pop(context);
                             }
                           },
