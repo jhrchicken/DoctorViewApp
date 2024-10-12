@@ -123,61 +123,67 @@ class _DreviewViewScreenState extends State<DreviewViewScreen> {
           ),
         ],
       ),
-      body: Column(
-        children: [
-          // 리뷰 상세보기
-          Padding(
-            padding: const EdgeInsets.all(20.0),
-            child: Container(
-              width: double.infinity,
-              decoration: const BoxDecoration(
-                color: Colors.white,
-              ),
-              child: DreviewDetailWidget(
-                reviewIdx: dreview.reviewIdx,
+      body: SingleChildScrollView( // SingleChildScrollView 추가
+        child: Column(
+          children: [
+            // 리뷰 상세보기
+            Padding(
+              padding: const EdgeInsets.all(20.0),
+              child: Container(
+                width: double.infinity,
+                decoration: const BoxDecoration(
+                  color: Colors.white,
+                ),
+                child: DreviewDetailWidget(
+                  reviewIdx: dreview.reviewIdx,
+                ),
               ),
             ),
-          ),
-          Divider(
-            color: Colors.grey[300],
-            thickness: 1.0,
-            indent: 20.0,
-            endIndent: 20.0,
-          ),
-          // 리뷰에 대한 답변
-          Expanded(
-            child: dreplyList.isEmpty
-              ? const Center(
-                  child: Text(
-                    '답변이 없습니다',
-                    style: TextStyle(
-                      color: Colors.grey,
+            Divider(
+              color: Colors.grey[300],
+              thickness: 1.0,
+              indent: 20.0,
+              endIndent: 20.0,
+            ),
+            // 리뷰에 대한 답변
+            dreplyList.isEmpty
+              ? const Column(
+                mainAxisAlignment: MainAxisAlignment.center, // 수직 중앙 정렬
+                children: [
+                  SizedBox(
+                    height: 200,
+                  ),
+                  Center(
+                    child: Text(
+                      '답변이 없습니다',
+                      style: TextStyle(
+                        color: Colors.grey,
+                      ),
                     ),
                   ),
-                )
-              : Padding(
-                  padding: const EdgeInsets.all(20),
-                  child: ListView.builder(
-                    itemCount: dreplyList.length,
-                    itemBuilder: (context, index) {
-                      final dreply = dreplyList[index];
-                      return Column(
-                        children: [
-                          DreplyItemWidget(
-                            replyIdx: dreply.replyIdx,
-                          ),
-                          const SizedBox(
-                            height: 10,
-                          ),
-                        ],
-                      );
-                    },
+                ],
+              )
+                : Padding(
+                    padding: const EdgeInsets.all(20),
+                    child: Column( // ListView.builder 대신 Column 사용
+                      children: dreplyList.map((dreply) {
+                        return Column(
+                          children: [
+                            DreplyItemWidget(
+                              replyIdx: dreply.replyIdx,
+                            ),
+                            const SizedBox(
+                              height: 10,
+                            ),
+                          ],
+                        );
+                      }).toList(),
+                    ),
                   ),
-              ),
-          ),
-        ],
+          ],
+        ),
       ),
-      
+
       // 하단 답변 입력창 고정
       bottomNavigationBar: (loginMember != null &&
               loginMember.auth == 'ROLE_HOSP' &&
@@ -225,8 +231,7 @@ class _DreviewViewScreenState extends State<DreviewViewScreen> {
                               );
                               _replyController.clear();
                               setState(() {
-                                dreplyList =
-                                    dreplyProvider.listDreply(dreview.reviewIdx);
+                                dreplyList = dreplyProvider.listDreply(dreview.reviewIdx);
                               });
                             }
                           },
@@ -240,4 +245,5 @@ class _DreviewViewScreenState extends State<DreviewViewScreen> {
           : null,
     );
   }
+
 }

@@ -132,33 +132,50 @@ class _BoardViewScreenState extends State<BoardViewScreen> {
             ),
 
             // 댓글 목록
-            Padding(
-              padding: const EdgeInsets.all(20.0),
-              child: Container(
-                width: double.infinity,
-                decoration: const BoxDecoration(
-                  color: Colors.white,
-                ),
-                child: ListView.builder(
-                  shrinkWrap: true,
-                  physics: const NeverScrollableScrollPhysics(),
-                  itemCount: commentList.length,
-                  itemBuilder: (context, index) {
-                    final comment = commentList[index];
-                    return Column(
-                      children: [
-                        CommentItemWidget(
-                          commIdx: comment.commIdx,
-                        ),
-                        const SizedBox(
-                          height: 10,
-                        ),
-                      ],
-                    );
-                  },
+            commentList.isEmpty
+              ? const Column(
+                mainAxisAlignment: MainAxisAlignment.center, // 수직 중앙 정렬
+                children: [
+                  SizedBox(
+                    height: 170,
+                  ),
+                  Center(
+                    child: Text(
+                      '댓글이 없습니다',
+                      style: TextStyle(
+                        color: Colors.grey,
+                      ),
+                    ),
+                  ),
+                ],
+              )
+              : Padding(
+                padding: const EdgeInsets.all(20.0),
+                child: Container(
+                  width: double.infinity,
+                  decoration: const BoxDecoration(
+                    color: Colors.white,
+                  ),
+                  child: ListView.builder(
+                    shrinkWrap: true,
+                    physics: const NeverScrollableScrollPhysics(),
+                    itemCount: commentList.length,
+                    itemBuilder: (context, index) {
+                      final comment = commentList[index];
+                      return Column(
+                        children: [
+                          CommentItemWidget(
+                            commIdx: comment.commIdx,
+                          ),
+                          const SizedBox(
+                            height: 10,
+                          ),
+                        ],
+                      );
+                    },
+                  ),
                 ),
               ),
-            ),
           ],
         ),
       ),
