@@ -19,6 +19,7 @@ class CommentActionSheet extends StatefulWidget {
 }
 
 class _CommentActionSheetState extends State<CommentActionSheet> {
+  
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -59,7 +60,7 @@ class _CommentActionSheetState extends State<CommentActionSheet> {
               CupertinoActionSheetAction(
                 onPressed: () {
                   Navigator.pop(context);
-                  widget.onEdit();  // 수정 버튼 클릭 시 onEdit 호출
+                  widget.onEdit();
                 },
                 child: Text(
                   '수정',

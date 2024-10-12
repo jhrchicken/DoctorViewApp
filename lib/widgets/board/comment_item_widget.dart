@@ -28,7 +28,6 @@ class _CommentItemWidgetState extends State<CommentItemWidget> {
   @override
   void initState() {
     super.initState();
-    // 초기화 시 댓글 내용을 컨트롤러에 설정
     final commentProvider = Provider.of<CommentProvider>(context, listen: false);
     Comment? comment = commentProvider.selectComment(widget.commIdx);
     _editingController.text = comment?.content ?? '';
