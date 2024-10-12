@@ -7,8 +7,8 @@ import 'package:doctorviewapp/providers/hreview_provider.dart';
 import 'package:doctorviewapp/providers/likes_provider.dart';
 import 'package:doctorviewapp/providers/member_provider.dart';
 import 'package:doctorviewapp/screens/mypage/join/login.dart';
-import 'package:doctorviewapp/widgets/doctor/dreview_item_widget.dart';
-import 'package:doctorviewapp/widgets/hospital/hreview_item_widget.dart';
+import 'package:doctorviewapp/widgets/mypage/mydreview_item_widget.dart';
+import 'package:doctorviewapp/widgets/mypage/myhreview_item_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -91,90 +91,63 @@ class _MyReviewListScreenState extends State<MyReviewListScreen> {
           style: CustomTextStyles.appbarText,
         ),
       ),
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.all(20.0),
-          child: Container(
-            width: double.infinity,
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(8),
-            ),
-            child: Column(
-              children: [
-                // 리뷰 목록이 없을 때 메시지 표시
-                if ((widget.reviewName == 'myhreview' && myHreviewList.isEmpty) ||
-                    (widget.reviewName == 'mydreview' && myDreviewList.isEmpty)) ...[
-                  Center(
-                    child: Text(
-                      widget.reviewName == 'myhreview'
-                          ? '작성한 리뷰가 없습니다'
-                          : '작성한 의사가 없습니다',
-                      style: TextStyle(
-                        fontSize: 16,
-                        color: Colors.grey[700],
-                      ),
-                    ),
+      body: Padding(
+        padding: const EdgeInsets.all(20.0),
+        child: myHreviewList.isEmpty && myDreviewList.isEmpty
+            ? Center(
+                child: Text(
+                  widget.reviewName == 'myhreview' || widget.reviewName == 'mydreview'
+                      ? '작성한 리뷰가 없습니다'
+                      : '좋아요 한 리뷰가 없습니다',
+                  style: TextStyle(
+                    fontSize: 16,
+                    color: Colors.grey[700],
                   ),
-                ] else ...[
+                ),
+              )
+            : ListView(
+                children: [
                   // 병원 리뷰 목록
                   if (widget.reviewName == 'myhreview')
-                    ListView.builder(
-                      shrinkWrap: true,
-                      physics: const NeverScrollableScrollPhysics(),
-                      itemCount: myHreviewList.length,
-                      itemBuilder: (context, index) {
-                        final hreview = myHreviewList[index];
-                        return Column(
-                          children: [
-                            HreviewItemWidget(reviewIdx: hreview.reviewIdx),
-                            Divider(color: Colors.grey[300]),
-                          ],
-                        );
-                      },
-                    ),
-                  // 의사 리뷰 목록
-                  if (widget.reviewName == 'mydreview')
-                    ListView.builder(
-                      shrinkWrap: true,
-                      physics: const NeverScrollableScrollPhysics(),
-                      itemCount: myDreviewList.length,
-                      itemBuilder: (context, index) {
-                        final dreview = myDreviewList[index];
-                        return Column(
-                          children: [
-                            DreviewItemWidget(reviewIdx: dreview.reviewIdx),
-                            Divider(color: Colors.grey[300]),
-                          ],
-                        );
-                      },
-                    ),
-                  // 좋아요 한 리뷰 목록
-                  if (widget.reviewName == 'mylikes') ...[
-                    // 병원 리뷰 목록
                     ...myHreviewList.map((hreview) {
                       return Column(
                         children: [
-                          HreviewItemWidget(reviewIdx: hreview.reviewIdx),
+                          MyhreviewItemWidget(reviewIdx: hreview.reviewIdx),
                           Divider(color: Colors.grey[300]),
                         ],
                       );
                     }),
-                    // 의사 리뷰 목록
+                  // 의사 리뷰 목록
+                  if (widget.reviewName == 'mydreview')
                     ...myDreviewList.map((dreview) {
                       return Column(
                         children: [
-                          DreviewItemWidget(reviewIdx: dreview.reviewIdx),
+                          MydreviewItemWidget(reviewIdx: dreview.reviewIdx),
+                          Divider(color: Colors.grey[300]),
+                        ],
+                      );
+                    }),
+                  // 좋아요 한 리뷰 목록
+                  if (widget.reviewName == 'mylikes') ...[
+                    ...myHreviewList.map((hreview) {
+                      return Column(
+                        children: [
+                          MyhreviewItemWidget(reviewIdx: hreview.reviewIdx),
+                          Divider(color: Colors.grey[300]),
+                        ],
+                      );
+                    }),
+                    ...myDreviewList.map((dreview) {
+                      return Column(
+                        children: [
+                          MydreviewItemWidget(reviewIdx: dreview.reviewIdx),
                           Divider(color: Colors.grey[300]),
                         ],
                       );
                     }),
                   ],
                 ],
-              ],
-            ),
-          ),
-        ),
+              ),
       ),
     );
   }

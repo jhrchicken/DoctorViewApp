@@ -227,7 +227,7 @@ class _HreviewViewScreenState extends State<HreviewViewScreen> {
                                 date: DateTime.now(),
                                 content: _replyController.text,
                                 rewrite: 'F',
-                                writerRef: 'harim',
+                                writerRef: loginMember.id,
                                 reviewRef: hreview.reviewIdx,
                               ),
                             );
