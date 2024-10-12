@@ -2,9 +2,11 @@ import 'package:doctorviewapp/header.dart';
 import 'package:doctorviewapp/models/doctor.dart';
 import 'package:doctorviewapp/providers/doctor_provider.dart';
 import 'package:doctorviewapp/providers/member_provider.dart';
+import 'package:doctorviewapp/providers/reserve_provider.dart';
 import 'package:doctorviewapp/screens/doctor/doctor_view_screen.dart';
 import 'package:doctorviewapp/theme/colors.dart';
 import 'package:doctorviewapp/widgets/member/edit_button.dart';
+import 'package:doctorviewapp/widgets/member/reserve_item.dart';
 import 'package:doctorviewapp/widgets/reserve/reserve_check_text_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -20,7 +22,9 @@ class _ReserveListUserState extends State<ReserveListUser> {
   @override
   Widget build(BuildContext context) {
     final memberProvider = Provider.of<MemberProvider>(context);
+    final reserveProvider = Provider.of<ReserveProvider>(context);
     final loginMember = memberProvider.loginMember;
+    final reserveList = reserveProvider.listReserve(loginMember!.id);
 
     return Scaffold(
       // 헤더
@@ -32,47 +36,30 @@ class _ReserveListUserState extends State<ReserveListUser> {
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Container(
-                width: double.infinity,
-                height: 250,
-                decoration: BoxDecoration(
-                  color: Colors.white, 
-                  border: Border.all(color: Colors.grey[300]!, width: 1.0),
-                  borderRadius: BorderRadius.circular(8),
+              if (reserveProvider.listReserve(loginMember.id) == null) ...[
+                const Text('예약내용이 없습니다'),
+              ]
+              else ... [
+                // const ReserveItem()
+                ListView.builder(
+                  shrinkWrap: true,
+                  physics: const NeverScrollableScrollPhysics(),
+                  itemCount: reserveList!.length,
+                  itemBuilder: (context, index) {
+                    final reserve = reserveList[index];
+                    return Column(
+                      children: [
+                        ReserveItem(
+                          reserveIdx: reserve.reserveIdx,
+                        ),
+                        if (index < reserveList.length - 1)
+                          const SizedBox(height: 10),
+                      ],
+                    );
+                  },
                 ),
-                child: Padding(
-                  padding: const EdgeInsets.all(20),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children:[
+              ]
 
-                      const ReserveCheckTextWidget(title: '병원', content: '',),
-                      const SizedBox(height: 10),
-                      Divider(
-                        color: Colors.grey[300],
-                        thickness: 1.0
-                      ),
-                      const SizedBox(height: 10),
-                      const ReserveCheckTextWidget(title: '병원', content: '',),
-                      const SizedBox(height: 10),
-                      Divider(
-                        color: Colors.grey[300],
-                        thickness: 1.0
-                      ),
-                      const SizedBox(height: 10),
-                      const ReserveCheckTextWidget(title: '병원', content: '',),
-                      const SizedBox(height: 10),
-                      Divider(
-                        color: Colors.grey[300],
-                        thickness: 1.0
-                      ),
-                      const SizedBox(height: 10),
-                      const ReserveCheckTextWidget(title: '병원', content: '',),
-
-                    ]
-                  ),
-                )
-              ),
 
             ],
           ),

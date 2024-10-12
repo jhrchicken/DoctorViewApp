@@ -9,23 +9,26 @@ class ReserveProvider extends ChangeNotifier {
   final List<Reserve> _reserveList = [
     Reserve(
       reserveIdx: 1, 
-      hospname: 'hospital1', 
-      username: 'dayeong', 
+      hospname: '엠플러스의원',
+      doctorname: '박애플',
+      username: '부다영', 
       tel: '010-2084-0204', 
       rrn: '021209-4000000', 
       address: '서울특별시', 
       postdate: DateTime(2024, 10, 11), 
       posttime: '11:00', 
-      doctorname: '이잠만',
       alarm: 'T', 
       review: 'F', 
       hide: 'F', 
+      user_ref: 'dayeong',
+      hosp_ref: 'hospital1',
       cancel: 'F',
     )
   ];
 
   // 예약 전체 목록
   List<Reserve> get reserveList => _reserveList;
+  
 
   // 예약 추가
   void insertReserve(Reserve reserve) {
@@ -33,5 +36,22 @@ class ReserveProvider extends ChangeNotifier {
     _reserveList.add(reserve);
     notifyListeners();
   }
+
+  // 예약 목록
+  List<Reserve>? listReserve(String userRef) {
+    List<Reserve> listResult = _reserveList.where((reserve) => reserve.user_ref == userRef).toList();
+    return listResult.isNotEmpty ? listResult : null;
+  }
+
+  // 예약 내역 (1개)
+  Reserve? selectReserve(int reserveIdx) {
+    try {
+      return _reserveList.firstWhere((reserve) => reserve.reserveIdx == reserveIdx);
+    }
+    catch (e) {
+      return null;
+    }
+  }
+
 
 }

@@ -15,6 +15,7 @@ import 'package:doctorviewapp/screens/mypage/join/join_hosp_success.dart';
 import 'package:doctorviewapp/screens/mypage/join/join_user_success.dart';
 import 'package:doctorviewapp/screens/mypage/join/login.dart';
 import 'package:doctorviewapp/screens/mypage/join/user.dart';
+import 'package:doctorviewapp/screens/mypage/reserve/reserve_list_user.dart';
 import 'package:doctorviewapp/screens/mypage/testpage/memberList.dart';
 import 'package:doctorviewapp/screens/mypage/testpage/reserveList.dart';
 import 'package:doctorviewapp/theme/colors.dart';
@@ -243,7 +244,7 @@ class _MyHomePageState extends State<MyHomePage> {
                             Expanded(
                               child: GestureDetector(
                                 onTap: () {
-                                  Navigator.of(context).pushNamed("/"); // 예약정보 확인 페이지로 이동
+                                  Navigator.of(context).push(MaterialPageRoute(builder: (context) => const ReserveListUser()));
                                 },
                                 child: Column(
                                   mainAxisAlignment: MainAxisAlignment.center,
@@ -652,12 +653,13 @@ class _MyHomePageState extends State<MyHomePage> {
                           ],
                         ),
                       ),
-
-                    ] 
+                    ],
+                    const SizedBox(height: 40,),
+                    // 로그아웃
+                    const Center(child: LogoutText()),
                   ],
 
-                  // 로그아웃
-                  const LogoutText(),
+                  
                   
                   /****************** 디버깅용 ******************/
                   SizedBox(
