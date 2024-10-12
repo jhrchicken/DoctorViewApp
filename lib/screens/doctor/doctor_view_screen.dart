@@ -202,14 +202,17 @@ class _DoctorViewScreenState extends State<DoctorViewScreen> {
                     ListView.builder(
                       shrinkWrap: true,
                       physics: const NeverScrollableScrollPhysics(),
-                      itemCount: dreviewList.length,
+                      itemCount: (dreviewList.length < 3) ? dreviewList.length : 3,
                       itemBuilder: (context, index) {
                         final dreview = dreviewList[index];
                         return Column(
                           children: [
                             DreviewItemWidget(reviewIdx: dreview.reviewIdx),
-                            if (index < dreviewList.length - 1)
-                              Divider(color: Colors.grey[100], thickness: 1.0),
+                            if (index < 2 && index < dreviewList.length - 1) 
+                              Divider(
+                                color: Colors.grey[100],
+                                thickness: 1.0,
+                              ),
                           ],
                         );
                       },
