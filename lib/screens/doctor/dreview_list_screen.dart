@@ -28,7 +28,7 @@ class _DreviewListScreenState extends State<DreviewListScreen> {
 
     final dreviewProvider = Provider.of<DreviewProvider>(context);
 
-    List<Dreview> dreviewList = dreviewProvider.listDreview(widget.docIdx);
+    List<Dreview> dreviewList = dreviewProvider.listDreview(widget.docIdx).reversed.toList();
 
     return Scaffold(
       appBar: AppBar(

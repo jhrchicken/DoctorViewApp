@@ -80,7 +80,7 @@ class _DoctorViewScreenState extends State<DoctorViewScreen> {
     final memberProvider = Provider.of<MemberProvider>(context);
 
     Doctor? doctor = doctorProvider.selectDoctor(widget.docIdx);
-    List<Dreview> dreviewList = dreviewProvider.listDreview(doctor!.docIdx);
+    List<Dreview> dreviewList = dreviewProvider.listDreview(doctor!.docIdx).reversed.toList();
     Member? loginMember = memberProvider.loginMember;
 
     // 로그인 하지 않은 경우
