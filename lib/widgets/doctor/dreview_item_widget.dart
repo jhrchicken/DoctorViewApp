@@ -80,7 +80,7 @@ class _DreviewItemWidgetState extends State<DreviewItemWidget> {
     Dreview? dreview = dreviewProvider.selectDreview(widget.reviewIdx);
     List<Likes> likesList = likesProvider.selectLikes('dreview', dreview!.reviewIdx.toString());
     List<Hashtag> hashtagList = hashtagProvider.listReviewHashtag(dreview.reviewIdx);
-    Member? member = memberProvider.selectMember(dreview.writerRef);
+    Member? member = memberProvider.selectMember(dreview.writerRef.toString());
     List<Dreply> dreplyList = dreplyProvider.listDreply(dreview.reviewIdx);
 
     return GestureDetector(
@@ -121,7 +121,7 @@ class _DreviewItemWidgetState extends State<DreviewItemWidget> {
                           children: [
                             const SizedBox(width: 2),
                             Text(
-                              member!.nickname.toString(),
+                              member?.nickname.toString() ?? '(알 수 없음)',
                               style: TextStyle(
                                 fontSize: 14,
                                 color: Colors.grey[900],
@@ -159,7 +159,7 @@ class _DreviewItemWidgetState extends State<DreviewItemWidget> {
             // 해시태그
             Wrap(
               spacing: 8.0,
-              runSpacing: 8.0,
+              runSpacing: 0,
               children: hashtagList.map((hashtag) {
                 return GreyButton(
                   text: '# ${hashtag.tag}',

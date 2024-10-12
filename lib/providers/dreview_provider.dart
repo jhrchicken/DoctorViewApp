@@ -3,33 +3,41 @@ import 'package:flutter/material.dart';
 
 class DreviewProvider extends ChangeNotifier {
   // 의사 리뷰 시퀀스
-  int _seqDreviewIdx = 4;
+  int _seqDreviewIdx = 5;
 
   // 의사 리뷰 더미데이터
   final List<Dreview> _dreviewList = [
     Dreview(
       reviewIdx: 1,
       date: DateTime.now(),
-      score: 1,
-      content: '이 의사 별로임',
+      score: 5,
+      content: '최고입니닷',
       rewrite: 'F',
-      writerRef: 'harim',
+      writerRef: 'dayeong',
       docRef: 1,
     ),
     Dreview(
       reviewIdx: 2,
       date: DateTime.now(),
-      score: 5,
-      content: '최고입니닷',
+      score: 3,
+      content: '그냥 그래요',
       rewrite: 'F',
-      writerRef: 'harim',
+      writerRef: 'leehr',
       docRef: 1,
     ),
     Dreview(
       reviewIdx: 3,
       date: DateTime.now(),
-      score: 3,
-      content: '그냥 그럼',
+      score: 4,
+      content: '자주 방문할게요',
+      rewrite: 'F',
+      docRef: 1,
+    ),
+    Dreview(
+      reviewIdx: 4,
+      date: DateTime.now(),
+      score: 1,
+      content: '이 의사 별로임',
       rewrite: 'F',
       writerRef: 'harim',
       docRef: 1,

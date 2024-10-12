@@ -40,7 +40,7 @@ class _DreviewDetailWidgetState extends State<DreviewDetailWidget> {
     List<Likes> likesList = likesProvider.selectLikes('dreview', dreview!.reviewIdx.toString());
     List<Hashtag> hashtagList = hashtagProvider.listReviewHashtag(dreview.reviewIdx);
     Member? loginMember = memberProvider.loginMember;
-    Member? member = memberProvider.selectMember(dreview.writerRef);
+    Member? member = memberProvider.selectMember(dreview.writerRef.toString());
     List<Dreply> dreplyList = dreplyProvider.listDreply(dreview.reviewIdx);
 
     return Column(
@@ -71,9 +71,9 @@ class _DreviewDetailWidgetState extends State<DreviewDetailWidget> {
                           member?.nickname ?? '(알 수 없음)',
                           style: TextStyle(
                             fontSize: 16,
-                            color: (member?.id != null && loginMember?.id != null && member!.id != loginMember!.id) 
-                              ? Colors.grey[900] 
-                              : pointColor2,
+                            color: (member?.id != null && loginMember?.id != null && member!.id == loginMember!.id) 
+                              ?pointColor2
+                              : Colors.grey[900],
                             fontWeight: FontWeight.w700,
                           ),
                         ),

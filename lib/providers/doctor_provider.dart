@@ -2,7 +2,7 @@ import 'package:doctorviewapp/models/doctor.dart';
 import 'package:flutter/material.dart';
 
 class DoctorProvider extends ChangeNotifier {
-  int _seqDoctorIdx = 5;
+  int _seqDoctorIdx = 4;
 
   // 의사 더미데이터
   final List<Doctor> _doctorList = [
@@ -25,14 +25,6 @@ class DoctorProvider extends ChangeNotifier {
     Doctor(
       docIdx: 3,
       name: '김잭슨',
-      major: '소아과',
-      career: '1년',
-      hours: '수-일 09:00-18:00',
-      hospRef: 'hospital2',
-    ),
-    Doctor(
-      docIdx: 4,
-      name: 'James',
       major: '소아과',
       career: '1년',
       hours: '수-일 09:00-18:00',

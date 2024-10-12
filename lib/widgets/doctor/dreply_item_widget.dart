@@ -1,6 +1,8 @@
 import 'package:doctorviewapp/models/dreply.dart';
+import 'package:doctorviewapp/models/hospital.dart';
 import 'package:doctorviewapp/models/member.dart';
 import 'package:doctorviewapp/providers/dreply_provider.dart';
+import 'package:doctorviewapp/providers/hospital_provider.dart';
 import 'package:doctorviewapp/providers/member_provider.dart';
 import 'package:doctorviewapp/theme/colors.dart';
 import 'package:doctorviewapp/widgets/common/title_input_field.dart';

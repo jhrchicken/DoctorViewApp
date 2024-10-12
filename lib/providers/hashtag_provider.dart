@@ -37,7 +37,17 @@ class HashtagProvider extends ChangeNotifier {
     Hashtag(
       tagIdx: 3,
       reviewRef: 1,
-      tag: '효과좋아요'
+      tag: '효과가 좋아요'
+    ),
+    Hashtag(
+      tagIdx: 3,
+      reviewRef: 3,
+      tag: '저렴해요'
+    ),
+    Hashtag(
+      tagIdx: 3,
+      reviewRef: 3,
+      tag: '꼼꼼해요'
     ),
   ];
 

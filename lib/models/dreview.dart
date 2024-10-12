@@ -4,7 +4,7 @@ class Dreview {
   int score;
   String content;
   String rewrite;
-  String writerRef;
+  String? writerRef;
   int docRef;
 
   Dreview({
@@ -13,7 +13,7 @@ class Dreview {
     required this.score,
     required this.content,
     required this.rewrite,
-    required this.writerRef,
+    this.writerRef,
     required this.docRef,
   });
 }
