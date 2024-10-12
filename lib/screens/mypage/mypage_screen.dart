@@ -18,6 +18,7 @@ import 'package:doctorviewapp/screens/mypage/join/user.dart';
 import 'package:doctorviewapp/screens/mypage/testpage/memberList.dart';
 import 'package:doctorviewapp/screens/mypage/testpage/reserveList.dart';
 import 'package:doctorviewapp/theme/colors.dart';
+import 'package:doctorviewapp/widgets/member/logout_text.dart';
 import 'package:doctorviewapp/widgets/member/mypage_menu.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -654,6 +655,9 @@ class _MyHomePageState extends State<MyHomePage> {
 
                     ] 
                   ],
+
+                  // 로그아웃
+                  const LogoutText(),
                   
                   /****************** 디버깅용 ******************/
                   SizedBox(

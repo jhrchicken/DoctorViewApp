@@ -3,6 +3,7 @@ import 'package:doctorviewapp/component/secondary_outline_button.dart';
 import 'package:doctorviewapp/header.dart';
 import 'package:doctorviewapp/models/member.dart';
 import 'package:doctorviewapp/providers/member_provider.dart';
+import 'package:doctorviewapp/widgets/member/logout_text.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -295,16 +296,7 @@ void initState() {
                     const SizedBox(height: 30),
 
                     // 로그아웃
-                    GestureDetector(
-                      onTap: () {
-                        memberProvider.logoutMember();
-                        Navigator.of(context).pushNamed("/");
-                      },
-                      child: const Text(
-                        '로그아웃',
-                        style: TextStyle(color: Color(0xff999999), fontSize: 12),
-                      ),
-                    ),
+                    const LogoutText(),
 
                   ],
                 ),

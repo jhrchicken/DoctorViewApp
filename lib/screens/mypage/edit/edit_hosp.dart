@@ -10,6 +10,7 @@ import 'package:doctorviewapp/providers/hours_provider.dart';
 import 'package:doctorviewapp/providers/member_provider.dart';
 import 'package:doctorviewapp/theme/colors.dart';
 import 'package:doctorviewapp/widgets/member/bool_radio_button.dart';
+import 'package:doctorviewapp/widgets/member/logout_text.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -810,16 +811,7 @@ class _EditHospState extends State<EditHosp> {
                     const SizedBox(height: 30),
 
                     // 로그아웃
-                    GestureDetector(
-                      onTap: () {
-                        memberProvider.logoutMember();
-                        Navigator.of(context).pushNamed("/");
-                      },
-                      child: const Text(
-                        '로그아웃',
-                        style: TextStyle(color: Color(0xff999999), fontSize: 12),
-                      ),
-                    ),
+                    const LogoutText(),
 
                   ],
                 ),
