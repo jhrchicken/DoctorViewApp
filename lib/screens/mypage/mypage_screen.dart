@@ -1,5 +1,4 @@
 import 'package:doctorviewapp/header.dart';
-import 'package:doctorviewapp/models/doctor.dart';
 import 'package:doctorviewapp/providers/member_provider.dart';
 import 'package:doctorviewapp/screens/mypage/edit/check/check_member.dart';
 import 'package:doctorviewapp/screens/mypage/edit/edit_hosp.dart';
@@ -15,6 +14,7 @@ import 'package:doctorviewapp/screens/mypage/join/join_hosp_success.dart';
 import 'package:doctorviewapp/screens/mypage/join/join_user_success.dart';
 import 'package:doctorviewapp/screens/mypage/join/login.dart';
 import 'package:doctorviewapp/screens/mypage/join/user.dart';
+import 'package:doctorviewapp/screens/mypage/my_hosp_doctor_screen.dart';
 import 'package:doctorviewapp/screens/mypage/testpage/memberList.dart';
 import 'package:doctorviewapp/screens/mypage/testpage/reserveList.dart';
 import 'package:doctorviewapp/theme/colors.dart';
@@ -253,8 +253,12 @@ class _MyHomePageState extends State<MyHomePage> {
                                       color: pointColor2,
                                       size: 30,
                                     ),
-                                    const SizedBox(height: 15),
-                                    Text('예약정보 확인', style: TextStyle(fontSize: 18, color: Colors.grey[900],)),
+                                    const SizedBox(height: 5),
+                                    Text(
+                                      '예약정보 확인',
+                                      textAlign: TextAlign.center,
+                                      style: TextStyle(fontSize: 16, color: Colors.grey[900],)
+                                    ),
                                   ],
                                 ),
                               ),
@@ -271,19 +275,30 @@ class _MyHomePageState extends State<MyHomePage> {
                             Expanded(
                               child: GestureDetector(
                                 onTap: () {
-                                  Navigator.of(context).pushNamed("/"); // 좋아요 페이지로 이동
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => const MyHospDoctorScreen(),
+                                    ),
+                                  );
                                 },
                                 child: Column(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   mainAxisSize: MainAxisSize.min,
                                   children: [
                                     const Icon(
-                                      Icons.favorite,
+                                      Icons.bookmark_rounded,
                                       color: pointColor2,
                                       size: 30,
                                     ),
-                                    const SizedBox(height: 15),
-                                    Text('좋아요', style: TextStyle(fontSize: 18, color: Colors.grey[900])),
+                                    const SizedBox(height: 5),
+                                    Text(
+                                      '찜',
+                                      style: TextStyle(
+                                        fontSize: 16,
+                                        color: Colors.grey[900]
+                                      ),
+                                    ),
                                   ],
                                 ),
                               ),
@@ -307,12 +322,15 @@ class _MyHomePageState extends State<MyHomePage> {
                                   mainAxisSize: MainAxisSize.min,
                                   children: [
                                     const Icon(
-                                      Icons.rate_review,
+                                      Icons.article,
                                       color: pointColor2,
                                       size: 30,
                                     ),
-                                    const SizedBox(height: 15),
-                                    Text('리뷰', style: TextStyle(fontSize: 18, color: Colors.grey[900])),
+                                    const SizedBox(height: 5),
+                                    Text('리뷰', style: TextStyle(
+                                      fontSize: 16,
+                                      color: Colors.grey[900])
+                                    ),
                                   ],
                                 ),
                               ),
@@ -349,14 +367,14 @@ class _MyHomePageState extends State<MyHomePage> {
                                 style: TextStyle(
                                   color: Colors.grey[900],
                                   fontWeight: FontWeight.w300,
-                                  fontSize: 18,
+                                  fontSize: 16,
                                 ),
                               ),
                             ),
                             Icon(
                               Icons.arrow_forward_ios,
                               color: Colors.grey[500],
-                              size: 18,
+                              size: 16,
                             ),
                           ],
                         ),
@@ -372,14 +390,14 @@ class _MyHomePageState extends State<MyHomePage> {
                                 style: TextStyle(
                                   color: Colors.grey[900],
                                   fontWeight: FontWeight.w300,
-                                  fontSize: 18,
+                                  fontSize: 16,
                                 ),
                               ),
                             ),
                             Icon(
                               Icons.arrow_forward_ios,
                               color: Colors.grey[500],
-                              size: 18,
+                              size: 16,
                             ),
                           ],
                         ),
@@ -395,14 +413,14 @@ class _MyHomePageState extends State<MyHomePage> {
                                 style: TextStyle(
                                   color: Colors.grey[900],
                                   fontWeight: FontWeight.w300,
-                                  fontSize: 18,
+                                  fontSize: 16,
                                 ),
                               ),
                             ),
                             Icon(
                               Icons.arrow_forward_ios,
                               color: Colors.grey[500],
-                              size: 18,
+                              size: 16,
                             ),
                           ],
                         ),
@@ -428,14 +446,14 @@ class _MyHomePageState extends State<MyHomePage> {
                                 style: TextStyle(
                                   color: Colors.grey[900],
                                   fontWeight: FontWeight.w300,
-                                  fontSize: 18,
+                                  fontSize: 16,
                                 ),
                               ),
                             ),
                             Icon(
                               Icons.arrow_forward_ios,
                               color: Colors.grey[500],
-                              size: 18,
+                              size: 16,
                             ),
                           ],
                         ),

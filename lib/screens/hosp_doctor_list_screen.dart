@@ -10,7 +10,7 @@ class HospDoctorListScreen extends StatefulWidget {
   const HospDoctorListScreen({super.key});
 
   @override
-  _HospDoctorListScreenState createState() => _HospDoctorListScreenState();
+  State<HospDoctorListScreen> createState() => _HospDoctorListScreenState();
 }
 
 class _HospDoctorListScreenState extends State<HospDoctorListScreen> {
