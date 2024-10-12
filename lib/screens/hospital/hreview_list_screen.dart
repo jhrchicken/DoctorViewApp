@@ -27,7 +27,7 @@ class _HreviewListScreenState extends State<HreviewListScreen> {
   Widget build(BuildContext context) {
     final hreviewProvider = Provider.of<HreviewProvider>(context);
 
-    List<Hreview> hreviewList = hreviewProvider.listHreview(widget.hospRef);
+    List<Hreview> hreviewList = hreviewProvider.listHreview(widget.hospRef).reversed.toList();
 
     return Scaffold(
       appBar: AppBar(

@@ -89,7 +89,7 @@ class _HospitalViewScreenState extends State<HospitalViewScreen> {
 
     Hospital? hospital = hospitalProvider.selectHosp(widget.id);
     List<Doctor> doctorList = doctorProvider.listDoctor(hospital!.id);
-    List<Hreview> hreviewList = hreviewProvider.listHreview(hospital.id);
+    List<Hreview> hreviewList = hreviewProvider.listHreview(hospital.id).reversed.toList();
     List<Hashtag> hashtagList = hashtagProvider.listHospHashtag(hospital.id);
 
     // 로그인 하지 않은 경우

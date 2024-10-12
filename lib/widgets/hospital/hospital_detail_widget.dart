@@ -7,7 +7,6 @@ import 'package:doctorviewapp/providers/likes_provider.dart';
 import 'package:doctorviewapp/screens/reserve/reserve_proceed_screen.dart';
 import 'package:doctorviewapp/theme/colors.dart';
 import 'package:doctorviewapp/widgets/common/primary_button.dart';
-import 'package:doctorviewapp/widgets/common/secondary_button.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -88,7 +87,7 @@ class _HospitalDetailWidgetState extends State<HospitalDetailWidget> {
               ),
             ),
             const SizedBox(
-              width: 8
+              width: 5
             ),
             Icon(
               Icons.circle,
@@ -96,7 +95,7 @@ class _HospitalDetailWidgetState extends State<HospitalDetailWidget> {
               color: Colors.grey[500],
             ),
             const SizedBox(
-              width: 8
+              width: 5
             ),
             Text(
               '리뷰 ${hreviewList.length.toString()}',
@@ -107,7 +106,7 @@ class _HospitalDetailWidgetState extends State<HospitalDetailWidget> {
               ),
             ),
             const SizedBox(
-              width: 8
+              width: 5
             ),
             Icon(
               Icons.circle,
@@ -115,7 +114,7 @@ class _HospitalDetailWidgetState extends State<HospitalDetailWidget> {
               color: Colors.grey[500],
             ),
             const SizedBox(
-              width: 8
+              width: 5
             ),
             Text(
               hospital.department,
@@ -156,7 +155,7 @@ class _HospitalDetailWidgetState extends State<HospitalDetailWidget> {
                   style: TextStyle(
                     color: Colors.grey[700],
                     fontSize: 14,
-                    fontWeight: FontWeight.w700,
+                    fontWeight: FontWeight.w500,
                   ),
                 ),
                 const SizedBox(
@@ -167,7 +166,7 @@ class _HospitalDetailWidgetState extends State<HospitalDetailWidget> {
                   style: TextStyle(
                     color: Colors.grey[500],
                     fontSize: 14,
-                    fontWeight: FontWeight.w700,
+                    fontWeight: FontWeight.w500,
                   ),
                 ),
               ],
@@ -191,18 +190,18 @@ class _HospitalDetailWidgetState extends State<HospitalDetailWidget> {
                   style: TextStyle(
                     color: Colors.grey[700],
                     fontSize: 14,
-                    fontWeight: FontWeight.w700,
+                    fontWeight: FontWeight.w500,
                   ),
                 ),
                 const SizedBox(
                   width: 10,
                 ),
                 Text(
-                  '진료시간을 입력해보아요',
+                  '진료시간을 입력하세요',
                   style: TextStyle(
                     color: Colors.grey[500],
                     fontSize: 14,
-                    fontWeight: FontWeight.w700,
+                    fontWeight: FontWeight.w500,
                   ),
                 ),
               ],
@@ -226,7 +225,7 @@ class _HospitalDetailWidgetState extends State<HospitalDetailWidget> {
                   style: TextStyle(
                     color: Colors.grey[700],
                     fontSize: 14,
-                    fontWeight: FontWeight.w700,
+                    fontWeight: FontWeight.w500,
                   ),
                 ),
                 const SizedBox(
@@ -237,7 +236,7 @@ class _HospitalDetailWidgetState extends State<HospitalDetailWidget> {
                   style: TextStyle(
                     color: Colors.grey[500],
                     fontSize: 14,
-                    fontWeight: FontWeight.w700,
+                    fontWeight: FontWeight.w500,
                   ),
                 ),
               ],
