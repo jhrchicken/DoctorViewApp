@@ -44,6 +44,9 @@ class DreviewProvider extends ChangeNotifier {
     ),
   ];
 
+  // 모든 의사 리뷰 목록
+  List<Dreview> get dreviewList => _dreviewList;
+
   // 의사 리뷰 목록
   List<Dreview> listDreview(int docRef) {
     return _dreviewList.where((dreview) => dreview.docRef == docRef).toList();
@@ -85,5 +88,9 @@ class DreviewProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  // 특정 사용자가 작성한 리뷰
+  List<Dreview> listMyDreview(String id) {
+    return _dreviewList.where((dreview) => dreview.writerRef == id).toList();
+  }
 
 }

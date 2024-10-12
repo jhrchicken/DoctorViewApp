@@ -15,6 +15,7 @@ import 'package:doctorviewapp/screens/mypage/join/join_user_success.dart';
 import 'package:doctorviewapp/screens/mypage/join/login.dart';
 import 'package:doctorviewapp/screens/mypage/join/user.dart';
 import 'package:doctorviewapp/screens/mypage/my_hosp_doctor_screen.dart';
+import 'package:doctorviewapp/screens/mypage/myreview_main_screen.dart';
 import 'package:doctorviewapp/screens/mypage/testpage/memberList.dart';
 import 'package:doctorviewapp/screens/mypage/testpage/reserveList.dart';
 import 'package:doctorviewapp/theme/colors.dart';
@@ -315,7 +316,12 @@ class _MyHomePageState extends State<MyHomePage> {
                             Expanded(
                               child: GestureDetector(
                                 onTap: () {
-                                  Navigator.of(context).pushNamed("/"); // 리뷰 페이지로 이동
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => const MyreviewMainScreen(),
+                                    ),
+                                  );
                                 },
                                 child: Column(
                                   mainAxisAlignment: MainAxisAlignment.center,
