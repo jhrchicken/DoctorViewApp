@@ -18,7 +18,7 @@ class _ReserveCheckInfoWidgetState extends State<ReserveCheckInfoWidget> {
       children: [
         
         const Row(
-      mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
             // SizedBox(width: 20,), 
             Text(

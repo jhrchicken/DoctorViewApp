@@ -1,7 +1,5 @@
 import 'package:doctorviewapp/component/secondary_outline_button.dart';
 import 'package:doctorviewapp/theme/colors.dart';
-import 'package:doctorviewapp/widgets/common/primary_outline_button.dart';
-import 'package:doctorviewapp/widgets/common/secondary_button.dart';
 import 'package:flutter/material.dart';
 
 class ReserveSelectDateWidget extends StatefulWidget {
@@ -24,19 +22,20 @@ class _ReserveSelectDateWidgetState extends State<ReserveSelectDateWidget> {
       children: [
         Row(
           children: [
-            const Icon(
+            Icon(
               Icons.calendar_today,
-              // color: pointColor2,
               size: 20,
+              color: Colors.grey[900],
             ),
-            const SizedBox(width: 10),
+            const SizedBox(width: 20),
             // 선택한 날짜 표시
             Text(
               '${_selectedDate != null ? _selectedDate!.month : DateTime.now().month}월 ${_selectedDate != null ? _selectedDate!.day : DateTime.now().day}일',
-              style: const TextStyle(
+              style: TextStyle(
                 fontSize: 20,
                 letterSpacing: 0.1,
                 fontWeight: FontWeight.w500,
+                color: Colors.grey[900],
               ),
             ),
 
