@@ -1,6 +1,9 @@
+import 'package:doctorviewapp/main.dart';
 import 'package:doctorviewapp/models/hashtag.dart';
+import 'package:doctorviewapp/models/hospital.dart';
 import 'package:doctorviewapp/models/hreview.dart';
 import 'package:doctorviewapp/providers/hashtag_provider.dart';
+import 'package:doctorviewapp/providers/hospital_provider.dart';
 import 'package:doctorviewapp/providers/hreview_provider.dart';
 import 'package:doctorviewapp/theme/colors.dart';
 import 'package:doctorviewapp/widgets/common/content_input_field.dart';
@@ -40,7 +43,7 @@ class _HreviewEditScreenState extends State<HreviewEditScreen> {
       _contentController.text = hreview.content;
       _score = hreview.score;
 
-      // 기존 해시태그 가져오기 (이 로직은 해시태그 데이터에 따라 조정)
+      // 기존 해시태그 가져오기
       final hashtagProvider = Provider.of<HashtagProvider>(context, listen: false);
       final hashtags = hashtagProvider.listReviewHashtag(widget.reviewIdx);
       _listHashtag.addAll(hashtags.map((hashtag) => hashtag.tag));
@@ -59,24 +62,18 @@ class _HreviewEditScreenState extends State<HreviewEditScreen> {
   Widget build(BuildContext context) {
     final hreviewProvider = Provider.of<HreviewProvider>(context);
     final hashtagProvider = Provider.of<HashtagProvider>(context);
+    final hospitalProvider = Provider.of<HospitalProvider>(context);
+
+    Hreview? hreview = hreviewProvider.selectHreview(widget.reviewIdx);
+    Hospital? hospital = hospitalProvider.selectHosp(hreview!.hospRef);
 
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,
         title: Text(
           '리뷰 수정',
-          style: TextStyle(
-            color: Colors.grey[900],
-            fontSize: 16,
-            fontWeight: FontWeight.w700,
-          ),
+          style: CustomTextStyles.appbarText,
         ),
-        actions: [
-          IconButton(
-            icon: Icon(Icons.bookmark_border_rounded, color: Colors.grey[900]),
-            onPressed: () {},
-          ),
-        ],
       ),
 
       body: Padding(
@@ -90,6 +87,21 @@ class _HreviewEditScreenState extends State<HreviewEditScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              Text(
+                '  ${hospital!.name}',
+                style: TextStyle(
+                  color: Colors.grey[900],
+                  fontSize: 18,
+                  fontWeight: FontWeight.w900,
+                ),
+              ),
+              const SizedBox(
+                height: 5,
+              ),
+              Divider(
+                thickness: 1,
+                color: Colors.grey[300],
+              ),
               const SizedBox(height: 20),
               Form(
                 key: _formKey,
@@ -119,7 +131,7 @@ class _HreviewEditScreenState extends State<HreviewEditScreen> {
                     // 해시태그
                     Wrap(
                       spacing: 8.0,
-                      runSpacing: 4.0,
+                      runSpacing: -5,
                       children: _optionHashtag.map((tag) {
                         final isSelected = _listHashtag.contains(tag);
                         return ChoiceChip(
@@ -127,6 +139,7 @@ class _HreviewEditScreenState extends State<HreviewEditScreen> {
                             tag,
                             style: TextStyle(
                               color: Colors.grey[700],
+                              fontSize: 12,
                             ),
                           ),
                           selected: isSelected,
@@ -140,7 +153,7 @@ class _HreviewEditScreenState extends State<HreviewEditScreen> {
                             });
                           },
                           backgroundColor: Colors.white,
-                          selectedColor: pointColor1,
+                          selectedColor: Colors.grey[100],
                           shape: RoundedRectangleBorder(
                             side: BorderSide(
                               color: Colors.grey.shade300,
@@ -200,10 +213,7 @@ class _HreviewEditScreenState extends State<HreviewEditScreen> {
                                   ),
                                 );
                               }
-
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                const SnackBar(content: Text('리뷰가 수정되었습니다')),
-                              );
+                              Navigator.pop(context);
                               Navigator.pop(context);
                             }
                           },

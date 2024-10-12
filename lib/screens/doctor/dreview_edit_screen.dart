@@ -1,3 +1,4 @@
+import 'package:doctorviewapp/main.dart';
 import 'package:doctorviewapp/models/doctor.dart';
 import 'package:doctorviewapp/models/dreview.dart';
 import 'package:doctorviewapp/models/hashtag.dart';
@@ -41,7 +42,7 @@ class _DreviewEditScreenState extends State<DreviewEditScreen> {
       _contentController.text = dreview.content;
       _score = dreview.score;
 
-      // 기존 해시태그 가져오기 (이 로직은 해시태그 데이터에 따라 조정)
+      // 기존 해시태그 가져오기
       final hashtagProvider = Provider.of<HashtagProvider>(context, listen: false);
       final hashtags = hashtagProvider.listReviewHashtag(widget.reviewIdx);
       _listHashtag.addAll(hashtags.map((hashtag) => hashtag.tag));
@@ -69,18 +70,8 @@ class _DreviewEditScreenState extends State<DreviewEditScreen> {
         backgroundColor: Colors.white,
         title: Text(
           '리뷰 수정',
-          style: TextStyle(
-            color: Colors.grey[900],
-            fontSize: 16,
-            fontWeight: FontWeight.w700,
-          ),
+          style: CustomTextStyles.appbarText,
         ),
-        actions: [
-          IconButton(
-            icon: Icon(Icons.bookmark_border_rounded, color: Colors.grey[900]),
-            onPressed: () {},
-          ),
-        ],
       ),
 
       body: Padding(

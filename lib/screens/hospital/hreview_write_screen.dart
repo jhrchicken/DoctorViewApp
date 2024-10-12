@@ -132,7 +132,7 @@ class _HreviewWriteScreenState extends State<HreviewWriteScreen> {
                             });
                           },
                           backgroundColor: Colors.white,
-                          selectedColor: pointColor1,
+                          selectedColor: Colors.grey[100],
                           shape: RoundedRectangleBorder(
                             side: BorderSide(
                               color: Colors.grey.shade300,
