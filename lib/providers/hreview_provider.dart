@@ -79,4 +79,9 @@ class HreviewProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  // 특정 사용자가 작성한 리뷰
+  List<Hreview> listMyHreview(String id) {
+    return _hreviewList.where((hreview) => hreview.writerRef == id).toList();
+  }
+
 }
