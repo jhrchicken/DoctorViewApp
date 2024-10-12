@@ -52,7 +52,7 @@ class _PostActionSheetState extends State<PostActionSheet> {
           ),
           child: CupertinoActionSheet(
             title: Text(
-              '리뷰',
+              '글',
               style: TextStyle(
                 fontWeight: FontWeight.w300,
                 color: Colors.grey[500],

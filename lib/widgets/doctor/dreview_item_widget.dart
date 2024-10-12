@@ -213,7 +213,7 @@ class _DreviewItemWidgetState extends State<DreviewItemWidget> {
                 Row(
                   children: [
                     Icon(
-                      Icons.mode_comment_outlined,
+                      Icons.email_outlined,
                       size: 12,
                       color: Colors.grey[500],
                     ),

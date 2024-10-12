@@ -152,49 +152,49 @@ class _DreviewDetailWidgetState extends State<DreviewDetailWidget> {
         ),
 
         // 좋아요수 리뷰수
-        const Row(
+        Row(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            SizedBox(
+            const SizedBox(
               width: 7,
             ),
-            // Row(
-            //   children: [
-            //     Icon(
-            //       Icons.favorite_border_rounded,
-            //       color: Colors.grey[500],
-            //       size: 20,
-            //     ),
-            //     const SizedBox(width: 4),
-            //     Text(
-            //       likesList.length.toString(),
-            //       style: TextStyle(
-            //         fontSize: 14,
-            //         color: Colors.grey[700],
-            //       ),
-            //     ),
-            //   ],
-            // ),
-            // const SizedBox(
-            //   width: 10,
-            // ),
-            // Row(
-            //   children: [
-            //     Icon(
-            //       Icons.mode_comment_outlined,
-            //       color: Colors.grey[500],
-            //       size: 20,
-            //     ),
-            //     const SizedBox(width: 4),
-            //     Text(
-            //       dreplyList.length.toString(),
-            //       style: TextStyle(
-            //         fontSize: 14,
-            //         color: Colors.grey[700],
-            //       ),
-            //     ),
-            //   ],
-            // ),
+            Row(
+              children: [
+                const Icon(
+                  Icons.favorite_border_rounded,
+                  color: Colors.red,
+                  size: 12,
+                ),
+                const SizedBox(width: 5),
+                Text(
+                  likesList.length.toString(),
+                  style: const TextStyle(
+                    fontSize: 12,
+                    color: Colors.red,
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(
+              width: 15,
+            ),
+            Row(
+              children: [
+                const Icon(
+                  Icons.mail_outline,
+                  color: Colors.teal,
+                  size: 12,
+                ),
+                const SizedBox(width: 5),
+                Text(
+                  dreplyList.length.toString(),
+                  style: const TextStyle(
+                    fontSize: 12,
+                    color: Colors.teal,
+                  ),
+                ),
+              ],
+            ),
           ],
         )
       ],
