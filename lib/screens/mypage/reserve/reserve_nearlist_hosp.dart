@@ -2,17 +2,18 @@ import 'package:doctorviewapp/header.dart';
 import 'package:doctorviewapp/providers/member_provider.dart';
 import 'package:doctorviewapp/providers/reserve_provider.dart';
 import 'package:doctorviewapp/widgets/member/reserve_item_near.dart';
+import 'package:doctorviewapp/widgets/member/reserve_item_near_hosp.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class ReserveNearlistUser extends StatefulWidget {
-  const ReserveNearlistUser({super.key});
+class ReserveNearlistHosp extends StatefulWidget {
+  const ReserveNearlistHosp({super.key});
 
   @override
-  State<ReserveNearlistUser> createState() => _ReserveNearlistUserState();
+  State<ReserveNearlistHosp> createState() => _ReserveNearlistHospState();
 }
 
-class _ReserveNearlistUserState extends State<ReserveNearlistUser> {
+class _ReserveNearlistHospState extends State<ReserveNearlistHosp> {
   @override
   Widget build(BuildContext context) {
     final memberProvider = Provider.of<MemberProvider>(context);
@@ -38,7 +39,7 @@ class _ReserveNearlistUserState extends State<ReserveNearlistUser> {
                   final reserve = reserveList[index];
                   return Column(
                     children: [
-                      ReserveItemNear(
+                      ReserveItemNearHosp(
                         reserveIdx: reserve.reserveIdx,
                       ),
                       if (index < reserveList.length - 1)
