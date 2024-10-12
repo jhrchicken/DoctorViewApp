@@ -1,5 +1,7 @@
+import 'package:doctorviewapp/models/doctor.dart';
 import 'package:doctorviewapp/models/dreview.dart';
 import 'package:doctorviewapp/models/hashtag.dart';
+import 'package:doctorviewapp/providers/doctor_provider.dart';
 import 'package:doctorviewapp/providers/dreview_provider.dart';
 import 'package:doctorviewapp/providers/hashtag_provider.dart';
 import 'package:doctorviewapp/theme/colors.dart';
@@ -57,6 +59,10 @@ class _DreviewEditScreenState extends State<DreviewEditScreen> {
   Widget build(BuildContext context) {
     final dreviewProvider = Provider.of<DreviewProvider>(context);
     final hashtagProvider = Provider.of<HashtagProvider>(context);
+    final doctorProvider = Provider.of<DoctorProvider>(context);
+
+    Dreview? dreview = dreviewProvider.selectDreview(widget.reviewIdx);
+    Doctor? doctor = doctorProvider.selectDoctor(dreview!.docRef);
 
     return Scaffold(
       appBar: AppBar(
@@ -88,6 +94,21 @@ class _DreviewEditScreenState extends State<DreviewEditScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              Text(
+                '  ${doctor!.name} 의사',
+                style: TextStyle(
+                  color: Colors.grey[900],
+                  fontSize: 18,
+                  fontWeight: FontWeight.w900,
+                ),
+              ),
+              const SizedBox(
+                height: 5,
+              ),
+              Divider(
+                thickness: 1,
+                color: Colors.grey[300],
+              ),
               const SizedBox(height: 20),
               Form(
                 key: _formKey,
@@ -117,7 +138,7 @@ class _DreviewEditScreenState extends State<DreviewEditScreen> {
                     // 해시태그
                     Wrap(
                       spacing: 8.0,
-                      runSpacing: 4.0,
+                      runSpacing: -5,
                       children: _optionHashtag.map((tag) {
                         final isSelected = _listHashtag.contains(tag);
                         return ChoiceChip(
@@ -125,6 +146,7 @@ class _DreviewEditScreenState extends State<DreviewEditScreen> {
                             tag,
                             style: TextStyle(
                               color: Colors.grey[700],
+                              fontSize: 12,
                             ),
                           ),
                           selected: isSelected,
@@ -138,7 +160,7 @@ class _DreviewEditScreenState extends State<DreviewEditScreen> {
                             });
                           },
                           backgroundColor: Colors.white,
-                          selectedColor: pointColor1,
+                          selectedColor: Colors.grey[100],
                           shape: RoundedRectangleBorder(
                             side: BorderSide(
                               color: Colors.grey.shade300,

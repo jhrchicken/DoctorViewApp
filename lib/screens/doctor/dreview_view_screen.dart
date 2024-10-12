@@ -155,22 +155,25 @@ class _DreviewViewScreenState extends State<DreviewViewScreen> {
                     ),
                   ),
                 )
-              : ListView.builder(
-                  itemCount: dreplyList.length,
-                  itemBuilder: (context, index) {
-                    final dreply = dreplyList[index];
-                    return Column(
-                      children: [
-                        DreplyItemWidget(
-                          replyIdx: dreply.replyIdx,
-                        ),
-                        const SizedBox(
-                          height: 10,
-                        ),
-                      ],
-                    );
-                  },
-                ),
+              : Padding(
+                  padding: const EdgeInsets.all(20),
+                  child: ListView.builder(
+                    itemCount: dreplyList.length,
+                    itemBuilder: (context, index) {
+                      final dreply = dreplyList[index];
+                      return Column(
+                        children: [
+                          DreplyItemWidget(
+                            replyIdx: dreply.replyIdx,
+                          ),
+                          const SizedBox(
+                            height: 10,
+                          ),
+                        ],
+                      );
+                    },
+                  ),
+              ),
           ),
         ],
       ),
