@@ -54,12 +54,6 @@ class _DreviewWriteScreenState extends State<DreviewWriteScreen> {
           '리뷰 작성',
           style: CustomTextStyles.appbarText,
         ),
-        actions: [
-          IconButton(
-            icon: Icon(Icons.bookmark_border_rounded, color: Colors.grey[900]),
-            onPressed: () {},
-          ),
-        ],
       ),
 
       body: Padding(

@@ -1,3 +1,4 @@
+import 'package:doctorviewapp/main.dart';
 import 'package:doctorviewapp/models/hashtag.dart';
 import 'package:doctorviewapp/models/hospital.dart';
 import 'package:doctorviewapp/models/hreview.dart';
@@ -52,18 +53,8 @@ class _HreviewWriteScreenState extends State<HreviewWriteScreen> {
         backgroundColor: Colors.white,
         title: Text(
           '리뷰 작성',
-          style: TextStyle(
-            color: Colors.grey[900],
-            fontSize: 16,
-            fontWeight: FontWeight.w700,
-          ),
+          style: CustomTextStyles.appbarText,
         ),
-        actions: [
-          IconButton(
-            icon: Icon(Icons.bookmark_border_rounded, color: Colors.grey[900]),
-            onPressed: () {},
-          ),
-        ],
       ),
 
       body: Padding(
@@ -81,9 +72,14 @@ class _HreviewWriteScreenState extends State<HreviewWriteScreen> {
                 '  ${hospital!.name}',
                 style: TextStyle(
                   color: Colors.grey[900],
-                  fontSize: 16,
+                  fontSize: 18,
                   fontWeight: FontWeight.w900,
                 ),
+              ),
+              const SizedBox(height: 5),
+              Divider(
+                thickness: 1,
+                color: Colors.grey[300],
               ),
               const SizedBox(height: 20),
               Form(
@@ -114,7 +110,7 @@ class _HreviewWriteScreenState extends State<HreviewWriteScreen> {
                     // 해시태그
                     Wrap(
                       spacing: 8.0,
-                      runSpacing: 4.0,
+                      runSpacing: -5,
                       children: _optionHashtag.map((tag) {
                         final isSelected = _listHashtag.contains(tag);
                         return ChoiceChip(
@@ -122,6 +118,7 @@ class _HreviewWriteScreenState extends State<HreviewWriteScreen> {
                             tag,
                             style: TextStyle(
                               color: Colors.grey[700],
+                              fontSize: 12,
                             ),
                           ),
                           selected: isSelected,
@@ -135,7 +132,7 @@ class _HreviewWriteScreenState extends State<HreviewWriteScreen> {
                             });
                           },
                           backgroundColor: Colors.white,
-                          selectedColor: pointColor1,
+                          selectedColor: Colors.grey[100],
                           shape: RoundedRectangleBorder(
                             side: BorderSide(
                               color: Colors.grey.shade300,

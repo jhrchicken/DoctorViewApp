@@ -37,13 +37,6 @@ class _DreviewListScreenState extends State<DreviewListScreen> {
           '리뷰',
           style: CustomTextStyles.appbarText,
         ),
-        actions: [
-          IconButton(
-            icon: Icon(Icons.bookmark_border_rounded, color: Colors.grey[900]),
-            onPressed: () {
-            },
-          ),
-        ],
       ),
       body: SingleChildScrollView(
         child: Column(

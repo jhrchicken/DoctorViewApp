@@ -66,6 +66,7 @@ class _DoctorItemWidgetState extends State<DoctorItemWidget> {
     }
   }
 
+
   @override
   Widget build(BuildContext context) {
     final doctorProvider = Provider.of<DoctorProvider>(context);

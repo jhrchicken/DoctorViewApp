@@ -70,18 +70,21 @@ class _HreplyItemWidgetState extends State<HreplyItemWidget> {
                         Row(
                           children: [
                             const SizedBox(width: 2),
+                            // 작성자
                             Text(
-                              hreply.writerRef,
+                              member?.nickname ?? '(알 수 없음)',
                               style: TextStyle(
                                 fontSize: 12,
-                                color: Colors.grey[900],
+                                color: (member?.id != null && loginMember?.id != null && member!.id == loginMember!.id) 
+                                  ? pointColor2
+                                  : Colors.grey[900],
                                 fontWeight: FontWeight.w700,
                               ),
                             ),
                             const SizedBox(width: 10),
                             // 작성일
                             Text(
-                              '${hreply.date.year}.${hreply.date.month}.${hreply.date.day}',
+                              '${hreply.date.year}-${hreply.date.month}-${hreply.date.day}',
                               style: TextStyle(
                                 fontSize: 12,
                                 color: Colors.grey[500],
@@ -106,7 +109,7 @@ class _HreplyItemWidgetState extends State<HreplyItemWidget> {
               ],
             ),
             const SizedBox(height: 10),
-                        // 내용
+            // 내용
             isEditing
               ? TitleInputField(
                 focusNode: _editingFocusNode,

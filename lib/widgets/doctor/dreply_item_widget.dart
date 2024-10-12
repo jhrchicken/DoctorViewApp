@@ -1,8 +1,6 @@
 import 'package:doctorviewapp/models/dreply.dart';
-import 'package:doctorviewapp/models/hospital.dart';
 import 'package:doctorviewapp/models/member.dart';
 import 'package:doctorviewapp/providers/dreply_provider.dart';
-import 'package:doctorviewapp/providers/hospital_provider.dart';
 import 'package:doctorviewapp/providers/member_provider.dart';
 import 'package:doctorviewapp/theme/colors.dart';
 import 'package:doctorviewapp/widgets/common/title_input_field.dart';
@@ -77,9 +75,9 @@ class _DreplyItemWidgetState extends State<DreplyItemWidget> {
                               member?.nickname ?? '(알 수 없음)',
                               style: TextStyle(
                                 fontSize: 14,
-                                color: (member?.id != null && loginMember?.id != null && member!.id != loginMember!.id) 
-                                  ? Colors.grey[900] 
-                                  : pointColor2,
+                                color: (member?.id != null && loginMember?.id != null && member!.id == loginMember!.id) 
+                                  ? pointColor2
+                                  : Colors.grey[900],
                                 fontWeight: FontWeight.w700,
                               ),
                             ),

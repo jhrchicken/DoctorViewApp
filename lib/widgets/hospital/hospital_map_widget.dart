@@ -31,7 +31,7 @@ class _HospitalMapWidgetState extends State<HospitalMapWidget> {
           '위치',
           style: TextStyle(
             color: Colors.grey[900],
-            fontSize: 16,
+            fontSize: 18,
             fontWeight: FontWeight.w900,
           ),
         ),

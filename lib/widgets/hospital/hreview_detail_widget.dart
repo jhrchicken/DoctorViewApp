@@ -1,9 +1,14 @@
 import 'package:doctorviewapp/models/hashtag.dart';
+import 'package:doctorviewapp/models/hreply.dart';
 import 'package:doctorviewapp/models/hreview.dart';
 import 'package:doctorviewapp/models/likes.dart';
+import 'package:doctorviewapp/models/member.dart';
 import 'package:doctorviewapp/providers/hashtag_provider.dart';
+import 'package:doctorviewapp/providers/hreply_provider.dart';
 import 'package:doctorviewapp/providers/hreview_provider.dart';
 import 'package:doctorviewapp/providers/likes_provider.dart';
+import 'package:doctorviewapp/providers/member_provider.dart';
+import 'package:doctorviewapp/theme/colors.dart';
 import 'package:doctorviewapp/widgets/common/grey_button.dart';
 import 'package:doctorviewapp/widgets/hospital/hreview_action_sheet.dart';
 import 'package:flutter/material.dart';
@@ -28,10 +33,15 @@ class _HreviewDetailWidgetState extends State<HreviewDetailWidget> {
     final hreviewProvider = Provider.of<HreviewProvider>(context);
     final likesProvider = Provider.of<LikesProvider>(context);
     final hashtagProvider = Provider.of<HashtagProvider>(context);
+    final memberProvider = Provider.of<MemberProvider>(context);
+    final hreplyProvider = Provider.of<HreplyProvider>(context);
 
     Hreview? hreview = hreviewProvider.selectHreview(widget.reviewIdx);
     List<Likes> likesList = likesProvider.selectLikes('hreview', hreview!.reviewIdx.toString());
     List<Hashtag> hashtagList = hashtagProvider.listReviewHashtag(hreview.reviewIdx);
+    Member? loginMember = memberProvider.loginMember;
+    Member? member = memberProvider.selectMember(hreview.writerRef);
+    List<Hreply> hreplyList = hreplyProvider.listHreply(hreview.reviewIdx);
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -44,7 +54,7 @@ class _HreviewDetailWidgetState extends State<HreviewDetailWidget> {
                 Icon(
                   Icons.account_circle,
                   color: Colors.grey[300],
-                  size: 30,
+                  size: 50,
                 ),
                 const SizedBox(
                   width: 8,
@@ -58,10 +68,12 @@ class _HreviewDetailWidgetState extends State<HreviewDetailWidget> {
                           width: 2,
                         ),
                         Text(
-                          hreview.writerRef,
+                          member?.nickname ?? '(알 수 없음)',
                           style: TextStyle(
-                            fontSize: 12,
-                            color: Colors.grey[900],
+                            fontSize: 16,
+                            color: (member?.id != null && loginMember?.id != null && member!.id == loginMember!.id) 
+                              ? pointColor2
+                              : Colors.grey[900],
                             fontWeight: FontWeight.w700,
                           ),
                         ),
@@ -70,7 +82,7 @@ class _HreviewDetailWidgetState extends State<HreviewDetailWidget> {
                         ),
                         // 작성일
                         Text(
-                          '${hreview.date.year}.${hreview.date.month}.${hreview.date.day}',
+                          '${hreview.date.year}-${hreview.date.month}-${hreview.date.day}',
                           style: TextStyle(
                             fontSize: 12,
                             color: Colors.grey[500],
@@ -91,7 +103,7 @@ class _HreviewDetailWidgetState extends State<HreviewDetailWidget> {
                             return Icon(
                               Icons.star_rounded,
                               color: index < hreview.score ? Colors.amber : Colors.grey[300],
-                              size: 16,
+                              size: 18,
                             );
                           }),
                         ),
@@ -128,9 +140,9 @@ class _HreviewDetailWidgetState extends State<HreviewDetailWidget> {
         
         // 내용
         Text(
-          hreview.content,
+          '  ${hreview.content}',
           style: TextStyle(
-            fontSize: 12,
+            fontSize: 14,
             color: Colors.grey[900],
           ),
         ),
@@ -143,39 +155,42 @@ class _HreviewDetailWidgetState extends State<HreviewDetailWidget> {
         Row(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
+            const SizedBox(
+              width: 7,
+            ),
             Row(
               children: [
-                Icon(
+                const Icon(
                   Icons.favorite_border_rounded,
-                  color: Colors.grey[500],
-                  size: 20,
+                  color: Colors.red,
+                  size: 12,
                 ),
-                const SizedBox(width: 4),
+                const SizedBox(width: 5),
                 Text(
                   likesList.length.toString(),
-                  style: TextStyle(
-                    fontSize: 14,
-                    color: Colors.grey[700],
+                  style: const TextStyle(
+                    fontSize: 12,
+                    color: Colors.red,
                   ),
                 ),
               ],
             ),
             const SizedBox(
-              width: 5,
+              width: 15,
             ),
             Row(
               children: [
-                Icon(
-                  Icons.favorite_border_rounded,
-                  color: Colors.grey[500],
-                  size: 20,
+                const Icon(
+                  Icons.mail_outline,
+                  color: Colors.teal,
+                  size: 12,
                 ),
-                const SizedBox(width: 4),
+                const SizedBox(width: 5),
                 Text(
-                  likesList.length.toString(),
-                  style: TextStyle(
-                    fontSize: 14,
-                    color: Colors.grey[700],
+                  hreplyList.length.toString(),
+                  style: const TextStyle(
+                    fontSize: 12,
+                    color: Colors.teal,
                   ),
                 ),
               ],

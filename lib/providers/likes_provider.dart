@@ -3,56 +3,92 @@ import 'package:flutter/material.dart';
 
 class LikesProvider extends ChangeNotifier {
   // 좋아요 일련번호 시퀀스
-  int _seqLikesIdx = 8;
+  int _seqLikesIdx = 14;
 
   // 좋아요 더미데이터
   final List<Likes> _likesList = [
     // 병원
     Likes(
       likeIdx: 1,
-      memberRef: 'harim',
+      // memberRef: 'harim',
       tablename: 'hospital',
       recodenum: 'hospital1'
     ),
     // 의사
     Likes(
       likeIdx: 2,
-      memberRef: 'harim',
+      // memberRef: 'harim',
       tablename: 'doctor',
       recodenum: '1'
     ),
     // 병원 리뷰
     Likes(
       likeIdx: 3,
-      memberRef: 'harim',
+      // memberRef: 'harim',
       tablename: 'hreview',
       recodenum: '1',
     ),
     // 의사 리뷰
     Likes(
       likeIdx: 4,
-      memberRef: 'harim',
+      // memberRef: 'harim',
       tablename: 'dreview',
       recodenum: '1',
     ),
     // 게시물
     Likes(
       likeIdx: 5,
-      memberRef: 'harim',
+      // memberRef: 'harim',
       tablename: 'board',
-      recodenum: '1',
+      recodenum: '8',
     ),
     Likes(
       likeIdx: 6,
-      memberRef: 'dayeong',
+      // memberRef: 'harim',
       tablename: 'board',
-      recodenum: '1',
+      recodenum: '8',
     ),
     Likes(
       likeIdx: 7,
-      memberRef: 'leehr',
+      // memberRef: 'harim',
       tablename: 'board',
-      recodenum: '1',
+      recodenum: '8',
+    ),
+    Likes(
+      likeIdx: 8,
+      // memberRef: 'harim',
+      tablename: 'board',
+      recodenum: '8',
+    ),
+    Likes(
+      likeIdx: 9,
+      // memberRef: 'dayeong',
+      tablename: 'board',
+      recodenum: '8',
+    ),
+    Likes(
+      likeIdx: 10,
+      // memberRef: 'leehr',
+      tablename: 'board',
+      recodenum: '8',
+    ),
+    Likes(
+      likeIdx: 11,
+      // memberRef: 'leehr',
+      tablename: 'board',
+      recodenum: '6',
+    ),
+    Likes(
+      likeIdx: 12,
+      // memberRef: 'leehr',
+      tablename: 'board',
+      recodenum: '5',
+    ),
+    Likes(
+      likeIdx: 13,
+      // memberRef: 'leehr',
+      tablename: 'board',
+      recodenum: '5',
     ),
   ];
 

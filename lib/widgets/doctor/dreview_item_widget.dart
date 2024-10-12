@@ -228,7 +228,7 @@ class _DreviewItemWidgetState extends State<DreviewItemWidget> {
                   ],
                 ),
               ],
-            )
+            ),
           ],
         ),
       ),

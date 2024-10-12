@@ -57,6 +57,7 @@ class _DoctorSummaryWidgetState extends State<DoctorSummaryWidget> {
                     style: const TextStyle(
                       color: pointColor2,
                       fontWeight: FontWeight.w700,
+                      fontSize: 16,
                     ),
                   ),
                   const Icon(

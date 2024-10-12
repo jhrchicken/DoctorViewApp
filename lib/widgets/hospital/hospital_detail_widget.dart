@@ -7,7 +7,6 @@ import 'package:doctorviewapp/providers/likes_provider.dart';
 import 'package:doctorviewapp/screens/reserve/reserve_proceed_screen.dart';
 import 'package:doctorviewapp/theme/colors.dart';
 import 'package:doctorviewapp/widgets/common/primary_button.dart';
-import 'package:doctorviewapp/widgets/common/secondary_button.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -38,13 +37,13 @@ class _HospitalDetailWidgetState extends State<HospitalDetailWidget> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Row(
+        const Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            const Row(
+            Row(
               children: [
                 Icon(
-                  Icons.expand_circle_down_rounded,
+                  Icons.verified,
                   color: pointColor2,
                 ),
                 SizedBox(
@@ -60,11 +59,6 @@ class _HospitalDetailWidgetState extends State<HospitalDetailWidget> {
                 ),
               ],
             ),
-            SecondaryButton(
-              text: '수정',
-              onPressed: () {},
-              color: pointColor1,
-            ),
           ],
         ),
         // 병원명
@@ -76,33 +70,24 @@ class _HospitalDetailWidgetState extends State<HospitalDetailWidget> {
           ),
         ),
         const SizedBox(
-          height: 13,
+          height: 3,
         ),
         // 좋아요 리뷰수 진료과목
         Row(
           children: [
-            Row(
-              children: [
-                const Icon(
-                  Icons.bookmark_border_rounded,
-                  size: 20,
-                  color: pointColor1,
-                ),
-                const SizedBox(
-                  width: 5
-                ),
-                Text(
-                  likesList.length.toString(),
-                  style: const TextStyle(
-                    color: pointColor1,
-                    fontSize: 16,
-                    fontWeight: FontWeight.w700,
-                  ),
-                ),
-              ],
+            const SizedBox(
+              width: 3,
+            ),
+            Text(
+              '찜 ${likesList.length.toString()}',
+              style: TextStyle(
+                color: Colors.grey[700],
+                fontWeight: FontWeight.w700,
+                fontSize: 12,
+              ),
             ),
             const SizedBox(
-              width: 8
+              width: 5
             ),
             Icon(
               Icons.circle,
@@ -110,28 +95,18 @@ class _HospitalDetailWidgetState extends State<HospitalDetailWidget> {
               color: Colors.grey[500],
             ),
             const SizedBox(
-              width: 8
+              width: 5
             ),
-            Row(
-              children: [
-                Text(
-                  '리뷰 ',
-                  style: TextStyle(
-                    color: Colors.grey[700],
-                    fontWeight: FontWeight.w700,
-                  ),
-                ),
-                Text(
-                  hreviewList.length.toString(),
-                  style: TextStyle(
-                    color: Colors.grey[700],
-                    fontWeight: FontWeight.w700,
-                  ),
-                ),
-              ],
+            Text(
+              '리뷰 ${hreviewList.length.toString()}',
+              style: TextStyle(
+                color: Colors.grey[700],
+                fontWeight: FontWeight.w700,
+                fontSize: 12,
+              ),
             ),
             const SizedBox(
-              width: 8
+              width: 5
             ),
             Icon(
               Icons.circle,
@@ -139,13 +114,14 @@ class _HospitalDetailWidgetState extends State<HospitalDetailWidget> {
               color: Colors.grey[500],
             ),
             const SizedBox(
-              width: 8
+              width: 5
             ),
             Text(
               hospital.department,
               style: TextStyle(
                 color: Colors.grey[700],
                 fontWeight: FontWeight.w700,
+                fontSize: 12,
               ),
             ),
           ],
@@ -178,8 +154,8 @@ class _HospitalDetailWidgetState extends State<HospitalDetailWidget> {
                   '주소',
                   style: TextStyle(
                     color: Colors.grey[700],
-                    fontSize: 12,
-                    fontWeight: FontWeight.w700,
+                    fontSize: 14,
+                    fontWeight: FontWeight.w500,
                   ),
                 ),
                 const SizedBox(
@@ -189,8 +165,8 @@ class _HospitalDetailWidgetState extends State<HospitalDetailWidget> {
                   hospital.address,
                   style: TextStyle(
                     color: Colors.grey[500],
-                    fontSize: 12,
-                    fontWeight: FontWeight.w700,
+                    fontSize: 14,
+                    fontWeight: FontWeight.w500,
                   ),
                 ),
               ],
@@ -213,19 +189,19 @@ class _HospitalDetailWidgetState extends State<HospitalDetailWidget> {
                   '진료시간',
                   style: TextStyle(
                     color: Colors.grey[700],
-                    fontSize: 12,
-                    fontWeight: FontWeight.w700,
+                    fontSize: 14,
+                    fontWeight: FontWeight.w500,
                   ),
                 ),
                 const SizedBox(
                   width: 10,
                 ),
                 Text(
-                  '진료시간을 입력해보아요',
+                  '진료시간을 입력하세요',
                   style: TextStyle(
                     color: Colors.grey[500],
-                    fontSize: 13,
-                    fontWeight: FontWeight.w700,
+                    fontSize: 14,
+                    fontWeight: FontWeight.w500,
                   ),
                 ),
               ],
@@ -248,8 +224,8 @@ class _HospitalDetailWidgetState extends State<HospitalDetailWidget> {
                   '전화',
                   style: TextStyle(
                     color: Colors.grey[700],
-                    fontSize: 12,
-                    fontWeight: FontWeight.w700,
+                    fontSize: 14,
+                    fontWeight: FontWeight.w500,
                   ),
                 ),
                 const SizedBox(
@@ -259,8 +235,8 @@ class _HospitalDetailWidgetState extends State<HospitalDetailWidget> {
                   hospital.tel,
                   style: TextStyle(
                     color: Colors.grey[500],
-                    fontSize: 13,
-                    fontWeight: FontWeight.w700,
+                    fontSize: 14,
+                    fontWeight: FontWeight.w500,
                   ),
                 ),
               ],
