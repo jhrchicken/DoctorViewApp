@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 
 class ReserveProvider extends ChangeNotifier {
   // 예약 일련번호 시퀀스
-  final int _seqReserveIdx = 0;
+  int _seqReserveIdx = 2;
 
   // 예약 더미데이터
   final List<Reserve> _reserveList = [
@@ -27,5 +27,12 @@ class ReserveProvider extends ChangeNotifier {
 
   // 예약 전체 목록
   List<Reserve> get reserveList => _reserveList;
+
+  // 예약 추가
+  void insertReserve(Reserve reserve) {
+    reserve.reserveIdx = _seqReserveIdx++;
+    _reserveList.add(reserve);
+    notifyListeners();
+  }
 
 }
