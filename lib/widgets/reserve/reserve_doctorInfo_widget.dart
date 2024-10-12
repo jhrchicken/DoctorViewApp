@@ -1,7 +1,5 @@
 import 'package:doctorviewapp/models/doctor.dart';
-import 'package:doctorviewapp/models/hospital.dart';
 import 'package:doctorviewapp/providers/doctor_provider.dart';
-import 'package:doctorviewapp/providers/hospital_provider.dart';
 import 'package:doctorviewapp/theme/colors.dart';
 import 'package:doctorviewapp/widgets/reserve/doctor_radio_button.dart';
 import 'package:flutter/material.dart';
@@ -58,6 +56,7 @@ class _ReserveDoctorInfoWidgetState extends State<ReserveDoctorInfoWidget> {
             },
           ),
         ),
+        const SizedBox(height: 10,),
       ],
     );
   }

@@ -1,11 +1,10 @@
 import 'package:doctorviewapp/main.dart';
 import 'package:doctorviewapp/models/hospital.dart';
-import 'package:doctorviewapp/models/member.dart';
 import 'package:doctorviewapp/providers/hospital_provider.dart';
-import 'package:doctorviewapp/providers/member_provider.dart';
 import 'package:doctorviewapp/theme/colors.dart';
 import 'package:doctorviewapp/widgets/common/primary_button.dart';
 import 'package:doctorviewapp/widgets/reserve/reserve_doctorInfo_widget.dart';
+import 'package:doctorviewapp/widgets/reserve/reserve_hoursInfo_widget.dart';
 import 'package:doctorviewapp/widgets/reserve/reserve_select_date_widget.dart';
 import 'package:doctorviewapp/widgets/reserve/reserve_select_time_widget.dart';
 import 'package:doctorviewapp/widgets/reserve/reserve_userInfo_widget.dart';
@@ -110,7 +109,9 @@ class _ReserveProceedScreenState extends State<ReserveProceedScreen> {
                 const SizedBox(height: 5,),
 
                 // 시간 선택
-                const ReserveSelectTimeWidget(),
+                // const ReserveSelectTimeWidget(),
+                ReserveHoursInfoWidget(hospRef: widget.hospRef),
+
                 Divider(
                   color: Colors.grey[300],
                   thickness: 1.0
