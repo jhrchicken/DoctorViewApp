@@ -72,7 +72,7 @@ class _HreplyItemWidgetState extends State<HreplyItemWidget> {
                             const SizedBox(width: 2),
                             // 작성자
                             Text(
-                              member?.nickname ?? '(알 수 없음)',
+                              loginMember?.nickname ?? '(알 수 없음)',
                               style: TextStyle(
                                 fontSize: 12,
                                 color: (member?.id != null && loginMember?.id != null && member!.id == loginMember!.id) 
