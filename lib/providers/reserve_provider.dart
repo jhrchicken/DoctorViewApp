@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 
 class ReserveProvider extends ChangeNotifier {
   // 예약 일련번호 시퀀스
-  int _seqReserveIdx = 2;
+  int _seqReserveIdx = 3;
 
   // 예약 더미데이터
   final List<Reserve> _reserveList = [
@@ -17,6 +17,24 @@ class ReserveProvider extends ChangeNotifier {
       address: '서울특별시', 
       postdate: DateTime(2024, 10, 11), 
       posttime: '11:00', 
+      alarm: 'T', 
+      review: 'F', 
+      hide: 'F', 
+      user_ref: 'dayeong',
+      hosp_ref: 'hospital1',
+      cancel: 'F',
+    ),
+    Reserve(
+      reserveIdx: 2, 
+      hospname: '엠플러스의원',
+      doctorname: '박애플',
+      username: '부다영', 
+      tel: '010-2084-0204', 
+      rrn: '021209-4000000', 
+      address: '서울특별시', 
+      // postdate: DateTime.now(),
+      postdate: DateTime(2024, 10, 17),
+      posttime: '13:00', 
       alarm: 'T', 
       review: 'F', 
       hide: 'F', 
@@ -39,8 +57,8 @@ class ReserveProvider extends ChangeNotifier {
   }
 
   // 예약 목록
-  List<Reserve>? listReserve(String userRef) {
-    List<Reserve> listResult = _reserveList.where((reserve) => reserve.user_ref == userRef).toList();
+  List<Reserve>? listReserve(String ref) {
+    List<Reserve> listResult = _reserveList.where((reserve) => reserve.user_ref == ref || reserve.hosp_ref == ref).toList();
     return listResult.isNotEmpty ? listResult : null;
   }
 
@@ -55,8 +73,11 @@ class ReserveProvider extends ChangeNotifier {
   }
 
   // 예약 내역 정렬 
-  List<Reserve> nearReserve(String userRef) {
-    List<Reserve> listResult = _reserveList.where((reserve) => reserve.user_ref == userRef && reserve.postdate.isAfter(DateTime.now())).toList();
+  List<Reserve> nearReserve(String ref) {
+    List<Reserve> listResult = _reserveList.where(
+      (reserve) => 
+      (reserve.user_ref == ref && reserve.postdate.isAfter(DateTime.now())) || (reserve.hosp_ref == ref && reserve.postdate.isAfter(DateTime.now())) 
+    ).toList();
 
     DateTime today = DateTime.now();
 
@@ -71,9 +92,10 @@ class ReserveProvider extends ChangeNotifier {
   }
 
   // 지난 예약
-  List<Reserve> pastReserve(String userRef) {
-    List<Reserve> listResult = _reserveList.where((reserve) => 
-      reserve.user_ref == userRef && reserve.postdate.isBefore(DateTime.now())
+  List<Reserve> pastReserve(String ref) {
+    List<Reserve> listResult = _reserveList.where(
+      (reserve) => 
+      (reserve.user_ref == ref && reserve.postdate.isBefore(DateTime.now())) || (reserve.hosp_ref == ref && reserve.postdate.isBefore(DateTime.now())) 
     ).toList();
 
     // 오래된 순서로 정렬

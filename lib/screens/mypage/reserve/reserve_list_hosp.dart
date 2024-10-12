@@ -1,21 +1,23 @@
 import 'package:doctorviewapp/header.dart';
 import 'package:doctorviewapp/providers/member_provider.dart';
 import 'package:doctorviewapp/providers/reserve_provider.dart';
+import 'package:doctorviewapp/screens/mypage/reserve/reserve_nearlist_hosp.dart';
 import 'package:doctorviewapp/screens/mypage/reserve/reserve_nearlist_user.dart';
 import 'package:doctorviewapp/theme/colors.dart';
 import 'package:doctorviewapp/widgets/common/primary_button.dart';
 import 'package:doctorviewapp/widgets/member/reserve_item.dart';
+import 'package:doctorviewapp/widgets/member/reserve_item_hosp.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class ReserveListUser extends StatefulWidget {
-  const ReserveListUser({super.key});
+class ReserveListHosp extends StatefulWidget {
+  const ReserveListHosp({super.key});
 
   @override
-  State<ReserveListUser> createState() => _ReserveListUserState();
+  State<ReserveListHosp> createState() => _ReserveListHospState();
 }
 
-class _ReserveListUserState extends State<ReserveListUser> {
+class _ReserveListHospState extends State<ReserveListHosp> {
   @override
   Widget build(BuildContext context) {
     final memberProvider = Provider.of<MemberProvider>(context);
@@ -40,7 +42,7 @@ class _ReserveListUserState extends State<ReserveListUser> {
               else ... [
                 PrimaryButton(
                   text: '지난 예약 보기', 
-                  onPressed: (){ Navigator.of(context).push(MaterialPageRoute(builder: (context) => const ReserveNearlistUser()));}, 
+                  onPressed: (){ Navigator.of(context).push(MaterialPageRoute(builder: (context) => const ReserveNearlistHosp()));}, 
                   color: pointColor2),
                 const SizedBox(height: 20),
                 ListView.builder(
@@ -51,7 +53,7 @@ class _ReserveListUserState extends State<ReserveListUser> {
                     final reserve = reserveList[index];
                     return Column(
                       children: [
-                        ReserveItem(
+                        ReserveItemHosp(
                           reserveIdx: reserve.reserveIdx,
                         ),
                         if (index < reserveList.length - 1)

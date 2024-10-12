@@ -1,6 +1,4 @@
 import 'package:doctorviewapp/models/reserve.dart';
-import 'package:doctorviewapp/providers/hospital_provider.dart';
-import 'package:doctorviewapp/providers/member_provider.dart';
 import 'package:doctorviewapp/providers/reserve_provider.dart';
 import 'package:doctorviewapp/widgets/reserve/reserve_check_text_widget.dart';
 import 'package:flutter/material.dart';
