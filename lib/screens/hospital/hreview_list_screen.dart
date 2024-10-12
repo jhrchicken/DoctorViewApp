@@ -1,3 +1,4 @@
+import 'package:doctorviewapp/main.dart';
 import 'package:doctorviewapp/models/hreview.dart';
 import 'package:doctorviewapp/providers/hreview_provider.dart';
 import 'package:doctorviewapp/screens/hospital/hreview_write_screen.dart';
@@ -33,19 +34,8 @@ class _HreviewListScreenState extends State<HreviewListScreen> {
         backgroundColor: Colors.white,
         title: Text(
           '리뷰',
-          style: TextStyle(
-            color: Colors.grey[900],
-            fontSize: 16,
-            fontWeight: FontWeight.w700,
-          ),
+          style: CustomTextStyles.appbarText,
         ),
-        actions: [
-          IconButton(
-            icon: Icon(Icons.bookmark_border_rounded, color: Colors.grey[900]),
-            onPressed: () {
-            },
-          ),
-        ],
       ),
       body: SingleChildScrollView(
         child: Column(
@@ -69,7 +59,7 @@ class _HreviewListScreenState extends State<HreviewListScreen> {
                           '후기',
                           style: TextStyle(
                             color: Colors.grey[900],
-                            fontSize: 16,
+                            fontSize: 18,
                             fontWeight: FontWeight.w900,
                           ),
                         ),
@@ -78,7 +68,7 @@ class _HreviewListScreenState extends State<HreviewListScreen> {
                           hreviewList.length.toString(),
                           style: const TextStyle(
                             color: pointColor2,
-                            fontSize: 16,
+                            fontSize: 18,
                             fontWeight: FontWeight.w900,
                           ),
                         ),

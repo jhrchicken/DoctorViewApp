@@ -1,10 +1,15 @@
 import 'package:doctorviewapp/models/hashtag.dart';
+import 'package:doctorviewapp/models/hreply.dart';
 import 'package:doctorviewapp/models/hreview.dart';
 import 'package:doctorviewapp/models/likes.dart';
+import 'package:doctorviewapp/models/member.dart';
 import 'package:doctorviewapp/providers/hashtag_provider.dart';
+import 'package:doctorviewapp/providers/hreply_provider.dart';
 import 'package:doctorviewapp/providers/hreview_provider.dart';
 import 'package:doctorviewapp/providers/likes_provider.dart';
+import 'package:doctorviewapp/providers/member_provider.dart';
 import 'package:doctorviewapp/screens/hospital/hreview_view_screen.dart';
+import 'package:doctorviewapp/theme/colors.dart';
 import 'package:doctorviewapp/widgets/common/grey_button.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -22,16 +27,61 @@ class HreviewItemWidget extends StatefulWidget {
 }
 
 class _HreviewItemWidgetState extends State<HreviewItemWidget> {
+  bool isLike = false;
+  Member? loginMember;
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    final likesProvider = Provider.of<LikesProvider>(context, listen: false);
+    final memberProvider = Provider.of<MemberProvider>(context, listen: false);
+
+    loginMember = memberProvider.loginMember;
+    if (loginMember != null) {
+      setState(() {
+        isLike = likesProvider.checkLikes('hreview', loginMember!.id, widget.reviewIdx.toString());
+      });
+    }
+  }
+
+  void _toggleLike() {
+    final likesProvider = Provider.of<LikesProvider>(context, listen: false);
+    final memberProvider = Provider.of<MemberProvider>(context, listen: false);
+
+    loginMember = memberProvider.loginMember;
+    if (loginMember != null) {
+      if (isLike) {
+        likesProvider.minusLikes('hreview', loginMember!.id, widget.reviewIdx.toString());
+      }
+      else {
+        likesProvider.plusLikes(
+          Likes(
+            likeIdx: 0,
+            memberRef: loginMember!.id,
+            tablename: 'hreview',
+            recodenum: widget.reviewIdx.toString(),
+          ),
+        );
+      }
+      setState(() {
+        isLike = !isLike;
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     final hreviewProvider = Provider.of<HreviewProvider>(context);
     final likesProvider = Provider.of<LikesProvider>(context);
     final hashtagProvider = Provider.of<HashtagProvider>(context);
+    final memberProvider = Provider.of<MemberProvider>(context);
+    final hreplyProvider = Provider.of<HreplyProvider>(context);
 
     Hreview? hreview = hreviewProvider.selectHreview(widget.reviewIdx);
     List<Likes> likesList = likesProvider.selectLikes('hreview', hreview!.reviewIdx.toString());
     List<Hashtag> hashtagList = hashtagProvider.listReviewHashtag(hreview.reviewIdx);
+    Member? member = memberProvider.selectMember(hreview.writerRef.toString());
+    List<Hreply> hreplyList = hreplyProvider.listHreply(hreview.reviewIdx);
 
     return GestureDetector(
       onTap: () {
@@ -45,7 +95,7 @@ class _HreviewItemWidgetState extends State<HreviewItemWidget> {
         );
       },
       child: Container(
-        padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
+        padding: const EdgeInsets.symmetric(vertical: 15.0, horizontal: 15.0),
         color: Colors.transparent,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -72,22 +122,11 @@ class _HreviewItemWidgetState extends State<HreviewItemWidget> {
                               width: 2,
                             ),
                             Text(
-                              hreview.writerRef,
+                              member?.nickname.toString() ?? '(알 수 없음)',
                               style: TextStyle(
-                                fontSize: 12,
+                                fontSize: 14,
                                 color: Colors.grey[900],
                                 fontWeight: FontWeight.w700,
-                              ),
-                            ),
-                            const SizedBox(
-                              width: 10,
-                            ),
-                            // 작성일
-                            Text(
-                              '${hreview.date.year}.${hreview.date.month}.${hreview.date.day}',
-                              style: TextStyle(
-                                fontSize: 12,
-                                color: Colors.grey[500],
                               ),
                             ),
                           ],
@@ -116,31 +155,15 @@ class _HreviewItemWidgetState extends State<HreviewItemWidget> {
                     ),
                   ],
                 ),
-      
-                // 좋아요 및 신고
+                // 좋아요
                 GestureDetector(
-                  onTap: () {},
-                  child: Row(
-                    children: [
-                      Icon(
-                        Icons.favorite_border_rounded,
-                        color: Colors.grey[500],
-                        size: 20,
-                      ),
-                      const SizedBox(
-                        width: 4
-                      ),
-                      Text(
-                        likesList.length.toString(),
-                        style: TextStyle(
-                          fontSize: 14,
-                          color: Colors.grey[700],
-                        ),
-                      ),
-                    ],
+                  onTap: _toggleLike,
+                  child: Icon(
+                    isLike  ? Icons.favorite_rounded : Icons.favorite_border_rounded,
+                    color: pointColor2,
+                    size: 24,
                   ),
-                )
-      
+                ),
               ],
             ),
             const SizedBox(
@@ -149,7 +172,7 @@ class _HreviewItemWidgetState extends State<HreviewItemWidget> {
             // 해시태그
             Wrap(
               spacing: 8.0,
-              runSpacing: 8.0,
+              runSpacing: 0,
               children: hashtagList.map((hashtag) {
                 return GreyButton(
                   text: '# ${hashtag.tag}',
@@ -168,8 +191,58 @@ class _HreviewItemWidgetState extends State<HreviewItemWidget> {
                 color: Colors.grey[900],
               ),
             ),
-      
-            // *** 추가 입력 사항 더 추가할 것 ***
+            const SizedBox(height: 5),
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                // 작성일
+                Text(
+                  '${hreview.date.year}-${hreview.date.month}-${hreview.date.day}  |  ',
+                  style: TextStyle(
+                    fontSize: 12,
+                    color: Colors.grey[500],
+                  ),
+                ),
+                // 좋아요수
+                Row(
+                  children: [
+                    Icon(
+                      Icons.favorite_border_outlined,
+                      size: 12,
+                      color: Colors.grey[500],
+                    ),
+                    const SizedBox(
+                      width: 5,
+                    ),
+                    Text(
+                      '${likesList.length.toString()}  |  ',
+                      style: TextStyle(
+                        fontSize: 12,
+                        color: Colors.grey[500],
+                      ),
+                    ),
+                  ],
+                ),
+                // 답글 수
+                Row(
+                  children: [
+                    Icon(
+                      Icons.email_outlined,
+                      size: 12,
+                      color: Colors.grey[500],
+                    ),
+                    const SizedBox(width: 5),
+                    Text(
+                      hreplyList.length.toString(),
+                      style: TextStyle(
+                        fontSize: 12,
+                        color: Colors.grey[500],
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
           ],
         ),
       ),

@@ -72,7 +72,7 @@ class _DreviewDetailWidgetState extends State<DreviewDetailWidget> {
                           style: TextStyle(
                             fontSize: 16,
                             color: (member?.id != null && loginMember?.id != null && member!.id == loginMember!.id) 
-                              ?pointColor2
+                              ? pointColor2
                               : Colors.grey[900],
                             fontWeight: FontWeight.w700,
                           ),

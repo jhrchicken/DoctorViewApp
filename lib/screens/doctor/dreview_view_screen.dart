@@ -123,7 +123,7 @@ class _DreviewViewScreenState extends State<DreviewViewScreen> {
           ),
         ],
       ),
-      body: SingleChildScrollView( // SingleChildScrollView 추가
+      body: SingleChildScrollView(
         child: Column(
           children: [
             // 리뷰 상세보기
@@ -148,7 +148,7 @@ class _DreviewViewScreenState extends State<DreviewViewScreen> {
             // 리뷰에 대한 답변
             dreplyList.isEmpty
               ? const Column(
-                mainAxisAlignment: MainAxisAlignment.center, // 수직 중앙 정렬
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   SizedBox(
                     height: 200,
@@ -165,7 +165,7 @@ class _DreviewViewScreenState extends State<DreviewViewScreen> {
               )
                 : Padding(
                     padding: const EdgeInsets.all(20),
-                    child: Column( // ListView.builder 대신 Column 사용
+                    child: Column(
                       children: dreplyList.map((dreply) {
                         return Column(
                           children: [
