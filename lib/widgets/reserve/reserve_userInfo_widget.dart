@@ -88,7 +88,19 @@ class _ReserveUserInfoWidgetState extends State<ReserveUserInfoWidget> {
               child: Text('이름', style: labelTextStyle),
             ),
             const SizedBox(width: 20),
-            UserInfoField(labelText: '방문자명*', width: 230, onChanged: widget.onUserNameChanged, controller: nameController, focusNode: nameFocus,),
+            UserInfoField(
+              labelText: '방문자명*', 
+              width: 230, 
+              onChanged: widget.onUserNameChanged, 
+              controller: nameController, 
+              focusNode: nameFocus,
+              validator: (value) {
+                if (value == null || value.isEmpty) {
+                  return '방문하시는분의 성함을 입력하세요';
+                } 
+                return null;
+              },
+            ),
           ],
         ),
         const SizedBox(height: 10),
@@ -99,7 +111,19 @@ class _ReserveUserInfoWidgetState extends State<ReserveUserInfoWidget> {
               child: Text('전화번호', style: labelTextStyle),
             ),
             const SizedBox(width: 20),
-            UserInfoField(labelText: '전화번호*', width: 230, onChanged: widget.onUserTelChanged, controller: telController, focusNode: telFocus,),
+            UserInfoField(
+              labelText: '전화번호*', 
+              width: 230, 
+              onChanged: widget.onUserTelChanged, 
+              controller: telController, 
+              focusNode: telFocus,
+              validator: (value) {
+                if (value == null || value.isEmpty) {
+                  return '전화번호를 입력하세요';
+                } 
+                return null;
+              },
+            ),
           ],
         ),
         const SizedBox(height: 10),
@@ -110,7 +134,19 @@ class _ReserveUserInfoWidgetState extends State<ReserveUserInfoWidget> {
               child: Text('주민번호', style: labelTextStyle),
             ),
             const SizedBox(width: 20),
-            UserInfoField(labelText: '주민번호*', width: 230, onChanged: widget.onUserRrnChanged, controller: rrnController, focusNode: rrnFocus,),
+            UserInfoField(
+              labelText: '주민번호*', 
+              width: 230, 
+              onChanged: widget.onUserRrnChanged, 
+              controller: rrnController, 
+              focusNode: rrnFocus,
+              validator: (value) {
+                if (value == null || value.isEmpty) {
+                  return '주민등록번호를 입력하세요';
+                } 
+                return null;
+              },
+              ),
           ],
         ),
         const SizedBox(height: 10),
@@ -121,7 +157,19 @@ class _ReserveUserInfoWidgetState extends State<ReserveUserInfoWidget> {
               child: Text('주소', style: labelTextStyle),
             ),
             const SizedBox(width: 20),
-            UserInfoField(labelText: '주소*', width: 230, onChanged: widget.onUserAddrChanged, controller: addressController, focusNode: addressFocus,),
+            UserInfoField(
+              labelText: '주소*', 
+              width: 230, 
+              onChanged: widget.onUserAddrChanged, 
+              controller: addressController, 
+              focusNode: addressFocus,
+              validator: (value) {
+                if (value == null || value.isEmpty) {
+                  return '주소를 입력하세요';
+                } 
+                return null;
+              },
+            ),
           ],
         ),
         const SizedBox(height: 20),

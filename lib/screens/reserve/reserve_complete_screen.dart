@@ -1,3 +1,5 @@
+import 'package:doctorviewapp/screens/home/home_screen.dart';
+import 'package:doctorviewapp/screens/mypage/mypage_screen.dart';
 import 'package:doctorviewapp/theme/colors.dart';
 import 'package:doctorviewapp/widgets/common/primary_button.dart';
 import 'package:doctorviewapp/widgets/reserve/reserve_checkinfo_widget.dart';
@@ -77,7 +79,16 @@ class _ReserveCompleteScreenState extends State<ReserveCompleteScreen> {
               ),
               
               const SizedBox(height: 30),
-              PrimaryButton(text: '마이페이지', onPressed: (){}, color: pointColor2),
+              PrimaryButton(text: '마이페이지', onPressed: (){
+                Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(
+                      /************ 수정: 하단바 안나옴 *******/
+                      builder: (context) => const MyPage(
+                      )
+                    ),
+                  );
+              }, color: pointColor2),
             ],
           ),
         ),

@@ -10,10 +10,12 @@ import 'package:provider/provider.dart';
 
 class ReserveHoursInfoWidget extends StatefulWidget {
   final String hospRef;
+  final ValueChanged<String> onHoursSelected; 
   
   const ReserveHoursInfoWidget({
     super.key,
     required this.hospRef,
+    required this.onHoursSelected,
   });
   
   @override
@@ -61,7 +63,7 @@ class _ReserveHoursInfoWidgetState extends State<ReserveHoursInfoWidget> {
             },
           ),
         ),
-        const SizedBox(height: 10,),
+        const SizedBox(height: 5,),
       ],
     );
   }
@@ -88,9 +90,9 @@ class _ReserveHoursInfoWidgetState extends State<ReserveHoursInfoWidget> {
                   setState(() {
                     selectedHours = value; 
                   });
-                  // if (value != null) {
-                  //   widget.onDoctorSelected(value); // 콜백 호출
-                  // }
+                  if (value != null) {
+                    widget.onHoursSelected(value); // 콜백 호출
+                  }
                 },
               ),
             ],

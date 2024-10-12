@@ -1,12 +1,14 @@
 import 'package:doctorviewapp/main.dart';
 import 'package:doctorviewapp/models/hospital.dart';
+import 'package:doctorviewapp/models/reserve.dart';
 import 'package:doctorviewapp/providers/hospital_provider.dart';
+import 'package:doctorviewapp/providers/member_provider.dart';
+import 'package:doctorviewapp/screens/reserve/reserve_check_screen.dart';
 import 'package:doctorviewapp/theme/colors.dart';
 import 'package:doctorviewapp/widgets/common/primary_button.dart';
 import 'package:doctorviewapp/widgets/reserve/reserve_doctorInfo_widget.dart';
 import 'package:doctorviewapp/widgets/reserve/reserve_hoursInfo_widget.dart';
 import 'package:doctorviewapp/widgets/reserve/reserve_select_date_widget.dart';
-import 'package:doctorviewapp/widgets/reserve/reserve_select_time_widget.dart';
 import 'package:doctorviewapp/widgets/reserve/reserve_userInfo_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -24,7 +26,30 @@ class ReserveProceedScreen extends StatefulWidget {
 }
 
 class _ReserveProceedScreenState extends State<ReserveProceedScreen> {
+  final _formKey = GlobalKey<FormState>();
+
+  @override
+  void initState() {
+    super.initState();
+    
+    final memberProvider = Provider.of<MemberProvider>(context, listen: false);
+    final loginMember = memberProvider.loginMember;
+
+    setState(() {
+      userName = loginMember!.name; 
+      userTel = loginMember.tel ?? '';   
+      userAddr = loginMember.address ?? '';
+      userRrn = loginMember.rrn ?? '';
+    });
+  }
+
+
   DateTime? _selectedDate;
+  void updateDate(DateTime value){
+    setState(() {
+      _selectedDate = value;
+    });
+  }
   
   
   // 예약자 정보
@@ -57,14 +82,25 @@ class _ReserveProceedScreenState extends State<ReserveProceedScreen> {
       selectedDoctor = value;
     });
   }
+
+  // 시간
+  String selectedHours='';
+  void updateHours(String value){
+    setState(() {
+      selectedHours = value;
+    });
+  }
+
+  
   
   @override
   Widget build(BuildContext context) {
 
     final hospitalProvider = Provider.of<HospitalProvider>(context);
-    // final memberProvider = Provider.of<MemberProvider>(context);
-
     Hospital? hospital = hospitalProvider.selectHosp(widget.hospRef);
+
+    final memberProvider = Provider.of<MemberProvider>(context);
+    final loginMember = memberProvider.loginMember;
   
     
     return Scaffold(
@@ -100,7 +136,7 @@ class _ReserveProceedScreenState extends State<ReserveProceedScreen> {
                 const SizedBox(height: 30),
 
                 // 날짜 선택
-                const ReserveSelectDateWidget(),
+                ReserveSelectDateWidget(onDateSelected: updateDate),
                 const SizedBox(height: 10,),
                 Divider(
                   color: Colors.grey[300],
@@ -109,8 +145,7 @@ class _ReserveProceedScreenState extends State<ReserveProceedScreen> {
                 const SizedBox(height: 5,),
 
                 // 시간 선택
-                // const ReserveSelectTimeWidget(),
-                ReserveHoursInfoWidget(hospRef: widget.hospRef),
+                ReserveHoursInfoWidget(hospRef: widget.hospRef, onHoursSelected: updateHours),
 
                 Divider(
                   color: Colors.grey[300],
@@ -126,28 +161,50 @@ class _ReserveProceedScreenState extends State<ReserveProceedScreen> {
                 ),
                 const SizedBox(height: 5,),
                 
+                Form(
+                  key: _formKey,
+                  child: ReserveUserInfoWidget(onUserNameChanged: updateUserName, onUserTelChanged: updateUserTel, onUserAddrChanged: updateUserAddr, onUserRrnChanged: updateUserRrn),
+                ),
                 // 방문자 
-                ReserveUserInfoWidget(onUserNameChanged: updateUserName, onUserTelChanged: updateUserTel, onUserAddrChanged: updateUserAddr, onUserRrnChanged: updateUserRrn),
-
-
-
-
+                
 
                 const SizedBox(height: 30),
                 PrimaryButton(
                   text: '예약하기',
                   onPressed: () {
-                    // Navigator.push(
-                    //   context,
-                    //   MaterialPageRoute(
-                    //     builder: (context) => const ReserveCheckScreen()
-                    //   ),
-                    // );
-                    // 병원
-                    print('========== hospital ===========');
-                    print('name:${hospital!.name}');
-
+                    if(_formKey.currentState!.validate() && selectedDoctor != '' && selectedHours != ''){
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => ReserveCheckScreen(
+                            reserve: Reserve(
+                              reserveIdx: 0, 
+                              hospname: hospital != null ? hospital.name : '', 
+                              username: userName, 
+                              doctorname: selectedDoctor,
+                              tel: userTel, 
+                              rrn: userRrn, 
+                              address: userAddr, 
+                              postdate: _selectedDate ?? DateTime.now(),
+                              posttime: selectedHours, 
+                              alarm: 'T', 
+                              review: 'F', 
+                              hide: 'F', 
+                              cancel: 'F',
+                              user_ref: loginMember != null ? loginMember.id : '', 
+                              hosp_ref: widget.hospRef,
+                            ) 
+                          ),
+                        ),
+                      );
+                    } else {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(content: Text('모든 항목을 선택해주세요.')),
+                        );
+                    }
                     
+                    // 병원
+                    print('name:${hospital!.name}');
                     // 방문자
                     print('userName:$userName');
                     print('usertel:$userTel');
@@ -155,6 +212,14 @@ class _ReserveProceedScreenState extends State<ReserveProceedScreen> {
                     print('userrrn:$userRrn');
                     // 의사
                     print('selectDoctor:$selectedDoctor');
+                    // 시간
+                    print('selectHours:$selectedHours');
+                    // 날짜
+                    print('날짜');
+                    if(_selectedDate != null){
+                      List<String> dateParts = _selectedDate.toString().split(' ');
+                      print(dateParts[0]);
+                    }
                   },
                   color: pointColor2)
 

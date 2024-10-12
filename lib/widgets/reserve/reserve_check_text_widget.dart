@@ -1,3 +1,4 @@
+import 'package:doctorviewapp/theme/colors.dart';
 import 'package:flutter/material.dart';
 
 class ReserveCheckTextWidget extends StatefulWidget {
@@ -23,11 +24,11 @@ class _ReserveCheckTextWidgetState extends State<ReserveCheckTextWidget> {
           width: 40,
           child: Text(
             widget.title,
-            style: TextStyle(
+            style: const TextStyle(
               fontSize: 18,
               letterSpacing: 0.1,
               fontWeight: FontWeight.w500,
-              color: Colors.grey[500],
+              color: pointColor2,
             ),
           ),
         ),

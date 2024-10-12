@@ -11,6 +11,8 @@ class ReserveList extends StatefulWidget {
 }
 
 class _ReserveListState extends State<ReserveList> {
+  
+
   @override
   Widget build(BuildContext context) {
     // ReserveProvider에서 데이터를 가져옴
@@ -33,6 +35,7 @@ class _ReserveListState extends State<ReserveList> {
               subtitle: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
+                  Text('idx: ${reserve.reserveIdx}'),
                   Text('예약 일시: ${reserve.postdate} ${reserve.posttime}'),
                   Text('예약 의사: ${reserve.doctorname}'),
                   Text('방문자 연락처: ${reserve.tel}'),

@@ -3,9 +3,11 @@ import 'package:doctorviewapp/theme/colors.dart';
 import 'package:flutter/material.dart';
 
 class ReserveSelectDateWidget extends StatefulWidget {
+  final ValueChanged<DateTime> onDateSelected; 
 
   const ReserveSelectDateWidget({
     super.key,
+    required this.onDateSelected
   });
 
   @override
@@ -48,16 +50,19 @@ class _ReserveSelectDateWidgetState extends State<ReserveSelectDateWidget> {
         SecondaryOutlineButton(
           text: '날짜 선택', 
           onPressed: () async {
+            DateTime lastRes = DateTime(DateTime.now().year, DateTime.now().month + 3, DateTime.now().day); 
+
             DateTime? pickedDate = await showDatePicker(
               context: context,
               initialDate: DateTime.now(),
-              firstDate: DateTime(2000),
-              lastDate: DateTime(2101),
+              firstDate: DateTime.now(),
+              lastDate: lastRes,
             );
             if (pickedDate != null && pickedDate != _selectedDate) {
               setState(() {
                 _selectedDate = pickedDate;
               });
+              widget.onDateSelected(_selectedDate!); // 콜백 호출
             }
           },
           color: pointColor2
