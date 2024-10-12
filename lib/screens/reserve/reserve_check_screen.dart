@@ -1,21 +1,40 @@
-import 'package:doctorviewapp/component/secondary_outline_button.dart';
-import 'package:doctorviewapp/header.dart';
+import 'package:doctorviewapp/models/reserve.dart';
+import 'package:doctorviewapp/providers/member_provider.dart';
+import 'package:doctorviewapp/providers/reserve_provider.dart';
 import 'package:doctorviewapp/screens/reserve/reserve_complete_screen.dart';
 import 'package:doctorviewapp/theme/colors.dart';
 import 'package:doctorviewapp/widgets/common/primary_button.dart';
 import 'package:doctorviewapp/widgets/reserve/reserve_check_text_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class ReserveCheckScreen extends StatefulWidget {
-  const ReserveCheckScreen({super.key});
+  Reserve reserve;
+
+  ReserveCheckScreen({
+    super.key,
+    required this.reserve,
+  });
 
   @override
   State<ReserveCheckScreen> createState() => _ReserveCheckScreenState();
 }
 
 class _ReserveCheckScreenState extends State<ReserveCheckScreen> {
+
+  // 예약 요일 출력용
+  String getWeekdayName(DateTime date) {
+    int weekday = date.weekday; 
+
+    List<String> weekdays = ['월', '화', '수', '목', '금', '토', '일'];
+    return weekdays[weekday - 1]; 
+  }
+  
   @override
   Widget build(BuildContext context) {
+    
+    final reserveProvider = Provider.of<ReserveProvider>(context);
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,
@@ -66,28 +85,28 @@ class _ReserveCheckScreenState extends State<ReserveCheckScreen> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children:[
 
-                      const ReserveCheckTextWidget(title: '병원', content: '동안의원'),
+                      ReserveCheckTextWidget(title: '병원', content: widget.reserve.hospname,),
                       const SizedBox(height: 10),
                       Divider(
                         color: Colors.grey[300],
                         thickness: 1.0
                       ),
                       const SizedBox(height: 10),
-                      const ReserveCheckTextWidget(title: '의사', content: '박민규 의사'),
+                      ReserveCheckTextWidget(title: '의사', content: '${widget.reserve.doctorname} 의사' ?? '',),
                       const SizedBox(height: 10),
                       Divider(
                         color: Colors.grey[300],
                         thickness: 1.0
                       ),
                       const SizedBox(height: 10),
-                      const ReserveCheckTextWidget(title: '날짜', content: '9월 21일 (토) 10:00'),
+                      ReserveCheckTextWidget(title: '날짜', content: '${widget.reserve.postdate.month}월 ${widget.reserve.postdate.day}일 (${getWeekdayName(widget.reserve.postdate)}) ${widget.reserve.posttime} '),
                       const SizedBox(height: 10),
                       Divider(
                         color: Colors.grey[300],
                         thickness: 1.0
                       ),
                       const SizedBox(height: 10),
-                      const ReserveCheckTextWidget(title: '방문자', content: '000님'),
+                      ReserveCheckTextWidget(title: '방문자', content: '${widget.reserve.username}님',),
 
                     ]
                   ),
@@ -98,10 +117,15 @@ class _ReserveCheckScreenState extends State<ReserveCheckScreen> {
               PrimaryButton(
                 text: '다음', 
                 onPressed: () {
+                  reserveProvider.insertReserve(
+                    widget.reserve,
+                  );
+
                   Navigator.pushReplacement(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => const ReserveCompleteScreen()
+                      builder: (context) => const ReserveCompleteScreen(
+                      )
                     ),
                   );
                 },

@@ -3,9 +3,11 @@ import 'package:doctorviewapp/theme/colors.dart';
 import 'package:flutter/material.dart';
 
 class ReserveSelectDateWidget extends StatefulWidget {
+  final ValueChanged<DateTime> onDateSelected; 
 
   const ReserveSelectDateWidget({
     super.key,
+    required this.onDateSelected
   });
 
   @override
@@ -58,6 +60,7 @@ class _ReserveSelectDateWidgetState extends State<ReserveSelectDateWidget> {
               setState(() {
                 _selectedDate = pickedDate;
               });
+              widget.onDateSelected(_selectedDate!); // 콜백 호출
             }
           },
           color: pointColor2
