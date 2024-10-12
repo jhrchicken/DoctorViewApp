@@ -81,6 +81,13 @@ class _DreviewWriteScreenState extends State<DreviewWriteScreen> {
                   fontWeight: FontWeight.w900,
                 ),
               ),
+              const SizedBox(
+                height: 5,
+              ),
+              Divider(
+                thickness: 1,
+                color: Colors.grey[300],
+              ),
               const SizedBox(height: 20),
               Form(
                 key: _formKey,
@@ -110,7 +117,7 @@ class _DreviewWriteScreenState extends State<DreviewWriteScreen> {
                     // 해시태그
                     Wrap(
                       spacing: 8.0,
-                      runSpacing: 4.0,
+                      runSpacing: -5,
                       children: _optionHashtag.map((tag) {
                         final isSelected = _listHashtag.contains(tag);
                         return ChoiceChip(
@@ -118,6 +125,7 @@ class _DreviewWriteScreenState extends State<DreviewWriteScreen> {
                             tag,
                             style: TextStyle(
                               color: Colors.grey[700],
+                              fontSize: 12,
                             ),
                           ),
                           selected: isSelected,
@@ -131,7 +139,7 @@ class _DreviewWriteScreenState extends State<DreviewWriteScreen> {
                             });
                           },
                           backgroundColor: Colors.white,
-                          selectedColor: pointColor1,
+                          selectedColor: Colors.grey[100],
                           shape: RoundedRectangleBorder(
                             side: BorderSide(
                               color: Colors.grey.shade300,
