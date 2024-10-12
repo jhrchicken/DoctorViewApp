@@ -1,13 +1,19 @@
+import 'package:doctorviewapp/main.dart';
 import 'package:doctorviewapp/models/doctor.dart';
 import 'package:doctorviewapp/models/hashtag.dart';
 import 'package:doctorviewapp/models/hospital.dart';
 import 'package:doctorviewapp/models/hreview.dart';
+import 'package:doctorviewapp/models/likes.dart';
+import 'package:doctorviewapp/models/member.dart';
 import 'package:doctorviewapp/providers/doctor_provider.dart';
 import 'package:doctorviewapp/providers/hashtag_provider.dart';
 import 'package:doctorviewapp/providers/hospital_provider.dart';
 import 'package:doctorviewapp/providers/hreview_provider.dart';
+import 'package:doctorviewapp/providers/likes_provider.dart';
+import 'package:doctorviewapp/providers/member_provider.dart';
 import 'package:doctorviewapp/screens/hospital/hreview_list_screen.dart';
 import 'package:doctorviewapp/screens/hospital/hreview_write_screen.dart';
+import 'package:doctorviewapp/screens/mypage/join/login.dart';
 import 'package:doctorviewapp/theme/colors.dart';
 import 'package:doctorviewapp/widgets/common/grey_button.dart';
 import 'package:doctorviewapp/widgets/common/primary_outline_button.dart';
@@ -32,6 +38,48 @@ class HospitalViewScreen extends StatefulWidget {
 }
 
 class _HospitalViewScreenState extends State<HospitalViewScreen> {
+  bool isLike = false;
+  Member? loginMember;
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    final likesProvider = Provider.of<LikesProvider>(context, listen: false);
+    final memberProvider = Provider.of<MemberProvider>(context, listen: false);
+
+    loginMember = memberProvider.loginMember;
+    if (loginMember != null) {
+      setState(() {
+        isLike = likesProvider.checkLikes('hospital', loginMember!.id, widget.id.toString());
+      });
+    }
+  }
+
+  void _toggleLike() {
+    final likesProvider = Provider.of<LikesProvider>(context, listen: false);
+    final memberProvider = Provider.of<MemberProvider>(context, listen: false);
+
+    loginMember = memberProvider.loginMember;
+    if (loginMember != null) {
+      if (isLike) {
+        likesProvider.minusLikes('hospital', loginMember!.id, widget.id.toString());
+      }
+      else {
+        likesProvider.plusLikes(
+          Likes(
+            likeIdx: 0,
+            memberRef: loginMember!.id,
+            tablename: 'hospital',
+            recodenum: widget.id.toString(),
+          ),
+        );
+      }
+      setState(() {
+        isLike = !isLike;
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final doctorProvider = Provider.of<DoctorProvider>(context);
@@ -43,24 +91,35 @@ class _HospitalViewScreenState extends State<HospitalViewScreen> {
     List<Doctor> doctorList = doctorProvider.listDoctor(hospital!.id);
     List<Hreview> hreviewList = hreviewProvider.listHreview(hospital.id);
     List<Hashtag> hashtagList = hashtagProvider.listHospHashtag(hospital.id);
+
+    // 로그인 하지 않은 경우
+    if (loginMember == null) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(
+            builder: (context) => const Login(),
+          ),
+        );
+      });
+      return const SizedBox();
+    }
     
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,
         title: Text(
           hospital.name,
-          style: TextStyle(
-            color: Colors.grey[900],
-            fontSize: 16,
-            fontWeight: FontWeight.w700,
-          ),
+          style: CustomTextStyles.appbarText,
         ),
         actions: [
           IconButton(
-            icon: Icon(Icons.bookmark_border_rounded, color: Colors.grey[900]),
-            onPressed: () {
-              
-            },
+            icon: Icon(
+              isLike ? Icons.bookmark : Icons.bookmark_border_rounded,
+              size: 24,
+            ),
+            color: Colors.grey[700],
+            onPressed: _toggleLike,
           ),
         ],
       ),
@@ -79,7 +138,6 @@ class _HospitalViewScreenState extends State<HospitalViewScreen> {
               ),
             ),
             const SizedBox(height: 15),
-
             // 위치
             Padding(
               padding: const EdgeInsets.all(20.0),
@@ -110,12 +168,11 @@ class _HospitalViewScreenState extends State<HospitalViewScreen> {
                         '해시태그',
                         style: TextStyle(
                           color: Colors.grey[900],
-                          fontSize: 16,
+                          fontSize: 18,
                           fontWeight: FontWeight.w900,
                         ),
                       ),
                       const SizedBox(height: 20),
-                      // 이거 해시태그 하나도 없을 때 처리해야 함
                       Wrap(
                         spacing: 8.0,
                         runSpacing: 8.0,
@@ -149,7 +206,7 @@ class _HospitalViewScreenState extends State<HospitalViewScreen> {
                         '의사',
                         style: TextStyle(
                           color: Colors.grey[900],
-                          fontSize: 16,
+                          fontSize: 18,
                           fontWeight: FontWeight.w900,
                         ),
                       ),
@@ -195,7 +252,7 @@ class _HospitalViewScreenState extends State<HospitalViewScreen> {
                           '리뷰',
                           style: TextStyle(
                             color: Colors.grey[900],
-                            fontSize: 16,
+                            fontSize: 18,
                             fontWeight: FontWeight.w900,
                           ),
                         ),
@@ -204,7 +261,7 @@ class _HospitalViewScreenState extends State<HospitalViewScreen> {
                           hreviewList.length.toString(),
                           style: const TextStyle(
                             color: pointColor2,
-                            fontSize: 16,
+                            fontSize: 18,
                             fontWeight: FontWeight.w900,
                           ),
                         ),
@@ -258,7 +315,7 @@ class _HospitalViewScreenState extends State<HospitalViewScreen> {
                     ListView.builder(
                       shrinkWrap: true,
                       physics: const NeverScrollableScrollPhysics(),
-                      itemCount: hreviewList.length, // 이거 5개까지만 보이게 하고 5개보다 리뷰가 적을 때 예외처리 해야됨
+                      itemCount: hreviewList.length,
                       itemBuilder: (context, index) {
                         final hreview = hreviewList[index];
                         return Column(
