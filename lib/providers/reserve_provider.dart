@@ -23,7 +23,8 @@ class ReserveProvider extends ChangeNotifier {
       user_ref: 'dayeong',
       hosp_ref: 'hospital1',
       cancel: 'F',
-    )
+    ),
+    
   ];
 
   // 예약 전체 목록
@@ -52,6 +53,40 @@ class ReserveProvider extends ChangeNotifier {
       return null;
     }
   }
+
+  // 예약 내역 정렬 
+  List<Reserve> nearReserve(String userRef) {
+    List<Reserve> listResult = _reserveList.where((reserve) => reserve.user_ref == userRef && reserve.postdate.isAfter(DateTime.now())).toList();
+
+    DateTime today = DateTime.now();
+
+    // 가장 가까운 순서로 정렬
+    listResult.sort((a, b) {
+      Duration diffA = a.postdate.difference(today).abs();
+      Duration diffB = b.postdate.difference(today).abs();
+      return diffA.compareTo(diffB); 
+    });
+
+    return listResult;
+  }
+
+  // 지난 예약
+  List<Reserve> pastReserve(String userRef) {
+    List<Reserve> listResult = _reserveList.where((reserve) => 
+      reserve.user_ref == userRef && reserve.postdate.isBefore(DateTime.now())
+    ).toList();
+
+    // 오래된 순서로 정렬
+    listResult.sort((a, b) {
+      return b.postdate.compareTo(a.postdate); 
+    });
+
+    return listResult;
+  }
+
+
+
+
 
 
 }
