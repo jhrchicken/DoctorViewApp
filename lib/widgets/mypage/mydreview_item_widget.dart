@@ -1,32 +1,34 @@
+import 'package:doctorviewapp/models/doctor.dart';
+import 'package:doctorviewapp/models/dreply.dart';
+import 'package:doctorviewapp/models/dreview.dart';
 import 'package:doctorviewapp/models/hashtag.dart';
-import 'package:doctorviewapp/models/hreply.dart';
-import 'package:doctorviewapp/models/hreview.dart';
 import 'package:doctorviewapp/models/likes.dart';
 import 'package:doctorviewapp/models/member.dart';
+import 'package:doctorviewapp/providers/doctor_provider.dart';
+import 'package:doctorviewapp/providers/dreply_provider.dart';
+import 'package:doctorviewapp/providers/dreview_provider.dart';
 import 'package:doctorviewapp/providers/hashtag_provider.dart';
-import 'package:doctorviewapp/providers/hreply_provider.dart';
-import 'package:doctorviewapp/providers/hreview_provider.dart';
 import 'package:doctorviewapp/providers/likes_provider.dart';
 import 'package:doctorviewapp/providers/member_provider.dart';
-import 'package:doctorviewapp/screens/hospital/hreview_view_screen.dart';
+import 'package:doctorviewapp/screens/doctor/dreview_view_screen.dart';
 import 'package:doctorviewapp/theme/colors.dart';
 import 'package:doctorviewapp/widgets/common/grey_button.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class HreviewItemWidget extends StatefulWidget {
+class MydreviewItemWidget extends StatefulWidget {
   final int reviewIdx;
 
-  const HreviewItemWidget({
+  const MydreviewItemWidget({
     super.key,
     required this.reviewIdx,
   });
 
   @override
-  State<HreviewItemWidget> createState() => _HreviewItemWidgetState();
+  State<MydreviewItemWidget> createState() => _MydreviewItemWidgetState();
 }
 
-class _HreviewItemWidgetState extends State<HreviewItemWidget> {
+class _MydreviewItemWidgetState extends State<MydreviewItemWidget> {
   bool isLike = false;
   Member? loginMember;
 
@@ -39,7 +41,7 @@ class _HreviewItemWidgetState extends State<HreviewItemWidget> {
     loginMember = memberProvider.loginMember;
     if (loginMember != null) {
       setState(() {
-        isLike = likesProvider.checkLikes('hreview', loginMember!.id, widget.reviewIdx.toString());
+        isLike = likesProvider.checkLikes('dreview', loginMember!.id, widget.reviewIdx.toString());
       });
     }
   }
@@ -51,14 +53,14 @@ class _HreviewItemWidgetState extends State<HreviewItemWidget> {
     loginMember = memberProvider.loginMember;
     if (loginMember != null) {
       if (isLike) {
-        likesProvider.minusLikes('hreview', loginMember!.id, widget.reviewIdx.toString());
+        likesProvider.minusLikes('dreview', loginMember!.id, widget.reviewIdx.toString());
       }
       else {
         likesProvider.plusLikes(
           Likes(
             likeIdx: 0,
             memberRef: loginMember!.id,
-            tablename: 'hreview',
+            tablename: 'dreview',
             recodenum: widget.reviewIdx.toString(),
           ),
         );
@@ -68,28 +70,28 @@ class _HreviewItemWidgetState extends State<HreviewItemWidget> {
       });
     }
   }
-
+  
   @override
   Widget build(BuildContext context) {
-    final hreviewProvider = Provider.of<HreviewProvider>(context);
+    final dreviewProvider = Provider.of<DreviewProvider>(context);
     final likesProvider = Provider.of<LikesProvider>(context);
     final hashtagProvider = Provider.of<HashtagProvider>(context);
-    final memberProvider = Provider.of<MemberProvider>(context);
-    final hreplyProvider = Provider.of<HreplyProvider>(context);
+    final dreplyProvider = Provider.of<DreplyProvider>(context);
+    final doctorProvider = Provider.of<DoctorProvider>(context);
 
-    Hreview? hreview = hreviewProvider.selectHreview(widget.reviewIdx);
-    List<Likes> likesList = likesProvider.selectLikes('hreview', hreview!.reviewIdx.toString());
-    List<Hashtag> hashtagList = hashtagProvider.listReviewHashtag(hreview.reviewIdx);
-    Member? member = memberProvider.selectMember(hreview.writerRef.toString());
-    List<Hreply> hreplyList = hreplyProvider.listHreply(hreview.reviewIdx);
+    Dreview? dreview = dreviewProvider.selectDreview(widget.reviewIdx);
+    List<Likes> likesList = likesProvider.selectLikes('dreview', dreview!.reviewIdx.toString());
+    List<Hashtag> hashtagList = hashtagProvider.listReviewHashtag(dreview.reviewIdx);
+    List<Dreply> dreplyList = dreplyProvider.listDreply(dreview.reviewIdx);
+    Doctor? doctor = doctorProvider.selectDoctor(dreview.docRef);
 
     return GestureDetector(
       onTap: () {
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => HreviewViewScreen(
-              reviewIdx: hreview.reviewIdx,
+            builder: (context) => DreviewViewScreen(
+              reviewIdx: dreview.reviewIdx,
             ),
           ),
         );
@@ -99,6 +101,7 @@ class _HreviewItemWidgetState extends State<HreviewItemWidget> {
         color: Colors.transparent,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisSize: MainAxisSize.min,
           children: [
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -118,11 +121,9 @@ class _HreviewItemWidgetState extends State<HreviewItemWidget> {
                       children: [
                         Row(
                           children: [
-                            const SizedBox(
-                              width: 2,
-                            ),
+                            const SizedBox(width: 2),
                             Text(
-                              member?.nickname.toString() ?? '(알 수 없음)',
+                              '${doctor!.name} 의사',
                               style: TextStyle(
                                 fontSize: 14,
                                 color: Colors.grey[900],
@@ -131,31 +132,21 @@ class _HreviewItemWidgetState extends State<HreviewItemWidget> {
                             ),
                           ],
                         ),
-                        const SizedBox(
-                          height: 3,
-                        ),
+                        const SizedBox(height: 3),
                         // 별점
                         Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            Row(
-                              children: List.generate(5, (index) {
-                                return Icon(
-                                  Icons.star_rounded,
-                                  color: index < hreview.score ? Colors.amber : Colors.grey[300],
-                                  size: 16,
-                                );
-                              }),
-                            ),
-                          ],
+                          children: List.generate(5, (index) {
+                            return Icon(
+                              Icons.star_rounded,
+                              color: index < dreview.score ? Colors.amber : Colors.grey[300],
+                              size: 18,
+                            );
+                          }),
                         ),
                       ],
-      
                     ),
                   ],
                 ),
-                // 좋아요
                 GestureDetector(
                   onTap: _toggleLike,
                   child: Icon(
@@ -166,9 +157,7 @@ class _HreviewItemWidgetState extends State<HreviewItemWidget> {
                 ),
               ],
             ),
-            const SizedBox(
-              height: 10,
-            ),
+            const SizedBox(height: 10),
             // 해시태그
             Wrap(
               spacing: 8.0,
@@ -182,10 +171,9 @@ class _HreviewItemWidgetState extends State<HreviewItemWidget> {
             ),
             if (hashtagList.isNotEmpty)
               const SizedBox(height: 10),
-      
             // 내용
             Text(
-              hreview.content,
+              dreview.content,
               style: TextStyle(
                 fontSize: 14,
                 color: Colors.grey[900],
@@ -197,7 +185,7 @@ class _HreviewItemWidgetState extends State<HreviewItemWidget> {
               children: [
                 // 작성일
                 Text(
-                  '${hreview.date.year}-${hreview.date.month}-${hreview.date.day}  |  ',
+                  '${dreview.date.year}-${dreview.date.month}-${dreview.date.day}  |  ',
                   style: TextStyle(
                     fontSize: 12,
                     color: Colors.grey[500],
@@ -233,7 +221,7 @@ class _HreviewItemWidgetState extends State<HreviewItemWidget> {
                     ),
                     const SizedBox(width: 5),
                     Text(
-                      hreplyList.length.toString(),
+                      dreplyList.length.toString(),
                       style: TextStyle(
                         fontSize: 12,
                         color: Colors.grey[500],
