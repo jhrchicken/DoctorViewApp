@@ -76,7 +76,7 @@ class _ReserveDoctorInfoWidgetState extends State<ReserveDoctorInfoWidget> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               DoctorRadioButton(
-                groupValue: selectedDoctor ?? 'noselect',
+                groupValue: selectedDoctor ?? '',
                 value: doctor.name,
                 title: doctor.name,
                 onChanged: (String? value) {

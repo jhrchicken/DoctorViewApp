@@ -50,11 +50,13 @@ class _ReserveSelectDateWidgetState extends State<ReserveSelectDateWidget> {
         SecondaryOutlineButton(
           text: '날짜 선택', 
           onPressed: () async {
+            DateTime lastRes = DateTime(DateTime.now().year, DateTime.now().month + 3, DateTime.now().day); 
+
             DateTime? pickedDate = await showDatePicker(
               context: context,
               initialDate: DateTime.now(),
-              firstDate: DateTime(2000),
-              lastDate: DateTime(2101),
+              firstDate: DateTime.now(),
+              lastDate: lastRes,
             );
             if (pickedDate != null && pickedDate != _selectedDate) {
               setState(() {

@@ -26,13 +26,12 @@ class ReserveProceedScreen extends StatefulWidget {
 }
 
 class _ReserveProceedScreenState extends State<ReserveProceedScreen> {
+  final _formKey = GlobalKey<FormState>();
+
   @override
   void initState() {
     super.initState();
-    _initializeUserInfo();
-  }
-
-  void _initializeUserInfo() {
+    
     final memberProvider = Provider.of<MemberProvider>(context, listen: false);
     final loginMember = memberProvider.loginMember;
 
@@ -137,7 +136,6 @@ class _ReserveProceedScreenState extends State<ReserveProceedScreen> {
                 const SizedBox(height: 30),
 
                 // 날짜 선택
-                // const ReserveSelectDateWidget(),
                 ReserveSelectDateWidget(onDateSelected: updateDate),
                 const SizedBox(height: 10,),
                 Divider(
@@ -163,38 +161,48 @@ class _ReserveProceedScreenState extends State<ReserveProceedScreen> {
                 ),
                 const SizedBox(height: 5,),
                 
+                Form(
+                  key: _formKey,
+                  child: ReserveUserInfoWidget(onUserNameChanged: updateUserName, onUserTelChanged: updateUserTel, onUserAddrChanged: updateUserAddr, onUserRrnChanged: updateUserRrn),
+                ),
                 // 방문자 
-                ReserveUserInfoWidget(onUserNameChanged: updateUserName, onUserTelChanged: updateUserTel, onUserAddrChanged: updateUserAddr, onUserRrnChanged: updateUserRrn),
+                
 
                 const SizedBox(height: 30),
                 PrimaryButton(
                   text: '예약하기',
                   onPressed: () {
-                    Navigator.push(
-                      context,
-                      
-                      MaterialPageRoute(
-                        builder: (context) => ReserveCheckScreen(
-                          reserve: Reserve(
-                            reserveIdx: 0, 
-                            hospname: hospital != null ? hospital.name : '', 
-                            username: userName, 
-                            doctorname: selectedDoctor,
-                            tel: userTel, 
-                            rrn: userRrn, 
-                            address: userAddr, 
-                            postdate: _selectedDate ?? DateTime.now(),
-                            posttime: selectedHours, 
-                            alarm: 'T', 
-                            review: 'F', 
-                            hide: 'F', 
-                            cancel: 'F',
-                            user_ref: loginMember != null ? loginMember.id : '', 
-                            hosp_ref: widget.hospRef,
-                          ) 
+                    if(_formKey.currentState!.validate() && selectedDoctor != '' && selectedHours != ''){
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => ReserveCheckScreen(
+                            reserve: Reserve(
+                              reserveIdx: 0, 
+                              hospname: hospital != null ? hospital.name : '', 
+                              username: userName, 
+                              doctorname: selectedDoctor,
+                              tel: userTel, 
+                              rrn: userRrn, 
+                              address: userAddr, 
+                              postdate: _selectedDate ?? DateTime.now(),
+                              posttime: selectedHours, 
+                              alarm: 'T', 
+                              review: 'F', 
+                              hide: 'F', 
+                              cancel: 'F',
+                              user_ref: loginMember != null ? loginMember.id : '', 
+                              hosp_ref: widget.hospRef,
+                            ) 
+                          ),
                         ),
-                      ),
-                    );
+                      );
+                    } else {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(content: Text('모든 항목을 선택해주세요.')),
+                        );
+                    }
+                    
                     // 병원
                     print('name:${hospital!.name}');
                     // 방문자
