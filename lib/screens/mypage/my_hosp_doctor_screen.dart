@@ -82,40 +82,62 @@ class _MyHospDoctorScreenState extends State<MyHospDoctorScreen> {
             // 병원 목록
             Padding(
               padding: const EdgeInsets.all(20.0),
-              child: ListView.builder(
-                itemCount: hospList.length,
-                itemBuilder: (context, index) {
-                  final hospital = hospList[index];
-                  return Column(
-                    children: [
-                      HospitalItemWidget(
-                        id: hospital.id,
+                child: hospList.isEmpty
+                  ? Center(
+                      child: Text(
+                        '찜한 병원이 없습니다',
+                        style: TextStyle(
+                          fontSize: 16,
+                          color: Colors.grey[600],
+                        ),
                       ),
-                      if (index < hospList.length - 1)
-                        Divider(color: Colors.grey[100], thickness: 1.0),
-                    ],
-                  );
-                },
-              ),
+                    )
+                  : ListView.builder(
+                      itemCount: hospList.length,
+                      itemBuilder: (context, index) {
+                        final hospital = hospList[index];
+                        return Column(
+                          key: ValueKey(hospital.id),
+                          children: [
+                            HospitalItemWidget(
+                              id: hospital.id,
+                            ),
+                            if (index < hospList.length - 1)
+                              Divider(color: Colors.grey[100], thickness: 1.0),
+                          ],
+                        );
+                      },
+                    ),
             ),
             // 의사 목록
             Padding(
               padding: const EdgeInsets.all(20.0),
-              child: ListView.builder(
-                itemCount: doctorList.length,
-                itemBuilder: (context, index) {
-                  final doctor = doctorList[index];
-                  return Column(
-                    children: [
-                      DoctorItemWidget(
-                        docIdx: doctor.docIdx,
+              child: doctorList.isEmpty
+                ? Center(
+                    child: Text(
+                      '찜한 의사가 없습니다',
+                      style: TextStyle(
+                        fontSize: 16,
+                        color: Colors.grey[600],
                       ),
-                      if (index < doctorList.length - 1)
-                        Divider(color: Colors.grey[100], thickness: 1.0),
-                    ],
-                  );
-                },
-              ),
+                    ),
+                  )
+                : ListView.builder(
+                  itemCount: doctorList.length,
+                  itemBuilder: (context, index) {
+                    final doctor = doctorList[index];
+                    return Column(
+                      key: ValueKey(doctor.docIdx),
+                      children: [
+                        DoctorItemWidget(
+                          docIdx: doctor.docIdx,
+                        ),
+                        if (index < doctorList.length - 1)
+                          Divider(color: Colors.grey[100], thickness: 1.0),
+                      ],
+                    );
+                  },
+                ),
             ),
           ],
         ),
