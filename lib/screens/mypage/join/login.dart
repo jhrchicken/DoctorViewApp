@@ -2,6 +2,7 @@ import 'package:doctorviewapp/component/checkbox.dart';
 import 'package:doctorviewapp/component/inputfield.dart';
 import 'package:doctorviewapp/component/secondary_outline_button.dart';
 import 'package:doctorviewapp/header.dart';
+import 'package:doctorviewapp/main.dart';
 import 'package:doctorviewapp/providers/member_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -33,7 +34,13 @@ class _LoginState extends State<Login> {
     
     return Scaffold(
       // 헤더
-      appBar: Header('로그인'), 
+      appBar: AppBar(
+        backgroundColor: Colors.white,
+        title: Text(
+          '로그인',
+          style: CustomTextStyles.appbarText,
+        ),
+      ),
 
       body: Center(
         child: Form(
