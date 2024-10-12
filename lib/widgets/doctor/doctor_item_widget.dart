@@ -142,7 +142,7 @@ class _DoctorItemWidgetState extends State<DoctorItemWidget> {
                       style: TextStyle(
                         color: Colors.grey[700],
                         fontSize: 14,
-                        fontWeight: FontWeight.w700,
+                        fontWeight: FontWeight.w500,
                       ),
                     ),
                     const SizedBox(width: 10),
@@ -151,7 +151,7 @@ class _DoctorItemWidgetState extends State<DoctorItemWidget> {
                       style: TextStyle(
                         color: Colors.grey[500],
                         fontSize: 14,
-                        fontWeight: FontWeight.w700,
+                        fontWeight: FontWeight.w500,
                       ),
                     ),
                   ],
@@ -164,7 +164,7 @@ class _DoctorItemWidgetState extends State<DoctorItemWidget> {
                       style: TextStyle(
                         color: Colors.grey[700],
                         fontSize: 14,
-                        fontWeight: FontWeight.w700,
+                        fontWeight: FontWeight.w500,
                       ),
                     ),
                     const SizedBox(width: 10),
@@ -173,7 +173,7 @@ class _DoctorItemWidgetState extends State<DoctorItemWidget> {
                       style: TextStyle(
                         color: Colors.grey[500],
                         fontSize: 14,
-                        fontWeight: FontWeight.w700,
+                        fontWeight: FontWeight.w500,
                       ),
                     ),
                   ],
@@ -186,7 +186,7 @@ class _DoctorItemWidgetState extends State<DoctorItemWidget> {
                       style: TextStyle(
                         color: Colors.grey[700],
                         fontSize: 14,
-                        fontWeight: FontWeight.w700,
+                        fontWeight: FontWeight.w500,
                       ),
                     ),
                     const SizedBox(width: 10),
@@ -195,7 +195,7 @@ class _DoctorItemWidgetState extends State<DoctorItemWidget> {
                       style: TextStyle(
                         color: Colors.grey[500],
                         fontSize: 14,
-                        fontWeight: FontWeight.w700,
+                        fontWeight: FontWeight.w500,
                       ),
                     ),
                   ],
