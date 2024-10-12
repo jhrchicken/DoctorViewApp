@@ -44,7 +44,7 @@ class _ReserveUserInfoWidgetState extends State<ReserveUserInfoWidget> {
     final loginMember = memberProvider.loginMember;
 
     if (loginMember != null) {
-      nameController.text = loginMember.name ?? '';
+      nameController.text = loginMember.name;
       telController.text = loginMember.tel ?? '';
       rrnController.text = loginMember.rrn ?? '';
       addressController.text = loginMember.address ?? '';

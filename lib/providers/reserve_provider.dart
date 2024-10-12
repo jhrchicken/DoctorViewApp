@@ -1,4 +1,3 @@
-import 'package:doctorviewapp/models/board.dart';
 import 'package:doctorviewapp/models/reserve.dart';
 import 'package:flutter/material.dart';
 

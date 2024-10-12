@@ -1,4 +1,3 @@
-import 'package:doctorviewapp/component/checkbox.dart';
 import 'package:doctorviewapp/component/inputfield.dart';
 import 'package:doctorviewapp/component/secondary_outline_button.dart';
 import 'package:doctorviewapp/header.dart';
@@ -70,7 +69,6 @@ void initState() {
   @override
   Widget build(BuildContext context) {
     final memberProvider = Provider.of<MemberProvider>(context);
-    final loginMember = memberProvider.loginMember;
 
     return Scaffold(
       // 헤더
