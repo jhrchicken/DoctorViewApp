@@ -148,7 +148,7 @@ class _BoardDetailWidgetState extends State<BoardDetailWidget> {
                 ),
               ],
             ),
-            const SizedBox(width: 10),
+            const SizedBox(width: 15),
             Row(
               children: [
                 const Icon(
@@ -166,7 +166,7 @@ class _BoardDetailWidgetState extends State<BoardDetailWidget> {
                 ),
               ],
             ),
-            const SizedBox(width: 10),
+            const SizedBox(width: 15),
             Row(
               children: [
                 Icon(
