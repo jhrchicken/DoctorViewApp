@@ -1,6 +1,7 @@
 import 'package:doctorviewapp/header.dart';
 import 'package:doctorviewapp/providers/member_provider.dart';
 import 'package:doctorviewapp/providers/reserve_provider.dart';
+import 'package:doctorviewapp/widgets/member/reserve_item_cancel.dart';
 import 'package:doctorviewapp/widgets/member/reserve_item_near.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -38,9 +39,24 @@ class _ReserveCancelListUserState extends State<ReserveCancelListUser> {
                   final reserve = reserveList[index];
                   return Column(
                     children: [
-                      ReserveItemNear(
-                        reserveIdx: reserve.reserveIdx,
+                      Stack(
+                        children: [
+                          ReserveItemCancel(
+                            reserveIdx: reserve.reserveIdx,
+                          ),
+                          Positioned(
+                            child: Container(
+                              width: double.infinity,
+                              height: 175,
+                              decoration: BoxDecoration(
+                                color: Colors.grey.withOpacity(0.5),
+                                borderRadius: BorderRadius.circular(8),
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
+
                       if (index < reserveList.length - 1)
                         const SizedBox(height: 10),
                     ],
