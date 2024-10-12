@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 
 class ReserveProvider extends ChangeNotifier {
   // 예약 일련번호 시퀀스
-  int _seqReserveIdx = 4;
+  int _seqReserveIdx = 5;
 
   // 예약 더미데이터
   final List<Reserve> _reserveList = [
@@ -58,6 +58,23 @@ class ReserveProvider extends ChangeNotifier {
       user_ref: 'dayeong',
       hosp_ref: 'hospital1',
       cancel: 'F',
+    ),
+    Reserve(
+      reserveIdx: 4, 
+      hospname: '엠플러스의원',
+      doctorname: '박애플',
+      username: '부다영', 
+      tel: '010-2084-0204', 
+      rrn: '021209-4000000', 
+      address: '서울특별시', 
+      postdate: DateTime(2024, 11, 03),
+      posttime: '17:00', 
+      alarm: 'T', 
+      review: 'F', 
+      hide: 'F', 
+      user_ref: 'dayeong',
+      hosp_ref: 'hospital1',
+      cancel: 'T',
     ),
     
   ];
