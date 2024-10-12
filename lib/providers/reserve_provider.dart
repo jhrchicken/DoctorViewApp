@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 
 class ReserveProvider extends ChangeNotifier {
   // 예약 일련번호 시퀀스
-  int _seqReserveIdx = 3;
+  int _seqReserveIdx = 4;
 
   // 예약 더미데이터
   final List<Reserve> _reserveList = [
@@ -35,6 +35,23 @@ class ReserveProvider extends ChangeNotifier {
       // postdate: DateTime.now(),
       postdate: DateTime(2024, 10, 17),
       posttime: '13:00', 
+      alarm: 'T', 
+      review: 'F', 
+      hide: 'F', 
+      user_ref: 'dayeong',
+      hosp_ref: 'hospital1',
+      cancel: 'T',
+    ),
+    Reserve(
+      reserveIdx: 3, 
+      hospname: '엠플러스의원',
+      doctorname: '박애플',
+      username: '부다영', 
+      tel: '010-2084-0204', 
+      rrn: '021209-4000000', 
+      address: '서울특별시', 
+      postdate: DateTime(2024, 10, 20),
+      posttime: '17:00', 
       alarm: 'T', 
       review: 'F', 
       hide: 'F', 
@@ -76,7 +93,7 @@ class ReserveProvider extends ChangeNotifier {
   List<Reserve> nearReserve(String ref) {
     List<Reserve> listResult = _reserveList.where(
       (reserve) => 
-      (reserve.user_ref == ref && reserve.postdate.isAfter(DateTime.now())) || (reserve.hosp_ref == ref && reserve.postdate.isAfter(DateTime.now())) 
+      (reserve.user_ref == ref && reserve.postdate.isAfter(DateTime.now()) && reserve.cancel =='F')  || (reserve.hosp_ref == ref && reserve.postdate.isAfter(DateTime.now()) && reserve.cancel =='F') 
     ).toList();
 
     DateTime today = DateTime.now();
@@ -106,7 +123,23 @@ class ReserveProvider extends ChangeNotifier {
     return listResult;
   }
 
+  // 예약 취소
+  void updateCancelReserve(int reserveIdx) {
+    final reserve = _reserveList.firstWhere((reserve) => reserve.reserveIdx == reserveIdx);
+    reserve.cancel = 'T';
+    notifyListeners();
+  }
 
+  // 취소된 예약 리스트
+  List<Reserve>? cancelReserve(String ref) {
+    try {
+      return _reserveList.where((reserve) => (reserve.user_ref == ref && reserve.cancel == 'T') || (reserve.hosp_ref == ref && reserve.cancel == 'T') ).toList();
+    }
+    catch (e) {
+      return null;
+    }
+  }
+  
 
 
 

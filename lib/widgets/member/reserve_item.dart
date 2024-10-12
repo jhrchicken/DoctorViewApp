@@ -1,5 +1,6 @@
 import 'package:doctorviewapp/models/reserve.dart';
 import 'package:doctorviewapp/providers/reserve_provider.dart';
+import 'package:doctorviewapp/widgets/member/reserve_item_option.dart';
 import 'package:doctorviewapp/widgets/reserve/reserve_check_text_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -39,34 +40,41 @@ class _ReserveItemState extends State<ReserveItem> {
         borderRadius: BorderRadius.circular(8),
       ),
       child: Padding(
-        padding: const EdgeInsets.all(20),
+        padding: const EdgeInsets.only(left: 20, top: 20, right: 10, bottom: 20),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children:[
 
             Row(
-              crossAxisAlignment: CrossAxisAlignment.baseline,
-              textBaseline: TextBaseline.alphabetic,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text(
-                  reserve!.hospname,
-                  style: const TextStyle(
-                    fontSize: 30,
-                    letterSpacing: 0.1,
-                    fontWeight: FontWeight.w800,
-                  ),
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.baseline,
+                  textBaseline: TextBaseline.alphabetic,
+                  children: [
+                    Text(
+                      reserve!.hospname,
+                      style: const TextStyle(
+                        fontSize: 30,
+                        letterSpacing: 0.1,
+                        fontWeight: FontWeight.w800,
+                      ),
+                    ),
+                    
+                    const SizedBox(width: 10),
+                    
+                    /*********** 수정: 이름 통해서 병원 진료과목 가져오기 **********/
+                    Text(
+                      '피부과',
+                      style: TextStyle(
+                        letterSpacing: 0.1,
+                        color: Colors.grey[500],
+                      ),
+                    ),
+                  ],
                 ),
-                
-                const SizedBox(width: 10),
 
-                /*********** 수정: 이름 통해서 병원 진료과목 가져오기 **********/
-                Text(
-                  '피부과',
-                  style: TextStyle(
-                    letterSpacing: 0.1,
-                    color: Colors.grey[500],
-                  ),
-                ),
+                ReserveItemOption(reserveIdx: widget.reserveIdx),
               ],
             ),
             const SizedBox(height: 15),

@@ -1,6 +1,7 @@
 import 'package:doctorviewapp/header.dart';
 import 'package:doctorviewapp/providers/member_provider.dart';
 import 'package:doctorviewapp/providers/reserve_provider.dart';
+import 'package:doctorviewapp/screens/mypage/reserve/reserve_cancellist_user.dart';
 import 'package:doctorviewapp/screens/mypage/reserve/reserve_nearlist_user.dart';
 import 'package:doctorviewapp/theme/colors.dart';
 import 'package:doctorviewapp/widgets/common/primary_button.dart';
@@ -38,10 +39,30 @@ class _ReserveListUserState extends State<ReserveListUser> {
                 const Text('예약내용이 없습니다'),
               ]
               else ... [
-                PrimaryButton(
+                // 지난 예약
+                if (reserveProvider.listReserve(loginMember.id) != null) ...[
+                  PrimaryButton(
                   text: '지난 예약 보기', 
                   onPressed: (){ Navigator.of(context).push(MaterialPageRoute(builder: (context) => const ReserveNearlistUser()));}, 
                   color: pointColor2),
+                ]
+                else ...[
+                ],
+
+                // 취소된 예약
+                if (reserveProvider.cancelReserve(loginMember.id) != null) ...[
+                  PrimaryButton(
+                  text: '취소된 예약 보기', 
+                  onPressed: (){ Navigator.of(context).push(MaterialPageRoute(builder: (context) => const ReserveCancelListUser()));}, 
+                  color: pointColor2),
+                ]
+                else ...[
+                ],
+
+
+                
+
+                
                 const SizedBox(height: 20),
                 ListView.builder(
                   shrinkWrap: true,
