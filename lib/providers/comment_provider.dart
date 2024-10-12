@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 
 class CommentProvider extends ChangeNotifier {
   // 댓글 일련번호 시퀀스
-  int _seqCommIdx = 5;
+  int _seqCommIdx = 6;
 
   // 댓글 더미데이터
   final List<Comment> _commList = [
@@ -24,15 +24,21 @@ class CommentProvider extends ChangeNotifier {
     Comment(
       commIdx: 3,
       postdate: DateTime.now(),
-      content: '댓글이에욧',
-      boardRef: 2,
+      content: '하하..',
+      boardRef: 9,
       writerRef: 'harim',
     ),
     Comment(
       commIdx: 4,
       postdate: DateTime.now(),
-      content: '댓글이에욧',
-      boardRef: 3,
+      content: '그러네요',
+      boardRef: 9,
+    ),
+    Comment(
+      commIdx: 5,
+      postdate: DateTime.now(),
+      content: '즐거운 토요일',
+      boardRef: 9,
       writerRef: 'leehr',
     ),
   ];

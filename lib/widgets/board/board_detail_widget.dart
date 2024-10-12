@@ -65,9 +65,9 @@ class _BoardDetailWidgetState extends State<BoardDetailWidget> {
                           member?.nickname ?? '(알 수 없음)',
                           style: TextStyle(
                             fontSize: 16,
-                            color: (member?.id != null && loginMember?.id != null && member!.id != loginMember!.id) 
-                              ? Colors.grey[900] 
-                              : pointColor2,
+                            color: (member?.id != null && loginMember?.id != null && member!.id == loginMember!.id) 
+                              ? pointColor2
+                              : Colors.grey[900],
                             fontWeight: FontWeight.w700,
                           ),
                         ),
