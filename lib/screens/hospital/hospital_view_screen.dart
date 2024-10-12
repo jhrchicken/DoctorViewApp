@@ -315,13 +315,13 @@ class _HospitalViewScreenState extends State<HospitalViewScreen> {
                     ListView.builder(
                       shrinkWrap: true,
                       physics: const NeverScrollableScrollPhysics(),
-                      itemCount: hreviewList.length,
+                      itemCount: (hreviewList.length < 3) ? hreviewList.length : 3,
                       itemBuilder: (context, index) {
                         final hreview = hreviewList[index];
                         return Column(
                           children: [
                             HreviewItemWidget(reviewIdx: hreview.reviewIdx),
-                            if (index < hreviewList.length - 1)
+                            if (index < 2 && index < hreviewList.length - 1)
                               Divider(color: Colors.grey[100], thickness: 1.0),
                           ],
                         );
