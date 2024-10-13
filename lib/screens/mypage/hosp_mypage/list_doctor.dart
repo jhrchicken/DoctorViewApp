@@ -4,6 +4,7 @@ import 'package:doctorviewapp/providers/doctor_provider.dart';
 import 'package:doctorviewapp/providers/member_provider.dart';
 import 'package:doctorviewapp/screens/doctor/doctor_view_screen.dart';
 import 'package:doctorviewapp/screens/mypage/edit/edit_doctor.dart';
+import 'package:doctorviewapp/screens/mypage/hosp_mypage/insert_doctor.dart';
 import 'package:doctorviewapp/theme/colors.dart';
 import 'package:doctorviewapp/widgets/common/grey_button.dart';
 import 'package:doctorviewapp/widgets/common/primary_button.dart';
@@ -71,7 +72,18 @@ class _DoctorListState extends State<DoctorList> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               
-              PrimaryButton(text: '의료진 등록하기', onPressed: (){}, color: pointColor2),
+              PrimaryButton(
+                text: '의료진 등록하기', 
+                onPressed: (){
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const InsertDoctor(),
+                    ),
+                  );
+                }, 
+                color: pointColor2
+              ),
               
               if (hospitalDoctors.isNotEmpty)
                 ListView.builder(
@@ -130,13 +142,13 @@ class _DoctorListState extends State<DoctorList> {
                                                 text: '수정', 
                                                 onPressed: (){
                                                   Navigator.push(
-                                                  context,
-                                                  MaterialPageRoute(
-                                                    builder: (context) => EditDoctor(
-                                                      docIdx: doctor.docIdx,
+                                                    context,
+                                                    MaterialPageRoute(
+                                                      builder: (context) => EditDoctor(
+                                                        docIdx: doctor.docIdx,
+                                                      ),
                                                     ),
-                                                  ),
-                                                );
+                                                  );
                                                 }
                                               ),
                                               EditButton(
