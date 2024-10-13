@@ -31,23 +31,29 @@ class _ReserveNearlistHospState extends State<ReserveNearlistHosp> {
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              ListView.builder(
-                shrinkWrap: true,
-                physics: const NeverScrollableScrollPhysics(),
-                itemCount: reserveList.length,
-                itemBuilder: (context, index) {
-                  final reserve = reserveList[index];
-                  return Column(
-                    children: [
-                      ReserveItemNearHosp(
-                        reserveIdx: reserve.reserveIdx,
-                      ),
-                      if (index < reserveList.length - 1)
-                        const SizedBox(height: 10),
-                    ],
-                  );
-                },
-              ),
+
+              if (reserveProvider.listReserve(loginMember.id) == null) ...[ const Text('지난예약이 없습니다.')]
+              else ...[
+                ListView.builder(
+                  shrinkWrap: true,
+                  physics: const NeverScrollableScrollPhysics(),
+                  itemCount: reserveList.length,
+                  itemBuilder: (context, index) {
+                    final reserve = reserveList[index];
+                    return Column(
+                      children: [
+                        ReserveItemNearHosp(
+                          reserveIdx: reserve.reserveIdx,
+                        ),
+                        if (index < reserveList.length - 1)
+                          const SizedBox(height: 10),
+                      ],
+                    );
+                  },
+                ),
+              ],
+
+              
             ]
 
 

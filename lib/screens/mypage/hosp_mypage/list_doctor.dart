@@ -3,6 +3,7 @@ import 'package:doctorviewapp/models/doctor.dart';
 import 'package:doctorviewapp/providers/doctor_provider.dart';
 import 'package:doctorviewapp/providers/member_provider.dart';
 import 'package:doctorviewapp/screens/doctor/doctor_view_screen.dart';
+import 'package:doctorviewapp/screens/mypage/edit/edit_doctor.dart';
 import 'package:doctorviewapp/theme/colors.dart';
 import 'package:doctorviewapp/widgets/common/grey_button.dart';
 import 'package:doctorviewapp/widgets/common/primary_button.dart';
@@ -28,6 +29,35 @@ class _DoctorListState extends State<DoctorList> {
     List<Doctor> hospitalDoctors = [];
     if (loginMember != null) {
       hospitalDoctors = doctorProvider.listDoctor(loginMember.id);
+    }
+
+    void showConfirmationDialog(BuildContext context, int docIdx) {
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            backgroundColor: Colors.grey[100],
+            title: const Text('의료진 삭제'),
+            content: const Text('의료진정보를 삭제하시겠습니까?'),
+            actions: [
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context).pop(); 
+                  doctorProvider.deleteDoctor(docIdx);
+                  print('삭제완료');
+                },
+                child: Text('예', style: TextStyle(color: Colors.grey[900]),),
+              ),
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context).pop(); 
+                },
+                child: Text('아니오',  style: TextStyle(color: Colors.grey[900]),),
+              ),
+            ],
+          );
+        },
+      );
     }
 
     return Scaffold(
@@ -96,8 +126,25 @@ class _DoctorListState extends State<DoctorList> {
                                           Row(
                                             children: [
                                               /*************** 수정페이지 이동 필요 ***************/
-                                              EditButton(text: '수정', onPressed: (){}),
-                                              EditButton(text: '삭제', onPressed: (){}),
+                                              EditButton(
+                                                text: '수정', 
+                                                onPressed: (){
+                                                  Navigator.push(
+                                                  context,
+                                                  MaterialPageRoute(
+                                                    builder: (context) => EditDoctor(
+                                                      docIdx: doctor.docIdx,
+                                                    ),
+                                                  ),
+                                                );
+                                                }
+                                              ),
+                                              EditButton(
+                                                text: '삭제', 
+                                                onPressed: (){
+                                                  showConfirmationDialog(context, doctor.docIdx);
+                                                }
+                                              ),
                                             ],
                                           ),
                                         ],

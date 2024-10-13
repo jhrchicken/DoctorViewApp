@@ -1,5 +1,5 @@
 import 'package:doctorviewapp/providers/member_provider.dart';
-import 'package:doctorviewapp/screens/reserve/userInfo_field.dart';
+import 'package:doctorviewapp/widgets/reserve/userInfo_field.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 

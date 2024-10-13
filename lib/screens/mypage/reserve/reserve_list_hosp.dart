@@ -1,6 +1,7 @@
 import 'package:doctorviewapp/header.dart';
 import 'package:doctorviewapp/providers/member_provider.dart';
 import 'package:doctorviewapp/providers/reserve_provider.dart';
+import 'package:doctorviewapp/screens/mypage/reserve/reserve_cancellist_hosp.dart';
 import 'package:doctorviewapp/screens/mypage/reserve/reserve_nearlist_hosp.dart';
 import 'package:doctorviewapp/screens/mypage/reserve/reserve_nearlist_user.dart';
 import 'package:doctorviewapp/theme/colors.dart';
@@ -40,10 +41,18 @@ class _ReserveListHospState extends State<ReserveListHosp> {
                 const Text('예약내용이 없습니다'),
               ]
               else ... [
+                // 지난 예약
                 PrimaryButton(
-                  text: '지난 예약 보기', 
-                  onPressed: (){ Navigator.of(context).push(MaterialPageRoute(builder: (context) => const ReserveNearlistHosp()));}, 
-                  color: pointColor2),
+                text: '지난 예약 보기', 
+                onPressed: (){ Navigator.of(context).push(MaterialPageRoute(builder: (context) => const ReserveNearlistHosp()));}, 
+                color: pointColor2),
+
+                // 취소된 예약
+                PrimaryButton(
+                text: '취소된 예약 보기', 
+                onPressed: (){ Navigator.of(context).push(MaterialPageRoute(builder: (context) => const ReserveCancelListHosp()));}, 
+                color: pointColor2),
+
                 const SizedBox(height: 20),
                 ListView.builder(
                   shrinkWrap: true,

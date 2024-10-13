@@ -2,7 +2,6 @@ import 'package:doctorviewapp/header.dart';
 import 'package:doctorviewapp/providers/member_provider.dart';
 import 'package:doctorviewapp/providers/reserve_provider.dart';
 import 'package:doctorviewapp/widgets/member/reserve_item_cancel.dart';
-import 'package:doctorviewapp/widgets/member/reserve_item_near.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 

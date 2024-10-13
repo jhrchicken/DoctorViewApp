@@ -67,7 +67,10 @@ class DoctorProvider extends ChangeNotifier {
   void updateDoctor(Doctor doctor) {
     for (int i = 0; i < _doctorList.length; i++) {
       if (_doctorList[i].docIdx == doctor.docIdx) {
-        _doctorList[i] = doctor;
+        _doctorList[i].name = doctor.name;
+        _doctorList[i].major = doctor.major;
+        _doctorList[i].career = doctor.career;
+        _doctorList[i].hours = doctor.hours;
         break;
       }
     }
