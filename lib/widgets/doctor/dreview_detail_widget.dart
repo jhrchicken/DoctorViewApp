@@ -88,6 +88,13 @@ class _DreviewDetailWidgetState extends State<DreviewDetailWidget> {
                             color: Colors.grey[500],
                           ),
                         ),
+                        Text(
+                          dreview.rewrite == 'T' ? '  (수정됨)' : '',
+                          style: TextStyle(
+                            color: Colors.grey[500],
+                            fontSize: 12,
+                          ),
+                        ),
                       ],
                     ),
                     const SizedBox(

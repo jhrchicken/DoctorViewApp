@@ -129,6 +129,13 @@ class _HreviewItemWidgetState extends State<HreviewItemWidget> {
                                 fontWeight: FontWeight.w700,
                               ),
                             ),
+                            Text(
+                              hreview.rewrite == 'T' ? '  (수정됨)' : '',
+                              style: TextStyle(
+                                color: Colors.grey[500],
+                                fontSize: 12,
+                              ),
+                            ),
                           ],
                         ),
                         const SizedBox(

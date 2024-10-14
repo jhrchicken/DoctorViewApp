@@ -120,13 +120,24 @@ class _DreviewItemWidgetState extends State<DreviewItemWidget> {
                         Row(
                           children: [
                             const SizedBox(width: 2),
-                            Text(
-                              member?.nickname.toString() ?? '(알 수 없음)',
-                              style: TextStyle(
-                                fontSize: 14,
-                                color: Colors.grey[900],
-                                fontWeight: FontWeight.w700,
-                              ),
+                            Row(
+                              children: [
+                                Text(
+                                  member?.nickname.toString() ?? '(알 수 없음)',
+                                  style: TextStyle(
+                                    fontSize: 14,
+                                    color: Colors.grey[900],
+                                    fontWeight: FontWeight.w700,
+                                  ),
+                                ),
+                                Text(
+                                  dreview.rewrite == 'T' ? '  (수정됨)' : '',
+                                  style: TextStyle(
+                                    color: Colors.grey[500],
+                                    fontSize: 12,
+                                  ),
+                                ),
+                              ],
                             ),
                           ],
                         ),
