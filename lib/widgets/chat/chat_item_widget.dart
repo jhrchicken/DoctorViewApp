@@ -41,14 +41,13 @@ class _ChatItemWidgetState extends State<ChatItemWidget> {
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20),
         child: Container(
+          width: double.infinity,
           padding: const EdgeInsets.symmetric(vertical: 15),
           decoration: const BoxDecoration(
-            color: Colors.white,    // 얘 없으면 여백 눌렀을 때 이동이 안댐;;;
             border: Border(
               bottom: BorderSide(color: border),
             ),
           ), 
-          width: double.infinity,
           child: Row(
             children: [
               const Icon(
@@ -67,7 +66,7 @@ class _ChatItemWidgetState extends State<ChatItemWidget> {
                       ),
                       const SizedBox(height: 3),
                       Container(
-                        constraints: const BoxConstraints(maxWidth: 250),
+                        constraints: const BoxConstraints(maxWidth: 230),
                         child: Text(
                           '내용입니다.내용입니다.내용입니다.내용입니다.내용입니다.내용입니다.내용입니다.내용입니다.내용입니다.',
                           style: TextStyle(fontSize: 14),
@@ -77,7 +76,7 @@ class _ChatItemWidgetState extends State<ChatItemWidget> {
                       ),
                     ],
                   ),
-                  const SizedBox(width: 15),
+                  const SizedBox(width: 35),
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.end,
                     children: [
