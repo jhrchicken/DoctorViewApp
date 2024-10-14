@@ -1,3 +1,4 @@
+import 'package:doctorviewapp/screens/hosp_doctor_list_screen.dart';
 import 'package:flutter/material.dart';
 
 class AddressSearchWidget extends StatefulWidget {
@@ -14,11 +15,11 @@ class _AddressSearchWidgetState extends State<AddressSearchWidget> {
   String? _selectedDistrict; // 선택된 시군구
   String? _selectedTown; // 선택된 읍면동
   // 광역시도 목록
-  List<String> cities = ['서울특별시', '부산', '대구', '인천', '광주', '대전', '울산'];
+  List<String> cities = ['서울특별시', '부산광역시', '대구', '인천', '광주', '대전', '울산'];
   // 광역시도에 따른 시군구 목록
   Map<String, List<String>> districts = {
     '서울특별시': ['강남구', '서초구', '강북구', '종로구'],
-    '부산': ['해운대구', '수영구', '사하구'],
+    '부산광역시': ['해운대구', '수영구', '사하구'],
     '대구': ['달서구', '수성구'],
     '인천': ['남동구', '연수구'],
     '광주': ['동구', '서구'],
@@ -36,42 +37,17 @@ class _AddressSearchWidgetState extends State<AddressSearchWidget> {
     '달서구': ['월성동', '상인동'],
   };
 
-  // 검색 버튼을 눌렀을 때 호출되는 함수
+  // 검색 함수
   void _searchAddress() {
     if (_selectedCity != null && _selectedDistrict != null && _selectedTown != null) {
-      // 선택된 주소를 처리하는 로직을 여기에 추가할 수 있습니다.
-      String fullAddress = '$_selectedCity $_selectedDistrict $_selectedTown';
-      showDialog(
-        context: context,
-        builder: (context) {
-          return AlertDialog(
-            title: const Text('선택한 주소'),
-            content: Text(fullAddress),
-            actions: [
-              TextButton(
-                onPressed: () => Navigator.pop(context),
-                child: const Text('확인'),
-              ),
-            ],
-          );
-        },
-      );
-    } else {
-      // 주소를 모두 선택하지 않았을 때 처리
-      showDialog(
-        context: context,
-        builder: (context) {
-          return AlertDialog(
-            title: const Text('에러'),
-            content: const Text('모든 항목을 선택해주세요.'),
-            actions: [
-              TextButton(
-                onPressed: () => Navigator.pop(context),
-                child: const Text('확인'),
-              ),
-            ],
-          );
-        },
+      String address = '$_selectedCity $_selectedDistrict $_selectedTown';
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => HospDoctorListScreen(
+            address: address,
+          ),
+        ),
       );
     }
   }
@@ -235,7 +211,7 @@ class _AddressSearchWidgetState extends State<AddressSearchWidget> {
                         setState(() {
                           _selectedTown = newValue;
                           if (_selectedTown != null) {
-                            _searchAddress(); // 동이 선택될 때 바로 함수 호출
+                            _searchAddress();
                           }
                         });
                       },

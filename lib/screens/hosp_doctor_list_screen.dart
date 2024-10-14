@@ -8,10 +8,12 @@ import 'package:provider/provider.dart';
 
 class HospDoctorListScreen extends StatefulWidget {
   final int tabIndex;
+  final String address;
 
   const HospDoctorListScreen({
     super.key,
     this.tabIndex = 0,
+    this.address = '',
   });
 
   @override
@@ -95,15 +97,31 @@ class _HospDoctorListScreenState extends State<HospDoctorListScreen> {
             Padding(
               padding: const EdgeInsets.all(20.0),
               child: ListView.builder(
-                itemCount: hospitalProvider.searchHosp(_searchWord).length,
+                itemCount: hospitalProvider.searchHosp(_searchWord).where((hospital) {
+                  // address가 빈 문자열이 아닐 경우 필터링
+                  if (widget.address.isNotEmpty) {
+                    return hospital.address == widget.address; // 주소가 일치하는 병원만 표시
+                  }
+                  return true; // 주소가 빈 문자열일 경우 모두 표시
+                }).toList().length,
                 itemBuilder: (context, index) {
-                  final hospital = hospitalProvider.searchHosp(_searchWord)[index];
+                  final hospital = hospitalProvider.searchHosp(_searchWord).where((hospital) {
+                    if (widget.address.isNotEmpty) {
+                      return hospital.address == widget.address;
+                    }
+                    return true;
+                  }).toList()[index]; // 필터링된 병원 리스트에서 아이템 선택
                   return Column(
                     children: [
                       HospitalItemWidget(
                         id: hospital.id,
                       ),
-                      if (index < hospitalProvider.searchHosp(_searchWord).length - 1)
+                      if (index < hospitalProvider.searchHosp(_searchWord).where((hospital) {
+                        if (widget.address.isNotEmpty) {
+                          return hospital.address == widget.address;
+                        }
+                        return true;
+                      }).toList().length - 1)
                         Divider(color: Colors.grey[100], thickness: 1.0),
                     ],
                   );
