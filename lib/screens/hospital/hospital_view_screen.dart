@@ -138,6 +138,7 @@ class _HospitalViewScreenState extends State<HospitalViewScreen> {
               ),
             ),
             const SizedBox(height: 15),
+            
             // 위치
             Padding(
               padding: const EdgeInsets.all(20.0),
