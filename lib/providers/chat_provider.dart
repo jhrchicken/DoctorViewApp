@@ -12,7 +12,7 @@ class ChatProvider extends ChangeNotifier {
       roomId: 'leehr-hospital1',
       message: '안녕하세요~',
       postdate: DateTime.now(),
-      read: 'F'
+      read: 'T'
     ),
     Chat(
       chatIdx: 2,
@@ -28,7 +28,7 @@ class ChatProvider extends ChangeNotifier {
       roomId: 'harim-hospital1',
       message: '상담할래요',
       postdate: DateTime.now(),
-      read: 'F'
+      read: 'T'
     ),
     Chat(
       chatIdx: 4,
@@ -36,7 +36,7 @@ class ChatProvider extends ChangeNotifier {
       roomId: 'harim-hospital1',
       message: '누구세요',
       postdate: DateTime.now(),
-      read: 'F'
+      read: 'T'
     ),
     Chat(
       chatIdx: 5,
@@ -52,7 +52,7 @@ class ChatProvider extends ChangeNotifier {
       roomId: 'harim-hospital2',
       message: '채팅을 보내볼게요',
       postdate: DateTime.now(),
-      read: 'F'
+      read: 'T'
     ),
     Chat(
       chatIdx: 7,
@@ -60,7 +60,7 @@ class ChatProvider extends ChangeNotifier {
       roomId: 'harim-hospital2',
       message: '또 보내볼게요',
       postdate: DateTime.now(),
-      read: 'F'
+      read: 'T'
     ),
     Chat(
       chatIdx: 8,
@@ -90,6 +90,12 @@ class ChatProvider extends ChangeNotifier {
   // 읽음으로 변경
   void updateChat(Chat chat) {
     chat.read = 'T';
+    notifyListeners();
+  }
+
+  // 채팅방 삭제
+  void deleteChat(String roomId) {
+    _chatList.removeWhere((chat) => chat.roomId == roomId);
     notifyListeners();
   }
 }

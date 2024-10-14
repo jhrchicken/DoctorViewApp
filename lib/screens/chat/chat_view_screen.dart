@@ -5,6 +5,7 @@ import 'package:doctorviewapp/models/member.dart';
 import 'package:doctorviewapp/providers/chat_provider.dart';
 import 'package:doctorviewapp/providers/hospital_provider.dart';
 import 'package:doctorviewapp/providers/member_provider.dart';
+import 'package:doctorviewapp/screens/chat/chat_list_screen.dart';
 import 'package:doctorviewapp/theme/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -82,6 +83,24 @@ class _ChatViewScreenState extends State<ChatViewScreen> {
           (loginMember!.id == userId) ? hospital!.name : user!.name,
           style: CustomTextStyles.appbarText,
         ),
+        actions: [
+          IconButton(
+            icon: const Icon(
+              Icons.delete_outline_rounded,
+              size: 26,
+            ),
+            color: Colors.red,
+            onPressed: (){
+              chatProvider.deleteChat(widget.roomId);
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const ChatListScreen(),
+                ),
+              );
+            },
+          ),
+        ],
       ),
 
       body: Column(
