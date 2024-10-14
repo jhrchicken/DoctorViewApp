@@ -40,7 +40,7 @@ class _ReserveItemState extends State<ReserveItem> {
         borderRadius: BorderRadius.circular(8),
       ),
       child: Padding(
-        padding: const EdgeInsets.only(left: 20, top: 20, right: 10, bottom: 20),
+        padding: const EdgeInsets.fromLTRB(20, 5, 0, 20),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children:[
@@ -55,9 +55,9 @@ class _ReserveItemState extends State<ReserveItem> {
                     Text(
                       reserve!.hospname,
                       style: const TextStyle(
-                        fontSize: 30,
+                        fontSize: 16,
                         letterSpacing: 0.1,
-                        fontWeight: FontWeight.w800,
+                        fontWeight: FontWeight.w700,
                       ),
                     ),
                     
@@ -77,7 +77,7 @@ class _ReserveItemState extends State<ReserveItem> {
                 ReserveItemOption(reserveIdx: widget.reserveIdx),
               ],
             ),
-            const SizedBox(height: 15),
+            const SizedBox(height: 8),
             ReserveCheckTextWidget(title: '의사', content: '${reserve.doctorname} 의사',),
             const SizedBox(height: 10),
             ReserveCheckTextWidget(title: '예약자', content: reserve.username),

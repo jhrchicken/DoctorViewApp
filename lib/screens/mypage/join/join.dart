@@ -18,30 +18,57 @@ class _JoinState extends State<Join> {
       appBar: Header('회원가입'), 
 
       // 회원가입 버튼
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-
-            // 병원 회원가입
-            JoinButton( 
-              context: context,
-              buttonText: '병원 회원가입',
-              emoji: '🏥',
-              nextPage: "/member/join/hosp.do",
-            ),
-
-            const SizedBox(height: 20,),
-
-            // 개인 회원가입
-            JoinButton( 
-              context: context,
-              buttonText: '개인 회원가입',
-              emoji: '😁',
-              nextPage: "/member/join/user.do",
-            )
-            
-          ],
+      body: Padding(
+        padding: const EdgeInsets.all(20),
+        child: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              // 개인 회원가입
+              Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    '개인 회원이라면?',
+                    style: TextStyle(
+                      color: Colors.grey[500],
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                  const SizedBox(height: 5),
+                  JoinButton( 
+                    context: context,
+                    buttonText: '일반 회원가입',
+                    emoji: '😁',
+                    nextPage: "/member/join/user.do",
+                  ),
+                ],
+              ),
+              
+              const SizedBox(height: 50),
+          
+              // 병원 회원가입
+              Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    '기업 회원이라면?',
+                    style: TextStyle(
+                      color: Colors.grey[500],
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                  const SizedBox(height: 5),
+                  JoinButton( 
+                    context: context,
+                    buttonText: '병원 회원가입',
+                    emoji: '🏥',
+                    nextPage: "/member/join/hosp.do",
+                  ),
+                ],
+              ),
+            ],
+          ),
         ),
       ),
     );
@@ -54,30 +81,27 @@ Widget JoinButton({
   required String emoji,
   required String nextPage,
 }) {
-  return SizedBox(
-    width: 250,
-    height: 200,
-    child: ElevatedButton(
-      onPressed: () {
-        Navigator.of(context).pushNamed(nextPage);
-      },
-      style: ElevatedButton.styleFrom(
-        backgroundColor: pointColor2,
-        foregroundColor: Colors.white,
-        textStyle: const TextStyle(fontWeight: FontWeight.w500, fontSize: 30),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(30),
-        ),
+  return ElevatedButton(
+    onPressed: () {
+      Navigator.of(context).pushNamed(nextPage);
+    },
+    style: ElevatedButton.styleFrom(
+      backgroundColor: pointColor2,
+      foregroundColor: Colors.white,
+      textStyle: const TextStyle(fontWeight: FontWeight.w500, fontSize: 18),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(20),
       ),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Text(emoji, style: const TextStyle(fontSize: 30)),
-          const SizedBox(height: 15),
-          Text(buttonText),
-        ],
-      ),
+      padding: const EdgeInsets.all(50),
+    ),
+    child: Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Text(emoji, style: const TextStyle(fontSize: 18)),
+        const SizedBox(width: 5),
+        Text(buttonText),
+      ],
     ),
   );
 }

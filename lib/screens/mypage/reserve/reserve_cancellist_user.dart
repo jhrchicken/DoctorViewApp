@@ -23,6 +23,7 @@ class _ReserveCancelListUserState extends State<ReserveCancelListUser> {
     return Scaffold(
       // 헤더
       appBar: Header('취소된 예약 확인'),
+      
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.all(20.0),
@@ -46,16 +47,32 @@ class _ReserveCancelListUserState extends State<ReserveCancelListUser> {
                           Positioned(
                             child: Container(
                               width: double.infinity,
-                              height: 175,
+                              height: 160,
                               decoration: BoxDecoration(
-                                color: Colors.grey.withOpacity(0.5),
+                                color: Colors.grey.withOpacity(0.8),
                                 borderRadius: BorderRadius.circular(8),
                               ),
                             ),
                           ),
-                        ],
+                          Positioned(
+                            top: 65,
+                            left: 0,
+                            right: 0,
+                            child: Container(
+                              width: double.infinity,
+                              height: 175,
+                              child: const Text(
+                                '취소된 예약',
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.w700,)
+                              ),
+                            ),
+                          ),
+                        ]
                       ),
-
                       if (index < reserveList.length - 1)
                         const SizedBox(height: 10),
                     ],
@@ -63,8 +80,6 @@ class _ReserveCancelListUserState extends State<ReserveCancelListUser> {
                 },
               ),
             ]
-
-
           ),
         ),
       ),

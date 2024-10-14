@@ -52,7 +52,7 @@ class _JoinUserState extends State<JoinUser> {
 
     return Scaffold(
       // 헤더
-      appBar: Header('유저회원가입'),
+      appBar: Header('일반 회원가입'),
 
       // 바디
       body:SingleChildScrollView(

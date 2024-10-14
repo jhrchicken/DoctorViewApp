@@ -33,6 +33,7 @@ class _ChatItemWidgetState extends State<ChatItemWidget> {
         );
       },
       child: Container(
+        decoration: BoxDecoration(color: Colors.white), // 얘 없으면 여백이 눌렀을 때 이동이 안댐;;;
         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
         width: double.infinity,
         child: Column(
