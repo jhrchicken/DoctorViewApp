@@ -163,21 +163,29 @@ class _MyReviewListScreenState extends State<MyReviewListScreen> {
                       ),
                     ),
                   )
-                : ListView(
-                    children: [
-                      ...likeHreviewList.map((review) => Column(
-                        children: [
-                          MyhreviewItemWidget(reviewIdx: review.reviewIdx),
-                          Divider(color: Colors.grey[100], thickness: 1.0),
-                        ],
-                      )),
-                      ...likeDreviewList.map((review) => Column(
-                        children: [
-                          MydreviewItemWidget(reviewIdx: review.reviewIdx),
-                          Divider(color: Colors.grey[100], thickness: 1.0),
-                        ],
-                      )),
-                    ],
+                : ListView.builder(
+                    itemCount: likeHreviewList.length + likeDreviewList.length,
+                    itemBuilder: (context, index) {
+                      if (index < likeHreviewList.length) {
+                        final review = likeHreviewList[index];
+                        return Column(
+                          children: [
+                            MyhreviewItemWidget(reviewIdx: review.reviewIdx),
+                            if (index < likeHreviewList.length + likeDreviewList.length - 1)
+                              Divider(color: Colors.grey[100], thickness: 1.0),
+                          ],
+                        );
+                      } else {
+                        final review = likeDreviewList[index - likeHreviewList.length];
+                        return Column(
+                          children: [
+                            MydreviewItemWidget(reviewIdx: review.reviewIdx),
+                            if (index < likeHreviewList.length + likeDreviewList.length - 1)
+                              Divider(color: Colors.grey[100], thickness: 1.0),
+                          ],
+                        );
+                      }
+                    },
                   ),
             ),
           ],

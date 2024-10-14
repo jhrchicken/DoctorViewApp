@@ -11,7 +11,6 @@ import 'package:doctorviewapp/providers/hashtag_provider.dart';
 import 'package:doctorviewapp/providers/likes_provider.dart';
 import 'package:doctorviewapp/providers/member_provider.dart';
 import 'package:doctorviewapp/screens/doctor/dreview_view_screen.dart';
-import 'package:doctorviewapp/theme/colors.dart';
 import 'package:doctorviewapp/widgets/common/grey_button.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
