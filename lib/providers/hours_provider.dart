@@ -92,7 +92,7 @@ class HoursProvider extends ChangeNotifier {
       endBreak: '00:00',
       deadLine: '00:00',
       hosp_ref: 'hospital1',
-      open_week: 'F',
+      open_week: 'T',
       weekend: 'F',
       night: 'F'
       ),
@@ -105,6 +105,16 @@ class HoursProvider extends ChangeNotifier {
   List<Hours> getHospHours(String hospRef) {
     return _hoursList.where((hours) => hours.hosp_ref == hospRef && hours.open_week == 'T').toList();
   }
+
+  // 근무 요일 반환
+  List<String> getHospWeeks(String hospRef) {
+    return _hoursList
+        .where((hours) => hours.hosp_ref == hospRef && hours.open_week == 'T')
+        .map((hours) => hours.week)
+        .toList();
+  }
+
+
 
   // 모든 시간 반환 (디버깅용)
   List<Hours> allHospHours(String hospRef) {

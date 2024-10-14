@@ -21,33 +21,68 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:doctorviewapp/screens/hosp_doctor_list_screen.dart';
 import 'widgets/common/bottom_navigation_bar.dart';
+// 예약하기 캘린더 한글처리
+import 'package:intl/date_symbol_data_local.dart';
 
 void main() {
-  runApp(
-    MultiProvider(
-      providers: [
-        ChangeNotifierProvider(create: (context) => DoctorProvider()),
-        ChangeNotifierProvider(create: (context) => DreviewProvider()),
-        ChangeNotifierProvider(create: (context) => DreplyProvider()),
-        ChangeNotifierProvider(create: (context) => HospitalProvider()),
-        ChangeNotifierProvider(create: (context) => HreviewProvider()),
-        ChangeNotifierProvider(create: (context) => HreplyProvider()),
-        ChangeNotifierProvider(create: (context) => LikesProvider()),
-        ChangeNotifierProvider(create: (context) => HashtagProvider()),
-        //회원관리
-        ChangeNotifierProvider(create: (context) => MemberProvider()),
-        ChangeNotifierProvider(create: (context) => HoursProvider()),
-        ChangeNotifierProvider(create: (context) => DetailProvider()),
-        // 게시판
-        ChangeNotifierProvider(create: (context) => BoardProvider()),
-        ChangeNotifierProvider(create: (context) => CommentProvider()),
-        ChangeNotifierProvider(create: (context) => ReportProvider()),
-        //예약
-        ChangeNotifierProvider(create: (context) => ReserveProvider()),
-      ],
-      child: const MyApp(),
-    ),
-  );
+
+  // 캘린더 한글처리를 위한 intl 패키지 초기화포함
+  initializeDateFormatting().then((_) {
+    runApp(
+      MultiProvider(
+        providers: [
+          ChangeNotifierProvider(create: (context) => DoctorProvider()),
+          ChangeNotifierProvider(create: (context) => DreviewProvider()),
+          ChangeNotifierProvider(create: (context) => DreplyProvider()),
+          ChangeNotifierProvider(create: (context) => HospitalProvider()),
+          ChangeNotifierProvider(create: (context) => HreviewProvider()),
+          ChangeNotifierProvider(create: (context) => HreplyProvider()),
+          ChangeNotifierProvider(create: (context) => LikesProvider()),
+          ChangeNotifierProvider(create: (context) => HashtagProvider()),
+          // 회원 관리
+          ChangeNotifierProvider(create: (context) => MemberProvider()),
+          ChangeNotifierProvider(create: (context) => HoursProvider()),
+          ChangeNotifierProvider(create: (context) => DetailProvider()),
+          // 게시판
+          ChangeNotifierProvider(create: (context) => BoardProvider()),
+          ChangeNotifierProvider(create: (context) => CommentProvider()),
+          ChangeNotifierProvider(create: (context) => ReportProvider()),
+          // 예약
+          ChangeNotifierProvider(create: (context) => ReserveProvider()),
+        ],
+        child: const MyApp(),
+      ),
+    );
+  });
+  
+  // 원본
+  // runApp(
+  //   MultiProvider(
+  //     providers: [
+  //       ChangeNotifierProvider(create: (context) => DoctorProvider()),
+  //       ChangeNotifierProvider(create: (context) => DreviewProvider()),
+  //       ChangeNotifierProvider(create: (context) => DreplyProvider()),
+  //       ChangeNotifierProvider(create: (context) => HospitalProvider()),
+  //       ChangeNotifierProvider(create: (context) => HreviewProvider()),
+  //       ChangeNotifierProvider(create: (context) => HreplyProvider()),
+  //       ChangeNotifierProvider(create: (context) => LikesProvider()),
+  //       ChangeNotifierProvider(create: (context) => HashtagProvider()),
+  //       //회원관리
+  //       ChangeNotifierProvider(create: (context) => MemberProvider()),
+  //       ChangeNotifierProvider(create: (context) => HoursProvider()),
+  //       ChangeNotifierProvider(create: (context) => DetailProvider()),
+  //       // 게시판
+  //       ChangeNotifierProvider(create: (context) => BoardProvider()),
+  //       ChangeNotifierProvider(create: (context) => CommentProvider()),
+  //       ChangeNotifierProvider(create: (context) => ReportProvider()),
+  //       //예약
+  //       ChangeNotifierProvider(create: (context) => ReserveProvider()),
+  //     ],
+  //     child: const MyApp(),
+  //   ),
+  // );
+
+
 }
 
 class MyApp extends StatelessWidget {
