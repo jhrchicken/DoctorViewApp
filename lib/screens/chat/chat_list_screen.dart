@@ -81,7 +81,7 @@ class _ChatListScreenState extends State<ChatListScreen> {
                   shrinkWrap: true,
                   physics: const NeverScrollableScrollPhysics(),
                   // itemCount: chatList.length,
-                  itemCount: 5,
+                  itemCount: 12,
                   itemBuilder: (context, index) {
                     return const Column(
                       children: [

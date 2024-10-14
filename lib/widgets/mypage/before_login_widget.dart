@@ -18,7 +18,7 @@ class _BeforeLoginWidgetState extends State<BeforeLoginWidget> {
         borderRadius: BorderRadius.circular(30),
       ),
       child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 40),
+        padding: const EdgeInsets.fromLTRB(30, 40, 30, 25),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
@@ -32,7 +32,7 @@ class _BeforeLoginWidgetState extends State<BeforeLoginWidget> {
               ),
             ),
 
-            const SizedBox(height: 20),
+            const SizedBox(height: 40),
 
             SizedBox(
               child: Row(

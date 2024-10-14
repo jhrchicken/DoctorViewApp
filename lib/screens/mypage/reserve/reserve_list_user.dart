@@ -34,16 +34,32 @@ class _ReserveListUserState extends State<ReserveListUser> {
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              /******** 수정: 디자인 ********/
               if (reserveProvider.listReserve(loginMember.id) == null) ...[
-                const Text('예약내용이 없습니다'),
+                Center(
+                  child: Padding(
+                    padding: const EdgeInsets.all(20),
+                    child: Text(
+                      '예약 내용이 없습니다',
+                      style: TextStyle(
+                        fontSize: 16,
+                        color: Colors.grey[500],
+                      ),
+                    ),
+                  ),
+                ),
               ]
               else ... [
                 // 지난 예약
                 if (reserveProvider.listReserve(loginMember.id) != null) ...[
                   PrimaryButton(
                   text: '지난 예약 보기', 
-                  onPressed: (){ Navigator.of(context).push(MaterialPageRoute(builder: (context) => const ReserveNearlistUser()));}, 
+                  onPressed: () {
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (context) => const ReserveNearlistUser()
+                        )
+                      );
+                    }, 
                   color: pointColor2),
                 ]
                 else ...[
@@ -53,7 +69,13 @@ class _ReserveListUserState extends State<ReserveListUser> {
                 if (reserveProvider.cancelReserve(loginMember.id) != null) ...[
                   PrimaryButton(
                   text: '취소된 예약 보기', 
-                  onPressed: (){ Navigator.of(context).push(MaterialPageRoute(builder: (context) => const ReserveCancelListUser()));}, 
+                  onPressed: () {
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (context) => const ReserveCancelListUser()
+                      )
+                    );
+                  }, 
                   color: pointColor2),
                 ]
                 else ...[

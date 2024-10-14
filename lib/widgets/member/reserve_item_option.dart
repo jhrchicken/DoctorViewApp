@@ -50,36 +50,32 @@ class _ReserveItemOptionState extends State<ReserveItemOption> {
   }
 
     
-    return 
-                PopupMenuButton<int>(
-                  onSelected: (value) {
-                    // 메뉴 항목 선택 시 동작 설정
-                    switch (value) {
-                      case 1:
-                         showConfirmationDialog(context); // 다이얼로그 호출
-                        break;
-                      case 2:
-                        print('메모 추가');
-                        break;
-                    }
-                  },
-                  itemBuilder: (BuildContext context) {
-                    return [
-                      const PopupMenuItem(
-                        value: 1,
-                        child: Text('예약 취소'),
-                      ),
-                      const PopupMenuItem(
-                        value: 2,
-                        child: Text('메모 추가'),
-                      ),
-                    ];
-                  },
-                  icon: Icon(Icons.more_vert, color: Colors.grey[500],), 
-                  color:Colors.grey[100]
-                );
-
-
-
+    return PopupMenuButton<int>(
+      onSelected: (value) {
+        // 메뉴 항목 선택 시 동작 설정
+        switch (value) {
+          case 1:
+              showConfirmationDialog(context); // 다이얼로그 호출
+            break;
+          case 2:
+            print('메모 추가');
+            break;
+        }
+      },
+      itemBuilder: (BuildContext context) {
+        return [
+          const PopupMenuItem(
+            value: 1,
+            child: Text('예약 취소'),
+          ),
+          const PopupMenuItem(
+            value: 2,
+            child: Text('메모 추가'),
+          ),
+        ];
+      },
+      icon: Icon(Icons.more_vert, color: Colors.grey[500],), 
+      color:Colors.grey[100]
+    );
   }
 }
