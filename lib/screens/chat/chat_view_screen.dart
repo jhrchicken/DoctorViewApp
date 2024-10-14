@@ -8,6 +8,7 @@ import 'package:doctorviewapp/providers/member_provider.dart';
 import 'package:doctorviewapp/theme/colors.dart';
 import 'package:doctorviewapp/widgets/chat/date_line.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 class ChatViewScreen extends StatefulWidget {
@@ -23,15 +24,11 @@ class ChatViewScreen extends StatefulWidget {
 }
 
 class _ChatViewScreenState extends State<ChatViewScreen> {
+
   final TextEditingController _messageController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
-    // String nowTime = DateTime.now().toString().split(' ')[1];
-    // String time = nowTime.split('.')[0];
-    // String hour = time.split(':')[0];
-    // String minute = time.split(':')[1];
-
     final memberProvider = Provider.of<MemberProvider>(context);
     final chatProvider = Provider.of<ChatProvider>(context);
     final hospitalProvider = Provider.of<HospitalProvider>(context);
@@ -43,11 +40,7 @@ class _ChatViewScreenState extends State<ChatViewScreen> {
     Hospital? hospital = hospitalProvider.selectHosp(hospId);
     Member? user = memberProvider.selectMember(userId);
 
-    DateTime now = DateTime.now();
-
     List<Chat> chatList = chatProvider.listChat(widget.roomId);
-
-
 
     return Scaffold(
       resizeToAvoidBottomInset: true,
@@ -59,12 +52,6 @@ class _ChatViewScreenState extends State<ChatViewScreen> {
           style: CustomTextStyles.appbarText,
         ),
       ),
-      
-
-
-
-
-
 
       body: Column(
         children: [
@@ -72,12 +59,13 @@ class _ChatViewScreenState extends State<ChatViewScreen> {
             child: SingleChildScrollView(
               child: Column(
                 children: [
+                  Divider(
+                    color: Colors.grey[300],
+                  ),
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 10),
                     child: Column(
                       children: [
-                        // 날짜
-                        const DateLine(),
                         const SizedBox(height: 10),
                         Container(
                           width: double.infinity,
@@ -90,9 +78,35 @@ class _ChatViewScreenState extends State<ChatViewScreen> {
                             physics: const NeverScrollableScrollPhysics(),
                             itemCount: chatList.length,
                             itemBuilder: (context, index) {
-                              final chat = chatList[index];
+                            final chat = chatList[index];
+                            final chatDate = DateFormat('yyyy년 MM월 dd일').format(chat.postdate);
+                            String? preChatDate;
+                            if (index > 0) {
+                              preChatDate = DateFormat('yyyy년 MM월 dd일').format(chatList[index - 1].postdate);
+                            }
                               return Column(
                                 children: [
+                                  // 날짜 구분선 추가
+                                  if (chatDate != preChatDate) ...[
+                                    Padding(
+                                      padding: const EdgeInsets.symmetric(vertical: 10),
+                                      child: Container(
+                                        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5), // 내부 여백
+                                        decoration: BoxDecoration(
+                                          color: Colors.grey[300],
+                                          borderRadius: BorderRadius.circular(15),
+                                          border: Border.all(color: Colors.white),
+                                        ),
+                                        child: Text(
+                                          chatDate,
+                                          style: const TextStyle(
+                                            fontSize: 12,
+                                            color: Colors.grey
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ],
                                   (chat.memberRef == loginMember.id)
                                     // 보낸 메세지
                                     ? Align(
@@ -103,10 +117,9 @@ class _ChatViewScreenState extends State<ChatViewScreen> {
                                           children: [
                                             Container(
                                               margin: const EdgeInsets.only(bottom: 8),
-                                              child: const Text(
-                                                // '$hour:$minute',
-                                                '시간 출력할게요',
-                                                style: TextStyle(fontSize: 10),
+                                              child: Text(
+                                                '${chat.postdate.hour}:${chat.postdate.minute}',
+                                                style: const TextStyle(fontSize: 10),
                                               ),
                                             ),
                                             Container(
@@ -114,11 +127,11 @@ class _ChatViewScreenState extends State<ChatViewScreen> {
                                               margin: const EdgeInsets.all(5),
                                               padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 10),
                                               decoration: BoxDecoration(
-                                                color: Colors.grey[300],
-                                                borderRadius: BorderRadius.circular(15),
+                                                color: pointColor1,
+                                                borderRadius: BorderRadius.circular(10),
                                               ),
-                                              child: const Text(
-                                                '안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요',
+                                              child: Text(
+                                                chat.message,
                                                 softWrap: true,
                                               ),
                                             ),
@@ -145,17 +158,16 @@ class _ChatViewScreenState extends State<ChatViewScreen> {
                                                 border: Border.all(color: border),
                                                 borderRadius: BorderRadius.circular(15),
                                               ),
-                                              child: const Text(
-                                                '누구세요',
+                                              child: Text(
+                                                chat.message,
                                                 softWrap: true,
                                               ),
                                             ),
                                             Container(
                                               margin: const EdgeInsets.only(bottom: 8),
-                                              child: const Text(
-                                                // '$hour:$minute',
-                                                '시간',
-                                                style: TextStyle(fontSize: 10),
+                                              child: Text(
+                                                '${chat.postdate.hour}:${chat.postdate.minute}',
+                                                style: const TextStyle(fontSize: 10),
                                               ),
                                             ),
                                           ],
