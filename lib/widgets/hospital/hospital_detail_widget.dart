@@ -348,9 +348,9 @@ class _HospitalDetailWidgetState extends State<HospitalDetailWidget> {
           height: 20,
         ),
         PrimaryButtonBlack(
-          text: '예약',
+          text: hospital.system == 'T' ? '예약' : '예약 불가',
           onPressed: () {
-            if (hospital.address == 'T') {
+            if (hospital.system == 'T') {
               Navigator.push(
                 context,
                 MaterialPageRoute(

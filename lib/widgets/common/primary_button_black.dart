@@ -39,8 +39,8 @@ class _PrimaryButtonBlackState extends State<PrimaryButtonBlack> {
         ),
         child: Text(
           widget.text,
-          style: const TextStyle(
-            color: Colors.black,
+          style: TextStyle(
+            color: Colors.grey[900],
             fontSize: 14,
             fontWeight: FontWeight.w700
           ),
