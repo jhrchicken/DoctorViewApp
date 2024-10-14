@@ -142,6 +142,8 @@ class _ReserveProceedScreenState extends State<ReserveProceedScreen> {
                 ReserveHoursInfoWidget(hospRef: widget.hospRef, onHoursSelected: updateHours),
                 const ReserveDivider(),
 
+                // ReserveHoursInfoWidget(hospRef: widget.hospRef, onHoursSelected: onHoursSelected)
+
                 // 의사
                 ReserveDoctorInfoWidget(hospRef: widget.hospRef, onDoctorSelected: updateDoctorName),
                 const ReserveDivider(),

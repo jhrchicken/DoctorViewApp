@@ -1,5 +1,7 @@
 import 'package:doctorviewapp/models/hours.dart';
+import 'package:doctorviewapp/models/reserve.dart';
 import 'package:doctorviewapp/providers/hours_provider.dart';
+import 'package:doctorviewapp/providers/reserve_provider.dart';
 import 'package:doctorviewapp/widgets/reserve/doctor_radio_button.dart';
 import 'package:doctorviewapp/widgets/reserve/reserve_timeSlots.dart';
 import 'package:flutter/material.dart';
@@ -26,6 +28,11 @@ class _ReserveHoursInfoWidgetState extends State<ReserveHoursInfoWidget> {
   Widget build(BuildContext context) {
     final hoursProvider = Provider.of<HoursProvider>(context);
     List<Hours> hoursList = hoursProvider.getHospHours(widget.hospRef);
+
+    final reserveProvider = Provider.of<ReserveProvider>(context);
+    List<Reserve>? reserveList = reserveProvider.listReserve(widget.hospRef);
+
+
     
     List<String> slots = getTimeSlots(
       hoursList[0].startTime, 
@@ -69,9 +76,9 @@ class _ReserveHoursInfoWidgetState extends State<ReserveHoursInfoWidget> {
         Row(
           mainAxisAlignment: (i + 3 >= slots.length) ? MainAxisAlignment.start : MainAxisAlignment.spaceEvenly, 
           children: [
-            _buildDoctorCard(slots[i]),
-            if (i + 1 < slots.length) _buildDoctorCard(slots[i + 1]), 
-            if (i + 2 < slots.length) _buildDoctorCard(slots[i + 2]),
+            _buildHoursCard(slots[i]),
+            if (i + 1 < slots.length) _buildHoursCard(slots[i + 1]), 
+            if (i + 2 < slots.length) _buildHoursCard(slots[i + 2]),
           ],
         ),
       );
@@ -79,7 +86,7 @@ class _ReserveHoursInfoWidgetState extends State<ReserveHoursInfoWidget> {
     return rows;
   }
 
-  Widget _buildDoctorCard(String slot) {
+  Widget _buildHoursCard(String slot) {
     return SizedBox(
       width: MediaQuery.of(context).size.width / 3 - 20, 
       child: Container(
