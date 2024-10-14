@@ -86,27 +86,26 @@ class _ChatViewScreenState extends State<ChatViewScreen> {
                             }
                               return Column(
                                 children: [
-                                  // 날짜 구분선 추가
-                                  if (chatDate != preChatDate) ...[
+                                  // 날짜 구분선
+                                  (chatDate != preChatDate) ?
                                     Padding(
                                       padding: const EdgeInsets.symmetric(vertical: 10),
                                       child: Container(
                                         padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5), // 내부 여백
                                         decoration: BoxDecoration(
-                                          color: Colors.grey[300],
+                                          color: Colors.grey[200],
                                           borderRadius: BorderRadius.circular(15),
                                           border: Border.all(color: Colors.white),
                                         ),
                                         child: Text(
                                           chatDate,
-                                          style: const TextStyle(
+                                          style: TextStyle(
                                             fontSize: 12,
-                                            color: Colors.grey
+                                            color: Colors.grey[700],
                                           ),
                                         ),
                                       ),
-                                    ),
-                                  ],
+                                    ) : const SizedBox.shrink(),
                                   (chat.memberRef == loginMember.id)
                                     // 보낸 메세지
                                     ? Align(
@@ -156,7 +155,7 @@ class _ChatViewScreenState extends State<ChatViewScreen> {
                                               decoration: BoxDecoration(
                                                 color: Colors.white,
                                                 border: Border.all(color: border),
-                                                borderRadius: BorderRadius.circular(15),
+                                                borderRadius: BorderRadius.circular(10),
                                               ),
                                               child: Text(
                                                 chat.message,
