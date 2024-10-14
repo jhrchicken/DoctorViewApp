@@ -35,7 +35,7 @@ class InputField extends StatefulWidget {
 }
 
 class _InputFieldState extends State<InputField> {
-  final _formFieldKey = GlobalKey<FormFieldState>(); // 추가됨^^
+  final _formFieldKey = GlobalKey<FormFieldState>();
 
   @override
   Widget build(BuildContext context) {
@@ -43,8 +43,8 @@ class _InputFieldState extends State<InputField> {
       width: widget.width ?? 300,
       child: TextFormField(
         readOnly: widget.readOnly,
-        key: _formFieldKey, // 추가됨^^
-        focusNode: widget.focusNode ?? FocusNode(), // focusNode가 없으면 기본 FocusNode 사용
+        key: _formFieldKey,
+        focusNode: widget.focusNode ?? FocusNode(),
         controller: widget.controller, 
         textInputAction: widget.textInputAction, 
         obscureText: widget.obscureText, 
@@ -54,8 +54,8 @@ class _InputFieldState extends State<InputField> {
             _formFieldKey.currentState?.validate(); 
           });
 
-          widget.onChanged?.call(value); // 전달된 onChanged 함수 호출
-        }, // 추가됨^^
+          widget.onChanged?.call(value);
+        },
         validator: widget.validator, 
         decoration: InputDecoration(
           labelText: widget.labelText, 
@@ -66,8 +66,7 @@ class _InputFieldState extends State<InputField> {
             height: 0,
             letterSpacing: -0.40,
           ),
-          border: 
-          /********* 테두리 디자인 ********/
+        border: 
           const OutlineInputBorder(
             borderSide: BorderSide(color: Color.fromARGB(255, 135, 135, 135), width: 1.0),
           ),
