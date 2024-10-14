@@ -25,7 +25,7 @@ class _HomeScreenState extends State<HomeScreen> {
           children: [
             // 로고
             Container(
-              padding: const EdgeInsets.fromLTRB(100, 50, 100, 0),
+              padding: const EdgeInsets.fromLTRB(85, 50, 100, 0),
               child: Image.asset(
                 'assets/images/logo.png',
                 height: 130,
