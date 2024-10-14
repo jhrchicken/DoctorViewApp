@@ -212,7 +212,7 @@ class _HospitalDetailWidgetState extends State<HospitalDetailWidget> {
         const SizedBox(
           height: 10,
         ),
-        // 야간진료/휴일 진료 표시
+        // 야간진료/휴일진료 PCR검사 표시
         Row(
           children: [
             SmallButton(
@@ -228,6 +228,15 @@ class _HospitalDetailWidgetState extends State<HospitalDetailWidget> {
               text: '휴일 진료',
               fontColor: today.weekend == 'T' ? pointColor2 : Colors.grey[500]!,
               backgroundColor: today.weekend == 'T' ? Colors.blue[50]! : Colors.grey[200]!,
+              onPressed: () {},
+            ),
+            const SizedBox(
+              width: 5,
+            ),
+            SmallButton(
+              text: 'PCR검사',
+              fontColor: hospital.pcr == 'T' ? pointColor2 : Colors.grey[500]!,
+              backgroundColor: hospital.pcr == 'T' ? Colors.blue[50]! : Colors.grey[200]!,
               onPressed: () {},
             ),
           ],

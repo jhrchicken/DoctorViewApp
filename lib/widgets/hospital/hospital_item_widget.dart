@@ -270,6 +270,15 @@ class _HospitalItemWidgetState extends State<HospitalItemWidget> {
                       backgroundColor: today.weekend == 'T' ? Colors.blue[50]! : Colors.grey[200]!,
                       onPressed: () {},
                     ),
+                    const SizedBox(
+                      width: 5,
+                    ),
+                    SmallButton(
+                      text: 'PCR검사',
+                      fontColor: hospital.pcr == 'T' ? pointColor2 : Colors.grey[500]!,
+                      backgroundColor: hospital.pcr == 'T' ? Colors.blue[50]! : Colors.grey[200]!,
+                      onPressed: () {},
+                    ),
                   ],
                 )
               ],
