@@ -47,6 +47,16 @@ class _ReserveDateAndHoursWidgetState extends State<ReserveDateAndHoursWidget> {
     final hoursProvider = Provider.of<HoursProvider>(context);
     List<Hours> hoursList = hoursProvider.getHospHours(widget.hospRef);
 
+    final reserveProvider = Provider.of<ReserveProvider>(context);
+    List<Reserve> reserveList = reserveProvider.nearReserve(widget.hospRef);
+
+    // 병원의 진행중인 예약목록 중 사용자가 선택한 날짜와 동일한 예약목록 필터링
+    List<Reserve> selectDayReserve = reserveList.where((reserve) {
+      return isSameDay(reserve.postdate, _selectedDay); 
+    }).toList();
+
+
+
     List<String> slots = getTimeSlots(
       hoursList[0].startTime,
       hoursList[0].deadLine,
@@ -57,8 +67,16 @@ class _ReserveDateAndHoursWidgetState extends State<ReserveDateAndHoursWidget> {
     return Column(
       children: [
         _buildDateSelector(),
-        const SizedBox(height: 10),
-        _buildHoursSelector(slots),
+        Divider(
+          color: Colors.grey[300],
+          thickness: 1.0,
+        ),
+        const SizedBox(height: 5),
+        _buildHoursSelector(slots, selectDayReserve),
+        Divider(
+          color: Colors.grey[300],
+          thickness: 1.0,
+        ),
         const SizedBox(height: 5),
       ],
     );
@@ -103,6 +121,7 @@ class _ReserveDateAndHoursWidgetState extends State<ReserveDateAndHoursWidget> {
         }).contains(true);
       },
       onDaySelected: (selectedDay, focusedDay) {
+        print(selectedDay);
         setState(() {
           _selectedDay = selectedDay;
         });
@@ -114,35 +133,10 @@ class _ReserveDateAndHoursWidgetState extends State<ReserveDateAndHoursWidget> {
     );
   }
 
-  CalendarStyle _calendarStyle() {
-    return const CalendarStyle(
-      selectedDecoration: BoxDecoration(
-        color: Colors.blue, // pointColor2로 변경
-        shape: BoxShape.circle,
-      ),
-      todayDecoration: BoxDecoration(),
-      todayTextStyle: TextStyle(
-        color: Colors.black,
-      ),
-    );
-  }
+  Widget _buildHoursSelector(List<String> slots, List<Reserve> selectDayReserve) {
 
-  HeaderStyle _headerStyle() {
-    return HeaderStyle(
-      titleTextStyle: TextStyle(
-        color: Colors.grey[900],
-        fontSize: 25,
-        fontWeight: FontWeight.bold,
-      ),
-      decoration: const BoxDecoration(
-        color: Colors.white,
-      ),
-      formatButtonVisible: false,
-      titleCentered: true,
-    );
-  }
 
-  Widget _buildHoursSelector(List<String> slots) {
+
     return ExpansionTile(
       shape: const Border(),
       leading: Icon(
@@ -163,23 +157,23 @@ class _ReserveDateAndHoursWidgetState extends State<ReserveDateAndHoursWidget> {
       children: [
         const SizedBox(height: 20),
         Column(
-          children: _buildRows(slots),
+          children: _buildRows(slots, selectDayReserve),
         ),
         const SizedBox(height: 5),
       ],
     );
   }
 
-  List<Widget> _buildRows(List<String> slots) {
+  List<Widget> _buildRows(List<String> slots, List<Reserve> selectDayReserve) {
     List<Widget> rows = [];
     for (int i = 0; i < slots.length; i += 3) {
       rows.add(
         Row(
           mainAxisAlignment: (i + 3 >= slots.length) ? MainAxisAlignment.start : MainAxisAlignment.spaceEvenly,
           children: [
-            _buildHoursCard(slots[i]),
-            if (i + 1 < slots.length) _buildHoursCard(slots[i + 1]),
-            if (i + 2 < slots.length) _buildHoursCard(slots[i + 2]),
+            _buildHoursCard(slots[i], selectDayReserve),
+            if (i + 1 < slots.length) _buildHoursCard(slots[i + 1], selectDayReserve),
+            if (i + 2 < slots.length) _buildHoursCard(slots[i + 2], selectDayReserve),
           ],
         ),
       );
@@ -187,13 +181,17 @@ class _ReserveDateAndHoursWidgetState extends State<ReserveDateAndHoursWidget> {
     return rows;
   }
 
-  Widget _buildHoursCard(String slot) {
+  Widget _buildHoursCard(String slot, List<Reserve> selectDayReserve) {
+
+    // 해당 시간에 예약이 있는지 확인
+    bool isReserved = selectDayReserve.any((reserve) => reserve.posttime == slot);
+    
     return SizedBox(
       width: MediaQuery.of(context).size.width / 3 - 20,
       child: Container(
         margin: const EdgeInsets.symmetric(vertical: 5),
         decoration: BoxDecoration(
-          color: Colors.grey[100],
+          color: isReserved ? Colors.grey[300] : Colors.grey[100], // 예약된 시간은 더 어두운 색으로
           borderRadius: BorderRadius.circular(8),
         ),
         child: Padding(
@@ -205,14 +203,16 @@ class _ReserveDateAndHoursWidgetState extends State<ReserveDateAndHoursWidget> {
                 groupValue: selectedHours ?? 'noselect',
                 value: slot,
                 title: slot,
-                onChanged: (String? value) {
-                  setState(() {
-                    selectedHours = value;
-                  });
-                  if (value != null) {
-                    widget.onHoursSelected(value); // 선택된 시간 전달
-                  }
-                },
+                onChanged: isReserved
+                    ? (value) {}
+                    : (String? value) {
+                        setState(() {
+                          selectedHours = value;
+                        });
+                        if (value != null) {
+                          widget.onHoursSelected(value); // 선택된 시간 전달
+                        }
+                      },
               ),
             ],
           ),
@@ -220,4 +220,35 @@ class _ReserveDateAndHoursWidgetState extends State<ReserveDateAndHoursWidget> {
       ),
     );
   }
+
+
+// 캘린더 스타일
+CalendarStyle _calendarStyle() {
+  return const CalendarStyle(
+    selectedDecoration: BoxDecoration(
+      color: Colors.blue, // pointColor2로 변경
+      shape: BoxShape.circle,
+    ),
+    todayDecoration: BoxDecoration(),
+    todayTextStyle: TextStyle(
+      color: Colors.black,
+    ),
+  );
+}
+HeaderStyle _headerStyle() {
+  return HeaderStyle(
+    titleTextStyle: TextStyle(
+      color: Colors.grey[900],
+      fontSize: 25,
+      fontWeight: FontWeight.bold,
+    ),
+    decoration: const BoxDecoration(
+      color: Colors.white,
+    ),
+    formatButtonVisible: false,
+    titleCentered: true,
+  );
+}
+
+
 }
