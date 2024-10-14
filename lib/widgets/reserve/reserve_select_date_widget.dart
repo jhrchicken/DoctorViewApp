@@ -1,12 +1,5 @@
-import 'package:doctorviewapp/header.dart';
-import 'package:doctorviewapp/models/doctor.dart';
-import 'package:doctorviewapp/models/hours.dart';
-import 'package:doctorviewapp/models/member.dart';
-import 'package:doctorviewapp/providers/doctor_provider.dart';
 import 'package:doctorviewapp/providers/hours_provider.dart';
 import 'package:doctorviewapp/theme/colors.dart';
-import 'package:doctorviewapp/widgets/reserve/doctor_radio_button.dart';
-import 'package:doctorviewapp/widgets/reserve/reserve_timeSlots.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:table_calendar/table_calendar.dart';
@@ -74,9 +67,12 @@ class _ReserveSelectDateWidgetState extends State<ReserveSelectDateWidget> {
     // 3개월 후 날짜
     DateTime lastRes = DateTime(DateTime.now().year, DateTime.now().month + 3, DateTime.now().day); 
 
+    // 오늘날짜 
+    DateTime today = DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day);
+
     return TableCalendar(
       focusedDay: _selectedDay,
-      firstDay: DateTime.now(),
+      firstDay: today,
       lastDay: lastRes,
       selectedDayPredicate: (day) => isSameDay(day, _selectedDay),
       enabledDayPredicate: (day) {
@@ -100,7 +96,7 @@ class _ReserveSelectDateWidgetState extends State<ReserveSelectDateWidget> {
     );
   }
 
-  // 캘린더 스타일
+  // 캘린더 디자인
   CalendarStyle _calendarStyle() {
     return const CalendarStyle(
       selectedDecoration: BoxDecoration(

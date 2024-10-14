@@ -216,22 +216,22 @@ class _MyHomePageState extends State<MyHomePage> {
                   //     child: const Text('회원목록'),
                   //   ),
                   // ),
-                  // SizedBox(
-                  //   width: 200,
-                  //   height: 100,
-                  //   child: ElevatedButton(
-                  //     onPressed: () {
-                  //       Navigator.of(context).pushNamed("/member/listReserve.do");
-                  //     },
-                  //     style: ElevatedButton.styleFrom(
-                  //       textStyle: const TextStyle(fontWeight: FontWeight.w500, fontSize: 30.0),
-                  //       shape: RoundedRectangleBorder(
-                  //         borderRadius: BorderRadius.circular(30),
-                  //       ),
-                  //     ),
-                  //     child: const Text('예약목록'),
-                  //   ),
-                  // ),
+                  SizedBox(
+                    width: 200,
+                    height: 100,
+                    child: ElevatedButton(
+                      onPressed: () {
+                        Navigator.of(context).pushNamed("/member/listReserve.do");
+                      },
+                      style: ElevatedButton.styleFrom(
+                        textStyle: const TextStyle(fontWeight: FontWeight.w500, fontSize: 30.0),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(30),
+                        ),
+                      ),
+                      child: const Text('예약목록'),
+                    ),
+                  ),
 
 
 
