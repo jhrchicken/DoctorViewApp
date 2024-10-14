@@ -1,8 +1,6 @@
-import 'package:doctorviewapp/providers/chat_provider.dart';
 import 'package:doctorviewapp/screens/chat/chat_screen.dart';
 import 'package:doctorviewapp/theme/colors.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 class ChatItemWidget extends StatefulWidget {
   // final int roomId;
@@ -25,7 +23,7 @@ class _ChatItemWidgetState extends State<ChatItemWidget> {
     String time = nowTime.split('.')[0];
     String hour = time.split(':')[0];
     String minute = time.split(':')[1];
-    int messageCount = 5555555;
+    int messageCount = 5;
 
     // final chatProvider = Provider.of<ChatProvider>(context);
 
@@ -34,81 +32,90 @@ class _ChatItemWidgetState extends State<ChatItemWidget> {
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => ChatScreen(),
+            builder: (context) => const ChatScreen(),
           )
         );
       },
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 20),
-        child: Container(
-          width: double.infinity,
-          padding: const EdgeInsets.symmetric(vertical: 15),
-          decoration: const BoxDecoration(
-            border: Border(
-              bottom: BorderSide(color: border),
-            ),
-          ), 
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Row(
-                children: [
-                  const Icon(
-                    Icons.account_circle,
-                    size: 50,
-                  ),
-                  const SizedBox(width: 10),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        '$hospital',
-                        style: const TextStyle(fontSize: 16),
-                      ),
-                      Container(
-                        constraints: const BoxConstraints(maxWidth: 200),
-                        child: Text(
-                          '내용입니다.내용입니다.내용입니다.내용입니다.내용입니다.내용입니다.내용입니다.내용입니다.내용입니다.',
-                          style: TextStyle(fontSize: 14),
-                          overflow: TextOverflow.ellipsis,
-                          maxLines: 1,
-                        ),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.end,
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.only(right: 3),
-                    child: Text(
-                      '$hour:$minute',    // 마지막 메세지 시간이 오늘이면 시간이 나오고, 과거면 날짜가 나와야 함
-                      style: TextStyle(fontSize: 10, color: Colors.grey[500]),
-                   ),
-                 ),
-                 const SizedBox(height: 5),
-                 Container(
-                   padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
-                   decoration: BoxDecoration(
-                     color: pointColor1,
-                     borderRadius: BorderRadius.circular(50),
-                   ),
-                   child:
-                   Text(
-                     messageCount >= 100 ? '99+' : '$messageCount',
-                     style: const TextStyle(
-                       color: Colors.white,
-                       fontWeight: FontWeight.w500,
-                       fontSize: 12,
-                     ),
-                   ),
-                 ),
-               ],
-              ),
-            ],
+      child: Container(
+        width: double.infinity,
+        height: 90,
+        padding: const EdgeInsets.symmetric(vertical: 15),
+        decoration: const BoxDecoration(
+          border: Border(
+            bottom: BorderSide(color: border),
           ),
+        ), 
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Row(
+              children: [
+                Icon(
+                  Icons.account_box_rounded,
+                  size: 50,
+                  color: Colors.grey[500],
+                ),
+                const SizedBox(
+                  width: 10,
+                ),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      hospital,
+                      style: TextStyle(
+                        fontSize: 16,
+                        color: Colors.grey[900],
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                    Container(
+                      constraints: const BoxConstraints(maxWidth: 200),
+                      child: Text(
+                        '내용입내용입내용입내용입내용입v입내용입내용입입내용입내용입입내용입내용입',
+                        style: TextStyle(
+                          fontSize: 12,
+                          color: Colors.grey[500],
+                        ),
+                        overflow: TextOverflow.ellipsis,
+                        maxLines: 2,
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(right: 3),
+                  child: Text(
+                    '$hour:$minute',    // 마지막 메세지 시간이 오늘이면 시간이 나오고, 과거면 날짜가 나와야 함
+                    style: TextStyle(fontSize: 10, color: Colors.grey[500]),
+                 ),
+               ),
+               const SizedBox(height: 5),
+               Container(
+                 padding: const EdgeInsets.symmetric(horizontal: 7, vertical: 2),
+                 decoration: BoxDecoration(
+                   color: pointColor1,
+                   borderRadius: BorderRadius.circular(50),
+                 ),
+                 child:
+                 Text(
+                   '$messageCount',
+                   style: const TextStyle(
+                     color: Colors.white,
+                     fontWeight: FontWeight.w500,
+                     fontSize: 12,
+                   ),
+                 ),
+               ),
+             ],
+            ),
+          ],
         ),
       ),
     );
