@@ -138,7 +138,20 @@ class _HospitalViewScreenState extends State<HospitalViewScreen> {
               ),
             ),
             const SizedBox(height: 15),
-            
+
+            // 진료시간
+            Padding(
+              padding: const EdgeInsets.all(20.0),
+              child: Container(
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                child: HospitalMapWidget(id: hospital.id),
+              ),
+            ),
+            const SizedBox(height: 15),
+
             // 위치
             Padding(
               padding: const EdgeInsets.all(20.0),
