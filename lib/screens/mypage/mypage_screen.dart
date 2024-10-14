@@ -14,10 +14,10 @@ import 'package:doctorviewapp/screens/mypage/join/join_hosp_success.dart';
 import 'package:doctorviewapp/screens/mypage/join/join_user_success.dart';
 import 'package:doctorviewapp/screens/mypage/join/login.dart';
 import 'package:doctorviewapp/screens/mypage/join/user.dart';
+import 'package:doctorviewapp/screens/mypage/myreview_list_screen.dart';
 import 'package:doctorviewapp/screens/mypage/reserve/reserve_list_hosp.dart';
 import 'package:doctorviewapp/screens/mypage/reserve/reserve_list_user.dart';
 import 'package:doctorviewapp/screens/mypage/my_hosp_doctor_screen.dart';
-import 'package:doctorviewapp/screens/mypage/myreview_main_screen.dart';
 import 'package:doctorviewapp/screens/mypage/testpage/memberList.dart';
 import 'package:doctorviewapp/screens/mypage/testpage/reserveList.dart';
 import 'package:doctorviewapp/theme/colors.dart';
@@ -322,7 +322,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                   Navigator.push(
                                     context,
                                     MaterialPageRoute(
-                                      builder: (context) => const MyreviewMainScreen(),
+                                      builder: (context) => const MyReviewListScreen(),
                                     ),
                                   );
                                 },

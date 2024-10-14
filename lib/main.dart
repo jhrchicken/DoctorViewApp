@@ -68,7 +68,6 @@ class MyApp extends StatelessWidget {
   }
 }
 
-
 class CustomTextStyles {
   static TextStyle appbarText = TextStyle(
     color: Colors.grey[900],
