@@ -21,7 +21,7 @@ class HoursProvider extends ChangeNotifier {
     Hours (
       hoursIdx: 2,
       week: '화요일',
-      startTime: '09:00',
+      startTime: '00:30',
       endTime: '18:00',
       startBreak: '12:00',
       endBreak: '13:00',
