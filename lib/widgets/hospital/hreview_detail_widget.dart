@@ -116,9 +116,11 @@ class _HreviewDetailWidgetState extends State<HreviewDetailWidget> {
             ),
 
             // 수정 삭제 모달
-            HreviewActionSheet(
-              reviewIdx: hreview.reviewIdx,
-            )
+            (member != null && member.id == loginMember!.id)
+              ? HreviewActionSheet(
+                  reviewIdx: hreview.reviewIdx,
+                )
+              : const SizedBox.shrink(),
           ],
         ),
         const SizedBox(

@@ -116,9 +116,11 @@ class _DreviewDetailWidgetState extends State<DreviewDetailWidget> {
             ),
 
             // 수정 삭제 모달
-            DreviewActionSheet(
-              reviewIdx: dreview.reviewIdx,
-            )
+            (member != null && member.id == loginMember!.id)
+              ? DreviewActionSheet(
+                  reviewIdx: dreview.reviewIdx,
+                )
+              : const SizedBox.shrink(),
           ],
         ),
         const SizedBox(

@@ -26,7 +26,7 @@ import 'package:intl/date_symbol_data_local.dart';
 
 void main() {
 
-  // 캘린더 한글처리를 위한 intl 패키지 초기화포함
+  // 캘린더 한글처리를 위한 intl 패키지 초기화 포함
   initializeDateFormatting().then((_) {
     runApp(
       MultiProvider(
