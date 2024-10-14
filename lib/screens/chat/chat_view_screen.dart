@@ -144,23 +144,28 @@ class _ChatViewScreenState extends State<ChatViewScreen> {
                                           mainAxisAlignment: MainAxisAlignment.start,
                                           crossAxisAlignment: CrossAxisAlignment.end,
                                           children: [
-                                            const Icon(
-                                              Icons.account_circle,
-                                              size: 50,
-                                            ),
-                                            Container(
-                                              constraints: const BoxConstraints(maxWidth: 280),
-                                              margin: const EdgeInsets.all(5),
-                                              padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 10),
-                                              decoration: BoxDecoration(
-                                                color: Colors.white,
-                                                border: Border.all(color: border),
-                                                borderRadius: BorderRadius.circular(10),
-                                              ),
-                                              child: Text(
-                                                chat.message,
-                                                softWrap: true,
-                                              ),
+                                            Row(
+                                              children: [
+                                                Icon(
+                                                  Icons.account_circle,
+                                                  size: 40,
+                                                  color: Colors.grey[500],
+                                                ),
+                                                Container(
+                                                  constraints: const BoxConstraints(maxWidth: 280),
+                                                  margin: const EdgeInsets.all(5),
+                                                  padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 10),
+                                                  decoration: BoxDecoration(
+                                                    color: Colors.white,
+                                                    border: Border.all(color: border),
+                                                    borderRadius: BorderRadius.circular(10),
+                                                  ),
+                                                  child: Text(
+                                                    chat.message,
+                                                    softWrap: true,
+                                                  ),
+                                                ),
+                                              ],
                                             ),
                                             Container(
                                               margin: const EdgeInsets.only(bottom: 8),
@@ -177,8 +182,6 @@ class _ChatViewScreenState extends State<ChatViewScreen> {
                             },
                           ),
                         ),
-
-
                       ],
                     ),
                   ),
@@ -186,6 +189,8 @@ class _ChatViewScreenState extends State<ChatViewScreen> {
               ),
             ),
           ),
+
+          // 채팅 보내기
           Padding(
             padding: const EdgeInsets.symmetric(
               horizontal: 10, vertical: 10
@@ -222,7 +227,16 @@ class _ChatViewScreenState extends State<ChatViewScreen> {
                           color: pointColor2,
                         ),
                         onPressed: () {
-                          /* 전송 */
+                          chatProvider.insertChat(
+                            Chat(
+                              chatIdx: 0,
+                              memberRef: loginMember.id,
+                              roomId: widget.roomId,
+                              message: _messageController.text,
+                              postdate: DateTime.now(),
+                              read: 'F',
+                            ),
+                          );
                         },
                       ),
                     ),
