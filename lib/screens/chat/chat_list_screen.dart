@@ -86,7 +86,6 @@ class _ChatListScreenState extends State<ChatListScreen> {
                     return const Column(
                       children: [
                         ChatItemWidget(),
-                        Divider(color: border),
                       ],
                     );
                   },
