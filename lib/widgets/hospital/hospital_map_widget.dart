@@ -1,7 +1,10 @@
+import 'dart:async';
+
 import 'package:doctorviewapp/models/hospital.dart';
 import 'package:doctorviewapp/providers/hospital_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:provider/provider.dart';
 
 class HospitalMapWidget extends StatefulWidget {
@@ -17,6 +20,22 @@ class HospitalMapWidget extends StatefulWidget {
 }
 
 class _HospitalMapWidgetState extends State<HospitalMapWidget> {
+
+  final Completer<GoogleMapController> _controller = Completer();
+
+  void makeMarker() {
+    Marker marker = Marker(
+      markerId: MarkerId(widget.id),
+      icon: BitmapDescriptor.defaultMarkerWithHue(
+        BitmapDescriptor.hueBlue,
+      ),
+      position: const LatLng(37, 126),
+      infoWindow: InfoWindow(
+        title: widget.id,
+      ),
+      onTap: () {},
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
