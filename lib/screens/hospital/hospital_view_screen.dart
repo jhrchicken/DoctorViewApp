@@ -19,6 +19,7 @@ import 'package:doctorviewapp/widgets/common/grey_button.dart';
 import 'package:doctorviewapp/widgets/common/primary_outline_button.dart';
 import 'package:doctorviewapp/widgets/doctor/doctor_summary_widget.dart';
 import 'package:doctorviewapp/widgets/hospital/hospital_detail_widget.dart';
+import 'package:doctorviewapp/widgets/hospital/hospital_hours_widget.dart';
 import 'package:doctorviewapp/widgets/hospital/hospital_map_widget.dart';
 import 'package:doctorviewapp/widgets/hospital/hreview_item_widget.dart';
 import 'package:doctorviewapp/widgets/hospital/hreview_summary_widget.dart';
@@ -147,7 +148,7 @@ class _HospitalViewScreenState extends State<HospitalViewScreen> {
                   color: Colors.white,
                   borderRadius: BorderRadius.circular(8),
                 ),
-                child: HospitalMapWidget(id: hospital.id),
+                child: HospitalHoursWidget(id: hospital.id),
               ),
             ),
             const SizedBox(height: 15),
