@@ -15,7 +15,9 @@ import 'package:provider/provider.dart';
 
 class MyHospDoctorScreen extends StatefulWidget {
 
-  const MyHospDoctorScreen({super.key});
+  const MyHospDoctorScreen({
+    super.key,
+  });
 
   @override
   State<MyHospDoctorScreen> createState() => _MyHospDoctorScreenState();

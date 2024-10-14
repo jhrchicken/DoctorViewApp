@@ -1,4 +1,6 @@
 import 'package:doctorviewapp/screens/board/board_list_screen.dart';
+import 'package:doctorviewapp/screens/hosp_doctor_list_screen.dart';
+import 'package:doctorviewapp/widgets/home/address_search_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:doctorviewapp/theme/colors.dart';
 
@@ -22,7 +24,7 @@ class _HomeScreenState extends State<HomeScreen> {
             
             // 메인 이미지
             Container(
-              padding: const EdgeInsets.fromLTRB(80, 50, 80, 0),
+              padding: const EdgeInsets.fromLTRB(100, 50, 100, 0),
               child: Image.asset(
                 'assets/images/logo.png',
                 height: 130,
@@ -30,36 +32,8 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
             ),
 
-            // 검색창
-            Padding(
-              padding: const EdgeInsets.fromLTRB(20, 0, 20, 20),
-              child: Container(
-                margin: const EdgeInsets.only(top: 15),
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(20),
-                  boxShadow: const [
-                    BoxShadow(
-                      color: Colors.grey,
-                      blurRadius: 5,
-                      offset: Offset(0, 2),
-                    ),
-                  ],
-                ),
-                child: TextField(
-                  decoration: InputDecoration(
-                    hintText: '병원을 검색해보세요.',
-                    hintStyle: const TextStyle(color: border),
-                    border: InputBorder.none,
-                    contentPadding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-                    suffixIcon: IconButton(
-                      onPressed: () { print('검색 버튼 클릭됨'); },
-                      icon: const Icon(Icons.search),
-                    ),
-                  ),
-                ),
-              ),
-            ),
+            // 주소 검색
+            const AddressSearchWidget(),
 
             // 병원찾기 / 의사찾기
             Padding(
@@ -70,7 +44,14 @@ class _HomeScreenState extends State<HomeScreen> {
                   Expanded(
                     flex: 1,
                     child: OutlinedButton(
-                      onPressed: () { /* 병원 찾기 페이지로 이동 */ },
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const HospDoctorListScreen(),
+                          ),
+                        );
+                      },
                       style: OutlinedButton.styleFrom(
                         backgroundColor: pointColor2,
                         padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 20),
@@ -130,7 +111,14 @@ class _HomeScreenState extends State<HomeScreen> {
                   Expanded(
                     flex: 1,
                     child: OutlinedButton(
-                      onPressed: () { /* 병원 찾기 페이지로 이동 */ },
+                      onPressed: () {
+                         Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const HospDoctorListScreen(tabIndex: 1),
+                          ),
+                        );
+                      },
                       style: OutlinedButton.styleFrom(
                         backgroundColor: pointColor2,
                         padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 20),

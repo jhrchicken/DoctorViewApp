@@ -7,7 +7,12 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class HospDoctorListScreen extends StatefulWidget {
-  const HospDoctorListScreen({super.key});
+  final int tabIndex;
+
+  const HospDoctorListScreen({
+    super.key,
+    this.tabIndex = 0,
+  });
 
   @override
   State<HospDoctorListScreen> createState() => _HospDoctorListScreenState();
@@ -24,6 +29,7 @@ class _HospDoctorListScreenState extends State<HospDoctorListScreen> {
 
     return DefaultTabController(
       length: 2,
+      initialIndex: widget.tabIndex,
       child: Scaffold(
         appBar: AppBar(
           backgroundColor: Colors.white,
