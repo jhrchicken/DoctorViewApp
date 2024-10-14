@@ -26,6 +26,7 @@ class _BottomNavigationBarWidgetState extends State<BottomNavigationBarWidget> {
       child: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,
         iconSize: 24,
+        backgroundColor: Colors.white,
         selectedItemColor: pointColor2,
         selectedLabelStyle: const TextStyle(
           fontSize: 10,
