@@ -147,14 +147,6 @@ class _MydreviewItemWidgetState extends State<MydreviewItemWidget> {
                     ),
                   ],
                 ),
-                GestureDetector(
-                  onTap: _toggleLike,
-                  child: Icon(
-                    isLike  ? Icons.favorite_rounded : Icons.favorite_border_rounded,
-                    color: pointColor2,
-                    size: 24,
-                  ),
-                ),
               ],
             ),
             const SizedBox(height: 10),
