@@ -25,24 +25,24 @@ class _ReserveCheckTextWidgetState extends State<ReserveCheckTextWidget> {
           child: Text(
             widget.title,
             style: const TextStyle(
-              fontSize: 18,
+              fontSize: 14,
               letterSpacing: 0.1,
               fontWeight: FontWeight.w500,
               color: pointColor2,
             ),
           ),
         ),
-      const SizedBox(width: 20),
+        
+        const SizedBox(width: 20),
 
-      Text(
-        widget.content,
-        style: const TextStyle(
-          fontSize: 18,
-          letterSpacing: 0.1,
-          fontWeight: FontWeight.w500,
+        Text(
+          widget.content,
+          style: const TextStyle(
+            fontSize: 14,
+            letterSpacing: 0.1,
+            fontWeight: FontWeight.w500,
+          ),
         ),
-      ),
-
       ],
     );
   }
