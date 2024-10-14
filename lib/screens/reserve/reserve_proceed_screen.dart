@@ -45,7 +45,7 @@ class _ReserveProceedScreenState extends State<ReserveProceedScreen> {
     });
   }
 
-
+  
   DateTime? _selectedDate;
   void updateDate(DateTime value){
     setState(() {
@@ -100,7 +100,6 @@ class _ReserveProceedScreenState extends State<ReserveProceedScreen> {
 
     final memberProvider = Provider.of<MemberProvider>(context);
     final loginMember = memberProvider.loginMember;
-    
     
     return Scaffold(
       appBar: AppBar(
@@ -204,10 +203,11 @@ class _ReserveProceedScreenState extends State<ReserveProceedScreen> {
                     print('날짜');
                     List<String> dateParts = _selectedDate.toString().split(' ');
                     print(dateParts[0]);
-                                    },
-                  color: pointColor2)
 
-                
+
+
+                  },
+                  color: pointColor2)
               ],
             ),
           ),
