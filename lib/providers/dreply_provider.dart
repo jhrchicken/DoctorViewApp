@@ -80,10 +80,4 @@ class DreplyProvider extends ChangeNotifier {
     _dreplyList.removeWhere((dreply) => dreply.replyIdx == replyIdx);
     notifyListeners();
   }
-
-
-
-
-
-
 }
