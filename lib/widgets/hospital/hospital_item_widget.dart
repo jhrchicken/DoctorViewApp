@@ -173,6 +173,35 @@ class _HospitalItemWidgetState extends State<HospitalItemWidget> {
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+                // 진료중 여부
+                Row(
+                  children: [
+                    Icon(
+                      Icons.circle,
+                      size: 7,
+                      color: isOpen ? Colors.green : Colors.grey[700],
+                    ),
+                    const SizedBox(
+                      width: 5,
+                    ),
+                    Text(
+                      isOpen ? '진료중 ' : '진료종료',
+                      style: TextStyle(
+                        color: isOpen ? Colors.green[600] : Colors.grey[700],
+                        fontSize: 14,
+                        fontWeight: FontWeight.w700,
+                      ),
+                    ),
+                    Text(
+                      isOpen ? '(${today.startTime}-${today.endTime})' : '',
+                      style: TextStyle(
+                        color: isOpen ? Colors.green[600] : Colors.grey[700],
+                        fontSize: 14,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                  ],
+                ),
                 // 주소
                 Row(
                   children: [
@@ -193,34 +222,6 @@ class _HospitalItemWidgetState extends State<HospitalItemWidget> {
                           fontSize: 14,
                           fontWeight: FontWeight.w500,
                         ),
-                      ),
-                    ),
-                  ],
-                ),
-                // 오늘 진료시간
-                Row(
-                  children: [
-                    Text(
-                      '진료시간',
-                      style: TextStyle(
-                        color: Colors.grey[700],
-                        fontSize: 14,
-                        fontWeight: FontWeight.w500,
-                      ),
-                    ),
-                    const SizedBox(width: 10),
-                    Expanded(
-                      child: Row(
-                        children: [
-                          Text(
-                            isOpen ? '오늘 ${today.startTime}-${today.endTime}' : '영업종료',
-                            style: TextStyle(
-                              color: Colors.grey[500],
-                              fontSize: 14,
-                              fontWeight: FontWeight.w500,
-                            ),
-                          ),
-                        ],
                       ),
                     ),
                   ],
