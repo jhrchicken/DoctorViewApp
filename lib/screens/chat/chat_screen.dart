@@ -77,6 +77,10 @@ class _ChatScreenState extends State<ChatScreen> {
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
+                    Icon(
+                      Icons.account_circle,
+                      size: 50,
+                    ),
                     Container(
                       constraints: const BoxConstraints(maxWidth: 280),
                       margin: const EdgeInsets.all(5),
