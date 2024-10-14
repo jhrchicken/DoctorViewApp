@@ -13,8 +13,8 @@ class HoursProvider extends ChangeNotifier {
       startBreak: '12:00',
       endBreak: '13:00',
       deadLine: '17:00',
-      hosp_ref: 'hospital1',
-      open_week: 'T',
+      hospRef: 'hospital1',
+      openWeek: 'T',
       weekend: 'F',
       night: 'F'
       ),
@@ -26,8 +26,8 @@ class HoursProvider extends ChangeNotifier {
       startBreak: '12:00',
       endBreak: '13:00',
       deadLine: '17:00',
-      hosp_ref: 'hospital1',
-      open_week: 'T',
+      hospRef: 'hospital1',
+      openWeek: 'T',
       weekend: 'F',
       night: 'F'
       ),
@@ -39,8 +39,8 @@ class HoursProvider extends ChangeNotifier {
       startBreak: '12:00',
       endBreak: '13:00',
       deadLine: '17:00',
-      hosp_ref: 'hospital1',
-      open_week: 'T',
+      hospRef: 'hospital1',
+      openWeek: 'T',
       weekend: 'F',
       night: 'F'
       ),
@@ -52,8 +52,8 @@ class HoursProvider extends ChangeNotifier {
       startBreak: '12:00',
       endBreak: '13:00',
       deadLine: '17:00',
-      hosp_ref: 'hospital1',
-      open_week: 'T',
+      hospRef: 'hospital1',
+      openWeek: 'T',
       weekend: 'F',
       night: 'F'
       ),
@@ -65,8 +65,8 @@ class HoursProvider extends ChangeNotifier {
       startBreak: '12:00',
       endBreak: '13:00',
       deadLine: '17:00',
-      hosp_ref: 'hospital1',
-      open_week: 'T',
+      hospRef: 'hospital1',
+      openWeek: 'T',
       weekend: 'F',
       night: 'F'
       ),
@@ -78,8 +78,8 @@ class HoursProvider extends ChangeNotifier {
       startBreak: '00:00',
       endBreak: '00:00',
       deadLine: '00:00',
-      hosp_ref: 'hospital1',
-      open_week: 'F',
+      hospRef: 'hospital1',
+      openWeek: 'F',
       weekend: 'F',
       night: 'F'
       ),
@@ -91,8 +91,8 @@ class HoursProvider extends ChangeNotifier {
       startBreak: '00:00',
       endBreak: '00:00',
       deadLine: '00:00',
-      hosp_ref: 'hospital1',
-      open_week: 'T',
+      hospRef: 'hospital1',
+      openWeek: 'T',
       weekend: 'F',
       night: 'F'
       ),
@@ -103,13 +103,13 @@ class HoursProvider extends ChangeNotifier {
 
   // 근무 시간 반환
   List<Hours> getHospHours(String hospRef) {
-    return _hoursList.where((hours) => hours.hosp_ref == hospRef && hours.open_week == 'T').toList();
+    return _hoursList.where((hours) => hours.hospRef == hospRef && hours.openWeek == 'T').toList();
   }
 
   // 근무 요일 반환
   List<String> getHospWeeks(String hospRef) {
     return _hoursList
-        .where((hours) => hours.hosp_ref == hospRef && hours.open_week == 'T')
+        .where((hours) => hours.hospRef == hospRef && hours.openWeek == 'T')
         .map((hours) => hours.week)
         .toList();
   }
@@ -118,7 +118,7 @@ class HoursProvider extends ChangeNotifier {
 
   // 모든 시간 반환 (디버깅용)
   List<Hours> allHospHours(String hospRef) {
-    return _hoursList.where((hours) => hours.hosp_ref == hospRef).toList();
+    return _hoursList.where((hours) => hours.hospRef == hospRef).toList();
   }
 
   // 기본 시간 추가
@@ -134,8 +134,8 @@ class HoursProvider extends ChangeNotifier {
       startBreak: '00:00',
       endBreak: '00:00',
       deadLine: '00:00',
-      hosp_ref: hospRef, 
-      open_week: 'F',
+      hospRef: hospRef, 
+      openWeek: 'F',
       weekend: 'F',
       night: 'F',
     );
@@ -147,14 +147,14 @@ class HoursProvider extends ChangeNotifier {
 
   // 근무 시간 초기화
   void resetHours(String hospRef){
-    List<Hours> hospHoursInfo = _hoursList.where((hour) => hour.hosp_ref == hospRef).toList();
+    List<Hours> hospHoursInfo = _hoursList.where((hour) => hour.hospRef == hospRef).toList();
     for (int i = 0; i < hospHoursInfo.length; i++) {
       hospHoursInfo[i].startTime = '00:00';
       hospHoursInfo[i].endTime = '00:00';
       hospHoursInfo[i].startBreak = '00:00';
       hospHoursInfo[i].endBreak = '00:00';
       hospHoursInfo[i].deadLine = '00:00';
-      hospHoursInfo[i].open_week = 'F';
+      hospHoursInfo[i].openWeek = 'F';
       hospHoursInfo[i].weekend = 'F';
       hospHoursInfo[i].night = 'F';
     }
@@ -163,7 +163,7 @@ class HoursProvider extends ChangeNotifier {
   // 근무 시간 업데이트
   void updateHours(Hours hours) {
     for (int i = 0; i < _hoursList.length; i++) {
-      if (_hoursList[i].hosp_ref == hours.hosp_ref && _hoursList[i].week == hours.week) {
+      if (_hoursList[i].hospRef == hours.hospRef && _hoursList[i].week == hours.week) {
         String weekend = (hours.week == '토요일' || hours.week == '일요일') ? 'T' : 'F';
         DateTime deadlineTime = DateTime.parse('2023-01-01 ${hours.deadLine}');
         DateTime compareTime = DateTime.parse('2023-01-01 20:00');
@@ -174,7 +174,7 @@ class HoursProvider extends ChangeNotifier {
         _hoursList[i].startBreak = hours.startBreak;
         _hoursList[i].endBreak = hours.endBreak;
         _hoursList[i].deadLine = hours.deadLine;
-        _hoursList[i].open_week = hours.open_week;
+        _hoursList[i].openWeek = hours.openWeek;
         _hoursList[i].weekend = weekend;
         _hoursList[i].night = night;
         

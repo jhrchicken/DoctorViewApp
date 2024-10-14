@@ -88,6 +88,13 @@ class _HreviewDetailWidgetState extends State<HreviewDetailWidget> {
                             color: Colors.grey[500],
                           ),
                         ),
+                        Text(
+                          hreview.rewrite == 'T' ? '  (수정됨)' : '',
+                          style: TextStyle(
+                            color: Colors.grey[500],
+                            fontSize: 12,
+                          ),
+                        ),
                       ],
                     ),
                     const SizedBox(
@@ -116,9 +123,11 @@ class _HreviewDetailWidgetState extends State<HreviewDetailWidget> {
             ),
 
             // 수정 삭제 모달
-            HreviewActionSheet(
-              reviewIdx: hreview.reviewIdx,
-            )
+            (member != null && member.id == loginMember!.id)
+              ? HreviewActionSheet(
+                  reviewIdx: hreview.reviewIdx,
+                )
+              : const SizedBox.shrink(),
           ],
         ),
         const SizedBox(

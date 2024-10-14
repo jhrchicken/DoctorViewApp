@@ -1,6 +1,7 @@
 import 'package:doctorviewapp/models/hospital.dart';
 import 'package:doctorviewapp/providers/hospital_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 
 class HospitalMapWidget extends StatefulWidget {
@@ -62,6 +63,7 @@ class _HospitalMapWidgetState extends State<HospitalMapWidget> {
         const SizedBox(
           height: 10,
         ),
+
         // 지도 하단 주소 표시
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -75,7 +77,9 @@ class _HospitalMapWidgetState extends State<HospitalMapWidget> {
               ),
             ),
             ElevatedButton(
-              onPressed: () {},
+              onPressed: () {
+                Clipboard.setData(ClipboardData(text: hospital.address));
+              },
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.grey[100],
                 shape: RoundedRectangleBorder(

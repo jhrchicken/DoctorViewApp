@@ -6,8 +6,8 @@ class Hours {
   String startBreak;
   String endBreak;
   String deadLine;
-  String hosp_ref;
-  String open_week;
+  String hospRef;
+  String openWeek;
   String weekend;
   String night;
 
@@ -19,8 +19,8 @@ class Hours {
     required this.startBreak,
     required this.endBreak,
     required this.deadLine,
-    required this.hosp_ref,
-    required this.open_week,
+    required this.hospRef,
+    required this.openWeek,
     required this.weekend,
     required this.night,
   });

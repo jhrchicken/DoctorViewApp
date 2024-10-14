@@ -90,6 +90,13 @@ class _HreplyItemWidgetState extends State<HreplyItemWidget> {
                                 color: Colors.grey[500],
                               ),
                             ),
+                            Text(
+                            hreply.rewrite == 'T' ? '  (수정됨)' : '',
+                            style: TextStyle(
+                              color: Colors.grey[500],
+                              fontSize: 12,
+                            ),
+                          ),
                           ],
                         ),
                       ],

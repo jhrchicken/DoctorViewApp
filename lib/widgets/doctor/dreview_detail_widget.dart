@@ -88,6 +88,13 @@ class _DreviewDetailWidgetState extends State<DreviewDetailWidget> {
                             color: Colors.grey[500],
                           ),
                         ),
+                        Text(
+                          dreview.rewrite == 'T' ? '  (수정됨)' : '',
+                          style: TextStyle(
+                            color: Colors.grey[500],
+                            fontSize: 12,
+                          ),
+                        ),
                       ],
                     ),
                     const SizedBox(
@@ -116,9 +123,11 @@ class _DreviewDetailWidgetState extends State<DreviewDetailWidget> {
             ),
 
             // 수정 삭제 모달
-            DreviewActionSheet(
-              reviewIdx: dreview.reviewIdx,
-            )
+            (member != null && member.id == loginMember!.id)
+              ? DreviewActionSheet(
+                  reviewIdx: dreview.reviewIdx,
+                )
+              : const SizedBox.shrink(),
           ],
         ),
         const SizedBox(

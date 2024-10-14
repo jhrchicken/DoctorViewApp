@@ -106,6 +106,7 @@ class _HreviewViewScreenState extends State<HreviewViewScreen> {
     Hospital? hospital = hospitalProvider.selectHosp(hreview.hospRef);
 
     return Scaffold(
+      resizeToAvoidBottomInset: true,
       appBar: AppBar(
         backgroundColor: Colors.white,
         title: Text(
@@ -123,128 +124,133 @@ class _HreviewViewScreenState extends State<HreviewViewScreen> {
           ),
         ],
       ),
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            // 리뷰 상세보기
-            Padding(
-              padding: const EdgeInsets.all(20.0),
-              child: Container(
-                width: double.infinity,
-                decoration: const BoxDecoration(
-                  color: Colors.white,
-                ),
-                child: HreviewDetailWidget(
-                  reviewIdx: hreview.reviewIdx,
-                ),
-              ),
-            ),
-
-            Divider(
-              color: Colors.grey[300],
-              thickness: 1.0,
-              indent: 20.0,
-              endIndent: 20.0,
-            ),
-
-            // 리뷰에 대한 답변 보기
-            hreplyList.isEmpty
-              ? const Column(
-                mainAxisAlignment: MainAxisAlignment.center,
+      body: Column(
+        children: [
+          Expanded(
+            child: SingleChildScrollView(
+              child: Column(
                 children: [
-                  SizedBox(
-                    height: 200,
-                  ),
-                  Center(
-                    child: Text(
-                      '답변이 없습니다',
-                      style: TextStyle(
-                        color: Colors.grey,
+                  // 리뷰 상세보기
+                  Padding(
+                    padding: const EdgeInsets.all(20.0),
+                    child: Container(
+                      width: double.infinity,
+                      decoration: const BoxDecoration(
+                        color: Colors.white,
+                      ),
+                      child: HreviewDetailWidget(
+                        reviewIdx: hreview.reviewIdx,
                       ),
                     ),
                   ),
-                ],
-              )
-            : Padding(
-                padding: const EdgeInsets.all(20),
-                child: Column(
-                  children: hreplyList.map((hreply) {
-                    return Column(
+            
+                  Divider(
+                    color: Colors.grey[300],
+                    thickness: 1.0,
+                    indent: 20.0,
+                    endIndent: 20.0,
+                  ),
+            
+                  // 리뷰에 대한 답변 보기
+                  hreplyList.isEmpty
+                    ? const Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        HreplyItemWidget(
-                          replyIdx: hreply.replyIdx,
+                        SizedBox(
+                          height: 200,
                         ),
-                        const SizedBox(
-                          height: 10,
+                        Center(
+                          child: Text(
+                            '답변이 없습니다',
+                            style: TextStyle(
+                              color: Colors.grey,
+                            ),
+                          ),
                         ),
                       ],
-                    );
-                  }).toList(),
-                ),
-              ),
-          ],
-        ),
-      ),
-
-      // 하단 답변 입력창 고정
-      bottomNavigationBar: (loginMember != null &&
-              loginMember.auth == 'ROLE_HOSP' &&
-              loginMember.id == hospital!.id)
-        ? Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
-            child: Row(
-              children: [
-                Expanded(
-                  child: TextField(
-                    controller: _replyController,
-                    style: TextStyle(
-                      color: Colors.grey[900],
-                      fontSize: 14,
-                    ),
-                    decoration: InputDecoration(
-                      hintText: '댓글을 입력하세요',
-                      hintStyle: TextStyle(
-                        color: Colors.grey[500],
-                        fontSize: 14,
-                      ),
-                      filled: true,
-                      fillColor: Colors.grey[100],
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(8),
-                        borderSide: BorderSide.none,
-                      ),
-                      contentPadding: const EdgeInsets.symmetric(
-                        horizontal: 16,
-                        vertical: 5,
-                      ),
-                      suffixIcon: IconButton(
-                        icon: const Icon(Icons.send_rounded, color: pointColor2),
-                        onPressed: () {
-                          if (_replyController.text.isNotEmpty) {
-                            hreplyProvider.insertHreply(
-                              Hreply(
-                                replyIdx: 0,
-                                date: DateTime.now(),
-                                content: _replyController.text,
-                                rewrite: 'F',
-                                writerRef: loginMember.id,
-                                reviewRef: hreview.reviewIdx,
+                    )
+                  : Padding(
+                      padding: const EdgeInsets.all(20),
+                      child: Column(
+                        children: hreplyList.map((hreply) {
+                          return Column(
+                            children: [
+                              HreplyItemWidget(
+                                replyIdx: hreply.replyIdx,
                               ),
-                            );
-                            _replyController.clear();
-                            setState(() {
-                              hreplyList = hreplyProvider.listHreply(hreview.reviewIdx);
-                            });
-                          }
-                        },
+                              const SizedBox(
+                                height: 10,
+                              ),
+                            ],
+                          );
+                        }).toList(),
                       ),
                     ),
-                  ),
-                ),
-              ],
+                ],
+              ),  
             ),
-          )
-        : null,
+          ),
+          // 하단 답변 입력창 고정
+          (loginMember != null &&
+                  loginMember.auth == 'ROLE_HOSP' &&
+                  loginMember.id == hospital!.id)
+            ? Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: TextField(
+                        controller: _replyController,
+                        style: TextStyle(
+                          color: Colors.grey[900],
+                          fontSize: 14,
+                        ),
+                        decoration: InputDecoration(
+                          hintText: '댓글을 입력하세요',
+                          hintStyle: TextStyle(
+                            color: Colors.grey[500],
+                            fontSize: 14,
+                          ),
+                          filled: true,
+                          fillColor: Colors.grey[100],
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(8),
+                            borderSide: BorderSide.none,
+                          ),
+                          contentPadding: const EdgeInsets.symmetric(
+                            horizontal: 16,
+                            vertical: 5,
+                          ),
+                          suffixIcon: IconButton(
+                            icon: const Icon(Icons.send_rounded, color: pointColor2),
+                            onPressed: () {
+                              if (_replyController.text.isNotEmpty) {
+                                hreplyProvider.insertHreply(
+                                  Hreply(
+                                    replyIdx: 0,
+                                    date: DateTime.now(),
+                                    content: _replyController.text,
+                                    rewrite: 'F',
+                                    writerRef: loginMember.id,
+                                    reviewRef: hreview.reviewIdx,
+                                  ),
+                                );
+                                _replyController.clear();
+                                setState(() {
+                                  hreplyList = hreplyProvider.listHreply(hreview.reviewIdx);
+                                });
+                              }
+                            },
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              )
+            : const SizedBox.shrink(),
+        ],
+      ),
     );
   }
 }

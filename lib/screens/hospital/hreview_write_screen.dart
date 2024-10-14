@@ -57,160 +57,163 @@ class _HreviewWriteScreenState extends State<HreviewWriteScreen> {
         ),
       ),
 
-      body: Padding(
-        padding: const EdgeInsets.all(20.0),
-        child: Container(
-          width: double.infinity,
-          decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.circular(8),
-          ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                '  ${hospital!.name}',
-                style: TextStyle(
-                  color: Colors.grey[900],
-                  fontSize: 18,
-                  fontWeight: FontWeight.w900,
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(20.0),
+              child: Container(
+                width: double.infinity,
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(8),
                 ),
-              ),
-              const SizedBox(height: 5),
-              Divider(
-                thickness: 1,
-                color: Colors.grey[300],
-              ),
-              const SizedBox(height: 20),
-              Form(
-                key: _formKey,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    // 별점
-                    const SizedBox(width: 10),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: List.generate(5, (index) {
-                        return GestureDetector(
-                          onTap: () {
-                            setState(() {
-                              _score = index + 1;
-                            });
-                          },
-                          child: Icon(
-                            Icons.star_rounded,
-                            color: index < _score ? Colors.amber : Colors.grey[300],
-                            size: 30,
-                          ),
-                        );
-                      }).toList(),
+                    Text(
+                      '  ${hospital!.name}',
+                      style: TextStyle(
+                        color: Colors.grey[900],
+                        fontSize: 18,
+                        fontWeight: FontWeight.w900,
+                      ),
                     ),
-                    const SizedBox(height: 10),
-                    // 해시태그
-                    Wrap(
-                      spacing: 8.0,
-                      runSpacing: -5,
-                      children: _optionHashtag.map((tag) {
-                        final isSelected = _listHashtag.contains(tag);
-                        return ChoiceChip(
-                          label: Text(
-                            tag,
-                            style: TextStyle(
-                              color: Colors.grey[700],
-                              fontSize: 12,
-                            ),
-                          ),
-                          selected: isSelected,
-                          onSelected: (selected) {
-                            setState(() {
-                              if (selected) {
-                                _listHashtag.add(tag);
-                              } else {
-                                _listHashtag.remove(tag);
-                              }
-                            });
-                          },
-                          backgroundColor: Colors.white,
-                          selectedColor: Colors.grey[100],
-                          shape: RoundedRectangleBorder(
-                            side: BorderSide(
-                              color: Colors.grey.shade300,
-                            ),
-                            borderRadius: BorderRadius.circular(20),
-                          ),
-                        );
-                      }).toList(),
+                    const SizedBox(height: 5),
+                    Divider(
+                      thickness: 1,
+                      color: Colors.grey[300],
                     ),
-                    const SizedBox(height: 16),
-                    // 리뷰 내용
-                    ContentInputField(
-                      controller: _contentController,
-                      focusNode: _contentFocusNode,
-                      labelText: '내용을 입력해주세요',
-                      textInputAction: TextInputAction.next,
-                      maxLength: 300,
-                      obscureText: false,
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return '내용 입력은 필수사항입니다.';
-                        }
-                        return null;
-                      },
-                    ),
-                    const SizedBox(height: 16),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        SecondaryButton(
-                          text: '작성 완료',
-                          onPressed: () {
-                            if (_formKey.currentState!.validate()) {
-                              final content = _contentController.text;
-
-                              int reviewIdx = hreviewProvider.insertHreview(
-                                Hreview(
-                                  reviewIdx: 0,
-                                  date: DateTime.now(),
-                                  score: _score,
-                                  content: content,
-                                  rewrite: 'F',
-                                  writerRef: 'harim',
-                                  hospRef: widget.hospRef,
+                    const SizedBox(height: 20),
+                    Form(
+                      key: _formKey,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          // 별점
+                          const SizedBox(width: 10),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: List.generate(5, (index) {
+                              return GestureDetector(
+                                onTap: () {
+                                  setState(() {
+                                    _score = index + 1;
+                                  });
+                                },
+                                child: Icon(
+                                  Icons.star_rounded,
+                                  color: index < _score ? Colors.amber : Colors.grey[300],
+                                  size: 30,
                                 ),
                               );
-
-                              for (int i = 0; i < _listHashtag.length; i++) {
-                                hashtagProvider.insertHashtag(
-                                  Hashtag(
-                                    tagIdx: 0,
-                                    reviewRef: reviewIdx,
-                                    tag: _listHashtag[i],
+                            }).toList(),
+                          ),
+                          const SizedBox(height: 10),
+                          // 해시태그
+                          Wrap(
+                            spacing: 8.0,
+                            runSpacing: -5,
+                            children: _optionHashtag.map((tag) {
+                              final isSelected = _listHashtag.contains(tag);
+                              return ChoiceChip(
+                                label: Text(
+                                  tag,
+                                  style: TextStyle(
+                                    color: Colors.grey[700],
+                                    fontSize: 12,
                                   ),
-                                );
-                              }
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                const SnackBar(content: Text('리뷰가 작성되었습니다')),
+                                ),
+                                selected: isSelected,
+                                onSelected: (selected) {
+                                  setState(() {
+                                    if (selected) {
+                                      _listHashtag.add(tag);
+                                    } else {
+                                      _listHashtag.remove(tag);
+                                    }
+                                  });
+                                },
+                                backgroundColor: Colors.white,
+                                selectedColor: Colors.grey[100],
+                                shape: RoundedRectangleBorder(
+                                  side: BorderSide(
+                                    color: Colors.grey.shade300,
+                                  ),
+                                  borderRadius: BorderRadius.circular(20),
+                                ),
                               );
-                              Navigator.pop(context);
-                            }
-                          },
-                          color: pointColor1,
-                        ),
-                        const SizedBox(width: 10),
-                        GreyButton(
-                          text: '취소',
-                          onPressed: () {
-                            Navigator.pop(context);
-                          },
-                        ),
-                      ],
+                            }).toList(),
+                          ),
+                          const SizedBox(height: 16),
+                          // 리뷰 내용
+                          ContentInputField(
+                            controller: _contentController,
+                            focusNode: _contentFocusNode,
+                            labelText: '내용을 입력해주세요',
+                            textInputAction: TextInputAction.next,
+                            maxLength: 300,
+                            obscureText: false,
+                            validator: (value) {
+                              if (value == null || value.isEmpty) {
+                                return '내용 입력은 필수사항입니다.';
+                              }
+                              return null;
+                            },
+                          ),
+                          const SizedBox(height: 16),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              SecondaryButton(
+                                text: '작성 완료',
+                                onPressed: () {
+                                  if (_formKey.currentState!.validate()) {
+                                    final content = _contentController.text;
+            
+                                    int reviewIdx = hreviewProvider.insertHreview(
+                                      Hreview(
+                                        reviewIdx: 0,
+                                        date: DateTime.now(),
+                                        score: _score,
+                                        content: content,
+                                        rewrite: 'F',
+                                        writerRef: 'harim',
+                                        hospRef: widget.hospRef,
+                                      ),
+                                    );
+            
+                                    for (int i = 0; i < _listHashtag.length; i++) {
+                                      hashtagProvider.insertHashtag(
+                                        Hashtag(
+                                          tagIdx: 0,
+                                          reviewRef: reviewIdx,
+                                          tag: _listHashtag[i],
+                                        ),
+                                      );
+                                    }
+                                    Navigator.pop(context);
+                                  }
+                                },
+                                color: pointColor1,
+                              ),
+                              const SizedBox(width: 10),
+                              GreyButton(
+                                text: '취소',
+                                onPressed: () {
+                                  Navigator.pop(context);
+                                },
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
                     ),
                   ],
                 ),
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );
