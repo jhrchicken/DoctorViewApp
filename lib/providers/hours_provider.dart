@@ -28,8 +28,8 @@ class HoursProvider extends ChangeNotifier {
       deadLine: '17:00',
       hospRef: 'hospital1',
       openWeek: 'T',
-      weekend: 'F',
-      night: 'F'
+      weekend: 'T',
+      night: 'T'
       ),
       Hours (
       hoursIdx: 3,
@@ -98,7 +98,7 @@ class HoursProvider extends ChangeNotifier {
       ),
     Hours (
       hoursIdx: 8,
-      week: '일요일',
+      week: '화요일',
       startTime: '00:00',
       endTime: '00:00',
       startBreak: '00:00',
@@ -106,7 +106,7 @@ class HoursProvider extends ChangeNotifier {
       deadLine: '00:00',
       hospRef: 'hospital2',
       openWeek: 'T',
-      weekend: 'F',
+      weekend: 'T',
       night: 'F'
       ),
   ];
