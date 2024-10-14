@@ -75,6 +75,7 @@ class _BoardViewScreenState extends State<BoardViewScreen> {
 
     if (board == null) {
       return Scaffold(
+        resizeToAvoidBottomInset: true,
         // 상단바
         appBar: AppBar(
           backgroundColor: Colors.white,
@@ -92,155 +93,143 @@ class _BoardViewScreenState extends State<BoardViewScreen> {
     List<Comment> commentList = commentProvider.listComment(board.boardIdx);
 
     return Scaffold(
-      // 상단바
+      resizeToAvoidBottomInset: true,
       appBar: AppBar(
         backgroundColor: Colors.white,
-        title: board.boardName == 'freeboard' 
-          ? Text(
-              '자유게시판',
-              style: CustomTextStyles.appbarText,
-            )
-          : Text(
-              '상담게시판',
-              style: CustomTextStyles.appbarText,
-            ),
-      ),
-      
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-
-            // 게시글 상세보기
-            Padding(
-              padding: const EdgeInsets.all(20.0),
-              child: Container(
-                width: double.infinity,
-                decoration: const BoxDecoration(
-                  color: Colors.white,
-                ),
-                child: BoardDetailWidget(
-                  boardIdx: board.boardIdx,
-                ),
+        title: board.boardName == 'freeboard'
+            ? Text(
+                '자유게시판',
+                style: CustomTextStyles.appbarText,
+              )
+            : Text(
+                '상담게시판',
+                style: CustomTextStyles.appbarText,
               ),
-            ),
-
-            Divider(
-              color: Colors.grey[300],
-              thickness: 1.0,
-              indent: 20.0,
-              endIndent: 20.0,
-            ),
-
-            // 댓글 목록
-            commentList.isEmpty
-              ? const Column(
-                mainAxisAlignment: MainAxisAlignment.center, // 수직 중앙 정렬
+      ),
+      body: Column(
+        children: [
+          Expanded(
+            child: SingleChildScrollView(
+              child: Column(
                 children: [
-                  SizedBox(
-                    height: 170,
-                  ),
-                  Center(
-                    child: Text(
-                      '댓글이 없습니다',
-                      style: TextStyle(
-                        color: Colors.grey,
+                  Padding(
+                    padding: const EdgeInsets.all(20.0),
+                    child: Container(
+                      width: double.infinity,
+                      decoration: const BoxDecoration(
+                        color: Colors.white,
+                      ),
+                      child: BoardDetailWidget(
+                        boardIdx: board.boardIdx,
                       ),
                     ),
                   ),
+                  Divider(
+                    color: Colors.grey[300],
+                    thickness: 1.0,
+                    indent: 20.0,
+                    endIndent: 20.0,
+                  ),
+                  commentList.isEmpty
+                      ? const Center(
+                          child: Padding(
+                            padding: EdgeInsets.all(20.0),
+                            child: Text(
+                              '댓글이 없습니다',
+                              style: TextStyle(color: Colors.grey),
+                            ),
+                          ),
+                        )
+                      : Padding(
+                          padding: const EdgeInsets.all(20.0),
+                          child: Container(
+                            width: double.infinity,
+                            decoration: const BoxDecoration(
+                              color: Colors.white,
+                            ),
+                            child: ListView.builder(
+                              shrinkWrap: true,
+                              physics: const NeverScrollableScrollPhysics(),
+                              itemCount: commentList.length,
+                              itemBuilder: (context, index) {
+                                final comment = commentList[index];
+                                return Column(
+                                  children: [
+                                    CommentItemWidget(
+                                      commIdx: comment.commIdx,
+                                    ),
+                                    const SizedBox(
+                                      height: 10,
+                                    ),
+                                  ],
+                                );
+                              },
+                            ),
+                          ),
+                        ),
                 ],
-              )
-              : Padding(
-                padding: const EdgeInsets.all(20.0),
-                child: Container(
-                  width: double.infinity,
-                  decoration: const BoxDecoration(
-                    color: Colors.white,
-                  ),
-                  child: ListView.builder(
-                    shrinkWrap: true,
-                    physics: const NeverScrollableScrollPhysics(),
-                    itemCount: commentList.length,
-                    itemBuilder: (context, index) {
-                      final comment = commentList[index];
-                      return Column(
-                        children: [
-                          CommentItemWidget(
-                            commIdx: comment.commIdx,
-                          ),
-                          const SizedBox(
-                            height: 10,
-                          ),
-                        ],
-                      );
-                    },
-                  ),
-                ),
-              ),
-          ],
-        ),
-      ),
-
-      // 하단에 답변 입력창 고정
-      bottomNavigationBar: Padding(
-        padding: const EdgeInsets.symmetric(
-          horizontal: 16, vertical: 10
-        ),
-        child: Row(
-          children: [
-            Expanded(
-              child: TextField(
-                controller: _commentController,
-                style: TextStyle(
-                  color: Colors.grey[900],
-                  fontSize: 14,
-                ),
-                decoration: InputDecoration(
-                  hintText: '댓글을 입력하세요',
-                  hintStyle: TextStyle(
-                    color: Colors.grey[500],
-                    fontSize: 14,
-                  ),
-                  filled: true,
-                  fillColor: Colors.grey[100],
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(8),
-                    borderSide: BorderSide.none,
-                  ),
-                  contentPadding: const EdgeInsets.symmetric(
-                    horizontal: 16,
-                    vertical: 5
-                  ),
-                  // 아이콘
-                  suffixIcon: IconButton(
-                    icon: const Icon(
-                      Icons.send_rounded,
-                      color: pointColor2,
-                    ),
-                    onPressed: () {
-                      if (_commentController.text.isNotEmpty) {
-                        commentProvider.insertComment(
-                          Comment(
-                            commIdx: 0,
-                            postdate: DateTime.now(),
-                            content: _commentController.text,
-                            boardRef: board.boardIdx,
-                            writerRef: loginMember.id,
-                          ),
-                        );
-                        _commentController.clear();
-
-                        // 상태 갱신
-                        setState(() {
-                          commentList = commentProvider.listComment(board.boardIdx);
-                        });
-                      }
-                    },
-                  ),
-                ),
               ),
             ),
-          ],
-        ),
+          ),
+          // 하단 입력창
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+            child: Row(
+              children: [
+                Expanded(
+                  child: TextField(
+                    controller: _commentController,
+                    style: TextStyle(
+                      color: Colors.grey[900],
+                      fontSize: 14,
+                    ),
+                    decoration: InputDecoration(
+                      hintText: '댓글을 입력하세요',
+                      hintStyle: TextStyle(
+                        color: Colors.grey[500],
+                        fontSize: 14,
+                      ),
+                      filled: true,
+                      fillColor: Colors.grey[100],
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(8),
+                        borderSide: BorderSide.none,
+                      ),
+                      contentPadding: const EdgeInsets.symmetric(
+                        horizontal: 16,
+                        vertical: 5,
+                      ),
+                      suffixIcon: IconButton(
+                        icon: const Icon(
+                          Icons.send_rounded,
+                          color: pointColor2,
+                        ),
+                        onPressed: () {
+                          if (_commentController.text.isNotEmpty) {
+                            commentProvider.insertComment(
+                              Comment(
+                                commIdx: 0,
+                                postdate: DateTime.now(),
+                                content: _commentController.text,
+                                boardRef: board.boardIdx,
+                                writerRef: loginMember.id,
+                              ),
+                            );
+                            _commentController.clear();
+
+                            setState(() {
+                              commentList = commentProvider.listComment(board.boardIdx);
+                            });
+                          }
+                        },
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
       ),
     );
   }
