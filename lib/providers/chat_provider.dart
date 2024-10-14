@@ -86,4 +86,10 @@ class ChatProvider extends ChangeNotifier {
     _chatList.add(chat);
     notifyListeners();
   }
+
+  // 읽음으로 변경
+  void updateChat(Chat chat) {
+    chat.read = 'T';
+    notifyListeners();
+  }
 }

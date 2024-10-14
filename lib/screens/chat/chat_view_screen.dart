@@ -6,7 +6,6 @@ import 'package:doctorviewapp/providers/chat_provider.dart';
 import 'package:doctorviewapp/providers/hospital_provider.dart';
 import 'package:doctorviewapp/providers/member_provider.dart';
 import 'package:doctorviewapp/theme/colors.dart';
-import 'package:doctorviewapp/widgets/chat/date_line.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
@@ -26,6 +25,38 @@ class ChatViewScreen extends StatefulWidget {
 class _ChatViewScreenState extends State<ChatViewScreen> {
 
   final TextEditingController _messageController = TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    final memberProvider = Provider.of<MemberProvider>(context);
+    final chatProvider = Provider.of<ChatProvider>(context);
+
+    Member? loginMember = memberProvider.loginMember;
+    if (loginMember != null) {
+      List<Chat> chatList = chatProvider.listChat(widget.roomId);
+      
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        for (var chat in chatList) {
+          if (chat.memberRef != loginMember.id) {
+            chatProvider.updateChat(chat);
+          }
+        }
+        setState(() {});
+      });
+    }
+  }
+
+  @override
+  void dispose() {
+    _messageController.dispose(); // 리소스 정리
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -116,9 +147,27 @@ class _ChatViewScreenState extends State<ChatViewScreen> {
                                           children: [
                                             Container(
                                               margin: const EdgeInsets.only(bottom: 8),
-                                              child: Text(
-                                                '${chat.postdate.hour}:${chat.postdate.minute}',
-                                                style: const TextStyle(fontSize: 10),
+                                              child: Column(
+                                                crossAxisAlignment: CrossAxisAlignment.end,
+                                                children: [
+                                                  (chat.read == 'F')
+                                                    ? const Text(
+                                                        '1',
+                                                        style: TextStyle(
+                                                          fontSize: 10,
+                                                          color: pointColor1,
+                                                          fontWeight: FontWeight.w700,
+                                                        ),
+                                                      )
+                                                    : const SizedBox.shrink(),
+                                                  Text(
+                                                    '${chat.postdate.hour}:${chat.postdate.minute}',
+                                                    style: TextStyle(
+                                                      fontSize: 10,
+                                                      color: Colors.grey[500],
+                                                    ),
+                                                  ),
+                                                ],
                                               ),
                                             ),
                                             Container(
@@ -171,7 +220,10 @@ class _ChatViewScreenState extends State<ChatViewScreen> {
                                               margin: const EdgeInsets.only(bottom: 8),
                                               child: Text(
                                                 '${chat.postdate.hour}:${chat.postdate.minute}',
-                                                style: const TextStyle(fontSize: 10),
+                                                style: TextStyle(
+                                                  fontSize: 10,
+                                                  color: Colors.grey[500],
+                                                ),
                                               ),
                                             ),
                                           ],
