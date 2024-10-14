@@ -51,7 +51,7 @@ class _AddressSearchWidgetState extends State<AddressSearchWidget> {
       );
     }
   }
-
+  
   @override
   Widget build(BuildContext context) {
     return
