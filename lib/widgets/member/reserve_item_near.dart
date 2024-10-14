@@ -34,7 +34,7 @@ class _ReserveItemNearState extends State<ReserveItemNear> {
     return Container(
       width: double.infinity,
       decoration: BoxDecoration(
-      color: Colors.grey[300],  
+      color: Colors.grey[200],  
       // border: Border.all(color: Colors.grey[300]!, width: 1.0),  // 외곽선 색상 유지
       borderRadius: BorderRadius.circular(8),
     ),
@@ -51,9 +51,9 @@ class _ReserveItemNearState extends State<ReserveItemNear> {
                 Text(
                   reserve!.hospname,
                   style: const TextStyle(
-                    fontSize: 30,
+                    fontSize: 16,
                     letterSpacing: 0.1,
-                    fontWeight: FontWeight.w800,
+                    fontWeight: FontWeight.w700,
                   ),
                 ),
                 
@@ -63,6 +63,7 @@ class _ReserveItemNearState extends State<ReserveItemNear> {
                 Text(
                   '피부과',
                   style: TextStyle(
+                    fontSize: 14,
                     letterSpacing: 0.1,
                     color: Colors.grey[500],
                   ),
@@ -74,7 +75,7 @@ class _ReserveItemNearState extends State<ReserveItemNear> {
             const SizedBox(height: 10),
             ReserveCheckTextWidget(title: '예약자', content: reserve.username),
             const SizedBox(height: 10),
-            ReserveCheckTextWidget(title: '예약일', content: '${formatDate(reserve.postdate)}, ${reserve.posttime}',),
+            ReserveCheckTextWidget(title: '예약일', content: '${formatDate(reserve.postdate)} ${reserve.posttime}',),
           ]
         ),
       )

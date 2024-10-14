@@ -98,10 +98,11 @@ class _InsertDoctorState extends State<InsertDoctor> {
                                           ),
                                         );
                                       }
-
-                                      ScaffoldMessenger.of(context).showSnackBar(
-                                          const SnackBar(content: Text('모든 내역을 작성해주세요.')),
-                                      );
+                                      else {
+                                        ScaffoldMessenger.of(context).showSnackBar(
+                                            const SnackBar(content: Text('모든 내역을 작성해주세요.')),
+                                        );
+                                      }
                                     }
                                   ),
                                 ],

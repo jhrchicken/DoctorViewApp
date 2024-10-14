@@ -1,8 +1,7 @@
-import 'package:doctorviewapp/models/doctor.dart';
 import 'package:doctorviewapp/models/hours.dart';
-import 'package:doctorviewapp/providers/doctor_provider.dart';
+import 'package:doctorviewapp/models/reserve.dart';
 import 'package:doctorviewapp/providers/hours_provider.dart';
-import 'package:doctorviewapp/theme/colors.dart';
+import 'package:doctorviewapp/providers/reserve_provider.dart';
 import 'package:doctorviewapp/widgets/reserve/doctor_radio_button.dart';
 import 'package:doctorviewapp/widgets/reserve/reserve_timeSlots.dart';
 import 'package:flutter/material.dart';
@@ -10,14 +9,14 @@ import 'package:provider/provider.dart';
 
 class ReserveHoursInfoWidget extends StatefulWidget {
   final String hospRef;
-  final ValueChanged<String> onHoursSelected; 
-  
+  final ValueChanged<String> onHoursSelected;
+
   const ReserveHoursInfoWidget({
     super.key,
     required this.hospRef,
     required this.onHoursSelected,
   });
-  
+
   @override
   State<ReserveHoursInfoWidget> createState() => _ReserveHoursInfoWidgetState();
 }
@@ -29,10 +28,18 @@ class _ReserveHoursInfoWidgetState extends State<ReserveHoursInfoWidget> {
   Widget build(BuildContext context) {
     final hoursProvider = Provider.of<HoursProvider>(context);
     List<Hours> hoursList = hoursProvider.getHospHours(widget.hospRef);
+
+    final reserveProvider = Provider.of<ReserveProvider>(context);
+    List<Reserve>? reserveList = reserveProvider.listReserve(widget.hospRef);
+
+
     
-    List<String> slots = getTimeSlots(hoursList[0].startTime, hoursList[0].deadLine, hoursList[0].startBreak, hoursList[0].endBreak);
-
-
+    List<String> slots = getTimeSlots(
+      hoursList[0].startTime, 
+      hoursList[0].deadLine, 
+      hoursList[0].startBreak, 
+      hoursList[0].endBreak
+    );
 
     return ExpansionTile(
       shape: const Border(),
@@ -53,26 +60,37 @@ class _ReserveHoursInfoWidgetState extends State<ReserveHoursInfoWidget> {
       tilePadding: EdgeInsets.zero,
       children: [
         const SizedBox(height: 20),
-        SizedBox(
-          height: 50, 
-          child: ListView.builder(
-            scrollDirection: Axis.horizontal,
-            itemCount: slots.length,
-            itemBuilder: (context, index) {
-              return _buildDoctorCard(slots[index]);
-            },
-          ),
+        Column(
+          children: _buildRows(slots),
         ),
-        const SizedBox(height: 5,),
+        const SizedBox(height: 5),
       ],
     );
   }
 
-  Widget _buildDoctorCard(String slots) {
+  List<Widget> _buildRows(List<String> slots) {
+    List<Widget> rows = [];
+    for (int i = 0; i < slots.length; i += 3) {
+      // 3개씩 묶어서 Row 생성
+      rows.add(
+        Row(
+          mainAxisAlignment: (i + 3 >= slots.length) ? MainAxisAlignment.start : MainAxisAlignment.spaceEvenly, 
+          children: [
+            _buildHoursCard(slots[i]),
+            if (i + 1 < slots.length) _buildHoursCard(slots[i + 1]), 
+            if (i + 2 < slots.length) _buildHoursCard(slots[i + 2]),
+          ],
+        ),
+      );
+    }
+    return rows;
+  }
+
+  Widget _buildHoursCard(String slot) {
     return SizedBox(
-      width: MediaQuery.of(context).size.width / 2.5 - 10, 
+      width: MediaQuery.of(context).size.width / 3 - 20, 
       child: Container(
-        margin: const EdgeInsets.symmetric(horizontal: 10),
+        margin: const EdgeInsets.symmetric(vertical: 5),
         decoration: BoxDecoration(
           color: Colors.grey[100],
           borderRadius: BorderRadius.circular(8),
@@ -84,8 +102,8 @@ class _ReserveHoursInfoWidgetState extends State<ReserveHoursInfoWidget> {
             children: [
               DoctorRadioButton(
                 groupValue: selectedHours ?? 'noselect',
-                value: slots,
-                title: slots,
+                value: slot,
+                title: slot,
                 onChanged: (String? value) {
                   setState(() {
                     selectedHours = value; 

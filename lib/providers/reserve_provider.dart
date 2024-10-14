@@ -108,12 +108,21 @@ class ReserveProvider extends ChangeNotifier {
 
   // 예약 내역 정렬 
   List<Reserve> nearReserve(String ref) {
-    List<Reserve> listResult = _reserveList.where(
-      (reserve) => 
-      (reserve.user_ref == ref && reserve.postdate.isAfter(DateTime.now()) && reserve.cancel =='F')  || (reserve.hosp_ref == ref && reserve.postdate.isAfter(DateTime.now()) && reserve.cancel =='F') 
-    ).toList();
-
     DateTime today = DateTime.now();
+
+    List<Reserve> listResult = _reserveList.where(
+      (reserve) {
+        // postDate + postTime
+        DateTime postDateTime = DateTime(
+          reserve.postdate.year,
+          reserve.postdate.month,
+          reserve.postdate.day,
+          int.parse(reserve.posttime.split(':')[0]), // 시
+          int.parse(reserve.posttime.split(':')[1]), // 분
+        );
+        return (reserve.user_ref == ref && postDateTime.isAfter(today) && reserve.cancel =='F') || (reserve.hosp_ref == ref && postDateTime.isAfter(today) && reserve.cancel =='F');
+      },
+    ).toList();
 
     // 가장 가까운 순서로 정렬
     listResult.sort((a, b) {
@@ -127,9 +136,19 @@ class ReserveProvider extends ChangeNotifier {
 
   // 지난 예약
   List<Reserve> pastReserve(String ref) {
+    DateTime today = DateTime.now();
     List<Reserve> listResult = _reserveList.where(
-      (reserve) => 
-      (reserve.user_ref == ref && reserve.postdate.isBefore(DateTime.now())) || (reserve.hosp_ref == ref && reserve.postdate.isBefore(DateTime.now())) 
+      (reserve) {
+        // postDate + postTime
+        DateTime postDateTime = DateTime(
+          reserve.postdate.year,
+          reserve.postdate.month,
+          reserve.postdate.day,
+          int.parse(reserve.posttime.split(':')[0]), // 시
+          int.parse(reserve.posttime.split(':')[1]), // 분
+        );
+        return (reserve.user_ref == ref && postDateTime.isBefore(today) && reserve.cancel =='F') || (reserve.hosp_ref == ref && postDateTime.isBefore(today) && reserve.cancel =='F');
+      },
     ).toList();
 
     // 오래된 순서로 정렬
@@ -157,6 +176,9 @@ class ReserveProvider extends ChangeNotifier {
     }
   }
   
+
+
+
 
 
 

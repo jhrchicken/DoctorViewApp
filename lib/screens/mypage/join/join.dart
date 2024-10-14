@@ -64,7 +64,7 @@ Widget JoinButton({
       style: ElevatedButton.styleFrom(
         backgroundColor: pointColor2,
         foregroundColor: Colors.white,
-        textStyle: const TextStyle(fontWeight: FontWeight.w500, fontSize: 30.0,),
+        textStyle: const TextStyle(fontWeight: FontWeight.w500, fontSize: 30),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(30),
         ),

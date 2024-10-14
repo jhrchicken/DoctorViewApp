@@ -6,6 +6,7 @@ import 'package:doctorviewapp/providers/member_provider.dart';
 import 'package:doctorviewapp/screens/reserve/reserve_check_screen.dart';
 import 'package:doctorviewapp/theme/colors.dart';
 import 'package:doctorviewapp/widgets/common/primary_button.dart';
+import 'package:doctorviewapp/widgets/reserve/reserve_divider.dart';
 import 'package:doctorviewapp/widgets/reserve/reserve_doctorInfo_widget.dart';
 import 'package:doctorviewapp/widgets/reserve/reserve_hoursInfo_widget.dart';
 import 'package:doctorviewapp/widgets/reserve/reserve_select_date_widget.dart';
@@ -28,6 +29,7 @@ class ReserveProceedScreen extends StatefulWidget {
 class _ReserveProceedScreenState extends State<ReserveProceedScreen> {
   final _formKey = GlobalKey<FormState>();
 
+  // 예약자 정보 초기화
   @override
   void initState() {
     super.initState();
@@ -43,14 +45,13 @@ class _ReserveProceedScreenState extends State<ReserveProceedScreen> {
     });
   }
 
-
+  
   DateTime? _selectedDate;
   void updateDate(DateTime value){
     setState(() {
       _selectedDate = value;
     });
   }
-  
   
   // 예약자 정보
   String userName = ''; String userTel = ''; String userAddr = ''; String userRrn = '';
@@ -92,16 +93,13 @@ class _ReserveProceedScreenState extends State<ReserveProceedScreen> {
   }
 
   
-  
   @override
   Widget build(BuildContext context) {
-
     final hospitalProvider = Provider.of<HospitalProvider>(context);
     Hospital? hospital = hospitalProvider.selectHosp(widget.hospRef);
 
     final memberProvider = Provider.of<MemberProvider>(context);
     final loginMember = memberProvider.loginMember;
-  
     
     return Scaffold(
       appBar: AppBar(
@@ -136,36 +134,25 @@ class _ReserveProceedScreenState extends State<ReserveProceedScreen> {
                 const SizedBox(height: 30),
 
                 // 날짜 선택
-                ReserveSelectDateWidget(onDateSelected: updateDate),
+                ReserveSelectDateWidget(hospRef: widget.hospRef, onDateSelected: updateDate),
                 const SizedBox(height: 10,),
-                Divider(
-                  color: Colors.grey[300],
-                  thickness: 1.0
-                ),
-                const SizedBox(height: 5,),
+                const ReserveDivider(),
 
                 // 시간 선택
                 ReserveHoursInfoWidget(hospRef: widget.hospRef, onHoursSelected: updateHours),
+                const ReserveDivider(),
 
-                Divider(
-                  color: Colors.grey[300],
-                  thickness: 1.0
-                ),
-                const SizedBox(height: 5,),
+                // ReserveHoursInfoWidget(hospRef: widget.hospRef, onHoursSelected: onHoursSelected)
 
                 // 의사
                 ReserveDoctorInfoWidget(hospRef: widget.hospRef, onDoctorSelected: updateDoctorName),
-                Divider(
-                  color: Colors.grey[300],
-                  thickness: 1.0
-                ),
-                const SizedBox(height: 5,),
+                const ReserveDivider(),
                 
+                // 방문자 
                 Form(
                   key: _formKey,
                   child: ReserveUserInfoWidget(onUserNameChanged: updateUserName, onUserTelChanged: updateUserTel, onUserAddrChanged: updateUserAddr, onUserRrnChanged: updateUserRrn),
                 ),
-                // 방문자 
                 
 
                 const SizedBox(height: 30),
@@ -216,19 +203,20 @@ class _ReserveProceedScreenState extends State<ReserveProceedScreen> {
                     print('selectHours:$selectedHours');
                     // 날짜
                     print('날짜');
-                    if(_selectedDate != null){
-                      List<String> dateParts = _selectedDate.toString().split(' ');
-                      print(dateParts[0]);
-                    }
+                    List<String> dateParts = _selectedDate.toString().split(' ');
+                    print(dateParts[0]);
+
+
+
                   },
                   color: pointColor2)
-
-                
               ],
             ),
           ),
         ),
       ),
     );
+  
+    
   }
 }

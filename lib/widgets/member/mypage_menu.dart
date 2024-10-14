@@ -27,14 +27,14 @@ class _MypageMenuState extends State<MypageMenu> {
               style: TextStyle(
                 color: Colors.grey[900],
                 fontWeight: FontWeight.w500,
-                fontSize: 22,
+                fontSize: 16,
               ),
             ),
           ),
           Icon(
             Icons.arrow_forward_ios,
             color: Colors.grey[500],
-            size: 18,
+            size: 16,
           ),
         ],
       ),
