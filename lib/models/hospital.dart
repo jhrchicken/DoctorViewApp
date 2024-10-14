@@ -15,6 +15,9 @@ class Hospital {
   String? hospitalize;
   String? system;
 
+  double? lat;
+  double? lng;
+
   Hospital({
     required this.id,
     required this.name,
@@ -28,5 +31,7 @@ class Hospital {
     this.pcr,
     this.hospitalize,
     this.system,
+    this.lat,
+    this.lng,
   });
 }
