@@ -1,4 +1,3 @@
-import 'package:doctorviewapp/screens/board/board_list_screen.dart';
 import 'package:doctorviewapp/widgets/home/address_search_widget.dart';
 import 'package:doctorviewapp/widgets/home/doctor_link_widget.dart';
 import 'package:doctorviewapp/widgets/home/freeboard_link_widget.dart';
@@ -6,7 +5,6 @@ import 'package:doctorviewapp/widgets/home/hashtag_search_widget.dart';
 import 'package:doctorviewapp/widgets/home/hosp_link_widget.dart';
 import 'package:doctorviewapp/widgets/home/qnaboard_link_widget.dart';
 import 'package:flutter/material.dart';
-import 'package:doctorviewapp/theme/colors.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});

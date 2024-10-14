@@ -162,27 +162,4 @@ class _MyHomePageState extends State<MyHomePage> {
     }
     return page!;
   }
-
-  // 각 페이지를 반환하는 메서드 (추후 삭제) 깃 연동 테스트 !!!!!!!!!
-  Widget dummyPage() {
-    return const SizedBox(
-      height: 200,
-      child: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Icon(
-              Icons.camera_alt,
-              color: Colors.red,
-              size: 50.0,
-            ),
-            Text(
-              'Page Index : 0',
-              style: TextStyle(fontSize: 20),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
 }

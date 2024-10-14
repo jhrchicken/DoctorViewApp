@@ -52,7 +52,7 @@ class _QnaboardLinkWidgetState extends State<QnaboardLinkWidget> {
                     ),
                     const SizedBox(height: 2),
                     Text(
-                      '상담 게시판',
+                      '상담게시판',
                       style: TextStyle(
                         fontSize: 14,
                         fontWeight: FontWeight.bold,
