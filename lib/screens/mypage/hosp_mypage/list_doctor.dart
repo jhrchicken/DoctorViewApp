@@ -45,7 +45,9 @@ class _DoctorListState extends State<DoctorList> {
                 onPressed: () {
                   Navigator.of(context).pop(); 
                   doctorProvider.deleteDoctor(docIdx);
-                  print('삭제완료');
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(content: Text('의료진정보가 삭제되었습니다.')),
+                );
                 },
                 child: Text('예', style: TextStyle(color: Colors.grey[900]),),
               ),

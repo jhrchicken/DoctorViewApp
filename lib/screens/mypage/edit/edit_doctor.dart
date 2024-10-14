@@ -116,9 +116,9 @@ class _EditDoctorState extends State<EditDoctor> {
                                         );
                                       }
 
-                                      ScaffoldMessenger.of(context).showSnackBar(
-                                          const SnackBar(content: Text('모든 내역을 작성해주세요.')),
-                                      );
+                                      // ScaffoldMessenger.of(context).showSnackBar(
+                                      //     const SnackBar(content: Text('모든 내역을 작성해주세요.')),
+                                      // );
                                     }
                                   ),
                                 ],
