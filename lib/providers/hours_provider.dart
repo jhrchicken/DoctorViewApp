@@ -2,17 +2,17 @@ import 'package:doctorviewapp/models/hours.dart';
 import 'package:flutter/material.dart';
 
 class HoursProvider extends ChangeNotifier {
-  int _seqHoursIdx = 8;
+  int _seqHoursIdx = 9;
   
   final List<Hours> _hoursList = [
     Hours (
       hoursIdx: 1,
       week: '월요일',
       startTime: '09:00',
-      endTime: '18:00',
+      endTime: '23:55',
       startBreak: '12:00',
       endBreak: '13:00',
-      deadLine: '17:00',
+      deadLine: '12:00',
       hospRef: 'hospital1',
       openWeek: 'T',
       weekend: 'F',
@@ -92,6 +92,19 @@ class HoursProvider extends ChangeNotifier {
       endBreak: '00:00',
       deadLine: '00:00',
       hospRef: 'hospital1',
+      openWeek: 'T',
+      weekend: 'F',
+      night: 'F'
+      ),
+    Hours (
+      hoursIdx: 8,
+      week: '일요일',
+      startTime: '00:00',
+      endTime: '00:00',
+      startBreak: '00:00',
+      endBreak: '00:00',
+      deadLine: '00:00',
+      hospRef: 'hospital2',
       openWeek: 'T',
       weekend: 'F',
       night: 'F'
