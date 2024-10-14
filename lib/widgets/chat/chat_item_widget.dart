@@ -30,7 +30,6 @@ class _ChatItemWidgetState extends State<ChatItemWidget> {
     // final chatProvider = Provider.of<ChatProvider>(context);
 
     return GestureDetector(
-      behavior: HitTestBehavior.opaque,
       onTap: () {
         Navigator.push(
           context,
@@ -39,70 +38,77 @@ class _ChatItemWidgetState extends State<ChatItemWidget> {
           )
         );
       },
-      child: Container(
-        width: double.infinity,
-        padding: const EdgeInsets.symmetric(vertical: 15),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Row(
-              children: [
-                const Icon(
-                  Icons.account_circle,
-                  size: 50,
-                ),
-                const SizedBox(width: 10),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      '$hospital',
-                      style: const TextStyle(fontSize: 16),
-                    ),
-                    const SizedBox(height: 3),
-                    Container(
-                      constraints: const BoxConstraints(maxWidth: 230),
-                      child: Text(
-                        '내용입니다.내용입니다.내용입니다.내용입니다.내용입니다.내용입니다.내용입니다.내용입니다.내용입니다.',
-                        style: TextStyle(fontSize: 14),
-                        overflow: TextOverflow.ellipsis,
-                        maxLines: 1,
-                      ),
-                    ),
-                  ],
-                ),
-              ],
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 20),
+        child: Container(
+          width: double.infinity,
+          padding: const EdgeInsets.symmetric(vertical: 15),
+          decoration: const BoxDecoration(
+            border: Border(
+              bottom: BorderSide(color: border),
             ),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.end,
-              children: [
-                Padding(
-                  padding: const EdgeInsets.only(right: 3),
-                  child: Text(
-                    '$hour:$minute',    // 마지막 메세지 시간이 오늘이면 시간이 나오고, 과거면 날짜가 나와야 함
-                    style: TextStyle(fontSize: 10, color: Colors.grey[500]),
-                 ),
-               ),
-               const SizedBox(height: 5),
-               Container(
-                 padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
-                 decoration: BoxDecoration(
-                   color: pointColor1,
-                   borderRadius: BorderRadius.circular(50),
-                 ),
-                 child:
-                 Text(
-                   messageCount >= 100 ? '99+' : '$messageCount',
-                   style: const TextStyle(
-                     color: Colors.white,
-                     fontWeight: FontWeight.w500,
-                     fontSize: 12,
+          ), 
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Row(
+                children: [
+                  const Icon(
+                    Icons.account_circle,
+                    size: 50,
+                  ),
+                  const SizedBox(width: 10),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        '$hospital',
+                        style: const TextStyle(fontSize: 16),
+                      ),
+                      Container(
+                        constraints: const BoxConstraints(maxWidth: 200),
+                        child: Text(
+                          '내용입니다.내용입니다.내용입니다.내용입니다.내용입니다.내용입니다.내용입니다.내용입니다.내용입니다.',
+                          style: TextStyle(fontSize: 14),
+                          overflow: TextOverflow.ellipsis,
+                          maxLines: 1,
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(right: 3),
+                    child: Text(
+                      '$hour:$minute',    // 마지막 메세지 시간이 오늘이면 시간이 나오고, 과거면 날짜가 나와야 함
+                      style: TextStyle(fontSize: 10, color: Colors.grey[500]),
                    ),
                  ),
-               ),
-             ],
-            ),
-          ],
+                 const SizedBox(height: 5),
+                 Container(
+                   padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+                   decoration: BoxDecoration(
+                     color: pointColor1,
+                     borderRadius: BorderRadius.circular(50),
+                   ),
+                   child:
+                   Text(
+                     messageCount >= 100 ? '99+' : '$messageCount',
+                     style: const TextStyle(
+                       color: Colors.white,
+                       fontWeight: FontWeight.w500,
+                       fontSize: 12,
+                     ),
+                   ),
+                 ),
+               ],
+              ),
+            ],
+          ),
         ),
       ),
     );

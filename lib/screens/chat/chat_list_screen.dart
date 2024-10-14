@@ -74,7 +74,7 @@ class _ChatListScreenState extends State<ChatListScreen> {
         child: Column(
           children: [
             Padding(
-              padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+              padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
               child: Container(
                 width: double.infinity,
                 decoration: BoxDecoration(
@@ -87,12 +87,7 @@ class _ChatListScreenState extends State<ChatListScreen> {
                   // itemCount: chatList.length,
                   itemCount: 12,
                   itemBuilder: (context, index) {
-                    return const Column(
-                      children: [
-                        ChatItemWidget(),
-                        Divider(color: border),
-                      ],
-                    );
+                    return ChatItemWidget();
                   },
                 ),
               ),
