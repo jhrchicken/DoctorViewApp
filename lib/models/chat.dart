@@ -1,9 +1,10 @@
 class Chat {
   int chatIdx;
   String memberRef;
-  int roomId;
+  String roomId;
   String message;
   DateTime postdate;
+  String read;
 
   Chat ({
     required this.chatIdx,
@@ -11,5 +12,6 @@ class Chat {
     required this.roomId,
     required this.message,
     required this.postdate,
+    required this.read,
   });
 }
