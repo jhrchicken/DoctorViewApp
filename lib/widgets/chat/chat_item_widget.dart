@@ -1,5 +1,6 @@
 import 'package:doctorviewapp/providers/chat_provider.dart';
 import 'package:doctorviewapp/screens/chat/chat_screen.dart';
+import 'package:doctorviewapp/theme/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -20,8 +21,13 @@ class _ChatItemWidgetState extends State<ChatItemWidget> {
 
   @override
   Widget build(BuildContext context) {
-    // final chatProvider = Provider.of<ChatProvider>(context);
+    String nowTime = DateTime.now().toString().split(' ')[1];
+    String time = nowTime.split('.')[0];
+    String hour = time.split(':')[0];
+    String minute = time.split(':')[1];
+    int messageCount = 5555555;
 
+    // final chatProvider = Provider.of<ChatProvider>(context);
 
     return GestureDetector(
       onTap: () {
@@ -32,28 +38,78 @@ class _ChatItemWidgetState extends State<ChatItemWidget> {
           )
         );
       },
-      child: Container(
-        decoration: BoxDecoration(color: Colors.white), // 얘 없으면 여백이 눌렀을 때 이동이 안댐;;;
-        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
-        width: double.infinity,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              '$hospital',
-              style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 20),
+        child: Container(
+          width: double.infinity,
+          padding: const EdgeInsets.symmetric(vertical: 15),
+          decoration: const BoxDecoration(
+            border: Border(
+              bottom: BorderSide(color: border),
             ),
-            const SizedBox(height: 3),
-            Container(
-              constraints: const BoxConstraints(maxWidth: 300),
-              child: Text(
-                '내용입니다.내용입니다.내용입니다.내용입니다.내용입니다.내용입니다.내용입니다.내용입니다.내용입니다.',
-                style: TextStyle(fontSize: 14),
-                overflow: TextOverflow.ellipsis,
-                maxLines: 1,
+          ), 
+          child: Row(
+            children: [
+              const Icon(
+                Icons.account_circle,
+                size: 50,
               ),
-            ),
-          ],
+              const SizedBox(width: 10),
+              Row(
+                children: [
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        '$hospital',
+                        style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
+                      ),
+                      const SizedBox(height: 3),
+                      Container(
+                        constraints: const BoxConstraints(maxWidth: 230),
+                        child: Text(
+                          '내용입니다.내용입니다.내용입니다.내용입니다.내용입니다.내용입니다.내용입니다.내용입니다.내용입니다.',
+                          style: TextStyle(fontSize: 14),
+                          overflow: TextOverflow.ellipsis,
+                          maxLines: 1,
+                        ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(width: 35),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.only(right: 3),
+                        child: Text(
+                          '$hour:$minute',    // 마지막 메세지 시간이 오늘이면 시간이 나오고, 과거면 날짜가 나와야 함
+                          style: TextStyle(fontSize: 10, color: Colors.grey[500]),
+                       ),
+                     ),
+                     const SizedBox(height: 5),
+                     Container(
+                       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+                       decoration: BoxDecoration(
+                         color: pointColor1,
+                         borderRadius: BorderRadius.circular(50),
+                       ),
+                       child:
+                       Text(
+                         messageCount >= 100 ? '99+' : '$messageCount',
+                         style: const TextStyle(
+                           color: Colors.white,
+                           fontWeight: FontWeight.w500,
+                           fontSize: 12,
+                         ),
+                       ),
+                     ),
+                   ],
+                  ),
+                ],
+              ),
+            ],
+          ),
         ),
       ),
     );
