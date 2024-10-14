@@ -12,6 +12,7 @@ import 'package:doctorviewapp/providers/hreview_provider.dart';
 import 'package:doctorviewapp/providers/likes_provider.dart';
 import 'package:doctorviewapp/providers/member_provider.dart';
 import 'package:doctorviewapp/providers/reserve_provider.dart';
+import 'package:doctorviewapp/screens/chat/chat_list_screen.dart';
 import 'package:doctorviewapp/screens/home/home_screen.dart';
 import 'package:doctorviewapp/screens/mypage/mypage_screen.dart';
 import 'package:doctorviewapp/providers/report_provider.dart';
@@ -115,7 +116,7 @@ class _MyHomePageState extends State<MyHomePage> {
         page = const HospDoctorListScreen();
         break;
       case 2:
-        page = dummyPage();
+        page = const ChatListScreen();
         break;
       case 3:
         page = const BoardMainScreen();
