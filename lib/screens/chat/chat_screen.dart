@@ -35,26 +35,36 @@ class _ChatScreenState extends State<ChatScreen> {
           padding: const EdgeInsets.symmetric(horizontal: 10),
           child: Column(
             children: [
+              // 날짜
               DateLine(),
+              SizedBox(height: 10),
           
               // 보낸 메세지
               Align(
                 alignment: Alignment.centerRight,
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.end,
+                  crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
-                    Text(
-                      '$hour:$minute',
-                      style: TextStyle(fontSize: 10),
+                    Container(
+                      margin: const EdgeInsets.only(bottom: 8),
+                      child: Text(
+                        '$hour:$minute',
+                        style: const TextStyle(fontSize: 10),
+                      ),
                     ),
                     Container(
-                      margin: EdgeInsets.all(5),
-                      padding: EdgeInsets.symmetric(vertical: 8, horizontal: 10),
+                      constraints: const BoxConstraints(maxWidth: 280),
+                      margin: const EdgeInsets.all(5),
+                      padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 10),
                       decoration: BoxDecoration(
                         color: Colors.grey[300],
                         borderRadius: BorderRadius.circular(15),
                       ),
-                      child: Text('안녕하세요'),
+                      child: const Text(
+                        '안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요',
+                        softWrap: true,
+                      ),
                     ),
                   ],
                 ),
@@ -65,20 +75,28 @@ class _ChatScreenState extends State<ChatScreen> {
                 alignment: Alignment.centerLeft,
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
                     Container(
-                      margin: EdgeInsets.all(5),
-                      padding: EdgeInsets.symmetric(vertical: 8, horizontal: 10),
+                      constraints: const BoxConstraints(maxWidth: 280),
+                      margin: const EdgeInsets.all(5),
+                      padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 10),
                       decoration: BoxDecoration(
                         color: Colors.white,
                         border: Border.all(color: border),
                         borderRadius: BorderRadius.circular(15),
                       ),
-                      child: Text('누구세요'),
+                      child: const Text(
+                        '누구세요',
+                        softWrap: true,
+                      ),
                     ),
-                    Text(
-                      '$hour:$minute',
-                      style: TextStyle(fontSize: 10),
+                    Container(
+                      margin: const EdgeInsets.only(bottom: 8),
+                      child: Text(
+                        '$hour:$minute',
+                        style: const TextStyle(fontSize: 10),
+                      ),
                     ),
                   ],
                 ),
@@ -91,7 +109,7 @@ class _ChatScreenState extends State<ChatScreen> {
       // 입력창
       bottomNavigationBar: Padding(
         padding: const EdgeInsets.symmetric(
-          horizontal: 16, vertical: 10
+          horizontal: 10, vertical: 10
         ),
         child: Row(
           children: [
