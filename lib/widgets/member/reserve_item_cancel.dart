@@ -50,9 +50,9 @@ class _ReserveItemCancelState extends State<ReserveItemCancel> {
                 Text(
                   reserve!.hospname,
                   style: const TextStyle(
-                    fontSize: 30,
+                    fontSize: 16,
                     letterSpacing: 0.1,
-                    fontWeight: FontWeight.w800,
+                    fontWeight: FontWeight.w700,
                   ),
                 ),
                 
@@ -62,6 +62,7 @@ class _ReserveItemCancelState extends State<ReserveItemCancel> {
                 Text(
                   '피부과',
                   style: TextStyle(
+                    fontSize: 14,
                     letterSpacing: 0.1,
                     color: Colors.grey[500],
                   ),

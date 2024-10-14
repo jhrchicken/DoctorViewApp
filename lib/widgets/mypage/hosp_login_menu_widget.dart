@@ -49,7 +49,7 @@ class _HospLoginMenuWidgetState extends State<HospLoginMenuWidget> {
             height: 50, 
             child: VerticalDivider(
               color: Colors.grey[100],
-              thickness: 1.0,
+              thickness: 2.0,
             ),
           ),
 
@@ -85,7 +85,7 @@ class _HospLoginMenuWidgetState extends State<HospLoginMenuWidget> {
             height: 50, 
             child: VerticalDivider(
               color: Colors.grey[100],
-              thickness: 1.0,
+              thickness: 2.0,
             ),
           ),
 

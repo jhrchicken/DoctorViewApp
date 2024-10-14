@@ -1,4 +1,5 @@
 import 'package:doctorviewapp/providers/doctor_provider.dart';
+import 'package:doctorviewapp/providers/hashtag_provider.dart';
 import 'package:doctorviewapp/providers/hospital_provider.dart';
 import 'package:doctorviewapp/theme/colors.dart';
 import 'package:doctorviewapp/widgets/doctor/doctor_item_widget.dart';
@@ -9,11 +10,13 @@ import 'package:provider/provider.dart';
 class HospDoctorListScreen extends StatefulWidget {
   final int tabIndex;
   final String address;
+  final String tag;
 
   const HospDoctorListScreen({
     super.key,
     this.tabIndex = 0,
     this.address = '',
+    this.tag = '',
   });
 
   @override
@@ -28,6 +31,7 @@ class _HospDoctorListScreenState extends State<HospDoctorListScreen> {
   Widget build(BuildContext context) {
     final doctorProvider = Provider.of<DoctorProvider>(context);
     final hospitalProvider = Provider.of<HospitalProvider>(context);
+    final hashtagProvider = Provider.of<HashtagProvider>(context);
 
     return DefaultTabController(
       length: 2,
@@ -99,28 +103,45 @@ class _HospDoctorListScreenState extends State<HospDoctorListScreen> {
               child: ListView.builder(
                 itemCount: hospitalProvider.searchHosp(_searchWord).where((hospital) {
                   // address가 빈 문자열이 아닐 경우 필터링
-                  if (widget.address.isNotEmpty) {
-                    return hospital.address == widget.address; // 주소가 일치하는 병원만 표시
-                  }
-                  return true; // 주소가 빈 문자열일 경우 모두 표시
+                  bool addressFilter = widget.address.isNotEmpty 
+                      ? hospital.address == widget.address 
+                      : true;
+                  // tag가 빈 문자열이 아닐 경우 필터링
+                  bool tagFilter = widget.tag.isNotEmpty 
+                      ? hashtagProvider.listHospHashtag(hospital.id)
+                          .any((hashtag) => hashtag.tag == widget.tag)
+                      : true;
+                  return addressFilter && tagFilter;
                 }).toList().length,
                 itemBuilder: (context, index) {
                   final hospital = hospitalProvider.searchHosp(_searchWord).where((hospital) {
-                    if (widget.address.isNotEmpty) {
-                      return hospital.address == widget.address;
-                    }
-                    return true;
-                  }).toList()[index]; // 필터링된 병원 리스트에서 아이템 선택
+                    // address가 빈 문자열이 아닐 경우 필터링
+                    bool addressFilter = widget.address.isNotEmpty 
+                        ? hospital.address == widget.address
+                        : true;
+                    // tag가 빈 문자열이 아닐 경우 필터링
+                    bool tagFilter = widget.tag.isNotEmpty 
+                        ? hashtagProvider.listHospHashtag(hospital.id)
+                            .any((hashtag) => hashtag.tag == widget.tag)
+                        : true;
+                    return addressFilter && tagFilter;
+                  }).toList()[index];
                   return Column(
                     children: [
                       HospitalItemWidget(
                         id: hospital.id,
                       ),
                       if (index < hospitalProvider.searchHosp(_searchWord).where((hospital) {
-                        if (widget.address.isNotEmpty) {
-                          return hospital.address == widget.address;
-                        }
-                        return true;
+                        // address가 빈 문자열이 아닐 경우 필터링
+                        bool addressFilter = widget.address.isNotEmpty 
+                            ? hospital.address == widget.address
+                            : true;
+                        // tag가 빈 문자열이 아닐 경우 필터링
+                        bool tagFilter = widget.tag.isNotEmpty 
+                            ? hashtagProvider.listHospHashtag(hospital.id)
+                                .any((hashtag) => hashtag.tag == widget.tag)
+                            : true;
+                        return addressFilter && tagFilter;
                       }).toList().length - 1)
                         Divider(color: Colors.grey[100], thickness: 1.0),
                     ],

@@ -51,7 +51,7 @@ class _UserLoginMenuWidgetState extends State<UserLoginMenuWidget> {
             height: 50, 
             child: VerticalDivider(
               color: Colors.grey[100],
-              thickness: 1.0,
+              thickness: 2.0,
             ),
           ),
 
