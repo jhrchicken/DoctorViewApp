@@ -74,9 +74,13 @@ class _ChatListScreenState extends State<ChatListScreen> {
         child: Column(
           children: [
             Padding(
-              padding: const EdgeInsets.only(top: 10),
+              padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
               child: Container(
                 width: double.infinity,
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(8),
+                ),
                 child: ListView.builder(
                   shrinkWrap: true,
                   physics: const NeverScrollableScrollPhysics(),
@@ -86,6 +90,7 @@ class _ChatListScreenState extends State<ChatListScreen> {
                     return const Column(
                       children: [
                         ChatItemWidget(),
+                        Divider(color: border),
                       ],
                     );
                   },
