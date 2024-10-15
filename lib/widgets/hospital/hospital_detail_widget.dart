@@ -361,7 +361,7 @@ class _HospitalDetailWidgetState extends State<HospitalDetailWidget> {
         const SizedBox(
           height: 20,
         ),
-        PrimaryButtonBlack(
+        PrimaryButton(
           text: hospital.system == 'T' ? '예약' : '예약 불가',
           onPressed: () {
             if (hospital.system == 'T') {
@@ -381,14 +381,16 @@ class _HospitalDetailWidgetState extends State<HospitalDetailWidget> {
         PrimaryButton(
           text: loginMember!.auth == 'ROLE_USER' ? '채팅' : '채팅 불가',
           onPressed: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => ChatViewScreen(
-                  roomId: '${loginMember.id}-${hospital.id}',
+            if (loginMember.auth == 'ROLE_USER') {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => ChatViewScreen(
+                    roomId: '${loginMember.id}-${hospital.id}',
+                  ),
                 ),
-              ),
-            );
+              );
+            }
           },
           color: loginMember.auth == 'ROLE_USER' ? pointColor2 : Colors.grey[500]!
         ),
