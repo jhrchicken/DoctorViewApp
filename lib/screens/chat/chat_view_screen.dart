@@ -49,7 +49,6 @@ class _ChatViewScreenState extends State<ChatViewScreen> {
             chatProvider.updateChat(chat);
           }
         }
-        // 자동 스크롤 제거: 메시지를 보낼 때만 스크롤
       });
     }
   }
