@@ -131,8 +131,14 @@ class _ChatViewScreenState extends State<ChatViewScreen> {
                             final chat = chatList[index];
                             final chatDate = DateFormat('yyyy년 MM월 dd일').format(chat.postdate);
                             String? preChatDate;
+                            // Chat? preChat;
+                            Chat? nextChat; 
                             if (index > 0) {
+                              // preChat = chatList[index - 1];
                               preChatDate = DateFormat('yyyy년 MM월 dd일').format(chatList[index - 1].postdate);
+                            }
+                            if (index < chatList.length - 1) {
+                              nextChat = chatList[index + 1];
                             }
                               return Column(
                                 children: [
@@ -141,7 +147,7 @@ class _ChatViewScreenState extends State<ChatViewScreen> {
                                     Padding(
                                       padding: const EdgeInsets.symmetric(vertical: 10),
                                       child: Container(
-                                        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5), // 내부 여백
+                                        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
                                         decoration: BoxDecoration(
                                           color: Colors.grey[200],
                                           borderRadius: BorderRadius.circular(15),
@@ -179,15 +185,25 @@ class _ChatViewScreenState extends State<ChatViewScreen> {
                                                         ),
                                                       )
                                                     : const SizedBox.shrink(),
-                                                  Text(
-                                                    '${chat.postdate.hour}:${chat.postdate.minute}',
-                                                    style: TextStyle(
-                                                      fontSize: 10,
-                                                      color: Colors.grey[500],
-                                                    ),
+                                                  (chat.memberRef == nextChat?.memberRef)
+                                                    ? (chat.postdate.hour != nextChat?.postdate.hour || chat.postdate.minute != nextChat?.postdate.minute)
+                                                        ? Text(
+                                                            '${chat.postdate.hour.toString().padLeft(2, '0')}:${chat.postdate.minute.toString().padLeft(2, '0')}',
+                                                            style: TextStyle(
+                                                              fontSize: 10,
+                                                              color: Colors.grey[500],
+                                                            ),
+                                                          )
+                                                        : const SizedBox.shrink()
+                                                    : Text(
+                                                        '${chat.postdate.hour.toString().padLeft(2, '0')}:${chat.postdate.minute.toString().padLeft(2, '0')}',
+                                                        style: TextStyle(
+                                                          fontSize: 10,
+                                                          color: Colors.grey[500],
+                                                        ),
+                                                      ),
+                                                    ],
                                                   ),
-                                                ],
-                                              ),
                                             ),
                                             Container(
                                               constraints: const BoxConstraints(maxWidth: 280),
@@ -214,11 +230,15 @@ class _ChatViewScreenState extends State<ChatViewScreen> {
                                           children: [
                                             Row(
                                               children: [
-                                                Icon(
-                                                  Icons.account_circle,
-                                                  size: 40,
-                                                  color: Colors.grey[500],
-                                                ),
+                                                (nextChat?.memberRef != chat.memberRef)
+                                                  ? Icon(
+                                                      Icons.account_circle,
+                                                      size: 40,
+                                                      color: Colors.grey[500],
+                                                    )
+                                                  : const SizedBox(
+                                                    width: 40,
+                                                  ),
                                                 Container(
                                                   constraints: const BoxConstraints(maxWidth: 280),
                                                   margin: const EdgeInsets.all(5),
@@ -237,13 +257,23 @@ class _ChatViewScreenState extends State<ChatViewScreen> {
                                             ),
                                             Container(
                                               margin: const EdgeInsets.only(bottom: 8),
-                                              child: Text(
-                                                '${chat.postdate.hour}:${chat.postdate.minute}',
-                                                style: TextStyle(
-                                                  fontSize: 10,
-                                                  color: Colors.grey[500],
-                                                ),
-                                              ),
+                                              child : (chat.memberRef == nextChat?.memberRef)
+                                                ? (chat.postdate.hour != nextChat?.postdate.hour || chat.postdate.minute != nextChat?.postdate.minute)
+                                                    ? Text(
+                                                        '${chat.postdate.hour.toString().padLeft(2, '0')}:${chat.postdate.minute.toString().padLeft(2, '0')}',
+                                                        style: TextStyle(
+                                                          fontSize: 10,
+                                                          color: Colors.grey[500],
+                                                        ),
+                                                      )
+                                                    : const SizedBox.shrink()
+                                                : Text(
+                                                    '${chat.postdate.hour.toString().padLeft(2, '0')}:${chat.postdate.minute.toString().padLeft(2, '0')}',
+                                                    style: TextStyle(
+                                                      fontSize: 10,
+                                                      color: Colors.grey[500],
+                                                    ),
+                                                  ),
                                             ),
                                           ],
                                         ),
