@@ -308,6 +308,9 @@ class _ChatViewScreenState extends State<ChatViewScreen> {
                               read: 'F',
                             ),
                           );
+                          setState(() {
+                            _messageController.text = '';
+                          });
                         },
                       ),
                     ),
