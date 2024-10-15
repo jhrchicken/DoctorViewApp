@@ -2,10 +2,13 @@ import 'package:doctorviewapp/models/hospital.dart';
 import 'package:doctorviewapp/models/hours.dart';
 import 'package:doctorviewapp/models/hreview.dart';
 import 'package:doctorviewapp/models/likes.dart';
+import 'package:doctorviewapp/models/member.dart';
 import 'package:doctorviewapp/providers/hospital_provider.dart';
 import 'package:doctorviewapp/providers/hours_provider.dart';
 import 'package:doctorviewapp/providers/hreview_provider.dart';
 import 'package:doctorviewapp/providers/likes_provider.dart';
+import 'package:doctorviewapp/providers/member_provider.dart';
+import 'package:doctorviewapp/screens/chat/chat_view_screen.dart';
 import 'package:doctorviewapp/screens/reserve/reserve_proceed_screen.dart';
 import 'package:doctorviewapp/theme/colors.dart';
 import 'package:doctorviewapp/widgets/common/primary_button.dart';
@@ -43,11 +46,13 @@ class _HospitalDetailWidgetState extends State<HospitalDetailWidget> {
     final likesProvider = Provider.of<LikesProvider>(context);
     final hreviewProvider = Provider.of<HreviewProvider>(context);
     final hoursProvider = Provider.of<HoursProvider>(context);
+    final memberProvider = Provider.of<MemberProvider>(context);
 
     Hospital? hospital = hospitalProvider.selectHosp(widget.id);
     List<Likes> likesList = likesProvider.selectLikes('hospital', hospital!.id);
     List<Hreview> hreviewList = hreviewProvider.listHreview(hospital.id);
     List<Hours> hoursList = hoursProvider.getHospHours(hospital.id);
+    Member? loginMember = memberProvider.loginMember;
     
     DateTime now = DateTime.now();
     String weekday = weekdays[now.weekday - 1];
@@ -374,19 +379,18 @@ class _HospitalDetailWidgetState extends State<HospitalDetailWidget> {
           color: hospital.system == 'T' ? pointColor1 : Colors.grey[500]!,
         ),
         PrimaryButton(
-          text: '채팅',
+          text: loginMember!.auth == 'ROLE_USER' ? '채팅' : '채팅 불가',
           onPressed: () {
-            // ***************** 채팅으로 바로가기 ******************
             Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => ReserveProceedScreen(
-                  hospRef: hospital.id,
+                builder: (context) => ChatViewScreen(
+                  roomId: '${loginMember.id}-${hospital.id}',
                 ),
               ),
             );
           },
-          color: pointColor2,
+          color: loginMember.auth == 'ROLE_USER' ? pointColor2 : Colors.grey[500]!
         ),
       ],
     );

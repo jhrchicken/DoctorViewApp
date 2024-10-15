@@ -26,10 +26,17 @@ class ChatViewScreen extends StatefulWidget {
 class _ChatViewScreenState extends State<ChatViewScreen> {
   final TextEditingController _messageController = TextEditingController();
   final ScrollController _scrollController = ScrollController();
+  bool _isAtBottom = true; // 스크롤 위치 추적 변수
+  bool _userScrolling = false; // 사용자가 스크롤 중인지 여부
 
   @override
   void initState() {
     super.initState();
+    _scrollController.addListener(() {
+      // 스크롤 위치에 따라 상태 업데이트
+      _isAtBottom = _scrollController.position.pixels == _scrollController.position.maxScrollExtent;
+      _userScrolling = !_isAtBottom; // 사용자가 스크롤 중이면 true
+    });
   }
 
   @override
@@ -42,12 +49,15 @@ class _ChatViewScreenState extends State<ChatViewScreen> {
     if (loginMember != null) {
       List<Chat> chatList = chatProvider.listChat(widget.roomId);
 
-      // 새 메시지 상태 업데이트
+      // 새 메시지 상태 업데이트 및 자동 스크롤
       WidgetsBinding.instance.addPostFrameCallback((_) {
         for (var chat in chatList) {
           if (chat.memberRef != loginMember.id) {
             chatProvider.updateChat(chat);
           }
+        }
+        if (_isAtBottom && !_userScrolling) {
+          _scrollToBottom(); // 사용자가 스크롤 중이 아닐 때만 자동 스크롤
         }
       });
     }
@@ -309,7 +319,8 @@ class _ChatViewScreenState extends State<ChatViewScreen> {
                         borderRadius: BorderRadius.circular(8),
                         borderSide: BorderSide.none,
                       ),
-                      contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 5),
+                      contentPadding: const EdgeInsets.symmetric(
+                          horizontal: 16, vertical: 5),
                       suffixIcon: IconButton(
                         icon: const Icon(
                           Icons.send_rounded,
@@ -330,8 +341,9 @@ class _ChatViewScreenState extends State<ChatViewScreen> {
                             setState(() {
                               _messageController.clear();
                             });
-                            // 메시지를 보낼 때만 스크롤
-                            _scrollToBottom();
+                            if (_isAtBottom) {
+                              _scrollToBottom(); // 사용자가 가장 아래에 있을 때만 스크롤
+                            }
                           }
                         },
                       ),
