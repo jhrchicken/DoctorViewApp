@@ -2,34 +2,38 @@ import 'package:doctorviewapp/main.dart';
 import 'package:doctorviewapp/models/dreview.dart';
 import 'package:doctorviewapp/models/hreview.dart';
 import 'package:doctorviewapp/models/member.dart';
+import 'package:doctorviewapp/providers/doctor_provider.dart';
+import 'package:doctorviewapp/providers/dreply_provider.dart';
 import 'package:doctorviewapp/providers/dreview_provider.dart';
+import 'package:doctorviewapp/providers/hreply_provider.dart';
 import 'package:doctorviewapp/providers/hreview_provider.dart';
-import 'package:doctorviewapp/providers/likes_provider.dart';
 import 'package:doctorviewapp/providers/member_provider.dart';
 import 'package:doctorviewapp/screens/mypage/join/login.dart';
 import 'package:doctorviewapp/theme/colors.dart';
-import 'package:doctorviewapp/widgets/mypage/mydreview_item_widget.dart';
-import 'package:doctorviewapp/widgets/mypage/myhreview_item_widget.dart';
+import 'package:doctorviewapp/widgets/doctor/dreview_item_widget.dart';
+import 'package:doctorviewapp/widgets/hospital/hreview_item_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class MyReviewListScreen extends StatefulWidget {
+class HospReviewListScreen extends StatefulWidget {
 
-  const MyReviewListScreen({
+  const HospReviewListScreen({
     super.key,
   });
 
   @override
-  State<MyReviewListScreen> createState() => _MyReviewListScreenState();
+  State<HospReviewListScreen> createState() => _HospReviewListScreenState();
 }
 
-class _MyReviewListScreenState extends State<MyReviewListScreen> {
+class _HospReviewListScreenState extends State<HospReviewListScreen> {
   @override
   Widget build(BuildContext context) {
     final memberProvider = Provider.of<MemberProvider>(context, listen: false);
     final hreviewProvider = Provider.of<HreviewProvider>(context, listen: false);
     final dreviewProvider = Provider.of<DreviewProvider>(context, listen: false);
-    final likesProvider = Provider.of<LikesProvider>(context, listen: false);
+    final doctorProvider = Provider.of<DoctorProvider>(context, listen: false);
+    final hreplyProvider = Provider.of<HreplyProvider>(context, listen: false);
+    final dreplyProvider = Provider.of<DreplyProvider>(context, listen: false);
 
     Member? loginMember = memberProvider.loginMember;
     List<Hreview> hreviewList = hreviewProvider.hreviewList;
@@ -48,26 +52,27 @@ class _MyReviewListScreenState extends State<MyReviewListScreen> {
       return const SizedBox();
     }
 
-    // 로그인 사용자가 작성한 병원 리뷰
+    // 로그인한 병원에 작성된 리뷰
     List <Hreview> myHreviewList = hreviewList
-          .where((hreview) => hreview.writerRef == loginMember.id)
+          .where((hreview) => hreview.hospRef == loginMember.id)
           .toList();
+
+    // 로그인한 병원에 소속된 의사에게 작성된 리뷰
+    List<Dreview> myDreviewList = dreviewList
+        .where((dreview) =>
+            doctorProvider.listDoctor(loginMember.id).any((doctor) => doctor.docIdx == dreview.docRef))
+        .toList();
     
-    // 로그인 사용자가 작성한 의사 리뷰
-    List <Dreview> myDreviewList = dreviewList
-          .where((dreview) => dreview.writerRef == loginMember.id)
-          .toList();
-    
-    // 로그인 사용자가 좋아요를 표시한 리뷰
-    List<Hreview> likeHreviewList =  hreviewList.where((hreview) {
-        return likesProvider.selectLikes('hreview', hreview.reviewIdx.toString())
-            .any((like) => like.memberRef == loginMember.id);
-      }).toList();
-    List<Dreview> likeDreviewList = dreviewList.where((dreview) {
-        return likesProvider.selectLikes('dreview', dreview.reviewIdx.toString())
-            .any((like) => like.memberRef == loginMember.id);
-      }).toList();
-    
+    // 새로 달린 리뷰 (답글이 없는 리뷰)
+    List<Hreview> newHreviewList = myHreviewList
+        .where((hreview) => 
+            hreplyProvider.listHreply(hreview.reviewIdx).isEmpty
+        ).toList();
+    List<Dreview> newDreviewList = myDreviewList
+        .where((dreview) => 
+            dreplyProvider.listDreply(dreview.reviewIdx).isEmpty
+        ).toList();
+
     return DefaultTabController(
       length: 3,
       child: Scaffold(
@@ -82,7 +87,7 @@ class _MyReviewListScreenState extends State<MyReviewListScreen> {
             tabs: const [
               Tab(text: '병원'),
               Tab(text: '의사'),
-              Tab(text: '좋아요'),
+              Tab(text: '새로운 리뷰'),
             ],
             indicatorColor: pointColor2,
             labelColor: pointColor2,
@@ -99,7 +104,7 @@ class _MyReviewListScreenState extends State<MyReviewListScreen> {
               child: myHreviewList.isEmpty
                 ? Center(
                     child: Text(
-                      '작성한 리뷰가 없습니다',
+                      '작성된 리뷰가 없습니다',
                       style: TextStyle(
                         fontSize: 16,
                         color: Colors.grey[700],
@@ -112,7 +117,7 @@ class _MyReviewListScreenState extends State<MyReviewListScreen> {
                       final review = myHreviewList[index];
                       return Column(
                           children: [
-                            MyhreviewItemWidget(
+                            HreviewItemWidget(
                               reviewIdx: review.reviewIdx
                             ),
                             if (index < myHreviewList.length - 1)
@@ -129,7 +134,7 @@ class _MyReviewListScreenState extends State<MyReviewListScreen> {
               child: myDreviewList.isEmpty
                 ? Center(
                     child: Text(
-                      '작성한 리뷰가 없습니다',
+                      '작성된 리뷰가 없습니다',
                       style: TextStyle(
                         fontSize: 16,
                         color: Colors.grey[700],
@@ -142,7 +147,7 @@ class _MyReviewListScreenState extends State<MyReviewListScreen> {
                       final review = myDreviewList[index];
                       return Column(
                           children: [
-                            MydreviewItemWidget(reviewIdx: review.reviewIdx),
+                            DreviewItemWidget(reviewIdx: review.reviewIdx),
                             if (index < myDreviewList.length - 1)
                               Divider(color: Colors.grey[100], thickness: 1.0),
                           ],
@@ -150,13 +155,14 @@ class _MyReviewListScreenState extends State<MyReviewListScreen> {
                     },
                   ),
             ),
-            // 좋아요 한 리뷰
+
+            // 새로운 리뷰
             Padding(
               padding: const EdgeInsets.all(20.0),
-              child: likeHreviewList.isEmpty && likeDreviewList.isEmpty
+              child: newHreviewList.isEmpty && newDreviewList.isEmpty
                 ? Center(
                     child: Text(
-                      '좋아요 한 리뷰가 없습니다',
+                      '새로운 리뷰가 없습니다',
                       style: TextStyle(
                         fontSize: 16,
                         color: Colors.grey[700],
@@ -164,23 +170,23 @@ class _MyReviewListScreenState extends State<MyReviewListScreen> {
                     ),
                   )
                 : ListView.builder(
-                    itemCount: likeHreviewList.length + likeDreviewList.length,
+                    itemCount: newHreviewList.length + newDreviewList.length,
                     itemBuilder: (context, index) {
-                      if (index < likeHreviewList.length) {
-                        final review = likeHreviewList[index];
+                      if (index < newHreviewList.length) {
+                        final review = newHreviewList[index];
                         return Column(
                           children: [
-                            MyhreviewItemWidget(reviewIdx: review.reviewIdx),
-                            if (index < likeHreviewList.length + likeDreviewList.length - 1)
+                            HreviewItemWidget(reviewIdx: review.reviewIdx),
+                            if (index < newHreviewList.length + newDreviewList.length - 1)
                               Divider(color: Colors.grey[100], thickness: 1.0),
                           ],
                         );
                       } else {
-                        final review = likeDreviewList[index - likeHreviewList.length];
+                        final review = newDreviewList[index - newHreviewList.length];
                         return Column(
                           children: [
-                            MydreviewItemWidget(reviewIdx: review.reviewIdx),
-                            if (index < likeHreviewList.length + likeDreviewList.length - 1)
+                            DreviewItemWidget(reviewIdx: review.reviewIdx),
+                            if (index < newHreviewList.length + newDreviewList.length - 1)
                               Divider(color: Colors.grey[100], thickness: 1.0),
                           ],
                         );

@@ -9,6 +9,8 @@ import 'package:doctorviewapp/providers/likes_provider.dart';
 import 'package:doctorviewapp/screens/reserve/reserve_proceed_screen.dart';
 import 'package:doctorviewapp/theme/colors.dart';
 import 'package:doctorviewapp/widgets/common/primary_button.dart';
+import 'package:doctorviewapp/widgets/common/primary_button_black.dart';
+import 'package:doctorviewapp/widgets/common/small_button.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -210,6 +212,38 @@ class _HospitalDetailWidgetState extends State<HospitalDetailWidget> {
         const SizedBox(
           height: 10,
         ),
+        // 야간진료/휴일진료 PCR검사 표시
+        Row(
+          children: [
+            SmallButton(
+              text: '야간진료',
+              fontColor: today.night == 'T' ? pointColor2 : Colors.grey[500]!,
+              backgroundColor: today.night == 'T' ? Colors.blue[50]! : Colors.grey[200]!,
+              onPressed: (){},
+            ),
+            const SizedBox(
+              width: 5,
+            ),
+            SmallButton(
+              text: '휴일 진료',
+              fontColor: today.weekend == 'T' ? pointColor2 : Colors.grey[500]!,
+              backgroundColor: today.weekend == 'T' ? Colors.blue[50]! : Colors.grey[200]!,
+              onPressed: () {},
+            ),
+            const SizedBox(
+              width: 5,
+            ),
+            SmallButton(
+              text: 'PCR검사',
+              fontColor: hospital.pcr == 'T' ? pointColor2 : Colors.grey[500]!,
+              backgroundColor: hospital.pcr == 'T' ? Colors.blue[50]! : Colors.grey[200]!,
+              onPressed: () {},
+            ),
+          ],
+        ),
+        const SizedBox(
+          height: 10,
+        ),
         Divider(
           color: Colors.grey[300],
           thickness: 1.0
@@ -322,9 +356,27 @@ class _HospitalDetailWidgetState extends State<HospitalDetailWidget> {
         const SizedBox(
           height: 20,
         ),
-        PrimaryButton(
-          text: '예약',
+        PrimaryButtonBlack(
+          text: hospital.system == 'T' ? '예약' : '예약 불가',
           onPressed: () {
+            if (hospital.system == 'T') {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => ReserveProceedScreen(
+                    hospRef: hospital.id,
+                  ),
+                ),
+              );
+            }
+            else {}
+          },
+          color: hospital.system == 'T' ? pointColor1 : Colors.grey[500]!,
+        ),
+        PrimaryButton(
+          text: '채팅',
+          onPressed: () {
+            // ***************** 채팅으로 바로가기 ******************
             Navigator.push(
               context,
               MaterialPageRoute(

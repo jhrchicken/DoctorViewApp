@@ -20,18 +20,36 @@ class HospitalMapWidget extends StatefulWidget {
 }
 
 class _HospitalMapWidgetState extends State<HospitalMapWidget> {
-
   final Completer<GoogleMapController> _controller = Completer();
+  late Hospital hospital;
+  Marker? marker;
+
+  @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    final hospitalProvider = Provider.of<HospitalProvider>(context);
+    
+    hospital = hospitalProvider.selectHosp(widget.id)!;
+
+    if (hospital.lat != null && hospital.lng != null) {
+      makeMarker();
+    }
+  }
 
   void makeMarker() {
-    Marker marker = Marker(
+    marker = Marker(
       markerId: MarkerId(widget.id),
       icon: BitmapDescriptor.defaultMarkerWithHue(
-        BitmapDescriptor.hueBlue,
+        BitmapDescriptor.hueRed,
       ),
-      position: const LatLng(37, 126),
+      position: LatLng(hospital.lat!, hospital.lng!),
       infoWindow: InfoWindow(
-        title: widget.id,
+        title: hospital.name,
       ),
       onTap: () {},
     );
@@ -39,10 +57,6 @@ class _HospitalMapWidgetState extends State<HospitalMapWidget> {
 
   @override
   Widget build(BuildContext context) {
-    final hospitalProvider = Provider.of<HospitalProvider>(context);
-
-    Hospital? hospital = hospitalProvider.selectHosp(widget.id);
-
     return Column(
       mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -58,37 +72,54 @@ class _HospitalMapWidgetState extends State<HospitalMapWidget> {
         const SizedBox(
           height: 20,
         ),
-        // 지도
-        Container(
-          height: 240,
-          width: double.infinity,
-          decoration: BoxDecoration(
-            color: Colors.grey[200],
-            border: Border.all(
-              color: Colors.grey,
-              width: 1,
-            ),
-          ),
-          child: const Center(
-            child: Text(
-              '지도 표시 영역',
-              style: TextStyle(
-                color: Colors.black54,
-                fontSize: 16,
+        // 지도 또는 위치 정보 없음 메시지 표시
+        hospital.lat == null || hospital.lng == null
+            ? Container(
+                height: 240,
+                width: double.infinity,
+                decoration: BoxDecoration(
+                  color: Colors.grey[200],
+                  border: Border.all(
+                    color: Colors.grey,
+                    width: 1,
+                  ),
+                ),
+                child: Center(
+                  child: Text(
+                    '위치정보가 없습니다',
+                    style: TextStyle(
+                      color: Colors.grey[700],
+                      fontSize: 14,
+                    ),
+                  ),
+                ),
+              )
+            : SizedBox(
+                height: 240,
+                width: double.infinity,
+                child: Center(
+                  child: GoogleMap(
+                    mapType: MapType.normal,
+                    initialCameraPosition: CameraPosition(
+                      target: LatLng(hospital.lat!, hospital.lng!),
+                      zoom: 17.0,
+                    ),
+                    onMapCreated: (GoogleMapController controller) {
+                      _controller.complete(controller);
+                    },
+                    markers: marker != null ? {marker!} : {},
+                  ),
+                ),
               ),
-            ),
-          ),
-        ),
         const SizedBox(
           height: 10,
         ),
-
         // 지도 하단 주소 표시
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
-              hospital!.address,
+              hospital.address,
               style: TextStyle(
                 color: Colors.grey[700],
                 fontSize: 12,
