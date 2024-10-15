@@ -24,8 +24,8 @@ class ChatViewScreen extends StatefulWidget {
 }
 
 class _ChatViewScreenState extends State<ChatViewScreen> {
-
   final TextEditingController _messageController = TextEditingController();
+  final ScrollController _scrollController = ScrollController();
 
   @override
   void initState() {
@@ -35,28 +35,39 @@ class _ChatViewScreenState extends State<ChatViewScreen> {
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    final memberProvider = Provider.of<MemberProvider>(context);
-    final chatProvider = Provider.of<ChatProvider>(context);
+    final memberProvider = Provider.of<MemberProvider>(context, listen: false);
+    final chatProvider = Provider.of<ChatProvider>(context, listen: false);
 
     Member? loginMember = memberProvider.loginMember;
     if (loginMember != null) {
       List<Chat> chatList = chatProvider.listChat(widget.roomId);
-      
+
+      // 새 메시지 상태 업데이트
       WidgetsBinding.instance.addPostFrameCallback((_) {
         for (var chat in chatList) {
           if (chat.memberRef != loginMember.id) {
             chatProvider.updateChat(chat);
           }
         }
-        setState(() {});
+        // 자동 스크롤 제거: 메시지를 보낼 때만 스크롤
       });
     }
   }
 
   @override
   void dispose() {
-    _messageController.dispose(); // 리소스 정리
+    _messageController.dispose();
+    _scrollController.dispose();
     super.dispose();
+  }
+
+  // 스크롤을 가장 아래로 이동시키는 함수
+  void _scrollToBottom() {
+    if (_scrollController.hasClients) {
+      _scrollController.jumpTo(
+        _scrollController.position.maxScrollExtent,
+      );
+    }
   }
 
   @override
@@ -76,7 +87,6 @@ class _ChatViewScreenState extends State<ChatViewScreen> {
 
     return Scaffold(
       resizeToAvoidBottomInset: true,
-      // 상단바
       appBar: AppBar(
         backgroundColor: Colors.white,
         title: Text(
@@ -90,7 +100,7 @@ class _ChatViewScreenState extends State<ChatViewScreen> {
               size: 26,
             ),
             color: Colors.red,
-            onPressed: (){
+            onPressed: () {
               chatProvider.deleteChat(widget.roomId);
               Navigator.push(
                 context,
@@ -105,197 +115,180 @@ class _ChatViewScreenState extends State<ChatViewScreen> {
 
       body: Column(
         children: [
+          // 채팅 메시지 리스트
           Expanded(
-            child: SingleChildScrollView(
-              child: Column(
-                children: [
-                  Divider(
-                    color: Colors.grey[300],
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 10),
-                    child: Column(
-                      children: [
-                        const SizedBox(height: 10),
-                        Container(
-                          width: double.infinity,
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(8),
-                          ),
-                          child: ListView.builder(
-                            shrinkWrap: true,
-                            physics: const NeverScrollableScrollPhysics(),
-                            itemCount: chatList.length,
-                            itemBuilder: (context, index) {
-                            final chat = chatList[index];
-                            final chatDate = DateFormat('yyyy년 MM월 dd일').format(chat.postdate);
-                            String? preChatDate;
-                            // Chat? preChat;
-                            Chat? nextChat; 
-                            if (index > 0) {
-                              // preChat = chatList[index - 1];
-                              preChatDate = DateFormat('yyyy년 MM월 dd일').format(chatList[index - 1].postdate);
-                            }
-                            if (index < chatList.length - 1) {
-                              nextChat = chatList[index + 1];
-                            }
-                              return Column(
-                                children: [
-                                  // 날짜 구분선
-                                  (chatDate != preChatDate) ?
-                                    Padding(
-                                      padding: const EdgeInsets.symmetric(vertical: 10),
-                                      child: Container(
-                                        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-                                        decoration: BoxDecoration(
-                                          color: Colors.grey[200],
-                                          borderRadius: BorderRadius.circular(15),
-                                          border: Border.all(color: Colors.white),
-                                        ),
-                                        child: Text(
-                                          chatDate,
+            child: ListView.builder(
+              controller: _scrollController,
+              itemCount: chatList.length,
+              itemBuilder: (context, index) {
+                final chat = chatList[index];
+                final chatDate = DateFormat('yyyy년 MM월 dd일').format(chat.postdate);
+                String? preChatDate;
+                Chat? nextChat;
+                Chat? preChat;
+                if (index > 0) {
+                  preChat = chatList[index - 1];
+                  preChatDate = DateFormat('yyyy년 MM월 dd일').format(chatList[index - 1].postdate);
+                }
+                if (index < chatList.length - 1) {
+                  nextChat = chatList[index + 1];
+                }
+                return Column(
+                  children: [
+                    // 날짜 구분선
+                    (chatDate != preChatDate)
+                        ? Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 10),
+                            child: Container(
+                              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                              decoration: BoxDecoration(
+                                color: Colors.grey[200],
+                                borderRadius: BorderRadius.circular(15),
+                                border: Border.all(color: Colors.white),
+                              ),
+                              child: Text(
+                                chatDate,
+                                style: TextStyle(
+                                  fontSize: 12,
+                                  color: Colors.grey[700],
+                                ),
+                              ),
+                            ),
+                          )
+                        : const SizedBox.shrink(),
+                    // 보낸 메시지
+                    (chat.memberRef == loginMember.id)
+                        ? Align(
+                            alignment: Alignment.centerRight,
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              crossAxisAlignment: CrossAxisAlignment.end,
+                              children: [
+                                Container(
+                                  margin: const EdgeInsets.only(bottom: 8),
+                                  child: Column(
+                                    crossAxisAlignment: CrossAxisAlignment.end,
+                                    children: [
+                                      (chat.read == 'F')
+                                          ? const Text(
+                                              '1',
+                                              style: TextStyle(
+                                                fontSize: 10,
+                                                color: pointColor1,
+                                                fontWeight: FontWeight.w700,
+                                              ),
+                                            )
+                                          : const SizedBox.shrink(),
+                                      (chat.memberRef == nextChat?.memberRef)
+                                          ? (chat.postdate.hour != nextChat?.postdate.hour ||
+                                                  chat.postdate.minute != nextChat?.postdate.minute)
+                                              ? Text(
+                                                  '${chat.postdate.hour.toString().padLeft(2, '0')}:${chat.postdate.minute.toString().padLeft(2, '0')}',
+                                                  style: TextStyle(
+                                                    fontSize: 10,
+                                                    color: Colors.grey[500],
+                                                  ),
+                                                )
+                                              : const SizedBox.shrink()
+                                          : Text(
+                                              '${chat.postdate.hour.toString().padLeft(2, '0')}:${chat.postdate.minute.toString().padLeft(2, '0')}',
+                                              style: TextStyle(
+                                                fontSize: 10,
+                                                color: Colors.grey[500],
+                                              ),
+                                            ),
+                                    ],
+                                  ),
+                                ),
+                                Container(
+                                  constraints: const BoxConstraints(maxWidth: 280),
+                                  margin: const EdgeInsets.all(5),
+                                  padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 10),
+                                  decoration: BoxDecoration(
+                                    color: pointColor1,
+                                    borderRadius: BorderRadius.circular(10),
+                                  ),
+                                  child: Text(
+                                    chat.message,
+                                    softWrap: true,
+                                  ),
+                                ),
+                                const SizedBox(
+                                  width: 10,
+                                ),
+                              ],
+                            ),
+                          )
+                        // 받은 메시지
+                        : Align(
+                            alignment: Alignment.centerLeft,
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.end,
+                              children: [
+                                Row(
+                                  children: [
+                                    const SizedBox(
+                                      width: 10,
+                                    ),
+                                    (preChat?.memberRef != chat.memberRef)
+                                        ? Icon(
+                                            Icons.account_circle,
+                                            size: 40,
+                                            color: Colors.grey[500],
+                                          )
+                                        : const SizedBox(
+                                            width: 40,
+                                          ),
+                                    Container(
+                                      constraints: const BoxConstraints(maxWidth: 280),
+                                      margin: const EdgeInsets.all(5),
+                                      padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 10),
+                                      decoration: BoxDecoration(
+                                        color: Colors.white,
+                                        border: Border.all(color: border),
+                                        borderRadius: BorderRadius.circular(10),
+                                      ),
+                                      child: Text(
+                                        chat.message,
+                                        softWrap: true,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                Container(
+                                  margin: const EdgeInsets.only(bottom: 8),
+                                  child: (chat.memberRef == nextChat?.memberRef)
+                                      ? (chat.postdate.hour != nextChat?.postdate.hour ||
+                                              chat.postdate.minute != nextChat?.postdate.minute)
+                                          ? Text(
+                                              '${chat.postdate.hour.toString().padLeft(2, '0')}:${chat.postdate.minute.toString().padLeft(2, '0')}',
+                                              style: TextStyle(
+                                                fontSize: 10,
+                                                color: Colors.grey[500],
+                                              ),
+                                            )
+                                          : const SizedBox.shrink()
+                                      : Text(
+                                          '${chat.postdate.hour.toString().padLeft(2, '0')}:${chat.postdate.minute.toString().padLeft(2, '0')}',
                                           style: TextStyle(
-                                            fontSize: 12,
-                                            color: Colors.grey[700],
+                                            fontSize: 10,
+                                            color: Colors.grey[500],
                                           ),
                                         ),
-                                      ),
-                                    ) : const SizedBox.shrink(),
-                                  (chat.memberRef == loginMember.id)
-                                    // 보낸 메세지
-                                    ? Align(
-                                        alignment: Alignment.centerRight,
-                                        child: Row(
-                                          mainAxisAlignment: MainAxisAlignment.end,
-                                          crossAxisAlignment: CrossAxisAlignment.end,
-                                          children: [
-                                            Container(
-                                              margin: const EdgeInsets.only(bottom: 8),
-                                              child: Column(
-                                                crossAxisAlignment: CrossAxisAlignment.end,
-                                                children: [
-                                                  (chat.read == 'F')
-                                                    ? const Text(
-                                                        '1',
-                                                        style: TextStyle(
-                                                          fontSize: 10,
-                                                          color: pointColor1,
-                                                          fontWeight: FontWeight.w700,
-                                                        ),
-                                                      )
-                                                    : const SizedBox.shrink(),
-                                                  (chat.memberRef == nextChat?.memberRef)
-                                                    ? (chat.postdate.hour != nextChat?.postdate.hour || chat.postdate.minute != nextChat?.postdate.minute)
-                                                        ? Text(
-                                                            '${chat.postdate.hour.toString().padLeft(2, '0')}:${chat.postdate.minute.toString().padLeft(2, '0')}',
-                                                            style: TextStyle(
-                                                              fontSize: 10,
-                                                              color: Colors.grey[500],
-                                                            ),
-                                                          )
-                                                        : const SizedBox.shrink()
-                                                    : Text(
-                                                        '${chat.postdate.hour.toString().padLeft(2, '0')}:${chat.postdate.minute.toString().padLeft(2, '0')}',
-                                                        style: TextStyle(
-                                                          fontSize: 10,
-                                                          color: Colors.grey[500],
-                                                        ),
-                                                      ),
-                                                    ],
-                                                  ),
-                                            ),
-                                            Container(
-                                              constraints: const BoxConstraints(maxWidth: 280),
-                                              margin: const EdgeInsets.all(5),
-                                              padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 10),
-                                              decoration: BoxDecoration(
-                                                color: pointColor1,
-                                                borderRadius: BorderRadius.circular(10),
-                                              ),
-                                              child: Text(
-                                                chat.message,
-                                                softWrap: true,
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                      )
-                                    // 받은 메세지
-                                    : Align(
-                                        alignment: Alignment.centerLeft,
-                                        child: Row(
-                                          mainAxisAlignment: MainAxisAlignment.start,
-                                          crossAxisAlignment: CrossAxisAlignment.end,
-                                          children: [
-                                            Row(
-                                              children: [
-                                                (nextChat?.memberRef != chat.memberRef)
-                                                  ? Icon(
-                                                      Icons.account_circle,
-                                                      size: 40,
-                                                      color: Colors.grey[500],
-                                                    )
-                                                  : const SizedBox(
-                                                    width: 40,
-                                                  ),
-                                                Container(
-                                                  constraints: const BoxConstraints(maxWidth: 280),
-                                                  margin: const EdgeInsets.all(5),
-                                                  padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 10),
-                                                  decoration: BoxDecoration(
-                                                    color: Colors.white,
-                                                    border: Border.all(color: border),
-                                                    borderRadius: BorderRadius.circular(10),
-                                                  ),
-                                                  child: Text(
-                                                    chat.message,
-                                                    softWrap: true,
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
-                                            Container(
-                                              margin: const EdgeInsets.only(bottom: 8),
-                                              child : (chat.memberRef == nextChat?.memberRef)
-                                                ? (chat.postdate.hour != nextChat?.postdate.hour || chat.postdate.minute != nextChat?.postdate.minute)
-                                                    ? Text(
-                                                        '${chat.postdate.hour.toString().padLeft(2, '0')}:${chat.postdate.minute.toString().padLeft(2, '0')}',
-                                                        style: TextStyle(
-                                                          fontSize: 10,
-                                                          color: Colors.grey[500],
-                                                        ),
-                                                      )
-                                                    : const SizedBox.shrink()
-                                                : Text(
-                                                    '${chat.postdate.hour.toString().padLeft(2, '0')}:${chat.postdate.minute.toString().padLeft(2, '0')}',
-                                                    style: TextStyle(
-                                                      fontSize: 10,
-                                                      color: Colors.grey[500],
-                                                    ),
-                                                  ),
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                ],
-                              );
-                            },
+                                ),
+                              ],
+                            ),
                           ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
+                  ],
+                );
+              },
             ),
           ),
 
-          // 채팅 보내기
+          // 채팅 입력
           Padding(
-            padding: const EdgeInsets.symmetric(
-              horizontal: 10, vertical: 10
-            ),
+            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
             child: Row(
               children: [
                 Expanded(
@@ -317,30 +310,30 @@ class _ChatViewScreenState extends State<ChatViewScreen> {
                         borderRadius: BorderRadius.circular(8),
                         borderSide: BorderSide.none,
                       ),
-                      contentPadding: const EdgeInsets.symmetric(
-                        horizontal: 16,
-                        vertical: 5
-                      ),
-                      // 아이콘
+                      contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 5),
                       suffixIcon: IconButton(
                         icon: const Icon(
                           Icons.send_rounded,
                           color: pointColor2,
                         ),
                         onPressed: () {
-                          chatProvider.insertChat(
-                            Chat(
-                              chatIdx: 0,
-                              memberRef: loginMember.id,
-                              roomId: widget.roomId,
-                              message: _messageController.text,
-                              postdate: DateTime.now(),
-                              read: 'F',
-                            ),
-                          );
-                          setState(() {
-                            _messageController.text = '';
-                          });
+                          if (_messageController.text.trim().isNotEmpty) {
+                            chatProvider.insertChat(
+                              Chat(
+                                chatIdx: 0,
+                                memberRef: loginMember.id,
+                                roomId: widget.roomId,
+                                message: _messageController.text.trim(),
+                                postdate: DateTime.now(),
+                                read: 'F',
+                              ),
+                            );
+                            setState(() {
+                              _messageController.clear();
+                            });
+                            // 메시지를 보낼 때만 스크롤
+                            _scrollToBottom();
+                          }
                         },
                       ),
                     ),
