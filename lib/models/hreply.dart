@@ -14,4 +14,27 @@ class Hreply {
     required this.writerRef,
     required this.reviewRef,
   });
+
+  factory Hreply.fromJson(Map<String, dynamic> json) {
+    int parseInt(String? value) {
+      return value != null ? int.parse(value) : 0;
+    }
+
+    return Hreply(
+      replyIdx: parseInt(json['replyIdx']?.toString()),
+      date: DateTime.parse(json['date']),
+      content: json['content'] ?? '',
+      rewrite: json['rewrite'] ?? '',
+      writerRef: json['writerRef'] ?? '',
+      reviewRef: parseInt(json['reviewRef']?.toString()),
+    );
+  }
+  Map<String, dynamic> toJson() => {
+    'replyIdx': replyIdx,
+    'date': date.toIso8601String(),
+    'content': content,
+    'rewrite': rewrite,
+    'writerRef': writerRef,
+    'reviewRef': reviewRef,
+  };
 }
