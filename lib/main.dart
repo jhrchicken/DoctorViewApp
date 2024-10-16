@@ -1,4 +1,5 @@
 import 'package:doctorviewapp/providers/board_provider.dart';
+import 'package:doctorviewapp/providers/chat_provider.dart';
 import 'package:doctorviewapp/providers/comment_provider.dart';
 import 'package:doctorviewapp/providers/detail_provider.dart';
 import 'package:doctorviewapp/providers/doctor_provider.dart';
@@ -49,6 +50,8 @@ void main() {
           ChangeNotifierProvider(create: (context) => ReportProvider()),
           // 예약
           ChangeNotifierProvider(create: (context) => ReserveProvider()),
+          // 채팅
+          ChangeNotifierProvider(create: (context) => ChatProvider()),
         ],
         child: const MyApp(),
       ),

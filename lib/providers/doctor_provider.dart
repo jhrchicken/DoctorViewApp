@@ -1,6 +1,7 @@
 import 'package:doctorviewapp/models/doctor.dart';
 import 'package:flutter/material.dart';
 
+//
 class DoctorProvider extends ChangeNotifier {
   int _seqDoctorIdx = 4;
 

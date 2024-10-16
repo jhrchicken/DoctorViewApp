@@ -2,13 +2,18 @@ import 'package:doctorviewapp/models/hospital.dart';
 import 'package:doctorviewapp/models/hours.dart';
 import 'package:doctorviewapp/models/hreview.dart';
 import 'package:doctorviewapp/models/likes.dart';
+import 'package:doctorviewapp/models/member.dart';
 import 'package:doctorviewapp/providers/hospital_provider.dart';
 import 'package:doctorviewapp/providers/hours_provider.dart';
 import 'package:doctorviewapp/providers/hreview_provider.dart';
 import 'package:doctorviewapp/providers/likes_provider.dart';
+import 'package:doctorviewapp/providers/member_provider.dart';
+import 'package:doctorviewapp/screens/chat/chat_view_screen.dart';
 import 'package:doctorviewapp/screens/reserve/reserve_proceed_screen.dart';
 import 'package:doctorviewapp/theme/colors.dart';
 import 'package:doctorviewapp/widgets/common/primary_button.dart';
+import 'package:doctorviewapp/widgets/common/primary_button_black.dart';
+import 'package:doctorviewapp/widgets/common/small_button.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -41,11 +46,13 @@ class _HospitalDetailWidgetState extends State<HospitalDetailWidget> {
     final likesProvider = Provider.of<LikesProvider>(context);
     final hreviewProvider = Provider.of<HreviewProvider>(context);
     final hoursProvider = Provider.of<HoursProvider>(context);
+    final memberProvider = Provider.of<MemberProvider>(context);
 
     Hospital? hospital = hospitalProvider.selectHosp(widget.id);
     List<Likes> likesList = likesProvider.selectLikes('hospital', hospital!.id);
     List<Hreview> hreviewList = hreviewProvider.listHreview(hospital.id);
     List<Hours> hoursList = hoursProvider.getHospHours(hospital.id);
+    Member? loginMember = memberProvider.loginMember;
     
     DateTime now = DateTime.now();
     String weekday = weekdays[now.weekday - 1];
@@ -210,6 +217,38 @@ class _HospitalDetailWidgetState extends State<HospitalDetailWidget> {
         const SizedBox(
           height: 10,
         ),
+        // 야간진료/휴일진료 PCR검사 표시
+        Row(
+          children: [
+            SmallButton(
+              text: '야간진료',
+              fontColor: today.night == 'T' ? pointColor2 : Colors.grey[500]!,
+              backgroundColor: today.night == 'T' ? Colors.blue[50]! : Colors.grey[200]!,
+              onPressed: (){},
+            ),
+            const SizedBox(
+              width: 5,
+            ),
+            SmallButton(
+              text: '휴일 진료',
+              fontColor: today.weekend == 'T' ? pointColor2 : Colors.grey[500]!,
+              backgroundColor: today.weekend == 'T' ? Colors.blue[50]! : Colors.grey[200]!,
+              onPressed: () {},
+            ),
+            const SizedBox(
+              width: 5,
+            ),
+            SmallButton(
+              text: 'PCR검사',
+              fontColor: hospital.pcr == 'T' ? pointColor2 : Colors.grey[500]!,
+              backgroundColor: hospital.pcr == 'T' ? Colors.blue[50]! : Colors.grey[200]!,
+              onPressed: () {},
+            ),
+          ],
+        ),
+        const SizedBox(
+          height: 10,
+        ),
         Divider(
           color: Colors.grey[300],
           thickness: 1.0
@@ -323,18 +362,37 @@ class _HospitalDetailWidgetState extends State<HospitalDetailWidget> {
           height: 20,
         ),
         PrimaryButton(
-          text: '예약',
+          text: hospital.system == 'T' ? '예약' : '예약 불가',
           onPressed: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => ReserveProceedScreen(
-                  hospRef: hospital.id,
+            if (hospital.system == 'T') {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => ReserveProceedScreen(
+                    hospRef: hospital.id,
+                  ),
                 ),
-              ),
-            );
+              );
+            }
+            else {}
           },
-          color: pointColor2,
+          color: hospital.system == 'T' ? pointColor1 : Colors.grey[500]!,
+        ),
+        PrimaryButton(
+          text: loginMember!.auth == 'ROLE_USER' ? '채팅' : '채팅 불가',
+          onPressed: () {
+            if (loginMember.auth == 'ROLE_USER') {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => ChatViewScreen(
+                    roomId: '${loginMember.id}-${hospital.id}',
+                  ),
+                ),
+              );
+            }
+          },
+          color: loginMember.auth == 'ROLE_USER' ? pointColor2 : Colors.grey[500]!
         ),
       ],
     );

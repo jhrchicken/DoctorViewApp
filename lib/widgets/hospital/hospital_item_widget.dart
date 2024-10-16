@@ -8,6 +8,7 @@ import 'package:doctorviewapp/providers/likes_provider.dart';
 import 'package:doctorviewapp/providers/member_provider.dart';
 import 'package:doctorviewapp/screens/hospital/hospital_view_screen.dart';
 import 'package:doctorviewapp/theme/colors.dart';
+import 'package:doctorviewapp/widgets/common/small_button.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -248,7 +249,38 @@ class _HospitalItemWidgetState extends State<HospitalItemWidget> {
                     ),
                   ],
                 ),
-
+                const SizedBox(
+                  height: 5,
+                ),
+                // 야간진료/휴일 진료 표시
+                Row(
+                  children: [
+                    SmallButton(
+                      text: '야간진료',
+                      fontColor: today.night == 'T' ? pointColor2 : Colors.grey[500]!,
+                      backgroundColor: today.night == 'T' ? Colors.blue[50]! : Colors.grey[200]!,
+                      onPressed: (){},
+                    ),
+                    const SizedBox(
+                      width: 5,
+                    ),
+                    SmallButton(
+                      text: '휴일 진료',
+                      fontColor: today.weekend == 'T' ? pointColor2 : Colors.grey[500]!,
+                      backgroundColor: today.weekend == 'T' ? Colors.blue[50]! : Colors.grey[200]!,
+                      onPressed: () {},
+                    ),
+                    const SizedBox(
+                      width: 5,
+                    ),
+                    SmallButton(
+                      text: 'PCR검사',
+                      fontColor: hospital.pcr == 'T' ? pointColor2 : Colors.grey[500]!,
+                      backgroundColor: hospital.pcr == 'T' ? Colors.blue[50]! : Colors.grey[200]!,
+                      onPressed: () {},
+                    ),
+                  ],
+                )
               ],
             ),
           ],

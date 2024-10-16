@@ -127,30 +127,6 @@ class _HospitalViewScreenState extends State<HospitalViewScreen> {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            // ************디버깅용 지도 *************
-            TextButton(
-              onPressed: () {
-                // Navigator.push(
-                //   context,
-                //   MaterialPageRoute(
-                //     builder: (context) => const HospitalMapScreen(),
-                //   ),
-                // );
-              },
-              style: TextButton.styleFrom(
-                padding: EdgeInsets.zero,
-                minimumSize: const Size(0, 0),
-                tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-              ),
-              child: const Text(
-                '지도',
-                style: TextStyle(
-                  fontSize: 12,
-                  fontWeight: FontWeight.w400,
-                  color: gray400,
-                ),
-              ),
-            ),
             // 병원 정보
             Padding(
               padding: const EdgeInsets.all(20.0),
