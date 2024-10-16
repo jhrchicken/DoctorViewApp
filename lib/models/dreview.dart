@@ -18,27 +18,23 @@ class Dreview {
   });
   
   factory Dreview.fromJson(Map<String, dynamic> json) {
-    int parseInt(String? value) {
-      return value != null ? int.parse(value) : 0;
-    }
-
     return Dreview(
-      reviewIdx: parseInt(json['reviewIdx']?.toString()),
-      date: DateTime.parse(json['date']),
-      score: parseInt(json['score']?.toString()),
-      content: json['content'] ?? '',
-      rewrite: json['rewrite'] ?? '',
-      writerRef: json['writerRef'] ?? '',
-      docRef: parseInt(json['docRef']?.toString()),
+      reviewIdx: json['review_idx'],
+      date: DateTime.parse(json['postdate']),
+      score: json['score'],
+      content: json['content'],
+      rewrite: json['rewrite'],
+      writerRef: json['writer_ref'],
+      docRef: json['doc_ref'],
     );
   }
   Map<String, dynamic> toJson() => {
-    'reviewIdx': reviewIdx,
-    'date': date.toIso8601String(),
+    'review_idx': reviewIdx,
+    'postdate': date.toIso8601String(),
     'score': score,
     'content': content,
     'rewrite': rewrite,
-    'writerRef': writerRef,
-    'docRef': docRef,
+    'writer_ref': writerRef,
+    'doc_ref': docRef,
   };
 }

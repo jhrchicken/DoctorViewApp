@@ -14,23 +14,19 @@ class Comment {
   });
 
   factory Comment.fromJson(Map<String, dynamic> json) {
-    int parseInt(String? value) {
-      return value != null ? int.parse(value) : 0;
-    }
-
     return Comment(
-      commIdx: parseInt(json['commIdx']?.toString()),
+      commIdx: json['comm_idx'],
       postdate: DateTime.parse(json['postdate']),
-      content: json['content'] ?? '',
-      boardRef: parseInt(json['boardRef']?.toString()),
-      writerRef: json['writerRef'] ?? '',
+      content: json['content'],
+      boardRef: json['board_ref'],
+      writerRef: json['writer_ref'],
     );
   }
   Map<String, dynamic> toJson() => {
-    'commIdx': commIdx,
+    'comm_idx': commIdx,
     'postdate': postdate.toIso8601String(),
     'content': content,
-    'boardRef': boardRef,
-    'writerRef': writerRef,
+    'board_ref': boardRef,
+    'writer_ref': writerRef,
   };
 }

@@ -9,7 +9,7 @@ class Member {
   String? rrn;
   int enable;
   final String auth;
-  String? point;
+  int? point;
   String? emoji;
   String? taxid;
   String? department;
@@ -47,7 +47,7 @@ class Member {
       rrn: json['rrn'] ?? '',
       enable: parseInt(json['enable']?.toString()),
       auth: json['auth'] ?? '',
-      point: json['point'] ?? '',
+      point: parseInt(json['point']?.toString()),
       emoji: json['emoji'] ?? '',
       taxid: json['taxid'] ?? '',
       department: json['department'] ?? '',

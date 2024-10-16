@@ -18,27 +18,23 @@ class Hreview {
   });
 
   factory Hreview.fromJson(Map<String, dynamic> json) {
-    int parseInt(String? value) {
-      return value != null ? int.parse(value) : 0;
-    }
-
     return Hreview(
-      reviewIdx: parseInt(json['reviewIdx']?.toString()),
-      date: DateTime.parse(json['date']),
-      score: parseInt(json['score']?.toString()),
-      content: json['content'] ?? '',
-      rewrite: json['rewrite'] ?? '',
-      writerRef: json['writerRef'] ?? '',
-      hospRef: json['hospRef'] ?? '',
+      reviewIdx: json['review_idx'],
+      date: DateTime.parse(json['postdate']),
+      score: json['score'],
+      content: json['content'],
+      rewrite: json['rewrite'],
+      writerRef: json['writer_ref'],
+      hospRef: json['api_ref'].toString(),
     );
   }
   Map<String, dynamic> toJson() => {
-    'reviewIdx': reviewIdx,
-    'date': date.toIso8601String(),
+    'review_idx': reviewIdx,
+    'postdate': date.toIso8601String(),
     'score': score,
     'content': content,
     'rewrite': rewrite,
-    'writerRef': writerRef,
-    'hospRef': hospRef,
+    'writer_ref': writerRef,
+    'api_ref': hospRef,
   };
 }

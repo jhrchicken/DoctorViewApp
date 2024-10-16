@@ -6,6 +6,7 @@ import 'package:doctorviewapp/models/comment.dart';
 import 'package:doctorviewapp/models/detail.dart';
 import 'package:doctorviewapp/models/doctor.dart';
 import 'package:doctorviewapp/models/dreply.dart';
+import 'package:doctorviewapp/models/dreview.dart';
 import 'package:doctorviewapp/models/hashtag.dart';
 import 'package:doctorviewapp/models/hospital.dart';
 import 'package:doctorviewapp/models/hours.dart';
@@ -24,7 +25,7 @@ const String baseUrl = "http://192.168.0.40:8586";
 class BoardApi {
   Future<List<Board>> fetchBoard() async {
     final response = await http.get(Uri.parse("$baseUrl/api/board"));
-    // print(response.body);
+    print(response.body);
       
     if (response.statusCode == 200) {
       final decodeResponse = json.decode(utf8.decode(response.bodyBytes));
@@ -58,7 +59,7 @@ class BoardApi {
 class CommentApi {
   Future<List<Comment>> fetchComment() async {
     final response = await http.get(Uri.parse("$baseUrl/api/comment"));
-    // print(response.body);
+    print(response.body);
       
     if (response.statusCode == 200) {
       final decodeResponse = json.decode(utf8.decode(response.bodyBytes));
@@ -75,7 +76,7 @@ class CommentApi {
 class DetailApi {
   Future<List<Detail>> fetchDetail() async {
     final response = await http.get(Uri.parse("$baseUrl/api/hdetail"));
-    // print(response.body);
+    print(response.body);
       
     if (response.statusCode == 200) {
       final decodeResponse = json.decode(utf8.decode(response.bodyBytes));
@@ -92,7 +93,7 @@ class DetailApi {
 class DoctorApi {
   Future<List<Doctor>> fetchDoctor() async {
     final response = await http.get(Uri.parse("$baseUrl/api/doctor"));
-    // print(response.body);
+    print(response.body);
       
     if (response.statusCode == 200) {
       final decodeResponse = json.decode(utf8.decode(response.bodyBytes));
@@ -109,7 +110,7 @@ class DoctorApi {
 class DReplyApi {
   Future<List<Dreply>> fetchDreply() async {
     final response = await http.get(Uri.parse("$baseUrl/api/dreply"));
-    // print(response.body);
+    print(response.body);
       
     if (response.statusCode == 200) {
       final decodeResponse = json.decode(utf8.decode(response.bodyBytes));
@@ -124,14 +125,14 @@ class DReplyApi {
 }
 
 class DReviewApi {
-  Future<List<Dreply>> fetchDreview() async {
+  Future<List<Dreview>> fetchDreview() async {
     final response = await http.get(Uri.parse("$baseUrl/api/dreview"));
-    // print(response.body);
+    print(response.body);
       
     if (response.statusCode == 200) {
       final decodeResponse = json.decode(utf8.decode(response.bodyBytes));
       List<dynamic> dreviewJson = decodeResponse;
-      return dreviewJson.map((json) => Dreply.fromJson(json)).toList();
+      return dreviewJson.map((json) => Dreview.fromJson(json)).toList();
     }
     else {
       print('Failed to load');
@@ -140,44 +141,85 @@ class DReviewApi {
   }
 }
 
-class HashtagApi {
-  Future<List<Hashtag>> fetchHashtag() async {
-    final response = await http.get(Uri.parse("$baseUrl/api/hashtags"));
-    // print(response.body);
+// class HashtagApi {
+//   Future<List<Hashtag>> fetchHashtag() async {
+//     final response = await http.get(Uri.parse("$baseUrl/api/hashtags"));
+//     print(response.body);
       
-    if (response.statusCode == 200) {
-      final decodeResponse = json.decode(utf8.decode(response.bodyBytes));
-      List<dynamic> hashtagJson = decodeResponse;
-      return hashtagJson.map((json) => Hashtag.fromJson(json)).toList();
-    }
-    else {
-      print('Failed to load');
-      return [];
-    }
-  }
-}
+//     if (response.statusCode == 200) {
+//       final decodeResponse = json.decode(utf8.decode(response.bodyBytes));
+//       List<dynamic> hashtagJson = decodeResponse;
+//       return hashtagJson.map((json) => Hashtag.fromJson(json)).toList();
+//     }
+//     else {
+//       print('Failed to load');
+//       return [];
+//     }
+//   }
+// }
 
 class HospitalApi {
-  Future<List<Hospital>> fetchHashtag() async {
-    final response = await http.get(Uri.parse("$baseUrl/api/hospital"));
-    // print(response.body);
-      
-    if (response.statusCode == 200) {
-      final decodeResponse = json.decode(utf8.decode(response.bodyBytes));
-      List<dynamic> hospitalJson = decodeResponse;
-      return hospitalJson.map((json) => Hospital.fromJson(json)).toList();
+  Future<List<Hospital>> fetchHospital() async {
+    final response1 = await http.get(Uri.parse("$baseUrl/api/member"));
+    if (response1.statusCode == 200) {
+      final List<dynamic> decodeResponse1 = json.decode(utf8.decode(response1.bodyBytes));
+      final List<Map<String, dynamic>> hospitalJson1 = decodeResponse1.map((item) {
+        return {
+          'id': item['id'],
+          'password': item['password'],
+          'name': item['name'],
+          'nickname': item['nickname'],
+          'tel': item['tel'],
+          'address': item['address'],
+          'department': item['department'],
+        };
+      }).toList();
+
+      final response2 = await http.get(Uri.parse("$baseUrl/api/hdetail"));
+      if(response2.statusCode == 200) {
+        final List<dynamic> decodeResponse2 = json.decode(utf8.decode(response1.bodyBytes));
+        final List<Map<String, dynamic>> hospitalJson2 = decodeResponse2.map((item) {
+          return {
+            'id': item['hosp_ref'],
+            'pcr': item['pcr'],
+            'system': item['system'],
+          };
+        }).toList();
+
+        List<Hospital> hospitals = hospitalJson1.map((hospital1) {
+          final matchingDetail = hospitalJson2.firstWhere(
+            (hospital2) => hospital2['id'] == hospital1['id'],
+            orElse: () => {},
+          );
+
+          return Hospital(
+            id: hospital1['id'],
+            name: hospital1['name'],
+            nickname: hospital1['nickname'],
+            tel: hospital1['tel'],
+            address: hospital1['address'],
+            department: hospital1['department'],
+            pcr: matchingDetail['pcr'],
+            system: matchingDetail['system'],
+          );
+        }).toList();
+
+        return hospitals;
+      }
+      else {
+        throw Exception('Failed to load 2');
+      }
     }
     else {
-      print('Failed to load');
-      return [];
+      throw Exception('Failed to load 1');
     }
   }
 }
 
 class HourslApi {
-  Future<List<Hours>> fetchHashtag() async {
+  Future<List<Hours>> fetchHour() async {
     final response = await http.get(Uri.parse("$baseUrl/api/hours"));
-    // print(response.body);
+    print(response.body);
       
     if (response.statusCode == 200) {
       final decodeResponse = json.decode(utf8.decode(response.bodyBytes));
@@ -192,9 +234,9 @@ class HourslApi {
 }
 
 class HReplyApi {
-  Future<List<Hreply>> fetchHashtag() async {
+  Future<List<Hreply>> fetchHReply() async {
     final response = await http.get(Uri.parse("$baseUrl/api/hreply"));
-    // print(response.body);
+    print(response.body);
       
     if (response.statusCode == 200) {
       final decodeResponse = json.decode(utf8.decode(response.bodyBytes));
@@ -209,9 +251,9 @@ class HReplyApi {
 }
 
 class HReviewApi {
-  Future<List<Hreview>> fetchHashtag() async {
+  Future<List<Hreview>> fetchHReview() async {
     final response = await http.get(Uri.parse("$baseUrl/api/hreview"));
-    // print(response.body);
+    print(response.body);
       
     if (response.statusCode == 200) {
       final decodeResponse = json.decode(utf8.decode(response.bodyBytes));
@@ -226,9 +268,9 @@ class HReviewApi {
 }
 
 class LikeApi {
-  Future<List<Likes>> fetchHashtag() async {
+  Future<List<Likes>> fetchLike() async {
     final response = await http.get(Uri.parse("$baseUrl/api/likes"));
-    // print(response.body);
+    print(response.body);
       
     if (response.statusCode == 200) {
       final decodeResponse = json.decode(utf8.decode(response.bodyBytes));
@@ -243,9 +285,9 @@ class LikeApi {
 }
 
 class MemberApi {
-  Future<List<Member>> fetchHashtag() async {
+  Future<List<Member>> fetchMember() async {
     final response = await http.get(Uri.parse("$baseUrl/api/member"));
-    // print(response.body);
+    print(response.body);
       
     if (response.statusCode == 200) {
       final decodeResponse = json.decode(utf8.decode(response.bodyBytes));
@@ -260,9 +302,9 @@ class MemberApi {
 }
 
 class ReportApi {
-  Future<List<Report>> fetchHashtag() async {
+  Future<List<Report>> fetchReport() async {
     final response = await http.get(Uri.parse("$baseUrl/api/reports"));
-    // print(response.body);
+    print(response.body);
       
     if (response.statusCode == 200) {
       final decodeResponse = json.decode(utf8.decode(response.bodyBytes));
@@ -277,9 +319,9 @@ class ReportApi {
 }
 
 class ReserveApi {
-  Future<List<Reserve>> fetchHashtag() async {
+  Future<List<Reserve>> fetchReserve() async {
     final response = await http.get(Uri.parse("$baseUrl/api/reserve"));
-    // print(response.body);
+    print(response.body);
       
     if (response.statusCode == 200) {
       final decodeResponse = json.decode(utf8.decode(response.bodyBytes));

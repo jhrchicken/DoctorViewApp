@@ -22,7 +22,7 @@ class Hreply {
 
     return Hreply(
       replyIdx: parseInt(json['replyIdx']?.toString()),
-      date: DateTime.parse(json['date']),
+      date: DateTime.parse(json['postdate']),
       content: json['content'] ?? '',
       rewrite: json['rewrite'] ?? '',
       writerRef: json['writerRef'] ?? '',
@@ -31,7 +31,7 @@ class Hreply {
   }
   Map<String, dynamic> toJson() => {
     'replyIdx': replyIdx,
-    'date': date.toIso8601String(),
+    'postdate': date.toIso8601String(),
     'content': content,
     'rewrite': rewrite,
     'writerRef': writerRef,

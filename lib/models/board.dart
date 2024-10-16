@@ -18,27 +18,23 @@ class Board {
   });
 
   factory Board.fromJson(Map<String, dynamic> json) {
-    int parseInt(String? value) {
-      return value != null ? int.parse(value) : 0;
-    }
-
     return Board(
-      boardIdx: parseInt(json['boardIdx']?.toString()),
-      boardName: json['boardName'] ?? '',
+      boardIdx: json['board_idx'],
+      boardName: json['boardname'],
       postdate: DateTime.parse(json['postdate']),
-      title: json['title'] ?? '',
-      content: json['content'] ?? '',
-      visitcount: parseInt(json['visitcount']?.toString()),
-      writerRef: json['writerRef'],
+      title: json['title'],
+      content: json['content'],
+      visitcount: json['visitcount'],
+      writerRef: json['writer_ref'],
     );
   }
   Map<String, dynamic> toJson() => {
-    'boardIdx': boardIdx,
-    'boardName': boardName,
+    'board_idx': boardIdx,
+    'boardname': boardName,
     'postdate': postdate.toIso8601String(),
     'title': title,
     'content': content,
     'visitcount': visitcount,
-    'writerRef': writerRef,
+    'writer_ref': writerRef,
   };
 }

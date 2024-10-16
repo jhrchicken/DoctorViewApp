@@ -16,25 +16,21 @@ class Doctor {
   });
 
   factory Doctor.fromJson(Map<String, dynamic> json) {
-    int parseInt(String? value) {
-      return value != null ? int.parse(value) : 0;
-    }
-
     return Doctor(
-      docIdx: parseInt(json['docIdx']?.toString()),
-      name: json['name'] ?? '',
-      major: json['major'] ?? '',
-      career: json['career'] ?? '',
-      hours: json['hours'] ?? '',
-      hospRef: json['hospRef'] ?? '',
+      docIdx: json['doc_idx'],
+      name: json['name'],
+      major: json['major'],
+      career: json['career'],
+      hours: json['hours'],
+      hospRef: json['hosp_ref'],
     );
   }
   Map<String, dynamic> toJson() => {
-    'docIdx': docIdx,
+    'doc_idx': docIdx,
     'name': name,
     'major': major,
     'career': career,
     'hours': hours,
-    'hospRef': hospRef,
+    'hosp_ref': hospRef,
   };
 }

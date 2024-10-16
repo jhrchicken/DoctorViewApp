@@ -1,3 +1,5 @@
+import 'package:doctorviewapp/models/hreview.dart';
+
 class Hashtag {
   int tagIdx;
   String? hospRef;
@@ -12,21 +14,19 @@ class Hashtag {
   });
 
   factory Hashtag.fromJson(Map<String, dynamic> json) {
-    int parseInt(String? value) {
-      return value != null ? int.parse(value) : 0;
-    }
-
     return Hashtag(
-      tagIdx: parseInt(json['tagIdx']?.toString()),
-      hospRef: json['hospRef'] ?? '',
-      reviewRef: parseInt(json['reviewRef']?.toString()),
-      tag: json['tag'] ?? '',
+      tagIdx: json['tag_idx'],
+      hospRef:  json['hosp_ref'],
+      reviewRef: json['dreview_ref == 0'] ? json['hreview_ref'] : json['dreview_ref'],
+      tag: json['tag'],
     );
   }
+
   Map<String, dynamic> toJson() => {
-    'tagIdx': tagIdx,
-    'hospRef': hospRef,
-    'reviewRef': reviewRef,
+    'tag_idx': tagIdx,
+    'hosp_ref': hospRef,
+    'hreview_ref': reviewRef,
+    'dreview_ref': reviewRef,
     'tag': tag,
   };
 }
