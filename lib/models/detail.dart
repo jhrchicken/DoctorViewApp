@@ -18,5 +18,31 @@ class Detail {
     this.system,
     this.hosp_ref,
   });
-  
+
+  factory Detail.fromJson(Map<String, dynamic> json) {
+    int parseInt(String? value) {
+      return value != null ? int.parse(value) : 0;
+    }
+
+    return Detail(
+      idx: parseInt(json['idx']?.toString()),
+      introduce: json['introduce'] ?? '',
+      traffic: json['traffic'] ?? '',
+      parking: json['parking'] ?? '',
+      pcr: json['pcr'] ?? '',
+      hospitalize: json['hospitalize'] ?? '',
+      system: json['system'] ?? '',
+      hosp_ref: json['hosp_ref'] ?? '',
+    );
+  }
+  Map<String, dynamic> toJson() => {
+    'idx': idx,
+    'introduce': introduce,
+    'traffic': traffic,
+    'parking': parking,
+    'pcr': pcr,
+    'hospitalize': hospitalize,
+    'system': system,
+    'hosp_ref': hosp_ref,
+  };
 }

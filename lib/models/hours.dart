@@ -24,4 +24,37 @@ class Hours {
     required this.weekend,
     required this.night,
   });
+
+  factory Hours.fromJson(Map<String, dynamic> json) {
+    int parseInt(String? value) {
+      return value != null ? int.parse(value) : 0;
+    }
+
+    return Hours(
+      hoursIdx: parseInt(json['hoursIdx']?.toString()),
+      week: json['week'] ?? '',
+      startTime: json['startTime'] ?? '',
+      endTime: json['endTime'] ?? '',
+      startBreak: json['startBreak'] ?? '',
+      endBreak: json['endBreak'] ?? '',
+      deadLine: json['deadLine'] ?? '',
+      hospRef: json['hospRef'] ?? '',
+      openWeek: json['openWeek'] ?? '',
+      weekend: json['weekend'] ?? '',
+      night: json['night'] ?? '',
+    );
+  }
+  Map<String, dynamic> toJson() => {
+    'hoursIdx': hoursIdx,
+    'week': week,
+    'startTime': startTime,
+    'endTime': endTime,
+    'startBreak': startBreak,
+    'endBreak': endBreak,
+    'deadLine': deadLine,
+    'hospRef': hospRef,
+    'openWeek': openWeek,
+    'weekend': weekend,
+    'night': night,
+  };
 }

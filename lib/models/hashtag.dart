@@ -54,6 +54,4 @@ class Hashtag {
 
     return data;
   }
-
-
 }
