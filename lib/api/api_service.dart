@@ -158,63 +158,23 @@ class HashtagApi {
   }
 }
 
-class HospitalApi {
+class HospitalApi{
   Future<List<Hospital>> fetchHospital() async {
-    final response1 = await http.get(Uri.parse("$baseUrl/api/member"));
-    if (response1.statusCode == 200) {
-      final List<dynamic> decodeResponse1 = json.decode(utf8.decode(response1.bodyBytes));
-      final List<Map<String, dynamic>> hospitalJson1 = decodeResponse1.map((item) {
-        return {
-          'id': item['id'],
-          'password': item['password'],
-          'name': item['name'],
-          'nickname': item['nickname'],
-          'tel': item['tel'],
-          'address': item['address'],
-          'department': item['department'],
-        };
-      }).toList();
-
-      final response2 = await http.get(Uri.parse("$baseUrl/api/hdetail"));
-      if(response2.statusCode == 200) {
-        final List<dynamic> decodeResponse2 = json.decode(utf8.decode(response1.bodyBytes));
-        final List<Map<String, dynamic>> hospitalJson2 = decodeResponse2.map((item) {
-          return {
-            'id': item['hosp_ref'],
-            'pcr': item['pcr'],
-            'system': item['system'],
-          };
-        }).toList();
-
-        List<Hospital> hospitals = hospitalJson1.map((hospital1) {
-          final matchingDetail = hospitalJson2.firstWhere(
-            (hospital2) => hospital2['id'] == hospital1['id'],
-            orElse: () => {},
-          );
-
-          return Hospital(
-            id: hospital1['id'],
-            name: hospital1['name'],
-            nickname: hospital1['nickname'],
-            tel: hospital1['tel'],
-            address: hospital1['address'],
-            department: hospital1['department'],
-            pcr: matchingDetail['pcr'],
-            system: matchingDetail['system'],
-          );
-        }).toList();
-
-        return hospitals;
-      }
-      else {
-        throw Exception('Failed to load 2');
-      }
+    final response = await http.get(Uri.parse("$baseUrl/api/hospital"));
+    print(response.body);
+      
+    if (response.statusCode == 200) {
+      final decodeResponse = json.decode(utf8.decode(response.bodyBytes));
+      List<dynamic> hospitalJson = decodeResponse;
+      return hospitalJson.map((json) => Hospital.fromJson(json)).toList();
     }
     else {
-      throw Exception('Failed to load 1');
+      print('Failed to load');
+      return [];
     }
   }
 }
+
 
 class HoursApi {
   Future<List<Hours>> fetchHour() async {

@@ -29,7 +29,7 @@ class Hospital {
     return Hospital(
       id: json['id'],
       name: json['name'],
-      nickname: json['nuckname'],
+      nickname: json['nickname'],
       tel: json['tel'],
       address: json['address'],
       department: json['department'],
@@ -37,15 +37,14 @@ class Hospital {
       system: json['system'],
     );
   }
-  // hospital이랑 hdetail이 섞여있음 어디로 보내
-  // Map<String, dynamic> toJson() => {
-  //   'id': id,
-  //   'name': name,
-  //   'nickname': nickname,
-  //   'tel': tel,
-  //   'address': address,
-  //   'department': department,
-  //   'pcr': pcr,
-  //   'system': system,
-  // };
+  Map<String, dynamic> toJson() => {
+    'id': id,
+    'name': name,
+    'nickname': nickname,
+    'tel': tel,
+    'address': address,
+    'department': department,
+    'pcr': pcr,
+    'system': system,
+  };
 }
