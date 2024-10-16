@@ -1,4 +1,7 @@
 import 'package:doctorviewapp/models/hreview.dart';
+import 'package:doctorviewapp/models/dreview.dart';
+import 'package:doctorviewapp/providers/dreview_provider.dart';
+import 'package:doctorviewapp/providers/hreview_provider.dart';
 
 class Hashtag {
   int tagIdx;
@@ -22,11 +25,33 @@ class Hashtag {
     );
   }
 
-  Map<String, dynamic> toJson() => {
-    'tag_idx': tagIdx,
-    'hosp_ref': hospRef,
-    'hreview_ref': reviewRef,
-    'dreview_ref': reviewRef,
-    'tag': tag,
-  };
+  Map<String, dynamic> toJson(DreviewProvider dreviewProvider, HreviewProvider hreviewProvider) {
+    List<Dreview> dreviewList = dreviewProvider.dreviewList;
+    List<Hreview> hreviewList = hreviewProvider.hreviewList;
+
+    int dreviewRef = 0;
+    int hreviewRef = 0;
+
+    for (var dreview in dreviewList) {
+      if (dreview.reviewIdx == reviewRef) {
+        dreviewRef = dreview.reviewIdx;
+      }
+    }
+    
+    for (var hreview in hreviewList) {
+      if (hreview.reviewIdx == reviewRef) {
+        hreviewRef = hreview.reviewIdx;
+      }
+    }
+  
+    final Map<String, dynamic> data = {
+      'tag_idx': tagIdx,
+      'hosp_ref': hospRef,
+      'dreview_ref': dreviewRef != 0 ? dreviewRef : null,
+      'hreview_ref': hreviewRef != 0 ? hreviewRef : null,
+      'tag': tag,
+    };
+
+    return data;
+  }
 }

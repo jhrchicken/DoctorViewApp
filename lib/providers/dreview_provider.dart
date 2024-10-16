@@ -1,9 +1,8 @@
+import 'package:doctorviewapp/models/common_varibles.dart';
 import 'package:doctorviewapp/models/dreview.dart';
 import 'package:flutter/material.dart';
 
 class DreviewProvider extends ChangeNotifier {
-  // 의사 리뷰 시퀀스
-  int _seqDreviewIdx = 5;
 
   // 의사 리뷰 더미데이터
   final List<Dreview> _dreviewList = [
@@ -51,8 +50,7 @@ class DreviewProvider extends ChangeNotifier {
   List<Dreview> listDreview(int docRef) {
     return _dreviewList.where((dreview) => dreview.docRef == docRef).toList();
   }
-
-
+  
   // 의사 리뷰 조회
   Dreview? selectDreview(int reviewIdx) {
     try {
@@ -65,7 +63,7 @@ class DreviewProvider extends ChangeNotifier {
 
   // 의사 리뷰 작성
   int insertDreview(Dreview dreview) {
-    dreview.reviewIdx = _seqDreviewIdx++;
+    dreview.reviewIdx = seqReviewIdx++;
     _dreviewList.add(dreview);
     notifyListeners();
     return dreview.reviewIdx;
