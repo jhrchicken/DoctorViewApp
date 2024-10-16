@@ -26,34 +26,30 @@ class Hours {
   });
 
   factory Hours.fromJson(Map<String, dynamic> json) {
-    int parseInt(String? value) {
-      return value != null ? int.parse(value) : 0;
-    }
-
     return Hours(
-      hoursIdx: parseInt(json['hoursIdx']?.toString()),
-      week: json['week'] ?? '',
-      startTime: json['startTime'] ?? '',
-      endTime: json['endTime'] ?? '',
-      startBreak: json['startBreak'] ?? '',
-      endBreak: json['endBreak'] ?? '',
-      deadLine: json['deadLine'] ?? '',
-      hospRef: json['hospRef'] ?? '',
-      openWeek: json['openWeek'] ?? '',
-      weekend: json['weekend'] ?? '',
-      night: json['night'] ?? '',
+      hoursIdx: int.parse(json['hours_idx']),
+      week: json['week'],
+      startTime: json['starttime'],
+      endTime: json['endtime'],
+      startBreak: json['startbreak'],
+      endBreak: json['endbreak'],
+      deadLine: json['deadline'],
+      hospRef: json['hosp_ref'],
+      openWeek: json['open_week'],
+      weekend: json['weekend'],
+      night: json['night'],
     );
   }
   Map<String, dynamic> toJson() => {
-    'hoursIdx': hoursIdx,
+    'hours_idx': hoursIdx.toString(),
     'week': week,
-    'startTime': startTime,
-    'endTime': endTime,
-    'startBreak': startBreak,
-    'endBreak': endBreak,
-    'deadLine': deadLine,
-    'hospRef': hospRef,
-    'openWeek': openWeek,
+    'starttime': startTime,
+    'endtime': endTime,
+    'startbreak': startBreak,
+    'endbreak': endBreak,
+    'deadline': deadLine,
+    'hosp_ref': hospRef,
+    'open_week': openWeek,
     'weekend': weekend,
     'night': night,
   };

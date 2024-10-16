@@ -43,21 +43,21 @@ class _DebugState extends State<Debug> {
   @override
   void initState() {
     super.initState();
-    futureBoard = BoardApi().fetchBoard();
-    futureComment = CommentApi().fetchComment();
-    futureDetail = DetailApi().fetchDetail();
-    futureDocotr = DoctorApi().fetchDoctor();
-    futureDreply = DReplyApi().fetchDreply();
-    futureDreview = DReviewApi().fetchDreview();
+    // futureBoard = BoardApi().fetchBoard();
+    // futureComment = CommentApi().fetchComment();
+    // futureDetail = DetailApi().fetchDetail();
+    // futureDocotr = DoctorApi().fetchDoctor();
+    // futureDreply = DReplyApi().fetchDreply();
+    // futureDreview = DReviewApi().fetchDreview();
     // futureHashtag = HashtagApi().fetchHashtag();
     futureHospital = HospitalApi().fetchHospital();
-    futureHour = HourslApi().fetchHour();
-    futureHreply = HReplyApi().fetchHReply();
-    futureHreview = HReviewApi().fetchHReview();
-    futureLike = LikeApi().fetchLike();
-    futureMember = MemberApi().fetchMember();
-    futureReport = ReportApi().fetchReport();
-    futureReserve = ReserveApi().fetchReserve();
+    // futureHour = HoursApi().fetchHour();
+    // futureHreply = HReplyApi().fetchHReply();
+    // futureHreview = HReviewApi().fetchHReview();
+    // futureLike = LikeApi().fetchLike();
+    // futureMember = MemberApi().fetchMember();
+    // futureReport = ReportApi().fetchReport();
+    // futureReserve = ReserveApi().fetchReserve();
   }
 
   @override
@@ -84,7 +84,7 @@ class _DebugState extends State<Debug> {
               final item = list[index];
               return ListTile(
                 title: Text(item.id.toString()),
-                subtitle: Text(item.name.toString()),
+                subtitle: Text(item.id.toString()),
                 onTap: () {},
               );
             },

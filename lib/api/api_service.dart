@@ -141,22 +141,22 @@ class DReviewApi {
   }
 }
 
-// class HashtagApi {
-//   Future<List<Hashtag>> fetchHashtag() async {
-//     final response = await http.get(Uri.parse("$baseUrl/api/hashtags"));
-//     print(response.body);
+class HashtagApi {
+  Future<List<Hashtag>> fetchHashtag() async {
+    final response = await http.get(Uri.parse("$baseUrl/api/hashtags"));
+    print(response.body);
       
-//     if (response.statusCode == 200) {
-//       final decodeResponse = json.decode(utf8.decode(response.bodyBytes));
-//       List<dynamic> hashtagJson = decodeResponse;
-//       return hashtagJson.map((json) => Hashtag.fromJson(json)).toList();
-//     }
-//     else {
-//       print('Failed to load');
-//       return [];
-//     }
-//   }
-// }
+    if (response.statusCode == 200) {
+      final decodeResponse = json.decode(utf8.decode(response.bodyBytes));
+      List<dynamic> hashtagJson = decodeResponse;
+      return hashtagJson.map((json) => Hashtag.fromJson(json)).toList();
+    }
+    else {
+      print('Failed to load');
+      return [];
+    }
+  }
+}
 
 class HospitalApi {
   Future<List<Hospital>> fetchHospital() async {
@@ -216,7 +216,7 @@ class HospitalApi {
   }
 }
 
-class HourslApi {
+class HoursApi {
   Future<List<Hours>> fetchHour() async {
     final response = await http.get(Uri.parse("$baseUrl/api/hours"));
     print(response.body);

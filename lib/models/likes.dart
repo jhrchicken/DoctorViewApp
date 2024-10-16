@@ -12,20 +12,16 @@ class Likes {
   });
 
   factory Likes.fromJson(Map<String, dynamic> json) {
-    int parseInt(String? value) {
-      return value != null ? int.parse(value) : 0;
-    }
-
     return Likes(
-      likeIdx: parseInt(json['likeIdx']?.toString()),
-      memberRef: json['memberRef'] ?? '',
-      tablename: json['tablename'] ?? '',
-      recodenum: json['recodenum'] ?? '',
+      likeIdx: json['like_idx'],
+      memberRef: json['member_ref'],
+      tablename: json['tablename'],
+      recodenum: json['recodenum'],
     );
   }
   Map<String, dynamic> toJson() => {
-    'likeIdx': likeIdx,
-    'memberRef': memberRef,
+    'like_idx': likeIdx,
+    'member_ref': memberRef,
     'tablename': tablename,
     'recodenum': recodenum,
   };

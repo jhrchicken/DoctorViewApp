@@ -16,25 +16,21 @@ class Hreply {
   });
 
   factory Hreply.fromJson(Map<String, dynamic> json) {
-    int parseInt(String? value) {
-      return value != null ? int.parse(value) : 0;
-    }
-
     return Hreply(
-      replyIdx: parseInt(json['replyIdx']?.toString()),
+      replyIdx: json['review_idx'],
       date: DateTime.parse(json['postdate']),
-      content: json['content'] ?? '',
-      rewrite: json['rewrite'] ?? '',
-      writerRef: json['writerRef'] ?? '',
-      reviewRef: parseInt(json['reviewRef']?.toString()),
+      content: json['content'],
+      rewrite: json['rewrite'],
+      writerRef: json['writer_ref'],
+      reviewRef: json['original_idx'],
     );
   }
   Map<String, dynamic> toJson() => {
-    'replyIdx': replyIdx,
+    'review_idx': replyIdx,
     'postdate': date.toIso8601String(),
     'content': content,
     'rewrite': rewrite,
-    'writerRef': writerRef,
-    'reviewRef': reviewRef,
+    'writer_ref': writerRef,
+    'original_ref': reviewRef,
   };
 }

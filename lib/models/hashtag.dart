@@ -20,7 +20,7 @@ class Hashtag {
     return Hashtag(
       tagIdx: json['tag_idx'],
       hospRef:  json['hosp_ref'],
-      reviewRef: json['dreview_ref == 0'] ? json['hreview_ref'] : json['dreview_ref'],
+      reviewRef: json['dreview_ref'] == 0 ? json['hreview_ref'] : json['dreview_ref'],
       tag: json['tag'],
     );
   }

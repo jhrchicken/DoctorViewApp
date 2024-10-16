@@ -32,25 +32,21 @@ class Member {
   });
 
   factory Member.fromJson(Map<String, dynamic> json) {
-    int parseInt(String? value) {
-      return value != null ? int.parse(value) : 0;
-    }
-
     return Member(
-      id: json['id'] ?? '',
-      password: json['password'] ?? '',
-      name: json['name'] ?? '',
-      nickname: json['nickname'] ?? '',
-      tel: json['tel'] ?? '',
-      address: json['address'] ?? '',
-      email: json['email'] ?? '',
-      rrn: json['rrn'] ?? '',
-      enable: parseInt(json['enable']?.toString()),
-      auth: json['auth'] ?? '',
-      point: parseInt(json['point']?.toString()),
-      emoji: json['emoji'] ?? '',
-      taxid: json['taxid'] ?? '',
-      department: json['department'] ?? '',
+      id: json['id'],
+      password: json['password'],
+      name: json['name'],
+      nickname: json['nickname'],
+      tel: json['tel'],
+      address: json['address'],
+      email: json['email'],
+      rrn: json['rrn'],
+      enable: json['enable'],
+      auth: json['auth'],
+      point: json['point'],
+      emoji: json['emoji'],
+      taxid: json['taxid'],
+      department: json['department'],
     );
   }
   Map<String, dynamic> toJson() => {

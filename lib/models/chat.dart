@@ -17,23 +17,19 @@ class Chat {
 
   // 스프링부트에서 api 연결하면 주석 해제
   // factory Chat.fromJson(Map<String, dynamic> json) {
-  //   int parseInt(String? value) {
-  //     return value != null ? int.parse(value) : 0;
-  //   }
-
   //   return Chat(
-  //     chatIdx: parseInt(json['chatIdx']?.toString()),
-  //     memberRef: json['memberRef'] ?? '',
-  //     roomId: json['roomId'] ?? '',
-  //     message: json['message'] ?? '',
+  //     chatIdx: json['chat_idx'],
+  //     memberRef: json['member_ref'],
+  //     roomId: json['room_id'],
+  //     message: json['message'],
   //     postdate: DateTime.parse(json['postdate']),
-  //     read: json['read'] ?? '',
+  //     read: json['read'],
   //   );
   // }
   // Map<String, dynamic> toJson() => {
-  //   'chatIdx': chatIdx,
-  //   'memberRef': memberRef,
-  //   'roomId': roomId,
+  //   'chat_idx': chatIdx,
+  //   'member_ref': memberRef,
+  //   'room_id': roomId,
   //   'message': message,
   //   'postdate': postdate.toIso8601String(),
   //   'read': read,
