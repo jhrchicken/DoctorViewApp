@@ -82,10 +82,10 @@ class _MyHomePageState extends State<MyHomePage> {
     reserveProvider.fetchReserve();
     final likesProvider = Provider.of<LikesProvider>(context, listen: false);
     likesProvider.fetchLike();
-    final hreviewsProvider = Provider.of<HreviewProvider>(context, listen: false);
-    hreviewsProvider.fetchHreview();
-    final dreviewsProvider = Provider.of<DreviewProvider>(context, listen: false);
-    dreviewsProvider.fetchDreview();
+    // final hreviewsProvider = Provider.of<HreviewProvider>(context, listen: false);
+    // hreviewsProvider.fetchHreview();
+    // final dreviewsProvider = Provider.of<DreviewProvider>(context, listen: false);
+    // dreviewsProvider.fetchDreview();
     final doctorsProvider = Provider.of<DoctorProvider>(context, listen: false);
     doctorsProvider.fetchDoctor();
   }

@@ -8,16 +8,33 @@ class HreplyProvider extends ChangeNotifier {
   int _seqHreplyIdx = 3;
 
   // 병원 리뷰 답변 더미데이터
-  final List<Hreply> _hreplyList = [];
+  final List<Hreply> _hreplyList = [
+    Hreply(
+      replyIdx: 1,
+      date: DateTime.now(),
+      content: '뭐요',
+      rewrite: 'F',
+      writerRef: 'harim',
+      reviewRef: 1
+    ),
+    Hreply(
+      replyIdx: 2,
+      date: DateTime.now(),
+      content: '입닫고 빵이나 드세요',
+      rewrite: 'F',
+      writerRef: 'harim',
+      reviewRef: 1
+    ),
+  ];
 
   // API에서 병원 리뷰 답변 목록 가져오기
-  Future<void> fetchHreply() async {
-    final hreplyApi = HReplyApi();
-    final fetchHreplies = await hreplyApi.fetchHReply();
-    _hreplyList.clear();
-    _hreplyList.addAll(fetchHreplies);
-    notifyListeners();
-  }
+  // Future<void> fetchHreply() async {
+  //   final hreplyApi = HReplyApi();
+  //   final fetchHreplies = await hreplyApi.fetchHReply();
+  //   _hreplyList.clear();
+  //   _hreplyList.addAll(fetchHreplies);
+  //   notifyListeners();
+  // }
 
   // 병원 리뷰 답변 목록
   List<Hreply> listHreply(int reviewRef) {
