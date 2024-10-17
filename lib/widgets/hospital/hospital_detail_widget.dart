@@ -29,6 +29,17 @@ class HospitalDetailWidget extends StatefulWidget {
 }
 
 class _HospitalDetailWidgetState extends State<HospitalDetailWidget> {
+  @override
+  void initState() {
+    super.initState();
+    final hoursProvider = Provider.of<HoursProvider>(context, listen: false);
+    hoursProvider.fetchHour();
+    final hreviewsProvider = Provider.of<HreviewProvider>(context, listen: false);
+    hreviewsProvider.fetchHreview();
+    final likesProvider = Provider.of<LikesProvider>(context, listen: false);
+    likesProvider.fetchLike();
+  }
+
   final List<String> weekdays = [
     '월요일',
     '화요일',
@@ -118,7 +129,27 @@ class _HospitalDetailWidgetState extends State<HospitalDetailWidget> {
           nextday = nextweekday;
           break;
         }
+        // if (nextweekday.startTime != '25:00') {
+        //   nextday = nextweekday;
+        //   break;
+        // }
       }
+    }
+
+    if (nextday == null) {
+      nextday = Hours(
+          hoursIdx: 0,
+          week: weekday,
+          startTime: '25:00',
+          endTime: '25:00',
+          startBreak: '25:00',
+          endBreak: '25:00',
+          deadLine: '25:00',
+          hospRef: 'null',
+          openWeek: 'F',
+          weekend: 'F',
+          night: 'F',
+      );
     }
 
     return Column(
