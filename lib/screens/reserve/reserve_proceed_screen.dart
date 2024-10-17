@@ -9,8 +9,6 @@ import 'package:doctorviewapp/widgets/common/primary_button.dart';
 import 'package:doctorviewapp/widgets/reserve/reserve_dateandhours_widget.dart';
 import 'package:doctorviewapp/widgets/reserve/reserve_divider.dart';
 import 'package:doctorviewapp/widgets/reserve/reserve_doctorInfo_widget.dart';
-import 'package:doctorviewapp/widgets/reserve/reserve_hoursInfo_widget.dart';
-import 'package:doctorviewapp/widgets/reserve/reserve_select_date_widget.dart';
 import 'package:doctorviewapp/widgets/reserve/reserve_userInfo_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -134,15 +132,7 @@ class _ReserveProceedScreenState extends State<ReserveProceedScreen> {
                 ),
                 const SizedBox(height: 30),
 
-                // 날짜 선택
-                // ReserveSelectDateWidget(hospRef: widget.hospRef, onDateSelected: updateDate),
-                // const SizedBox(height: 10,),
-                // const ReserveDivider(),
-
-                // 시간 선택
-                // ReserveHoursInfoWidget(hospRef: widget.hospRef, onHoursSelected: updateHours),
-                // const ReserveDivider(),
-
+                // 날짜, 시간
                 ReserveDateAndHoursWidget(hospRef: widget.hospRef, onDateSelected: updateDate, onHoursSelected: updateHours),
 
                 // 의사

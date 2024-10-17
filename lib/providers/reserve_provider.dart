@@ -117,8 +117,8 @@ class ReserveProvider extends ChangeNotifier {
           reserve.postdate.year,
           reserve.postdate.month,
           reserve.postdate.day,
-          int.parse(reserve.posttime.split(':')[0]), // 시
-          int.parse(reserve.posttime.split(':')[1]), // 분
+          int.parse(reserve.posttime.split(':')[0]),
+          int.parse(reserve.posttime.split(':')[1]),
         );
         return (reserve.user_ref == ref && postDateTime.isAfter(today) && reserve.cancel =='F') || (reserve.hosp_ref == ref && postDateTime.isAfter(today) && reserve.cancel =='F');
       },
