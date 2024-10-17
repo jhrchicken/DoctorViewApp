@@ -27,14 +27,14 @@ class Hospital {
 
   factory Hospital.fromJson(Map<String, dynamic> json) {
     return Hospital(
-      id: json['id'],
+      id: json['id'] ?? '',
       name: json['name'],
-      nickname: json['nickname'],
+      nickname: json['nickname'] ?? json['name'],
       tel: json['tel'],
       address: json['address'],
       department: json['department'],
-      pcr: json['pcr'],
-      system: json['system'],
+      pcr: json['pcr'] ?? '',
+      system: json['system'] ?? '',
     );
   }
   Map<String, dynamic> toJson() => {
