@@ -34,8 +34,6 @@ class _HospitalDetailWidgetState extends State<HospitalDetailWidget> {
     super.initState();
     final hoursProvider = Provider.of<HoursProvider>(context, listen: false);
     hoursProvider.fetchHour();
-    final hreviewsProvider = Provider.of<HreviewProvider>(context, listen: false);
-    hreviewsProvider.fetchHreview();
     final likesProvider = Provider.of<LikesProvider>(context, listen: false);
     likesProvider.fetchLike();
   }
@@ -129,10 +127,6 @@ class _HospitalDetailWidgetState extends State<HospitalDetailWidget> {
           nextday = nextweekday;
           break;
         }
-        // if (nextweekday.startTime != '25:00') {
-        //   nextday = nextweekday;
-        //   break;
-        // }
       }
     }
 

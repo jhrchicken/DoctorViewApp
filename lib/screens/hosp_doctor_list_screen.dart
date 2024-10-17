@@ -31,6 +31,8 @@ class _HospDoctorListScreenState extends State<HospDoctorListScreen> {
     doctorProvider.fetchDoctor();
     final hospitalProvider = Provider.of<HospitalProvider>(context, listen: false);
     hospitalProvider.fetchHospital();
+    final hashtagProvider = Provider.of<HashtagProvider>(context, listen: false);
+    hashtagProvider.fetchHashtag();
   }
 
   final TextEditingController _searchController = TextEditingController();
