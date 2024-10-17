@@ -23,6 +23,12 @@ class BoardItemWidget extends StatefulWidget {
 }
 
 class _BoardItemWidgetState extends State<BoardItemWidget> {
+  @override
+  void initState() {
+    super.initState();
+    final commentProvider = Provider.of<CommentProvider>(context, listen: false);
+    commentProvider.fetchComment();
+  }
 
   @override
   Widget build(BuildContext context) {

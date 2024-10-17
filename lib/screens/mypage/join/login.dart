@@ -1,7 +1,6 @@
 import 'package:doctorviewapp/component/checkbox.dart';
 import 'package:doctorviewapp/component/inputfield.dart';
 import 'package:doctorviewapp/component/secondary_outline_button.dart';
-import 'package:doctorviewapp/header.dart';
 import 'package:doctorviewapp/main.dart';
 import 'package:doctorviewapp/providers/member_provider.dart';
 import 'package:flutter/material.dart';
@@ -15,6 +14,13 @@ class Login extends StatefulWidget {
 }
 
 class _LoginState extends State<Login> {
+  @override
+  void initState() {
+    super.initState();
+    final memberProvider = Provider.of<MemberProvider>(context, listen: false);
+    memberProvider.fetchMember();
+  }
+  
   final _formKey = GlobalKey<FormState>();
   bool isChecked = false; 
 

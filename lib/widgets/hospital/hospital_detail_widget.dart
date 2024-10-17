@@ -12,7 +12,6 @@ import 'package:doctorviewapp/screens/chat/chat_view_screen.dart';
 import 'package:doctorviewapp/screens/reserve/reserve_proceed_screen.dart';
 import 'package:doctorviewapp/theme/colors.dart';
 import 'package:doctorviewapp/widgets/common/primary_button.dart';
-import 'package:doctorviewapp/widgets/common/primary_button_black.dart';
 import 'package:doctorviewapp/widgets/common/small_button.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';

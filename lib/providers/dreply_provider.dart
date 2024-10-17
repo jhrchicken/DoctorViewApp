@@ -1,3 +1,4 @@
+import 'package:doctorviewapp/api/api_service.dart';
 import 'package:doctorviewapp/models/dreply.dart';
 import 'package:flutter/material.dart';
 
@@ -6,40 +7,16 @@ class DreplyProvider extends ChangeNotifier {
   int _seqDreplyIdx = 5;
 
   // 의사 리뷰 답변 더미데이터
-  final List<Dreply> _dreplyList = [
-    Dreply(
-      replyIdx: 1,
-      date: DateTime.now(),
-      content: '님이 더 별로예요',
-      rewrite: 'F',
-      writerRef: 'hospital1',
-      reviewRef: 4
-    ),
-    Dreply(
-      replyIdx: 2,
-      date: DateTime.now(),
-      content: '저희 병원에 다시는 방문하지 마세요',
-      rewrite: 'F',
-      writerRef: 'hospital1',
-      reviewRef: 4
-    ),
-    Dreply(
-      replyIdx: 3,
-      date: DateTime.now(),
-      content: '앞으로 많이 방문해주세요~!',
-      rewrite: 'F',
-      writerRef: 'hospital1',
-      reviewRef: 3
-    ),
-    Dreply(
-      replyIdx: 4,
-      date: DateTime.now(),
-      content: '감사합니다 ^^',
-      rewrite: 'F',
-      writerRef: 'hospital1',
-      reviewRef: 1
-    ),
-  ];
+  final List<Dreply> _dreplyList = [];
+
+  // API에서 의사 리뷰 답변 목록 가져오기
+  Future<void> fetchDreply() async {
+    final dreplyApi = DReplyApi();
+    final fetchDreplies = await dreplyApi.fetchDreply();
+    _dreplyList.clear();
+    _dreplyList.addAll(fetchDreplies);
+    notifyListeners();
+  }
 
   // 의사 리뷰 답변 목록
   List<Dreply> listDreply(int reviewRef) {

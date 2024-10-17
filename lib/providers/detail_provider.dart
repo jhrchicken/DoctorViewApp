@@ -1,3 +1,4 @@
+import 'package:doctorviewapp/api/api_service.dart';
 import 'package:doctorviewapp/models/detail.dart';
 import 'package:flutter/material.dart';
 
@@ -5,20 +6,19 @@ class DetailProvider extends ChangeNotifier {
 
   int _seqDetailIdx = 1;
 
-  final List<Detail> _detailList = [
-    Detail(
-      idx: 0,
-      introduce: '안녕하세요. 병원1입니다.',
-      traffic: '종각역 3번출구 5분거리',
-      parking: 'T',
-      pcr: 'T',
-      hospitalize: 'F',
-      system: 'T',
-      hosp_ref: 'hospital1',
-    ),
-  ];
+  final List<Detail> _detailList = [];
 
+  // 상세정보 전체 목록
   List<Detail> get detailList => _detailList;
+
+  // API에서 상세정보 목록 가져오기
+  Future<void> fetchDetail() async {
+    final detailApi = DetailApi();
+    final fetchDetails = await detailApi.fetchDetail();
+    _detailList.clear();
+    _detailList.addAll(fetchDetails);
+    notifyListeners();
+  }
 
   // 해당하는 병원의 디테일 반환
   Detail? getHospDetail(String hospRef) {

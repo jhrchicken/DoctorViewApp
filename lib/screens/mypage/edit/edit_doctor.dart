@@ -1,7 +1,6 @@
 import 'package:doctorviewapp/header.dart';
 import 'package:doctorviewapp/models/doctor.dart';
 import 'package:doctorviewapp/providers/doctor_provider.dart';
-import 'package:doctorviewapp/providers/member_provider.dart';
 import 'package:doctorviewapp/screens/mypage/hosp_mypage/list_doctor.dart';
 import 'package:doctorviewapp/widgets/reserve/userInfo_field.dart';
 import 'package:doctorviewapp/theme/colors.dart';

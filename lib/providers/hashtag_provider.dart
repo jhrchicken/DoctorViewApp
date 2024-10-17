@@ -1,3 +1,4 @@
+import 'package:doctorviewapp/api/api_service.dart';
 import 'package:doctorviewapp/models/hashtag.dart';
 import 'package:flutter/material.dart';
 
@@ -6,50 +7,16 @@ class HashtagProvider extends ChangeNotifier {
   int _seqHashtagIdx = 7;
 
   // 해시태그 더미데이터
-  final List<Hashtag> _hashtagList = [
-    // 병원 해시태그
-    Hashtag(
-      tagIdx: 1,
-      hospRef: 'hospital1',
-      tag: '위염'
-    ),
-    Hashtag(
-      tagIdx: 2,
-      hospRef: 'hospital1',
-      tag: '감기'
-    ),
-    Hashtag(
-      tagIdx: 3,
-      hospRef: 'hospital1',
-      tag: '장염'
-    ),
-    // 리뷰 해시태그
-    Hashtag(
-      tagIdx: 1,
-      reviewRef: 1,
-      tag: '친절해요'
-    ),
-    Hashtag(
-      tagIdx: 2,
-      reviewRef: 1,
-      tag: '청결해요'
-    ),
-    Hashtag(
-      tagIdx: 3,
-      reviewRef: 1,
-      tag: '효과가 좋아요'
-    ),
-    Hashtag(
-      tagIdx: 3,
-      reviewRef: 3,
-      tag: '저렴해요'
-    ),
-    Hashtag(
-      tagIdx: 3,
-      reviewRef: 3,
-      tag: '꼼꼼해요'
-    ),
-  ];
+  final List<Hashtag> _hashtagList = [];
+
+  // API에서 해시태그 목록 가져오기
+  Future<void> fetchHashtag() async {
+    final hashtagApi = HashtagApi();
+    final fetchTags = await hashtagApi.fetchHashtag();
+    _hashtagList.clear();
+    _hashtagList.addAll(fetchTags);
+    notifyListeners();
+  }
 
   // 특정 병원의 해시태그 목록 조회
   List<Hashtag> listHospHashtag(String hospRef) {

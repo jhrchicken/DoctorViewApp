@@ -1,5 +1,4 @@
 import 'package:doctorviewapp/models/reserve.dart';
-import 'package:doctorviewapp/providers/member_provider.dart';
 import 'package:doctorviewapp/providers/reserve_provider.dart';
 import 'package:doctorviewapp/screens/reserve/reserve_complete_screen.dart';
 import 'package:doctorviewapp/theme/colors.dart';

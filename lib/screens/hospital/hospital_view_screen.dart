@@ -39,6 +39,13 @@ class HospitalViewScreen extends StatefulWidget {
 }
 
 class _HospitalViewScreenState extends State<HospitalViewScreen> {
+  @override
+  void initState() {
+    super.initState();
+    final likesProvider = Provider.of<LikesProvider>(context, listen: false);
+    likesProvider.fetchLike();
+  }
+
   bool isLike = false;
   Member? loginMember;
 

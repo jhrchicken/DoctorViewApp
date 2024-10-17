@@ -3,11 +3,8 @@ import 'package:doctorviewapp/models/member.dart';
 import 'package:doctorviewapp/providers/member_provider.dart';
 import 'package:doctorviewapp/screens/board/bestboard_list_screen.dart';
 import 'package:doctorviewapp/screens/board/board_list_screen.dart';
-import 'package:doctorviewapp/screens/board/debug.dart';
 import 'package:doctorviewapp/screens/board/myboard_list_screen.dart';
 import 'package:doctorviewapp/screens/board/waitcomment_list_screen.dart';
-import 'package:doctorviewapp/theme/colors.dart';
-import 'package:doctorviewapp/widgets/common/primary_button.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -337,23 +334,6 @@ class _BoardMainScreenState extends State<BoardMainScreen> {
                     ),
                   ],
                 ),
-              ),
-            ),
-
-            // api 연결 테스트용
-            Padding(
-              padding: const EdgeInsets.all(20),
-              child: PrimaryButton(
-                text: 'api test',
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const Debug()
-                    ),
-                  );
-                },
-                color: pointColor2,
               ),
             ),
           ],

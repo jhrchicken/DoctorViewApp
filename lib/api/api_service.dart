@@ -39,22 +39,21 @@ class BoardApi {
   }
 }
 
-// 스프링부트에서 api 연결하면 주석 해제
-// class ChatApi {
-//   Future<List<Chat>> fetchChat() async {
-//     final response = await http.get(Uri.parse("$baseUrl/api/chat"));
+class ChatApi {
+  Future<List<Chat>> fetchChat() async {
+    final response = await http.get(Uri.parse("$baseUrl/api/chat"));
 
-//     if (response.statusCode == 200) {
-//       final decodeResponse = json.decode(utf8.decode(response.bodyBytes));
-//       List<dynamic> chatJson = decodeResponse;
-//       return chatJson.map((json) => Chat.fromJson(json)).toList();
-//     }
-//     else {
-//       print('Failed to load');
-//       return [];
-//     }
-//   }
-// }
+    if (response.statusCode == 200) {
+      final decodeResponse = json.decode(utf8.decode(response.bodyBytes));
+      List<dynamic> chatJson = decodeResponse;
+      return chatJson.map((json) => Chat.fromJson(json)).toList();
+    }
+    else {
+      print('Failed to load');
+      return [];
+    }
+  }
+}
 
 class CommentApi {
   Future<List<Comment>> fetchComment() async {
