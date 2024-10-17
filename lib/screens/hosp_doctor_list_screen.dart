@@ -24,6 +24,15 @@ class HospDoctorListScreen extends StatefulWidget {
 }
 
 class _HospDoctorListScreenState extends State<HospDoctorListScreen> {
+  @override
+  void initState() {
+    super.initState();
+    final doctorProvider = Provider.of<DoctorProvider>(context, listen: false);
+    doctorProvider.fetchDoctor();
+    final hospitalProvider = Provider.of<HospitalProvider>(context, listen: false);
+    hospitalProvider.fetchHospital();
+  }
+
   final TextEditingController _searchController = TextEditingController();
   String _searchWord = "";
 

@@ -19,7 +19,7 @@ class _FreeboardLinkWidgetState extends State<FreeboardLinkWidget> {
             context,
             MaterialPageRoute(
               builder: (context) => const BoardListScreen(
-                boardName: 'qnaboard',
+                boardName: 'freeboard',
               ),
             ),
           );
@@ -44,7 +44,7 @@ class _FreeboardLinkWidgetState extends State<FreeboardLinkWidget> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      '건강 고민',
+                      '미리보는',
                       style: TextStyle(
                         fontSize: 10,
                         color: Colors.grey[500],
@@ -52,7 +52,7 @@ class _FreeboardLinkWidgetState extends State<FreeboardLinkWidget> {
                     ),
                     const SizedBox(height: 2),
                     Text(
-                      '상담 게시판',
+                      '커뮤니티',
                       style: TextStyle(
                         fontSize: 14,
                         fontWeight: FontWeight.bold,
@@ -68,7 +68,7 @@ class _FreeboardLinkWidgetState extends State<FreeboardLinkWidget> {
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
                 Image.asset(
-                  'assets/images/qna.png',
+                  'assets/images/board.png',
                   height: 50,
                   fit: BoxFit.cover,
                 ),

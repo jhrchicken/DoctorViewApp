@@ -1,4 +1,5 @@
 import 'package:doctorviewapp/providers/board_provider.dart';
+import 'package:doctorviewapp/providers/chat_provider.dart';
 import 'package:doctorviewapp/providers/comment_provider.dart';
 import 'package:doctorviewapp/providers/detail_provider.dart';
 import 'package:doctorviewapp/providers/doctor_provider.dart';
@@ -26,7 +27,7 @@ import 'package:intl/date_symbol_data_local.dart';
 
 void main() {
 
-  // 캘린더 한글처리를 위한 intl 패키지 초기화포함
+  // 캘린더 한글처리를 위한 intl 패키지 초기화 포함
   initializeDateFormatting().then((_) {
     runApp(
       MultiProvider(
@@ -49,6 +50,8 @@ void main() {
           ChangeNotifierProvider(create: (context) => ReportProvider()),
           // 예약
           ChangeNotifierProvider(create: (context) => ReserveProvider()),
+          // 채팅
+          ChangeNotifierProvider(create: (context) => ChatProvider()),
         ],
         child: const MyApp(),
       ),
@@ -161,28 +164,5 @@ class _MyHomePageState extends State<MyHomePage> {
         break;
     }
     return page!;
-  }
-
-  // 각 페이지를 반환하는 메서드 (추후 삭제) 깃 연동 테스트 !!!!!!!!!
-  Widget dummyPage() {
-    return const SizedBox(
-      height: 200,
-      child: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Icon(
-              Icons.camera_alt,
-              color: Colors.red,
-              size: 50.0,
-            ),
-            Text(
-              'Page Index : 0',
-              style: TextStyle(fontSize: 20),
-            ),
-          ],
-        ),
-      ),
-    );
   }
 }

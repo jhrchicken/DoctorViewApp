@@ -1,6 +1,5 @@
 import 'package:doctorviewapp/header.dart';
 import 'package:doctorviewapp/models/doctor.dart';
-import 'package:doctorviewapp/models/member.dart';
 import 'package:doctorviewapp/providers/doctor_provider.dart';
 import 'package:doctorviewapp/providers/member_provider.dart';
 import 'package:doctorviewapp/screens/mypage/hosp_mypage/list_doctor.dart';

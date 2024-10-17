@@ -1,3 +1,4 @@
+import 'package:doctorviewapp/api/api_service.dart';
 import 'package:doctorviewapp/models/comment.dart';
 import 'package:flutter/material.dart';
 
@@ -6,45 +7,19 @@ class CommentProvider extends ChangeNotifier {
   int _seqCommIdx = 6;
 
   // 댓글 더미데이터
-  final List<Comment> _commList = [
-    Comment(
-      commIdx: 1,
-      postdate: DateTime.now(),
-      content: '댓글이에욧',
-      boardRef: 1,
-      writerRef: 'dayeong',
-    ),
-    Comment(
-      commIdx: 2,
-      postdate: DateTime.now(),
-      content: '댓글이에욧',
-      boardRef: 1,
-      writerRef: 'harim',
-    ),
-    Comment(
-      commIdx: 3,
-      postdate: DateTime.now(),
-      content: '하하..',
-      boardRef: 9,
-      writerRef: 'harim',
-    ),
-    Comment(
-      commIdx: 4,
-      postdate: DateTime.now(),
-      content: '그러네요',
-      boardRef: 9,
-    ),
-    Comment(
-      commIdx: 5,
-      postdate: DateTime.now(),
-      content: '즐거운 토요일',
-      boardRef: 9,
-      writerRef: 'leehr',
-    ),
-  ];
+  final List<Comment> _commList = [];
 
   // 댓글 전체 목록
   List<Comment> get commList => _commList;
+
+  // API에서 댓글 목록 가져오기
+  Future<void> fetchComment() async {
+    final commentApi = CommentApi();
+    final fetchComments = await commentApi.fetchComment();
+    _commList.clear();
+    _commList.addAll(fetchComments);
+    notifyListeners();
+  }
 
   // 특정 게시물 댓글 목록
   List<Comment> listComment(int boardRef) {

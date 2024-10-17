@@ -51,7 +51,7 @@ class _AddressSearchWidgetState extends State<AddressSearchWidget> {
       );
     }
   }
-
+  
   @override
   Widget build(BuildContext context) {
     return
@@ -67,10 +67,23 @@ class _AddressSearchWidgetState extends State<AddressSearchWidget> {
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              Center(
+                child: Text(
+                  '지역으로 병원을 검색해보세요',
+                  style: TextStyle(
+                    color: Colors.grey[700],
+                    fontSize: 12,
+                    fontWeight: FontWeight.w700,
+                  ),
+                ),
+              ),
+              const SizedBox(
+                height: 10,
+              ),
               Row(
                 children: [
                   // 광역시도 드롭다운
-                  Expanded(
+                  Flexible(
                     child: DropdownButtonFormField<String>(
                       decoration: InputDecoration(
                         contentPadding: const EdgeInsets.symmetric(
@@ -121,9 +134,9 @@ class _AddressSearchWidgetState extends State<AddressSearchWidget> {
                       }).toList(),
                     ),
                   ),
-                  const SizedBox(width: 8),
+                  const SizedBox(width: 4),
                   // 시군구 드롭다운
-                  Expanded(
+                  Flexible(
                     child: DropdownButtonFormField<String>(
                       decoration: InputDecoration(
                         contentPadding: const EdgeInsets.symmetric(
@@ -175,9 +188,9 @@ class _AddressSearchWidgetState extends State<AddressSearchWidget> {
                           : [],
                     ),
                   ),
-                  const SizedBox(width: 8),
+                  const SizedBox(width: 4),
                   // 읍면동 드롭다운
-                  Expanded(
+                  Flexible(
                     child: DropdownButtonFormField<String>(
                       decoration: InputDecoration(
                         contentPadding: const EdgeInsets.symmetric(

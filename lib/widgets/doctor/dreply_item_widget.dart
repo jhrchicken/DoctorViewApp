@@ -90,6 +90,13 @@ class _DreplyItemWidgetState extends State<DreplyItemWidget> {
                                 color: Colors.grey[500],
                               ),
                             ),
+                            Text(
+                              dreply.rewrite == 'T' ? '  (수정됨)' : '',
+                              style: TextStyle(
+                                color: Colors.grey[500],
+                                fontSize: 12,
+                              ),
+                            ),
                           ],
                         ),
                       ],

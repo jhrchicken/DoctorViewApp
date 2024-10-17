@@ -1,3 +1,4 @@
+import 'package:doctorviewapp/api/api_service.dart';
 import 'package:doctorviewapp/models/reserve.dart';
 import 'package:flutter/material.dart';
 
@@ -6,78 +7,16 @@ class ReserveProvider extends ChangeNotifier {
   int _seqReserveIdx = 5;
 
   // 예약 더미데이터
-  final List<Reserve> _reserveList = [
-    Reserve(
-      reserveIdx: 1, 
-      hospname: '엠플러스의원',
-      doctorname: '박애플',
-      username: '부다영', 
-      tel: '010-2084-0204', 
-      rrn: '021209-4000000', 
-      address: '서울특별시', 
-      postdate: DateTime(2024, 10, 11), 
-      posttime: '11:00', 
-      alarm: 'T', 
-      review: 'F', 
-      hide: 'F', 
-      user_ref: 'dayeong',
-      hosp_ref: 'hospital1',
-      cancel: 'F',
-    ),
-    Reserve(
-      reserveIdx: 2, 
-      hospname: '엠플러스의원',
-      doctorname: '박애플',
-      username: '부다영', 
-      tel: '010-2084-0204', 
-      rrn: '021209-4000000', 
-      address: '서울특별시', 
-      // postdate: DateTime.now(),
-      postdate: DateTime(2024, 10, 17),
-      posttime: '13:00', 
-      alarm: 'T', 
-      review: 'F', 
-      hide: 'F', 
-      user_ref: 'dayeong',
-      hosp_ref: 'hospital1',
-      cancel: 'T',
-    ),
-    Reserve(
-      reserveIdx: 3, 
-      hospname: '엠플러스의원',
-      doctorname: '박애플',
-      username: '부다영', 
-      tel: '010-2084-0204', 
-      rrn: '021209-4000000', 
-      address: '서울특별시', 
-      postdate: DateTime(2024, 10, 20),
-      posttime: '17:00', 
-      alarm: 'T', 
-      review: 'F', 
-      hide: 'F', 
-      user_ref: 'dayeong',
-      hosp_ref: 'hospital1',
-      cancel: 'F',
-    ),
-    Reserve(
-      reserveIdx: 4, 
-      hospname: '엠플러스의원',
-      doctorname: '박애플',
-      username: '부다영', 
-      tel: '010-2084-0204', 
-      rrn: '021209-4000000', 
-      address: '서울특별시', 
-      postdate: DateTime(2024, 11, 03),
-      posttime: '17:00', 
-      alarm: 'T', 
-      review: 'F', 
-      hide: 'F', 
-      user_ref: 'dayeong',
-      hosp_ref: 'hospital1',
-      cancel: 'T',
-    ),
-    
-  ];
+  final List<Reserve> _reserveList = [];
+
+  // API에서 예약 목록 가져오기
+  Future<void> fetchReserve() async {
+    final reserveApi = ReserveApi();
+    final fetchReserves = await reserveApi.fetchReserve();
+    _reserveList.clear();
+    _reserveList.addAll(fetchReserves);
+    notifyListeners();
+  }  
 
   // 예약 전체 목록
   List<Reserve> get reserveList => _reserveList;

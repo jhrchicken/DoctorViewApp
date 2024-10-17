@@ -1,5 +1,5 @@
 import 'package:doctorviewapp/screens/mypage/my_hosp_doctor_screen.dart';
-import 'package:doctorviewapp/screens/mypage/myreview_list_screen.dart';
+import 'package:doctorviewapp/screens/mypage/user_review_list_screen%20copy.dart';
 import 'package:doctorviewapp/screens/mypage/reserve/reserve_list_user.dart';
 import 'package:doctorviewapp/theme/colors.dart';
 import 'package:flutter/material.dart';
@@ -102,7 +102,7 @@ class _UserLoginMenuWidgetState extends State<UserLoginMenuWidget> {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => const MyReviewListScreen(),
+                    builder: (context) => const UserReviewListScreen(),
                   ),
                 );
               },

@@ -1,4 +1,3 @@
-import 'package:doctorviewapp/screens/home/home_screen.dart';
 import 'package:doctorviewapp/screens/mypage/mypage_screen.dart';
 import 'package:doctorviewapp/theme/colors.dart';
 import 'package:doctorviewapp/widgets/common/primary_button.dart';

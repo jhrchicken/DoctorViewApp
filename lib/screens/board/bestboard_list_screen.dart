@@ -15,8 +15,6 @@ class BestboardListScreen extends StatefulWidget {
 }
 
 class _BestboardListScreenState extends State<BestboardListScreen> {
-
-  
   @override
   Widget build(BuildContext context) {
     final boardProvider = Provider.of<BoardProvider>(context);

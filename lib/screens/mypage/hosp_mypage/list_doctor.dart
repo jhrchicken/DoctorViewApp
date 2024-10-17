@@ -6,7 +6,6 @@ import 'package:doctorviewapp/screens/doctor/doctor_view_screen.dart';
 import 'package:doctorviewapp/screens/mypage/edit/edit_doctor.dart';
 import 'package:doctorviewapp/screens/mypage/hosp_mypage/insert_doctor.dart';
 import 'package:doctorviewapp/theme/colors.dart';
-import 'package:doctorviewapp/widgets/common/grey_button.dart';
 import 'package:doctorviewapp/widgets/common/primary_button.dart';
 import 'package:doctorviewapp/widgets/member/edit_button.dart';
 import 'package:flutter/material.dart';

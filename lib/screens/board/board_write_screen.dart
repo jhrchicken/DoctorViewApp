@@ -128,7 +128,7 @@ class _BoardWriteScreenState extends State<BoardWriteScreen> {
                     const SizedBox(
                       height: 10,
                     ),
-                    // 리뷰 내용
+                    // 내용
                     ContentInputField(
                       controller: _contentController,
                       focusNode: _contentFocusNode,

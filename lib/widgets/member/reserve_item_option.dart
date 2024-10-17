@@ -1,5 +1,4 @@
 import 'package:doctorviewapp/providers/reserve_provider.dart';
-import 'package:doctorviewapp/screens/mypage/reserve/reserve_list_user.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 

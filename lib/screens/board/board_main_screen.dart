@@ -336,7 +336,6 @@ class _BoardMainScreenState extends State<BoardMainScreen> {
                 ),
               ),
             ),
-
           ],
         ),
       ),

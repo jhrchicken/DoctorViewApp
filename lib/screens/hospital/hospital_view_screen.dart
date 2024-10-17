@@ -19,6 +19,7 @@ import 'package:doctorviewapp/widgets/common/grey_button.dart';
 import 'package:doctorviewapp/widgets/common/primary_outline_button.dart';
 import 'package:doctorviewapp/widgets/doctor/doctor_summary_widget.dart';
 import 'package:doctorviewapp/widgets/hospital/hospital_detail_widget.dart';
+import 'package:doctorviewapp/widgets/hospital/hospital_hours_widget.dart';
 import 'package:doctorviewapp/widgets/hospital/hospital_map_widget.dart';
 import 'package:doctorviewapp/widgets/hospital/hreview_item_widget.dart';
 import 'package:doctorviewapp/widgets/hospital/hreview_summary_widget.dart';
@@ -38,6 +39,13 @@ class HospitalViewScreen extends StatefulWidget {
 }
 
 class _HospitalViewScreenState extends State<HospitalViewScreen> {
+  @override
+  void initState() {
+    super.initState();
+    final likesProvider = Provider.of<LikesProvider>(context, listen: false);
+    likesProvider.fetchLike();
+  }
+
   bool isLike = false;
   Member? loginMember;
 
@@ -138,6 +146,20 @@ class _HospitalViewScreenState extends State<HospitalViewScreen> {
               ),
             ),
             const SizedBox(height: 15),
+
+            // 진료시간
+            Padding(
+              padding: const EdgeInsets.all(20.0),
+              child: Container(
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                child: HospitalHoursWidget(id: hospital.id),
+              ),
+            ),
+            const SizedBox(height: 15),
+
             // 위치
             Padding(
               padding: const EdgeInsets.all(20.0),

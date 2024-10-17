@@ -1,7 +1,6 @@
 import 'package:doctorviewapp/models/reserve.dart';
 import 'package:doctorviewapp/providers/reserve_provider.dart';
 import 'package:doctorviewapp/widgets/reserve/reserve_check_text_hosp_widget.dart';
-import 'package:doctorviewapp/widgets/reserve/reserve_check_text_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 

@@ -1,7 +1,5 @@
 import 'package:doctorviewapp/models/hours.dart';
-import 'package:doctorviewapp/models/reserve.dart';
 import 'package:doctorviewapp/providers/hours_provider.dart';
-import 'package:doctorviewapp/providers/reserve_provider.dart';
 import 'package:doctorviewapp/widgets/reserve/doctor_radio_button.dart';
 import 'package:doctorviewapp/widgets/reserve/reserve_timeSlots.dart';
 import 'package:flutter/material.dart';
@@ -28,10 +26,6 @@ class _ReserveHoursInfoWidgetState extends State<ReserveHoursInfoWidget> {
   Widget build(BuildContext context) {
     final hoursProvider = Provider.of<HoursProvider>(context);
     List<Hours> hoursList = hoursProvider.getHospHours(widget.hospRef);
-
-    final reserveProvider = Provider.of<ReserveProvider>(context);
-    List<Reserve>? reserveList = reserveProvider.listReserve(widget.hospRef);
-
 
     
     List<String> slots = getTimeSlots(
