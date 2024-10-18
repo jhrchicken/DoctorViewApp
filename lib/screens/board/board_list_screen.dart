@@ -24,17 +24,6 @@ class BoardListScreen extends StatefulWidget {
 
 class _BoardListScreenState extends State<BoardListScreen> {
   @override
-  void initState() {
-    super.initState();
-    final boardProvider = Provider.of<BoardProvider>(context, listen: false);
-    boardProvider.fetchBoard();
-    final likesProvider = Provider.of<LikesProvider>(context, listen: false);
-    likesProvider.fetchLike();
-    final reportsProvider = Provider.of<ReportProvider>(context, listen: false);
-    reportsProvider.fetchReport();
-  }
-
-  @override
   Widget build(BuildContext context) {
     final boardProvider = Provider.of<BoardProvider>(context);
     List<Board> boardList = boardProvider.listBoard(widget.boardName).reversed.toList();

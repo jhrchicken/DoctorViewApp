@@ -22,13 +22,6 @@ class HreviewListScreen extends StatefulWidget {
 }
 
 class _HreviewListScreenState extends State<HreviewListScreen> {
-  // @override
-  // void initState() {
-  //   super.initState();
-  //   final hreviewProvider = Provider.of<HreviewProvider>(context, listen: false);
-  //   hreviewProvider.fetchHreview();
-  // }
-
   @override
   Widget build(BuildContext context) {
     final hreviewProvider = Provider.of<HreviewProvider>(context);

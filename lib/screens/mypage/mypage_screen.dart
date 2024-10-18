@@ -1,10 +1,5 @@
 import 'package:doctorviewapp/header.dart';
-import 'package:doctorviewapp/providers/doctor_provider.dart';
-import 'package:doctorviewapp/providers/dreview_provider.dart';
-import 'package:doctorviewapp/providers/hreview_provider.dart';
-import 'package:doctorviewapp/providers/likes_provider.dart';
 import 'package:doctorviewapp/providers/member_provider.dart';
-import 'package:doctorviewapp/providers/reserve_provider.dart';
 import 'package:doctorviewapp/screens/mypage/edit/check/check_member.dart';
 import 'package:doctorviewapp/screens/mypage/edit/edit_hosp.dart';
 import 'package:doctorviewapp/screens/mypage/edit/edit_user.dart';
@@ -75,21 +70,6 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  @override
-  void initState() {
-    super.initState();
-    final reserveProvider = Provider.of<ReserveProvider>(context, listen: false);
-    reserveProvider.fetchReserve();
-    final likesProvider = Provider.of<LikesProvider>(context, listen: false);
-    likesProvider.fetchLike();
-    // final hreviewsProvider = Provider.of<HreviewProvider>(context, listen: false);
-    // hreviewsProvider.fetchHreview();
-    // final dreviewsProvider = Provider.of<DreviewProvider>(context, listen: false);
-    // dreviewsProvider.fetchDreview();
-    final doctorsProvider = Provider.of<DoctorProvider>(context, listen: false);
-    doctorsProvider.fetchDoctor();
-  }
-
   @override
   Widget build(BuildContext context) {
     final memberProvider = Provider.of<MemberProvider>(context);
