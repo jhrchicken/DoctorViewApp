@@ -94,6 +94,13 @@ class MemberProvider extends ChangeNotifier {
   // 회원 찾기
   Member? searchMember(String id, [String? password]) {
     try {
+      print('searchMember');
+      // 디버깅용
+      for (var member in memberList) {
+        print('id: ${member.id}, pass: ${member.password}, 이름: ${member.name}');
+      }
+
+
       Member? searchMember;
 
       if (password == null) {
@@ -152,6 +159,8 @@ class MemberProvider extends ChangeNotifier {
   // 아이디찾기
   String? findId(String email, String password) {
     try {
+      
+      
       final member = _memberList.firstWhere(
         (member) => member.email == email && member.password == password,
       );

@@ -3,9 +3,6 @@ import 'package:doctorviewapp/models/reserve.dart';
 import 'package:flutter/material.dart';
 
 class ReserveProvider extends ChangeNotifier {
-  // 예약 일련번호 시퀀스
-  int _seqReserveIdx = 5;
-
   // 예약 더미데이터
   final List<Reserve> _reserveList = [
     // Reserve(
@@ -79,29 +76,38 @@ class ReserveProvider extends ChangeNotifier {
     // ),
   ];
 
+  // 예약 일련번호 시퀀스
+  int _seqReserveIdx = 0;
   // API에서 예약 목록 가져오기
   Future<void> fetchReserve() async {
     final reserveApi = ReserveApi();
     final fetchReserves = await reserveApi.fetchReserve();
     _reserveList.clear();
     _reserveList.addAll(fetchReserves);
+
+    // 예약 일련번호 시퀀스를 fetchReserves의 길이로 설정
+    _seqReserveIdx = fetchReserves.length;
+
     notifyListeners();
   }  
 
   // 예약 전체 목록
   List<Reserve> get reserveList => _reserveList;
   
-
   // 예약 추가
   void insertReserve(Reserve reserve) {
+    // print(_seqReserveIdx);
     reserve.reserveIdx = _seqReserveIdx++;
     _reserveList.add(reserve);
+    // print(_reserveList);
     notifyListeners();
+    return;
   }
 
   // 예약 목록
   List<Reserve>? listReserve(String ref) {
     List<Reserve> listResult = _reserveList.where((reserve) => reserve.user_ref == ref || reserve.hosp_ref == ref).toList();
+
     return listResult.isNotEmpty ? listResult : null;
   }
 
@@ -126,8 +132,8 @@ class ReserveProvider extends ChangeNotifier {
           reserve.postdate.year,
           reserve.postdate.month,
           reserve.postdate.day,
-          int.parse(reserve.posttime.split(':')[0]), // 시
-          int.parse(reserve.posttime.split(':')[1]), // 분
+          int.parse(reserve.posttime.split(':')[0]),
+          int.parse(reserve.posttime.split(':')[1]),
         );
         return (reserve.user_ref == ref && postDateTime.isAfter(today) && reserve.cancel =='F') || (reserve.hosp_ref == ref && postDateTime.isAfter(today) && reserve.cancel =='F');
       },
@@ -140,32 +146,44 @@ class ReserveProvider extends ChangeNotifier {
       return diffA.compareTo(diffB); 
     });
 
+    
+    print('다가오는 예약');
+    for (var reserve in listResult) {
+      print('번호: ${reserve.reserveIdx}, 날짜: ${reserve.postdate}, 시간: ${reserve.posttime}, 병원: ${reserve.hospname},예약자: ${reserve.username}');
+    }
+
     return listResult;
   }
 
   // 지난 예약
-  List<Reserve> pastReserve(String ref) {
-    DateTime today = DateTime.now();
-    List<Reserve> listResult = _reserveList.where(
-      (reserve) {
-        // postDate + postTime
-        DateTime postDateTime = DateTime(
-          reserve.postdate.year,
-          reserve.postdate.month,
-          reserve.postdate.day,
-          int.parse(reserve.posttime.split(':')[0]), // 시
-          int.parse(reserve.posttime.split(':')[1]), // 분
-        );
-        return (reserve.user_ref == ref && postDateTime.isBefore(today) && reserve.cancel =='F') || (reserve.hosp_ref == ref && postDateTime.isBefore(today) && reserve.cancel =='F');
-      },
-    ).toList();
+  List<Reserve>? pastReserve(String ref) {
+    try {
+      DateTime today = DateTime.now();
+      List<Reserve> listResult = _reserveList.where(
+        (reserve) {
+          // postDate + postTime
+          DateTime postDateTime = DateTime(
+            reserve.postdate.year,
+            reserve.postdate.month,
+            reserve.postdate.day,
+            int.parse(reserve.posttime.split(':')[0]), // 시
+            int.parse(reserve.posttime.split(':')[1]), // 분
+          );
+          return (reserve.user_ref == ref && postDateTime.isBefore(today) && reserve.cancel =='F') || (reserve.hosp_ref == ref && postDateTime.isBefore(today) && reserve.cancel =='F');
+        },
+      ).toList();
 
-    // 오래된 순서로 정렬
-    listResult.sort((a, b) {
-      return b.postdate.compareTo(a.postdate); 
-    });
+      // 오래된 순서로 정렬
+      listResult.sort((a, b) {
+        return b.postdate.compareTo(a.postdate); 
+      });
 
-    return listResult;
+      return listResult;
+    }
+    catch (e) {
+      return null;
+    }
+    
   }
 
   // 예약 취소

@@ -21,7 +21,6 @@ import 'package:http/http.dart' as http;
 
 const String baseUrl = "http://192.168.0.40:8586";
 
-
 class BoardApi {
   Future<List<Board>> fetchBoard() async {
     final response = await http.get(Uri.parse("$baseUrl/api/board"));

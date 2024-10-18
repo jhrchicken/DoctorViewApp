@@ -98,7 +98,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   if(loginMember == null) ...[
 
                     // 로그인 / 회원가입 버튼
-                    BeforeLoginWidget(),
+                    const BeforeLoginWidget(),
 
                     const SizedBox(height: 40),
 
@@ -161,7 +161,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     if (loginMember.auth == 'ROLE_USER') ...[
                       
                       // 로그인 후
-                      UserLoginMenuWidget(),
+                      const UserLoginMenuWidget(),
 
                       const SizedBox(height: 10,),
 
@@ -172,13 +172,13 @@ class _MyHomePageState extends State<MyHomePage> {
                       const SizedBox(height: 20,),
 
                       // 추가기능
-                      MoreFeatWidget(),
+                      const MoreFeatWidget(),
                     ]
 
 
                     // 병원
                     else if (loginMember.auth == 'ROLE_HOSP') ...[
-                      HospLoginMenuWidget(),
+                      const HospLoginMenuWidget(),
 
 
                       const SizedBox(height: 10),
@@ -190,51 +190,12 @@ class _MyHomePageState extends State<MyHomePage> {
                       const SizedBox(height: 20,),
 
                       // 추가기능
-                      MoreFeatWidget(),
+                      const MoreFeatWidget(),
                     ],
                     const SizedBox(height: 40,),
                     // 로그아웃
                     const Center(child: LogoutText()),
                   ],
-
-                  
-                  
-                  /****************** 디버깅용 ******************/
-                  // SizedBox(
-                  //   width: 200,
-                  //   height: 100,
-                  //   child: ElevatedButton(
-                  //     onPressed: () {
-                  //       Navigator.of(context).pushNamed("/member/listMember.do");
-                  //     },
-                  //     style: ElevatedButton.styleFrom(
-                  //       textStyle: const TextStyle(fontWeight: FontWeight.w500, fontSize: 30.0),
-                  //       shape: RoundedRectangleBorder(
-                  //         borderRadius: BorderRadius.circular(30),
-                  //       ),
-                  //     ),
-                  //     child: const Text('회원목록'),
-                  //   ),
-                  // ),
-                  SizedBox(
-                    width: 200,
-                    height: 100,
-                    child: ElevatedButton(
-                      onPressed: () {
-                        Navigator.of(context).pushNamed("/member/listReserve.do");
-                      },
-                      style: ElevatedButton.styleFrom(
-                        textStyle: const TextStyle(fontWeight: FontWeight.w500, fontSize: 30.0),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(30),
-                        ),
-                      ),
-                      child: const Text('예약목록'),
-                    ),
-                  ),
-
-
-
                 ],
               ),
             ),
