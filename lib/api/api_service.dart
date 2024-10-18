@@ -19,7 +19,11 @@ import 'package:doctorviewapp/models/reserve.dart';
 import 'package:http/http.dart' as http;
 
 
+<<<<<<< HEAD
 const String baseUrl = "http://192.168.35.112:8586";
+=======
+const String baseUrl = "http://192.168.100.37:8586";
+>>>>>>> 6b4216c6623ed40d5315b9cc58edc2144320e77e
 
 
 class BoardApi {
@@ -195,7 +199,7 @@ class HoursApi {
 class HReplyApi {
   Future<List<Hreply>> fetchHReply() async {
     final response = await http.get(Uri.parse("$baseUrl/api/hreply"));
-    print(response.body);
+    // print(response.body);
       
     if (response.statusCode == 200) {
       final decodeResponse = json.decode(utf8.decode(response.bodyBytes));
@@ -212,7 +216,7 @@ class HReplyApi {
 class HReviewApi {
   Future<List<Hreview>> fetchHReview() async {
     final response = await http.get(Uri.parse("$baseUrl/api/hreview"));
-    print(response.body);
+    // print(response.body);
       
     if (response.statusCode == 200) {
       final decodeResponse = json.decode(utf8.decode(response.bodyBytes));

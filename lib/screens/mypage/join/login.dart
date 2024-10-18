@@ -14,13 +14,6 @@ class Login extends StatefulWidget {
 }
 
 class _LoginState extends State<Login> {
-  @override
-  void initState() {
-    super.initState();
-    final memberProvider = Provider.of<MemberProvider>(context, listen: false);
-    memberProvider.fetchMember();
-  }
-  
   final _formKey = GlobalKey<FormState>();
   bool isChecked = false; 
 

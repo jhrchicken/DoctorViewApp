@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 
 class BoardProvider extends ChangeNotifier {
   // 게시판 일련번호 시퀀스
-  int _seqBoardIdx = 10;
+  int _seqBoardIdx = 50;
 
   // 게시판 더미데이터
   final List<Board> _boardList = [];
@@ -41,6 +41,7 @@ class BoardProvider extends ChangeNotifier {
     board.boardIdx = _seqBoardIdx++;
     _boardList.add(board);
     notifyListeners();
+    print('작성완료');
   }
 
   // 게시물 삭제
