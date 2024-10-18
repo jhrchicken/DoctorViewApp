@@ -48,9 +48,6 @@ class _HospitalViewScreenState extends State<HospitalViewScreen> {
     final likesProvider = Provider.of<LikesProvider>(context, listen: false);
     final memberProvider = Provider.of<MemberProvider>(context, listen: false);
 
-    likesProvider.fetchLike();
-
-
     loginMember = memberProvider.loginMember;
     if (loginMember != null) {
       setState(() {

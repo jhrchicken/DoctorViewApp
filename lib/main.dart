@@ -57,35 +57,6 @@ void main() {
       ),
     );
   });
-  
-  // 원본
-  // runApp(
-  //   MultiProvider(
-  //     providers: [
-  //       ChangeNotifierProvider(create: (context) => DoctorProvider()),
-  //       ChangeNotifierProvider(create: (context) => DreviewProvider()),
-  //       ChangeNotifierProvider(create: (context) => DreplyProvider()),
-  //       ChangeNotifierProvider(create: (context) => HospitalProvider()),
-  //       ChangeNotifierProvider(create: (context) => HreviewProvider()),
-  //       ChangeNotifierProvider(create: (context) => HreplyProvider()),
-  //       ChangeNotifierProvider(create: (context) => LikesProvider()),
-  //       ChangeNotifierProvider(create: (context) => HashtagProvider()),
-  //       //회원관리
-  //       ChangeNotifierProvider(create: (context) => MemberProvider()),
-  //       ChangeNotifierProvider(create: (context) => HoursProvider()),
-  //       ChangeNotifierProvider(create: (context) => DetailProvider()),
-  //       // 게시판
-  //       ChangeNotifierProvider(create: (context) => BoardProvider()),
-  //       ChangeNotifierProvider(create: (context) => CommentProvider()),
-  //       ChangeNotifierProvider(create: (context) => ReportProvider()),
-  //       //예약
-  //       ChangeNotifierProvider(create: (context) => ReserveProvider()),
-  //     ],
-  //     child: const MyApp(),
-  //   ),
-  // );
-
-
 }
 
 class MyApp extends StatelessWidget {
@@ -124,6 +95,33 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   // 네비게이션에서 사용할 인덱스
   int _curIndex = 0;
+  
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      //API처리
+      Provider.of<DoctorProvider>(context, listen: false).fetchDoctor(); //의사
+      Provider.of<DreviewProvider>(context, listen: false).fetchDreview(); //의사라뷰
+      Provider.of<DreplyProvider>(context, listen: false).fetchDreply(); //의사답글
+      Provider.of<HospitalProvider>(context, listen: false).fetchHospital(); //병원
+      Provider.of<HreviewProvider>(context, listen: false).fetchHreview(); //병원리뷰 
+      Provider.of<HreplyProvider>(context, listen: false).fetchHreply(); //병원답글
+      Provider.of<LikesProvider>(context, listen: false).fetchLike(); //좋아요
+      Provider.of<LikesProvider>(context, listen: false).fetchLike(); //좋아요
+      Provider.of<HashtagProvider>(context, listen: false).fetchHashtag(); //해시태그
+
+      Provider.of<MemberProvider>(context, listen: false).fetchMember(); //멤버
+      Provider.of<HoursProvider>(context, listen: false).fetchHour(); //시간
+      Provider.of<DetailProvider>(context, listen: false).fetchDetail(); //병원디테일
+
+      Provider.of<BoardProvider>(context, listen: false).fetchBoard(); //게시판
+      Provider.of<CommentProvider>(context, listen: false).fetchComment(); //댓글
+      Provider.of<ReportProvider>(context, listen: false).fetchReport(); //리뷰
+      Provider.of<ReserveProvider>(context, listen: false).fetchReserve(); //예약
+      Provider.of<ChatProvider>(context, listen: false).fetchChat(); //채팅
+    });
+  }
   
   @override
   Widget build(BuildContext context) {

@@ -43,6 +43,8 @@ class DoctorProvider extends ChangeNotifier {
     final fetchDoctors = await doctorApi.fetchDoctor();
     _doctorList.clear();
     _doctorList.addAll(fetchDoctors);
+    print('=====병원======');
+    print(_doctorList);
     notifyListeners();
   }
 

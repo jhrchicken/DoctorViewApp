@@ -29,14 +29,6 @@ class HospitalDetailWidget extends StatefulWidget {
 }
 
 class _HospitalDetailWidgetState extends State<HospitalDetailWidget> {
-  @override
-  void initState() {
-    super.initState();
-    final hoursProvider = Provider.of<HoursProvider>(context, listen: false);
-    hoursProvider.fetchHour();
-    final likesProvider = Provider.of<LikesProvider>(context, listen: false);
-    likesProvider.fetchLike();
-  }
 
   final List<String> weekdays = [
     '월요일',
@@ -130,8 +122,7 @@ class _HospitalDetailWidgetState extends State<HospitalDetailWidget> {
       }
     }
 
-    if (nextday == null) {
-      nextday = Hours(
+    nextday ??= Hours(
           hoursIdx: 0,
           week: weekday,
           startTime: '25:00',
@@ -144,7 +135,6 @@ class _HospitalDetailWidgetState extends State<HospitalDetailWidget> {
           weekend: 'F',
           night: 'F',
       );
-    }
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -342,7 +332,7 @@ class _HospitalDetailWidgetState extends State<HospitalDetailWidget> {
                 ),
                 Text(
                   isOpen ? '${today.endTime}에 영업종료' : 
-                    nextday!.week == weekdays[now.weekday - 1]
+                    nextday.week == weekdays[now.weekday - 1]
                       ? '오늘 ${nextday.startTime}에 영업시작'
                       : '${nextday.week} ${nextday.startTime}에 영업시작',
                   style: TextStyle(
