@@ -19,7 +19,7 @@ import 'package:doctorviewapp/models/reserve.dart';
 import 'package:http/http.dart' as http;
 
 
-const String baseUrl = "http://192.168.0.40:8586";
+const String baseUrl = "http://192.168.35.112:8586";
 
 
 class BoardApi {
