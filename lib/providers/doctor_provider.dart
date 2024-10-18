@@ -7,7 +7,32 @@ class DoctorProvider extends ChangeNotifier {
   int _seqDoctorIdx = 4;
 
   // 의사 더미데이터
-  final List<Doctor> _doctorList = [];
+  final List<Doctor> _doctorList = [
+    // Doctor(
+    //   docIdx: 1,
+    //   name: '이잠만',
+    //   major: '내과',
+    //   career: '3년',
+    //   hours: '월-금 10:00-18:00',
+    //   hospRef: 'hospital1',
+    // ),
+    // Doctor(
+    //   docIdx: 2,
+    //   name: '박애플',
+    //   major: '산부인과',
+    //   career: '10년',
+    //   hours: '월-수 10:00-18:00',
+    //   hospRef: 'hospital1',
+    // ),
+    // Doctor(
+    //   docIdx: 3,
+    //   name: '김잭슨',
+    //   major: '소아과',
+    //   career: '1년',
+    //   hours: '수-일 09:00-18:00',
+    //   hospRef: 'hospital2',
+    // ),
+  ];
 
   // 의사 전체 목록
   List<Doctor> get doctorList => _doctorList;

@@ -28,13 +28,13 @@ class HreplyProvider extends ChangeNotifier {
   ];
 
   // API에서 병원 리뷰 답변 목록 가져오기
-  // Future<void> fetchHreply() async {
-  //   final hreplyApi = HReplyApi();
-  //   final fetchHreplies = await hreplyApi.fetchHReply();
-  //   _hreplyList.clear();
-  //   _hreplyList.addAll(fetchHreplies);
-  //   notifyListeners();
-  // }
+  Future<void> fetchHreply() async {
+    final hreplyApi = HReplyApi();
+    final fetchHreplies = await hreplyApi.fetchHReply();
+    _hreplyList.clear();
+    _hreplyList.addAll(fetchHreplies);
+    notifyListeners();
+  }
 
   // 병원 리뷰 답변 목록
   List<Hreply> listHreply(int reviewRef) {
