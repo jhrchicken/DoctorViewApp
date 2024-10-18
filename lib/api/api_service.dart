@@ -21,11 +21,10 @@ import 'package:http/http.dart' as http;
 
 const String baseUrl = "http://192.168.0.40:8586";
 
-
 class BoardApi {
   Future<List<Board>> fetchBoard() async {
     final response = await http.get(Uri.parse("$baseUrl/api/board"));
-    // print(response.body);
+    print(response.body);
       
     if (response.statusCode == 200) {
       final decodeResponse = json.decode(utf8.decode(response.bodyBytes));
@@ -58,7 +57,7 @@ class ChatApi {
 class CommentApi {
   Future<List<Comment>> fetchComment() async {
     final response = await http.get(Uri.parse("$baseUrl/api/comment"));
-    // print(response.body);
+    print(response.body);
       
     if (response.statusCode == 200) {
       final decodeResponse = json.decode(utf8.decode(response.bodyBytes));
@@ -75,7 +74,7 @@ class CommentApi {
 class DetailApi {
   Future<List<Detail>> fetchDetail() async {
     final response = await http.get(Uri.parse("$baseUrl/api/hdetail"));
-    // print(response.body);
+    print(response.body);
       
     if (response.statusCode == 200) {
       final decodeResponse = json.decode(utf8.decode(response.bodyBytes));
@@ -92,7 +91,7 @@ class DetailApi {
 class DoctorApi {
   Future<List<Doctor>> fetchDoctor() async {
     final response = await http.get(Uri.parse("$baseUrl/api/doctor"));
-    // print(response.body);
+    print(response.body);
       
     if (response.statusCode == 200) {
       final decodeResponse = json.decode(utf8.decode(response.bodyBytes));
@@ -109,7 +108,7 @@ class DoctorApi {
 class DReplyApi {
   Future<List<Dreply>> fetchDreply() async {
     final response = await http.get(Uri.parse("$baseUrl/api/dreply"));
-    // print(response.body);
+    print(response.body);
       
     if (response.statusCode == 200) {
       final decodeResponse = json.decode(utf8.decode(response.bodyBytes));
@@ -126,7 +125,7 @@ class DReplyApi {
 class DReviewApi {
   Future<List<Dreview>> fetchDreview() async {
     final response = await http.get(Uri.parse("$baseUrl/api/dreview"));
-    // print(response.body);
+    print(response.body);
       
     if (response.statusCode == 200) {
       final decodeResponse = json.decode(utf8.decode(response.bodyBytes));
@@ -143,7 +142,7 @@ class DReviewApi {
 class HashtagApi {
   Future<List<Hashtag>> fetchHashtag() async {
     final response = await http.get(Uri.parse("$baseUrl/api/hashtags"));
-    // print(response.body);
+    print(response.body);
       
     if (response.statusCode == 200) {
       final decodeResponse = json.decode(utf8.decode(response.bodyBytes));
@@ -160,7 +159,7 @@ class HashtagApi {
 class HospitalApi{
   Future<List<Hospital>> fetchHospital() async {
     final response = await http.get(Uri.parse("$baseUrl/api/hospital"));
-    // print(response.body);
+    print(response.body);
       
     if (response.statusCode == 200) {
       final decodeResponse = json.decode(utf8.decode(response.bodyBytes));
@@ -178,7 +177,7 @@ class HospitalApi{
 class HoursApi {
   Future<List<Hours>> fetchHour() async {
     final response = await http.get(Uri.parse("$baseUrl/api/hours"));
-    // print(response.body);
+    print(response.body);
       
     if (response.statusCode == 200) {
       final decodeResponse = json.decode(utf8.decode(response.bodyBytes));
@@ -195,7 +194,7 @@ class HoursApi {
 class HReplyApi {
   Future<List<Hreply>> fetchHReply() async {
     final response = await http.get(Uri.parse("$baseUrl/api/hreply"));
-    // print(response.body);
+    print(response.body);
       
     if (response.statusCode == 200) {
       final decodeResponse = json.decode(utf8.decode(response.bodyBytes));
@@ -212,7 +211,7 @@ class HReplyApi {
 class HReviewApi {
   Future<List<Hreview>> fetchHReview() async {
     final response = await http.get(Uri.parse("$baseUrl/api/hreview"));
-    // print(response.body);
+    print(response.body);
       
     if (response.statusCode == 200) {
       final decodeResponse = json.decode(utf8.decode(response.bodyBytes));
@@ -229,7 +228,7 @@ class HReviewApi {
 class LikeApi {
   Future<List<Likes>> fetchLike() async {
     final response = await http.get(Uri.parse("$baseUrl/api/likes"));
-    // print(response.body);
+    print(response.body);
       
     if (response.statusCode == 200) {
       final decodeResponse = json.decode(utf8.decode(response.bodyBytes));
@@ -246,7 +245,7 @@ class LikeApi {
 class MemberApi {
   Future<List<Member>> fetchMember() async {
     final response = await http.get(Uri.parse("$baseUrl/api/member"));
-    // print(response.body);
+    print(response.body);
       
     if (response.statusCode == 200) {
       final decodeResponse = json.decode(utf8.decode(response.bodyBytes));
@@ -263,7 +262,7 @@ class MemberApi {
 class ReportApi {
   Future<List<Report>> fetchReport() async {
     final response = await http.get(Uri.parse("$baseUrl/api/reports"));
-    // print(response.body);
+    print(response.body);
       
     if (response.statusCode == 200) {
       final decodeResponse = json.decode(utf8.decode(response.bodyBytes));
@@ -280,7 +279,7 @@ class ReportApi {
 class ReserveApi {
   Future<List<Reserve>> fetchReserve() async {
     final response = await http.get(Uri.parse("$baseUrl/api/reserve"));
-    // print(response.body);
+    print(response.body);
       
     if (response.statusCode == 200) {
       final decodeResponse = json.decode(utf8.decode(response.bodyBytes));

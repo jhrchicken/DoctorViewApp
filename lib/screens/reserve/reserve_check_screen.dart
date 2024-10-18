@@ -91,7 +91,7 @@ class _ReserveCheckScreenState extends State<ReserveCheckScreen> {
                         thickness: 1.0
                       ),
                       const SizedBox(height: 10),
-                      ReserveCheckTextWidget(title: '의사', content: '${widget.reserve.doctorname} 의사' ?? '',),
+                      ReserveCheckTextWidget(title: '의사', content: '${widget.reserve.doctorname} 의사'),
                       const SizedBox(height: 10),
                       Divider(
                         color: Colors.grey[300],

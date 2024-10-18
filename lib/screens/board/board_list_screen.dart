@@ -1,8 +1,6 @@
 import 'package:doctorviewapp/main.dart';
 import 'package:doctorviewapp/models/board.dart';
 import 'package:doctorviewapp/providers/board_provider.dart';
-import 'package:doctorviewapp/providers/likes_provider.dart';
-import 'package:doctorviewapp/providers/report_provider.dart';
 import 'package:doctorviewapp/screens/board/board_write_screen.dart';
 import 'package:doctorviewapp/theme/colors.dart';
 import 'package:doctorviewapp/widgets/board/board_item_widget.dart';
@@ -24,20 +22,10 @@ class BoardListScreen extends StatefulWidget {
 
 class _BoardListScreenState extends State<BoardListScreen> {
   @override
-  void initState() {
-    super.initState();
-    final boardProvider = Provider.of<BoardProvider>(context, listen: false);
-    boardProvider.fetchBoard();
-    final likesProvider = Provider.of<LikesProvider>(context, listen: false);
-    likesProvider.fetchLike();
-    final reportsProvider = Provider.of<ReportProvider>(context, listen: false);
-    reportsProvider.fetchReport();
-  }
-
-  @override
   Widget build(BuildContext context) {
     final boardProvider = Provider.of<BoardProvider>(context);
     List<Board> boardList = boardProvider.listBoard(widget.boardName).reversed.toList();
+    
 
     return Scaffold(
       // 상단바

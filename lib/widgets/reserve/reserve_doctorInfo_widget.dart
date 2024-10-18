@@ -90,6 +90,7 @@ class _ReserveDoctorInfoWidgetState extends State<ReserveDoctorInfoWidget> {
               ),
               const SizedBox(height: 10),
               _buildDoctorInfo(doctor),
+              
             ],
           ),
         ),

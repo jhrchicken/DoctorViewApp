@@ -34,6 +34,7 @@ class _ReserveListUserState extends State<ReserveListUser> {
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              // 예약목록이 하나도 없으면
               if (reserveProvider.listReserve(loginMember.id) == null) ...[
                 Center(
                   child: Padding(
@@ -49,8 +50,8 @@ class _ReserveListUserState extends State<ReserveListUser> {
                 ),
               ]
               else ... [
-                // 지난 예약
-                if (reserveProvider.listReserve(loginMember.id) != null) ...[
+                // 지난 예약이 있으면 '지난 예약 보기' 버튼  출력
+                if (reserveProvider.pastReserve(loginMember.id) != null) ...[
                   PrimaryButton(
                   text: '지난 예약 보기', 
                   onPressed: () {
@@ -65,7 +66,7 @@ class _ReserveListUserState extends State<ReserveListUser> {
                 else ...[
                 ],
 
-                // 취소된 예약
+                // 취소된 예약이 있으면 '취소된 예약 보기' 버튼 출력
                 if (reserveProvider.cancelReserve(loginMember.id) != null) ...[
                   PrimaryButton(
                   text: '취소된 예약 보기', 
@@ -80,10 +81,6 @@ class _ReserveListUserState extends State<ReserveListUser> {
                 ]
                 else ...[
                 ],
-
-
-                
-
                 
                 const SizedBox(height: 20),
                 ListView.builder(

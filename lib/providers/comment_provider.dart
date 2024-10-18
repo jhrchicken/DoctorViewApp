@@ -7,7 +7,42 @@ class CommentProvider extends ChangeNotifier {
   int _seqCommIdx = 6;
 
   // 댓글 더미데이터
-  final List<Comment> _commList = [];
+  final List<Comment> _commList = [
+    // Comment(
+    //   commIdx: 1,
+    //   postdate: DateTime.now(),
+    //   content: '댓글이에욧',
+    //   boardRef: 1,
+    //   writerRef: 'dayeong',
+    // ),
+    // Comment(
+    //   commIdx: 2,
+    //   postdate: DateTime.now(),
+    //   content: '댓글이에욧',
+    //   boardRef: 1,
+    //   writerRef: 'harim',
+    // ),
+    // Comment(
+    //   commIdx: 3,
+    //   postdate: DateTime.now(),
+    //   content: '하하..',
+    //   boardRef: 9,
+    //   writerRef: 'harim',
+    // ),
+    // Comment(
+    //   commIdx: 4,
+    //   postdate: DateTime.now(),
+    //   content: '그러네요',
+    //   boardRef: 9,
+    // ),
+    // Comment(
+    //   commIdx: 5,
+    //   postdate: DateTime.now(),
+    //   content: '즐거운 토요일',
+    //   boardRef: 9,
+    //   writerRef: 'leehr',
+    // ),
+  ];
 
   // 댓글 전체 목록
   List<Comment> get commList => _commList;

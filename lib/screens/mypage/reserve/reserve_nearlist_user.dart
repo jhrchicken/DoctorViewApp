@@ -33,7 +33,7 @@ class _ReserveNearlistUserState extends State<ReserveNearlistUser> {
               ListView.builder(
                 shrinkWrap: true,
                 physics: const NeverScrollableScrollPhysics(),
-                itemCount: reserveList.length,
+                itemCount: reserveList!.length,
                 itemBuilder: (context, index) {
                   final reserve = reserveList[index];
                   return Column(

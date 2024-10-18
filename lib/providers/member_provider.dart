@@ -11,7 +11,68 @@ class MemberProvider extends ChangeNotifier {
 
   Member? get loginMember => _loginMember;
 
-  final List<Member> _memberList = [];
+  final List<Member> _memberList = [
+    // Member(
+    //   id: 'dayeong', 
+    //   password: '12341234', 
+    //   name: '부다영', 
+    //   nickname: '메이', 
+    //   tel: '010-2084-0204', 
+    //   address: '서울특별시',
+    //   email: 'dyboo1347@gmail.com',
+    //   rrn: '021209-4000000',
+    //   enable: 1,
+    //   auth: 'ROLE_USER'
+    // ),
+    // Member(
+    //   id: 'harim', 
+    //   password: '12341234', 
+    //   name: '정하림', 
+    //   nickname: '아잠만', 
+    //   tel: '010-1111-1234', 
+    //   address: '서울특별시',
+    //   email: 'harim@gmail.com',
+    //   rrn: '021201-4000000',
+    //   enable: 1,
+    //   auth: 'ROLE_USER'
+    // ),
+    // Member(
+    //   id: 'leehr', 
+    //   password: '12341234', 
+    //   name: '이회리', 
+    //   nickname: '여울', 
+    //   tel: '010-222-1234', 
+    //   address: '서울특별시',
+    //   email: 'leeehr@gmail.com',
+    //   rrn: '021202-4000000',
+    //   enable: 1,
+    //   auth: 'ROLE_USER'
+    // ),
+    // Member(
+    //   id: 'hospital1', 
+    //   password: '12341234', 
+    //   name: '엠플러스의원', 
+    //   nickname: '엠플러스의원',
+    //   tel: '02-1234-1234', 
+    //   address: '서울특별시 강남구 논현동',
+    //   taxid: '111-1111-1111',
+    //   department: '외과',
+    //   enable: 0,
+    //   auth: 'ROLE_HOSP'
+    // ),
+    // Member(
+    //   id: 'hospital2', 
+    //   password: '12341234', 
+    //   name: '온리원의원', 
+    //   nickname: '온리원의원',
+    //   tel: '02-1234-1234', 
+    //   address: '서울특별시 강남구 대치동',
+    //   taxid: '111-1111-1111',
+    //   department: '피부과',
+    //   enable: 0,
+    //   auth: 'ROLE_HOSP'
+    // ),
+  ];
 
   // 회원 전체 목록
   List<Member> get memberList => _memberList;
@@ -33,6 +94,13 @@ class MemberProvider extends ChangeNotifier {
   // 회원 찾기
   Member? searchMember(String id, [String? password]) {
     try {
+      print('searchMember');
+      // 디버깅용
+      for (var member in memberList) {
+        print('id: ${member.id}, pass: ${member.password}, 이름: ${member.name}');
+      }
+
+
       Member? searchMember;
 
       if (password == null) {
@@ -91,6 +159,8 @@ class MemberProvider extends ChangeNotifier {
   // 아이디찾기
   String? findId(String email, String password) {
     try {
+      
+      
       final member = _memberList.firstWhere(
         (member) => member.email == email && member.password == password,
       );

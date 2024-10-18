@@ -42,21 +42,11 @@ class _HospitalViewScreenState extends State<HospitalViewScreen> {
   bool isLike = false;
   Member? loginMember;
 
-  // @override
-  // void initState() {
-  //   super.initState();
-  //   final hreviewsProvider = Provider.of<HreviewProvider>(context, listen: false);
-  //   hreviewsProvider.fetchHreview();
-  // }
-
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
     final likesProvider = Provider.of<LikesProvider>(context, listen: false);
     final memberProvider = Provider.of<MemberProvider>(context, listen: false);
-
-    likesProvider.fetchLike();
-
 
     loginMember = memberProvider.loginMember;
     if (loginMember != null) {

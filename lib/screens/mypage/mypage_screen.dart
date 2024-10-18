@@ -1,10 +1,5 @@
 import 'package:doctorviewapp/header.dart';
-import 'package:doctorviewapp/providers/doctor_provider.dart';
-import 'package:doctorviewapp/providers/dreview_provider.dart';
-import 'package:doctorviewapp/providers/hreview_provider.dart';
-import 'package:doctorviewapp/providers/likes_provider.dart';
 import 'package:doctorviewapp/providers/member_provider.dart';
-import 'package:doctorviewapp/providers/reserve_provider.dart';
 import 'package:doctorviewapp/screens/mypage/edit/check/check_member.dart';
 import 'package:doctorviewapp/screens/mypage/edit/edit_hosp.dart';
 import 'package:doctorviewapp/screens/mypage/edit/edit_user.dart';
@@ -76,21 +71,6 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   @override
-  void initState() {
-    super.initState();
-    final reserveProvider = Provider.of<ReserveProvider>(context, listen: false);
-    reserveProvider.fetchReserve();
-    final likesProvider = Provider.of<LikesProvider>(context, listen: false);
-    likesProvider.fetchLike();
-    // final hreviewsProvider = Provider.of<HreviewProvider>(context, listen: false);
-    // hreviewsProvider.fetchHreview();
-    // final dreviewsProvider = Provider.of<DreviewProvider>(context, listen: false);
-    // dreviewsProvider.fetchDreview();
-    final doctorsProvider = Provider.of<DoctorProvider>(context, listen: false);
-    doctorsProvider.fetchDoctor();
-  }
-
-  @override
   Widget build(BuildContext context) {
     final memberProvider = Provider.of<MemberProvider>(context);
     final loginMember = memberProvider.loginMember;
@@ -118,7 +98,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   if(loginMember == null) ...[
 
                     // 로그인 / 회원가입 버튼
-                    BeforeLoginWidget(),
+                    const BeforeLoginWidget(),
 
                     const SizedBox(height: 40),
 
@@ -181,7 +161,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     if (loginMember.auth == 'ROLE_USER') ...[
                       
                       // 로그인 후
-                      UserLoginMenuWidget(),
+                      const UserLoginMenuWidget(),
 
                       const SizedBox(height: 10,),
 
@@ -192,13 +172,13 @@ class _MyHomePageState extends State<MyHomePage> {
                       const SizedBox(height: 20,),
 
                       // 추가기능
-                      MoreFeatWidget(),
+                      const MoreFeatWidget(),
                     ]
 
 
                     // 병원
                     else if (loginMember.auth == 'ROLE_HOSP') ...[
-                      HospLoginMenuWidget(),
+                      const HospLoginMenuWidget(),
 
 
                       const SizedBox(height: 10),
@@ -210,51 +190,12 @@ class _MyHomePageState extends State<MyHomePage> {
                       const SizedBox(height: 20,),
 
                       // 추가기능
-                      MoreFeatWidget(),
+                      const MoreFeatWidget(),
                     ],
                     const SizedBox(height: 40,),
                     // 로그아웃
                     const Center(child: LogoutText()),
                   ],
-
-                  
-                  
-                  /****************** 디버깅용 ******************/
-                  // SizedBox(
-                  //   width: 200,
-                  //   height: 100,
-                  //   child: ElevatedButton(
-                  //     onPressed: () {
-                  //       Navigator.of(context).pushNamed("/member/listMember.do");
-                  //     },
-                  //     style: ElevatedButton.styleFrom(
-                  //       textStyle: const TextStyle(fontWeight: FontWeight.w500, fontSize: 30.0),
-                  //       shape: RoundedRectangleBorder(
-                  //         borderRadius: BorderRadius.circular(30),
-                  //       ),
-                  //     ),
-                  //     child: const Text('회원목록'),
-                  //   ),
-                  // ),
-                  SizedBox(
-                    width: 200,
-                    height: 100,
-                    child: ElevatedButton(
-                      onPressed: () {
-                        Navigator.of(context).pushNamed("/member/listReserve.do");
-                      },
-                      style: ElevatedButton.styleFrom(
-                        textStyle: const TextStyle(fontWeight: FontWeight.w500, fontSize: 30.0),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(30),
-                        ),
-                      ),
-                      child: const Text('예약목록'),
-                    ),
-                  ),
-
-
-
                 ],
               ),
             ),

@@ -1,5 +1,7 @@
 import 'package:doctorviewapp/models/hours.dart';
+import 'package:doctorviewapp/models/reserve.dart';
 import 'package:doctorviewapp/providers/hours_provider.dart';
+import 'package:doctorviewapp/providers/reserve_provider.dart';
 import 'package:doctorviewapp/widgets/reserve/doctor_radio_button.dart';
 import 'package:doctorviewapp/widgets/reserve/reserve_timeSlots.dart';
 import 'package:flutter/material.dart';
@@ -24,7 +26,7 @@ class ReserveDateAndHoursWidget extends StatefulWidget {
 
 class _ReserveDateAndHoursWidgetState extends State<ReserveDateAndHoursWidget> {
   DateTime _selectedDay = DateTime.now();
-  String? selectedHours; // 선택된 시간
+  String? selectedHours; 
   late List<String> weekList;
 
   @override
@@ -45,6 +47,14 @@ class _ReserveDateAndHoursWidgetState extends State<ReserveDateAndHoursWidget> {
     final hoursProvider = Provider.of<HoursProvider>(context);
     List<Hours> hoursList = hoursProvider.getHospHours(widget.hospRef);
 
+    final reserveProvider = Provider.of<ReserveProvider>(context);
+    List<Reserve> reserveList = reserveProvider.nearReserve(widget.hospRef);
+
+    // 병원의 진행중인 예약목록 중 사용자가 선택한 날짜와 동일한 예약목록 필터링
+    List<Reserve> selectDayReserve = reserveList.where((reserve) {
+      return isSameDay(reserve.postdate, _selectedDay); 
+    }).toList();
+
     List<String> slots = getTimeSlots(
       hoursList[0].startTime,
       hoursList[0].deadLine,
@@ -55,8 +65,16 @@ class _ReserveDateAndHoursWidgetState extends State<ReserveDateAndHoursWidget> {
     return Column(
       children: [
         _buildDateSelector(),
-        const SizedBox(height: 10),
-        _buildHoursSelector(slots),
+        Divider(
+          color: Colors.grey[300],
+          thickness: 1.0,
+        ),
+        const SizedBox(height: 5),
+        _buildHoursSelector(slots, selectDayReserve),
+        Divider(
+          color: Colors.grey[300],
+          thickness: 1.0,
+        ),
         const SizedBox(height: 5),
       ],
     );
@@ -103,8 +121,9 @@ class _ReserveDateAndHoursWidgetState extends State<ReserveDateAndHoursWidget> {
       onDaySelected: (selectedDay, focusedDay) {
         setState(() {
           _selectedDay = selectedDay;
+          selectedHours = null;
         });
-        widget.onDateSelected(selectedDay); // 선택된 날짜 전달
+        widget.onDateSelected(selectedDay); 
       },
       calendarStyle: _calendarStyle(),
       headerStyle: _headerStyle(),
@@ -112,35 +131,10 @@ class _ReserveDateAndHoursWidgetState extends State<ReserveDateAndHoursWidget> {
     );
   }
 
-  CalendarStyle _calendarStyle() {
-    return const CalendarStyle(
-      selectedDecoration: BoxDecoration(
-        color: Colors.blue, // pointColor2로 변경
-        shape: BoxShape.circle,
-      ),
-      todayDecoration: BoxDecoration(),
-      todayTextStyle: TextStyle(
-        color: Colors.black,
-      ),
-    );
-  }
+  Widget _buildHoursSelector(List<String> slots, List<Reserve> selectDayReserve) {
 
-  HeaderStyle _headerStyle() {
-    return HeaderStyle(
-      titleTextStyle: TextStyle(
-        color: Colors.grey[900],
-        fontSize: 25,
-        fontWeight: FontWeight.bold,
-      ),
-      decoration: const BoxDecoration(
-        color: Colors.white,
-      ),
-      formatButtonVisible: false,
-      titleCentered: true,
-    );
-  }
 
-  Widget _buildHoursSelector(List<String> slots) {
+
     return ExpansionTile(
       shape: const Border(),
       leading: Icon(
@@ -161,23 +155,29 @@ class _ReserveDateAndHoursWidgetState extends State<ReserveDateAndHoursWidget> {
       children: [
         const SizedBox(height: 20),
         Column(
-          children: _buildRows(slots),
+          children: _buildRows(slots, selectDayReserve),
         ),
         const SizedBox(height: 5),
       ],
     );
   }
 
-  List<Widget> _buildRows(List<String> slots) {
+  List<Widget> _buildRows(List<String> slots, List<Reserve> selectDayReserve) {
     List<Widget> rows = [];
     for (int i = 0; i < slots.length; i += 3) {
       rows.add(
         Row(
-          mainAxisAlignment: (i + 3 >= slots.length) ? MainAxisAlignment.start : MainAxisAlignment.spaceEvenly,
+          mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            _buildHoursCard(slots[i]),
-            if (i + 1 < slots.length) _buildHoursCard(slots[i + 1]),
-            if (i + 2 < slots.length) _buildHoursCard(slots[i + 2]),
+            _buildHoursCard(slots[i], selectDayReserve),
+            if (i + 1 < slots.length) ...[
+              const SizedBox(width: 10), 
+              _buildHoursCard(slots[i + 1], selectDayReserve),
+            ],
+            if (i + 2 < slots.length) ...[
+              const SizedBox(width: 10),
+              _buildHoursCard(slots[i + 2], selectDayReserve),
+            ],
           ],
         ),
       );
@@ -185,13 +185,32 @@ class _ReserveDateAndHoursWidgetState extends State<ReserveDateAndHoursWidget> {
     return rows;
   }
 
-  Widget _buildHoursCard(String slot) {
+  Widget _buildHoursCard(String slot, List<Reserve> selectDayReserve) {
+
+    // 해당 시간에 예약이 있는지 확인
+    bool isReserved = selectDayReserve.any((reserve) => reserve.posttime == slot);
+
+    // 현재 날짜와 시간
+    DateTime now = DateTime.now();
+    
+    // 선택한 날짜와 슬롯 시간을 조합하여 DateTime 객체 생성
+    DateTime slotTime = DateTime(
+      _selectedDay.year,
+      _selectedDay.month,
+      _selectedDay.day,
+      int.parse(slot.split(':')[0]),
+      int.parse(slot.split(':')[1]),
+    );
+
+    // 슬롯 시간이 현재 시간보다 이전인지 확인
+    bool isPastTime = slotTime.isBefore(now);
+    
     return SizedBox(
       width: MediaQuery.of(context).size.width / 3 - 20,
       child: Container(
         margin: const EdgeInsets.symmetric(vertical: 5),
         decoration: BoxDecoration(
-          color: Colors.grey[100],
+          color: isPastTime || isReserved  ? Colors.grey[500] : Colors.grey[100], // 예약된 시간은 더 어두운 색으로
           borderRadius: BorderRadius.circular(8),
         ),
         child: Padding(
@@ -203,14 +222,16 @@ class _ReserveDateAndHoursWidgetState extends State<ReserveDateAndHoursWidget> {
                 groupValue: selectedHours ?? 'noselect',
                 value: slot,
                 title: slot,
-                onChanged: (String? value) {
-                  setState(() {
-                    selectedHours = value;
-                  });
-                  if (value != null) {
-                    widget.onHoursSelected(value); // 선택된 시간 전달
-                  }
-                },
+                onChanged: isReserved
+                    ? (value) {}
+                    : (String? value) {
+                        setState(() {
+                          selectedHours = value;
+                        });
+                        if (value != null) {
+                          widget.onHoursSelected(value); 
+                        }
+                      },
               ),
             ],
           ),
@@ -218,4 +239,35 @@ class _ReserveDateAndHoursWidgetState extends State<ReserveDateAndHoursWidget> {
       ),
     );
   }
+
+
+// 캘린더 스타일
+CalendarStyle _calendarStyle() {
+  return const CalendarStyle(
+    selectedDecoration: BoxDecoration(
+      color: Colors.blue, // pointColor2로 변경
+      shape: BoxShape.circle,
+    ),
+    todayDecoration: BoxDecoration(),
+    todayTextStyle: TextStyle(
+      color: Colors.black,
+    ),
+  );
+}
+HeaderStyle _headerStyle() {
+  return HeaderStyle(
+    titleTextStyle: TextStyle(
+      color: Colors.grey[900],
+      fontSize: 25,
+      fontWeight: FontWeight.bold,
+    ),
+    decoration: const BoxDecoration(
+      color: Colors.white,
+    ),
+    formatButtonVisible: false,
+    titleCentered: true,
+  );
+}
+
+
 }
