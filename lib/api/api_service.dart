@@ -19,11 +19,13 @@ import 'package:doctorviewapp/models/reserve.dart';
 import 'package:http/http.dart' as http;
 
 
-const String baseUrl = "http://192.168.0.40:8586";
+// const String baseUrl = "http://192.168.0.40:8586";
+const String baseUrl = "http://192.168.35.232:8586";
 
 class BoardApi {
   Future<List<Board>> fetchBoard() async {
     final response = await http.get(Uri.parse("$baseUrl/api/board"));
+    print('===== fetchBoard ====');
     print(response.body);
       
     if (response.statusCode == 200) {
@@ -57,6 +59,7 @@ class ChatApi {
 class CommentApi {
   Future<List<Comment>> fetchComment() async {
     final response = await http.get(Uri.parse("$baseUrl/api/comment"));
+    print('===== fetchComment ====');
     print(response.body);
       
     if (response.statusCode == 200) {
@@ -74,6 +77,7 @@ class CommentApi {
 class DetailApi {
   Future<List<Detail>> fetchDetail() async {
     final response = await http.get(Uri.parse("$baseUrl/api/hdetail"));
+    print('===== fetchDetail ====');
     print(response.body);
       
     if (response.statusCode == 200) {
@@ -91,6 +95,7 @@ class DetailApi {
 class DoctorApi {
   Future<List<Doctor>> fetchDoctor() async {
     final response = await http.get(Uri.parse("$baseUrl/api/doctor"));
+    print('===== fetchDoctor ====');
     print(response.body);
       
     if (response.statusCode == 200) {
@@ -108,6 +113,7 @@ class DoctorApi {
 class DReplyApi {
   Future<List<Dreply>> fetchDreply() async {
     final response = await http.get(Uri.parse("$baseUrl/api/dreply"));
+    print('===== fetchDreply ====');
     print(response.body);
       
     if (response.statusCode == 200) {
@@ -125,6 +131,7 @@ class DReplyApi {
 class DReviewApi {
   Future<List<Dreview>> fetchDreview() async {
     final response = await http.get(Uri.parse("$baseUrl/api/dreview"));
+    print('===== fetchDreview ====');
     print(response.body);
       
     if (response.statusCode == 200) {
@@ -142,6 +149,7 @@ class DReviewApi {
 class HashtagApi {
   Future<List<Hashtag>> fetchHashtag() async {
     final response = await http.get(Uri.parse("$baseUrl/api/hashtags"));
+    print('===== fetchHashtag ====');
     print(response.body);
       
     if (response.statusCode == 200) {
@@ -159,6 +167,7 @@ class HashtagApi {
 class HospitalApi{
   Future<List<Hospital>> fetchHospital() async {
     final response = await http.get(Uri.parse("$baseUrl/api/hospital"));
+    print('===== fetchHospital ====');
     print(response.body);
       
     if (response.statusCode == 200) {
@@ -177,6 +186,7 @@ class HospitalApi{
 class HoursApi {
   Future<List<Hours>> fetchHour() async {
     final response = await http.get(Uri.parse("$baseUrl/api/hours"));
+    print('===== fetchHour ====');
     print(response.body);
       
     if (response.statusCode == 200) {
@@ -194,6 +204,7 @@ class HoursApi {
 class HReplyApi {
   Future<List<Hreply>> fetchHReply() async {
     final response = await http.get(Uri.parse("$baseUrl/api/hreply"));
+    print('===== fetchHReply ====');
     print(response.body);
       
     if (response.statusCode == 200) {
@@ -211,6 +222,7 @@ class HReplyApi {
 class HReviewApi {
   Future<List<Hreview>> fetchHReview() async {
     final response = await http.get(Uri.parse("$baseUrl/api/hreview"));
+    print('===== fetchHReview ====');
     print(response.body);
       
     if (response.statusCode == 200) {
@@ -228,6 +240,7 @@ class HReviewApi {
 class LikeApi {
   Future<List<Likes>> fetchLike() async {
     final response = await http.get(Uri.parse("$baseUrl/api/likes"));
+    print('===== fetchLike ====');
     print(response.body);
       
     if (response.statusCode == 200) {
@@ -245,6 +258,7 @@ class LikeApi {
 class MemberApi {
   Future<List<Member>> fetchMember() async {
     final response = await http.get(Uri.parse("$baseUrl/api/member"));
+    print('===== fetchMember ====');
     print(response.body);
       
     if (response.statusCode == 200) {
@@ -262,6 +276,7 @@ class MemberApi {
 class ReportApi {
   Future<List<Report>> fetchReport() async {
     final response = await http.get(Uri.parse("$baseUrl/api/reports"));
+    print('===== fetchReport ====');
     print(response.body);
       
     if (response.statusCode == 200) {
@@ -279,6 +294,7 @@ class ReportApi {
 class ReserveApi {
   Future<List<Reserve>> fetchReserve() async {
     final response = await http.get(Uri.parse("$baseUrl/api/reserve"));
+    print('===== fetchReserve` ====');
     print(response.body);
       
     if (response.statusCode == 200) {

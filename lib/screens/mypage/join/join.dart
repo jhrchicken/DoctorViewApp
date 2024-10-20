@@ -1,4 +1,6 @@
 import 'package:doctorviewapp/header.dart';
+import 'package:doctorviewapp/screens/mypage/join/hosp.dart';
+import 'package:doctorviewapp/screens/mypage/join/user.dart';
 import 'package:doctorviewapp/theme/colors.dart';
 import 'package:flutter/material.dart';
 
@@ -40,7 +42,14 @@ class _JoinState extends State<Join> {
                     context: context,
                     buttonText: '일반 회원가입',
                     emoji: '😁',
-                    nextPage: "/member/join/user.do",
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const JoinUser(),
+                        ),
+                      );
+                    },
                   ),
                 ],
               ),
@@ -63,7 +72,14 @@ class _JoinState extends State<Join> {
                     context: context,
                     buttonText: '병원 회원가입',
                     emoji: '🏥',
-                    nextPage: "/member/join/hosp.do",
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const JoinHosp(),
+                        ),
+                      );
+                    },
                   ),
                 ],
               ),
@@ -79,12 +95,11 @@ Widget JoinButton({
   required BuildContext context,
   required String buttonText,
   required String emoji,
-  required String nextPage,
+  // required String nextPage,
+  required VoidCallback onPressed,
 }) {
   return ElevatedButton(
-    onPressed: () {
-      Navigator.of(context).pushNamed(nextPage);
-    },
+    onPressed: onPressed,
     style: ElevatedButton.styleFrom(
       backgroundColor: pointColor2,
       foregroundColor: Colors.white,

@@ -9,6 +9,7 @@ import 'package:doctorviewapp/models/member.dart';
 import 'package:doctorviewapp/providers/doctor_provider.dart';
 import 'package:doctorviewapp/providers/hours_provider.dart';
 import 'package:doctorviewapp/providers/member_provider.dart';
+import 'package:doctorviewapp/screens/mypage/join/join_hosp_success.dart';
 import 'package:doctorviewapp/theme/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -829,10 +830,14 @@ class _JoinHospState extends State<JoinHosp> {
                               );
                             }
           
-                            Navigator.of(context).pushNamed('/member/join/hosp/success.do');
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => const JoinHospSuccess(),
+                              ),
+                            );
                           }
           
-                          // 화면 이동
                         },
                         color: Colors.blue, 
                       ),

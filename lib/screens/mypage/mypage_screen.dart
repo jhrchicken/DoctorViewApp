@@ -4,18 +4,6 @@ import 'package:doctorviewapp/screens/mypage/edit/check/check_member.dart';
 import 'package:doctorviewapp/screens/mypage/edit/edit_hosp.dart';
 import 'package:doctorviewapp/screens/mypage/edit/edit_user.dart';
 import 'package:doctorviewapp/screens/mypage/hosp_mypage/list_doctor.dart';
-import 'package:doctorviewapp/screens/mypage/join/find/find_id.dart';
-import 'package:doctorviewapp/screens/mypage/join/find/find_id_success.dart';
-import 'package:doctorviewapp/screens/mypage/join/find/find_pass.dart';
-import 'package:doctorviewapp/screens/mypage/join/find/find_pass_success.dart';
-import 'package:doctorviewapp/screens/mypage/join/hosp.dart';
-import 'package:doctorviewapp/screens/mypage/join/join.dart';
-import 'package:doctorviewapp/screens/mypage/join/join_hosp_success.dart';
-import 'package:doctorviewapp/screens/mypage/join/join_user_success.dart';
-import 'package:doctorviewapp/screens/mypage/join/login.dart';
-import 'package:doctorviewapp/screens/mypage/join/user.dart';
-import 'package:doctorviewapp/screens/mypage/testpage/memberList.dart';
-import 'package:doctorviewapp/screens/mypage/testpage/reserveList.dart';
 import 'package:doctorviewapp/widgets/member/logout_text.dart';
 import 'package:doctorviewapp/widgets/member/mypage_menu.dart';
 import 'package:doctorviewapp/widgets/mypage/before_login_widget.dart';
@@ -38,24 +26,11 @@ class MyPage extends StatelessWidget {
       initialRoute: '/',
       routes: {
         '/': (context) => const MyHomePage(),
-        '/member/join.do': (context) => const Join(),
-        '/member/join/user.do': (context) => const JoinUser(),
-        '/member/join/user/success.do': (context) => const JoinUserSuccess(),
-        '/member/join/hosp.do': (context) => const JoinHosp(),
-        '/member/join/hosp/success.do': (context) => const JoinHospSuccess(),
-        '/member/login.do': (context) => const Login(),
-        '/member/findId.do': (context) => const FindId(),
-        '/member/findIdSuccess.do': (context) => const FindIdSuccess(),
-        '/member/findPass.do': (context) => const FindPass(),
-        '/member/findPassSuccess.do': (context) => const FindPassSuccess(),
         '/member/checkMember.do': (context) => const CheckMember(),
         '/member/editUser.do': (context) => const EditUser(),
         '/member/editHosp.do': (context) => const EditHosp(),
         '/member/doctorInfo.do': (context) => const DoctorList(),
 
-        /****************** 디버깅용 ******************/
-        '/member/listMember.do': (context) => const MemberList(),
-        '/member/listReserve.do': (context) => const ReserveList(),
       },
       // home: const MyHomePage(title: '앱 바 타이틀'),
     );

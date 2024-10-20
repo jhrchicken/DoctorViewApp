@@ -1,9 +1,12 @@
 import 'package:doctorviewapp/component/secondary_outline_button.dart';
 import 'package:doctorviewapp/header.dart';
+import 'package:doctorviewapp/screens/mypage/join/login.dart';
 import 'package:flutter/material.dart';
 
 class FindIdSuccess extends StatefulWidget {
-  const FindIdSuccess({super.key});
+  final String memberId;
+
+  const FindIdSuccess({super.key, required this.memberId}); 
 
   @override
   State<FindIdSuccess> createState() => _FindIdSuccessState();
@@ -12,8 +15,6 @@ class FindIdSuccess extends StatefulWidget {
 class _FindIdSuccessState extends State<FindIdSuccess> {
   @override
   Widget build(BuildContext context) {
-    final String? memberId = ModalRoute.of(context)?.settings.arguments as String?;
-    
     return Scaffold(
       // 헤더
       appBar: Header('아이디 찾기 완료'), 
@@ -48,7 +49,7 @@ class _FindIdSuccessState extends State<FindIdSuccess> {
               SizedBox (
                 width: 300,
                 child: Text(
-                  '회원님의 아이디는\n$memberId입니다',
+                  '회원님의 아이디는\n${widget.memberId}입니다',
                   textAlign: TextAlign.center,
                   style: const TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
                 ),
@@ -63,7 +64,12 @@ class _FindIdSuccessState extends State<FindIdSuccess> {
                 child: SecondaryOutlineButton(
                   text: '로그인하러가기', // 버튼에 표시할 텍스트
                   onPressed: () {
-                    Navigator.of(context).pushNamed('/member/login.do');
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const Login(),
+                      ),
+                    );
                   },
                   color: Colors.blue, // 버튼 테두리와 텍스트 색상
                 ),
