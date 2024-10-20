@@ -1,5 +1,6 @@
 import 'package:doctorviewapp/component/secondary_outline_button.dart';
 import 'package:doctorviewapp/header.dart';
+import 'package:doctorviewapp/screens/mypage/join/login.dart';
 import 'package:flutter/material.dart';
 
 class JoinUserSuccess extends StatefulWidget {
@@ -74,7 +75,12 @@ class _JoinUserSuccessState extends State<JoinUserSuccess> {
                 child: SecondaryOutlineButton(
                   text: '로그인하러가기', // 버튼에 표시할 텍스트
                   onPressed: () {
-                    Navigator.of(context).pushNamed('/member/login.do');
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const Login(),
+                      ),
+                    );
                   },
                   color: Colors.blue, // 버튼 테두리와 텍스트 색상
                 ),

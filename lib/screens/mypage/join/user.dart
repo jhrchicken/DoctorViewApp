@@ -4,6 +4,7 @@ import 'package:doctorviewapp/component/secondary_outline_button.dart';
 import 'package:doctorviewapp/header.dart';
 import 'package:doctorviewapp/models/member.dart';
 import 'package:doctorviewapp/providers/member_provider.dart';
+import 'package:doctorviewapp/screens/mypage/join/join_user_success.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -391,7 +392,12 @@ class _JoinUserState extends State<JoinUser> {
                             );
 
                             // 화면 이동
-                            Navigator.of(context).pushNamed('/member/join/user/success.do');
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => const JoinUserSuccess(),
+                              ),
+                            );
                           }
                         },
                         color: Colors.blue,

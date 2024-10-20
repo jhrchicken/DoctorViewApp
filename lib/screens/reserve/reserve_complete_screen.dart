@@ -78,14 +78,8 @@ class _ReserveCompleteScreenState extends State<ReserveCompleteScreen> {
               ),
               
               const SizedBox(height: 30),
-              PrimaryButton(text: '마이페이지', onPressed: (){
-               Navigator.popUntil(context, (route) => route.isFirst); // 모든 이전 페이지를 pop
-                Navigator.pushReplacement(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => const MyPage(), // 하단 내비게이션 바가 있는 메인 페이지
-                  ),
-                );
+              PrimaryButton(text: '예약완료', onPressed: (){
+                Navigator.popUntil(context, (route) => route.isFirst); // 모든 이전 페이지를 pop
               }, color: pointColor2),
             ],
           ),
