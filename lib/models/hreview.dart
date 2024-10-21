@@ -25,7 +25,8 @@ class Hreview {
       content: json['content'],
       rewrite: json['rewrite'],
       writerRef: json['writer_ref'],
-      hospRef: json['api_ref'].toString(),
+      // hospRef: json['api_ref'].toString(),
+      hospRef: json['hosp_ref'].toString(),
     );
   }
   Map<String, dynamic> toJson() => {
@@ -35,6 +36,7 @@ class Hreview {
     'content': content,
     'rewrite': rewrite,
     'writer_ref': writerRef,
-    'api_ref': hospRef,
+    // 'api_ref': hospRef,
+    'hosp_ref': hospRef,
   };
 }

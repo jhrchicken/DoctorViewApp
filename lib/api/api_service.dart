@@ -25,8 +25,8 @@ const String baseUrl = "http://192.168.35.199:8586";
 class BoardApi {
   Future<List<Board>> fetchBoard() async {
     final response = await http.get(Uri.parse("$baseUrl/api/board"));
-    print('===== fetchBoard ====');
-    print(response.body);
+    // print('===== fetchBoard ====');
+    // print(response.body);
       
     if (response.statusCode == 200) {
       final decodeResponse = json.decode(utf8.decode(response.bodyBytes));
@@ -34,7 +34,7 @@ class BoardApi {
       return boardJson.map((json) => Board.fromJson(json)).toList();
     }
     else {
-      print('Failed to load');
+      print('==fetchBoard== Failed to load');
       return [];
     }
   }
@@ -50,7 +50,7 @@ class ChatApi {
       return chatJson.map((json) => Chat.fromJson(json)).toList();
     }
     else {
-      print('Failed to load');
+      print('==fetchChat== Failed to load');
       return [];
     }
   }
@@ -59,8 +59,8 @@ class ChatApi {
 class CommentApi {
   Future<List<Comment>> fetchComment() async {
     final response = await http.get(Uri.parse("$baseUrl/api/comment"));
-    print('===== fetchComment ====');
-    print(response.body);
+    // print('===== fetchComment ====');
+    // print(response.body);
       
     if (response.statusCode == 200) {
       final decodeResponse = json.decode(utf8.decode(response.bodyBytes));
@@ -68,7 +68,7 @@ class CommentApi {
       return commentJson.map((json) => Comment.fromJson(json)).toList();
     }
     else {
-      print('Failed to load');
+      print('== fetchComment== Failed to load');
       return [];
     }
   }
@@ -77,8 +77,8 @@ class CommentApi {
 class DetailApi {
   Future<List<Detail>> fetchDetail() async {
     final response = await http.get(Uri.parse("$baseUrl/api/hdetail"));
-    print('===== fetchDetail ====');
-    print(response.body);
+    // print('===== fetchDetail ====');
+    // print(response.body);
       
     if (response.statusCode == 200) {
       final decodeResponse = json.decode(utf8.decode(response.bodyBytes));
@@ -86,7 +86,7 @@ class DetailApi {
       return detailJson.map((json) => Detail.fromJson(json)).toList();
     }
     else {
-      print('Failed to load');
+      print('== fetchDetail == Failed to load');
       return [];
     }
   }
@@ -95,8 +95,8 @@ class DetailApi {
 class DoctorApi {
   Future<List<Doctor>> fetchDoctor() async {
     final response = await http.get(Uri.parse("$baseUrl/api/doctor"));
-    print('===== fetchDoctor ====');
-    print(response.body);
+    // print('===== fetchDoctor ====');
+    // print(response.body);
       
     if (response.statusCode == 200) {
       final decodeResponse = json.decode(utf8.decode(response.bodyBytes));
@@ -104,7 +104,7 @@ class DoctorApi {
       return doctorJson.map((json) => Doctor.fromJson(json)).toList();
     }
     else {
-      print('Failed to load');
+      print('==fetchDoctor== Failed to load');
       return [];
     }
   }
@@ -113,8 +113,8 @@ class DoctorApi {
 class DReplyApi {
   Future<List<Dreply>> fetchDreply() async {
     final response = await http.get(Uri.parse("$baseUrl/api/dreply"));
-    print('===== fetchDreply ====');
-    print(response.body);
+    // print('===== fetchDreply ====');
+    // print(response.body);
       
     if (response.statusCode == 200) {
       final decodeResponse = json.decode(utf8.decode(response.bodyBytes));
@@ -122,7 +122,7 @@ class DReplyApi {
       return dreplyJson.map((json) => Dreply.fromJson(json)).toList();
     }
     else {
-      print('Failed to load');
+      print('==fetchDreply== Failed to load');
       return [];
     }
   }
@@ -131,8 +131,8 @@ class DReplyApi {
 class DReviewApi {
   Future<List<Dreview>> fetchDreview() async {
     final response = await http.get(Uri.parse("$baseUrl/api/dreview"));
-    print('===== fetchDreview ====');
-    print(response.body);
+    // print('===== fetchDreview ====');
+    // print(response.body);
       
     if (response.statusCode == 200) {
       final decodeResponse = json.decode(utf8.decode(response.bodyBytes));
@@ -140,7 +140,7 @@ class DReviewApi {
       return dreviewJson.map((json) => Dreview.fromJson(json)).toList();
     }
     else {
-      print('Failed to load');
+      print('==fetchDreview== Failed to load');
       return [];
     }
   }
@@ -149,8 +149,8 @@ class DReviewApi {
 class HashtagApi {
   Future<List<Hashtag>> fetchHashtag() async {
     final response = await http.get(Uri.parse("$baseUrl/api/hashtags"));
-    print('===== fetchHashtag ====');
-    print(response.body);
+    // print('===== fetchHashtag ====');
+    // print(response.body);
       
     if (response.statusCode == 200) {
       final decodeResponse = json.decode(utf8.decode(response.bodyBytes));
@@ -158,7 +158,7 @@ class HashtagApi {
       return hashtagJson.map((json) => Hashtag.fromJson(json)).toList();
     }
     else {
-      print('Failed to load');
+      print('==fetchHashtag== Failed to load');
       return [];
     }
   }
@@ -176,7 +176,7 @@ class HospitalApi{
       return hospitalJson.map((json) => Hospital.fromJson(json)).toList();
     }
     else {
-      print('Failed to load');
+      print('==fetchHospital== Failed to load');
       return [];
     }
   }
@@ -186,8 +186,8 @@ class HospitalApi{
 class HoursApi {
   Future<List<Hours>> fetchHour() async {
     final response = await http.get(Uri.parse("$baseUrl/api/hours"));
-    print('===== fetchHour ====');
-    print(response.body);
+    // print('===== fetchHour ====');
+    // print(response.body);
       
     if (response.statusCode == 200) {
       final decodeResponse = json.decode(utf8.decode(response.bodyBytes));
@@ -195,7 +195,7 @@ class HoursApi {
       return hourJson.map((json) => Hours.fromJson(json)).toList();
     }
     else {
-      print('Failed to load');
+      print('==fetchHour== Failed to load');
       return [];
     }
   }
@@ -213,7 +213,7 @@ class HReplyApi {
       return hreplyJson.map((json) => Hreply.fromJson(json)).toList();
     }
     else {
-      print('Failed to load');
+      print('==fetchHReply== Failed to load');
       return [];
     }
   }
@@ -231,7 +231,7 @@ class HReviewApi {
       return hreviewJson.map((json) => Hreview.fromJson(json)).toList();
     }
     else {
-      print('Failed to load');
+      print('==fetchHReview== Failed to load');
       return [];
     }
   }
@@ -240,8 +240,8 @@ class HReviewApi {
 class LikeApi {
   Future<List<Likes>> fetchLike() async {
     final response = await http.get(Uri.parse("$baseUrl/api/likes"));
-    print('===== fetchLike ====');
-    print(response.body);
+    // print('===== fetchLike ====');
+    // print(response.body);
       
     if (response.statusCode == 200) {
       final decodeResponse = json.decode(utf8.decode(response.bodyBytes));
@@ -249,7 +249,7 @@ class LikeApi {
       return likeJson.map((json) => Likes.fromJson(json)).toList();
     }
     else {
-      print('Failed to load');
+      print('==fetchLike== Failed to load');
       return [];
     }
   }
@@ -258,8 +258,8 @@ class LikeApi {
 class MemberApi {
   Future<List<Member>> fetchMember() async {
     final response = await http.get(Uri.parse("$baseUrl/api/member"));
-    print('===== fetchMember ====');
-    print(response.body);
+    // print('===== fetchMember ====');
+    // print(response.body);
       
     if (response.statusCode == 200) {
       final decodeResponse = json.decode(utf8.decode(response.bodyBytes));
@@ -267,7 +267,7 @@ class MemberApi {
       return memberJson.map((json) => Member.fromJson(json)).toList();
     }
     else {
-      print('Failed to load');
+      print('==fetchMember== Failed to load');
       return [];
     }
   }
@@ -276,8 +276,8 @@ class MemberApi {
 class ReportApi {
   Future<List<Report>> fetchReport() async {
     final response = await http.get(Uri.parse("$baseUrl/api/reports"));
-    print('===== fetchReport ====');
-    print(response.body);
+    // print('===== fetchReport ====');
+    // print(response.body);
       
     if (response.statusCode == 200) {
       final decodeResponse = json.decode(utf8.decode(response.bodyBytes));
@@ -285,7 +285,7 @@ class ReportApi {
       return reportJson.map((json) => Report.fromJson(json)).toList();
     }
     else {
-      print('Failed to load');
+      print('==fetchReport== Failed to load');
       return [];
     }
   }
@@ -294,8 +294,8 @@ class ReportApi {
 class ReserveApi {
   Future<List<Reserve>> fetchReserve() async {
     final response = await http.get(Uri.parse("$baseUrl/api/reserve"));
-    print('===== fetchReserve` ====');
-    print(response.body);
+    // print('===== fetchReserve` ====');
+    // print(response.body);
       
     if (response.statusCode == 200) {
       final decodeResponse = json.decode(utf8.decode(response.bodyBytes));
@@ -303,7 +303,7 @@ class ReserveApi {
       return reserveJson.map((json) => Reserve.fromJson(json)).toList();
     }
     else {
-      print('Failed to load');
+      print('==fetchReserve== Failed to load');
       return [];
     }
   }

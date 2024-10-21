@@ -104,7 +104,7 @@ class _MyHomePageState extends State<MyHomePage> {
     Provider.of<DreviewProvider>(context, listen: false).fetchDreview(); //의사라뷰
     Provider.of<DreplyProvider>(context, listen: false).fetchDreply(); //의사답글
     Provider.of<HospitalProvider>(context, listen: false).fetchHospital(); //병원
-    // Provider.of<HreviewProvider>(context, listen: false).fetchHreview(); //병원리뷰 
+    Provider.of<HreviewProvider>(context, listen: false).fetchHreview(); //병원리뷰 
     Provider.of<HreplyProvider>(context, listen: false).fetchHreply(); //병원답글
     Provider.of<LikesProvider>(context, listen: false).fetchLike(); //좋아요
     Provider.of<HashtagProvider>(context, listen: false).fetchHashtag(); //해시태그
