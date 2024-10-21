@@ -38,14 +38,14 @@ class _DoctorListState extends State<DoctorList> {
           return AlertDialog(
             backgroundColor: Colors.grey[100],
             title: const Text('의료진 삭제'),
-            content: const Text('의료진정보를 삭제하시겠습니까?'),
+            content: const Text('의료진 정보를 삭제하시겠습니까?'),
             actions: [
               TextButton(
                 onPressed: () {
                   Navigator.of(context).pop(); 
                   doctorProvider.deleteDoctor(docIdx);
                   ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(content: Text('의료진정보가 삭제되었습니다.')),
+                    const SnackBar(content: Text('의료진 정보가 삭제되었습니다.')),
                 );
                 },
                 child: Text('예', style: TextStyle(color: Colors.grey[900]),),
@@ -73,17 +73,20 @@ class _DoctorListState extends State<DoctorList> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               
-              PrimaryButton(
-                text: '의료진 등록하기', 
-                onPressed: (){
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const InsertDoctor(),
-                    ),
-                  );
-                }, 
-                color: pointColor2
+              Padding(
+                padding: const EdgeInsets.only(bottom: 10),
+                child: PrimaryButton(
+                  text: '의료진 등록하기', 
+                  onPressed: (){
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const InsertDoctor(),
+                      ),
+                    );
+                  }, 
+                  color: pointColor2
+                ),
               ),
               
               if (hospitalDoctors.isNotEmpty)
@@ -93,7 +96,7 @@ class _DoctorListState extends State<DoctorList> {
                   itemBuilder: (context, index) {
                     final doctor = hospitalDoctors[index];
                     return Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 10),
+                      padding: const EdgeInsets.symmetric(vertical: 5),
                       child: GestureDetector(
                         onTap: () {
                           Navigator.push(
@@ -112,7 +115,7 @@ class _DoctorListState extends State<DoctorList> {
                             borderRadius: BorderRadius.circular(15),
                           ),
                           child: Padding(
-                            padding: const EdgeInsets.all(20),
+                            padding: const EdgeInsets.fromLTRB(12, 4, 10, 15),
                             child: Row(
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
@@ -121,7 +124,7 @@ class _DoctorListState extends State<DoctorList> {
                                   color: Colors.grey[700],
                                   size: 80,
                                 ),
-                                const SizedBox(width: 20), 
+                                const SizedBox(width: 12), 
                                 Expanded( 
                                   child: Column(
                                     crossAxisAlignment: CrossAxisAlignment.start, 
@@ -133,12 +136,15 @@ class _DoctorListState extends State<DoctorList> {
                                           Text(
                                             doctor.name,
                                             textAlign: TextAlign.left,
-                                            style: TextStyle(fontSize: 22, fontWeight: FontWeight.w700, color: Colors.grey[900]),
+                                            style: TextStyle(
+                                              fontSize: 18,
+                                              fontWeight: FontWeight.w700,
+                                              color: Colors.grey[900]
+                                            ),
                                           ),
                                           
                                           Row(
                                             children: [
-                                              /*************** 수정페이지 이동 필요 ***************/
                                               EditButton(
                                                 text: '수정', 
                                                 onPressed: (){
@@ -163,23 +169,22 @@ class _DoctorListState extends State<DoctorList> {
                                         ],
                                       ),
 
-                                      const SizedBox(height: 5), 
-
                                       Row(
                                         children: [
                                           const Text(
-                                            '전공: ',
+                                            '전공',
                                             style: TextStyle(
-                                              fontSize: 18,
-                                              fontWeight: FontWeight.w600,
+                                              fontSize: 14,
+                                              fontWeight: FontWeight.w500,
                                               color: pointColor2,
                                             ),
                                           ),
+                                          const SizedBox(width: 5),
                                           Text(
                                             doctor.major,
                                             style: TextStyle(
-                                              fontSize: 18,
-                                              fontWeight: FontWeight.w400, 
+                                              fontSize: 14,
+                                              fontWeight: FontWeight.w500, 
                                               color: Colors.grey[900],
                                             ),
                                           ),
@@ -189,18 +194,19 @@ class _DoctorListState extends State<DoctorList> {
                                       Row(
                                         children: [
                                           const Text(
-                                            '경력: ',
+                                            '경력',
                                             style: TextStyle(
-                                              fontSize: 18,
-                                              fontWeight: FontWeight.w600,
+                                              fontSize: 14,
+                                              fontWeight: FontWeight.w500,
                                               color: pointColor2,
                                             ),
                                           ),
+                                          const SizedBox(width: 5),
                                           Text(
                                             doctor.career,
                                             style: TextStyle(
-                                              fontSize: 18,
-                                              fontWeight: FontWeight.w400, 
+                                              fontSize: 14,
+                                              fontWeight: FontWeight.w500, 
                                               color: Colors.grey[900],
                                             ),
                                           ),
@@ -210,18 +216,19 @@ class _DoctorListState extends State<DoctorList> {
                                       Row(
                                         children: [
                                           const Text(
-                                            '진료시간: ',
+                                            '진료시간',
                                             style: TextStyle(
-                                              fontSize: 18,
-                                              fontWeight: FontWeight.w600,
+                                              fontSize: 14,
+                                              fontWeight: FontWeight.w500,
                                               color: pointColor2,
                                             ),
                                           ),
+                                          const SizedBox(width: 5),
                                           Text(
                                             doctor.hours,
                                             style: TextStyle(
-                                              fontSize: 18,
-                                              fontWeight: FontWeight.w400, 
+                                              fontSize: 14,
+                                              fontWeight: FontWeight.w500, 
                                               color: Colors.grey[900],
                                             ),
                                           ),

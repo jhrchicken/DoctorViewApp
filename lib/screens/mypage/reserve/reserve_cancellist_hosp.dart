@@ -23,6 +23,7 @@ class _ReserveCancelListHospState extends State<ReserveCancelListHosp> {
     return Scaffold(
       // 헤더
       appBar: Header('취소된 예약 확인'),
+
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.all(20.0),
@@ -31,7 +32,18 @@ class _ReserveCancelListHospState extends State<ReserveCancelListHosp> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               if (reserveProvider.cancelReserve(loginMember.id) == null) ...[
-                const Text('취소된 예약이 없습니다'),
+                Center(
+                  child: Padding(
+                    padding: const EdgeInsets.all(20),
+                    child: Text(
+                      '취소된 예약이 없습니다',
+                      style: TextStyle(
+                        fontSize: 16,
+                        color: Colors.grey[500],
+                      ),
+                    ),
+                  ),
+                ),
               ]
               else ...[
                 ListView.builder(
@@ -50,10 +62,27 @@ class _ReserveCancelListHospState extends State<ReserveCancelListHosp> {
                               Positioned(
                                 child: Container(
                                   width: double.infinity,
-                                  height: 240,
+                                  height: 220,
                                   decoration: BoxDecoration(
-                                    color: Colors.grey.withOpacity(0.5),
+                                    color: Colors.grey.withOpacity(0.8),
                                     borderRadius: BorderRadius.circular(8),
+                                  ),
+                                ),
+                              ),
+                              Positioned(
+                                top: 95,
+                                left: 0,
+                                right: 0,
+                                child: Container(
+                                  width: double.infinity,
+                                  height: 175,
+                                  child: const Text(
+                                    '취소된 예약',
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.w700,)
                                   ),
                                 ),
                               ),

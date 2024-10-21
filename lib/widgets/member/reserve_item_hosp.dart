@@ -51,9 +51,9 @@ class _ReserveItemHospState extends State<ReserveItemHosp> {
                 Text(
                   '${formatDate(reserve!.postdate)} (${reserve.posttime})',
                   style: const TextStyle(
-                    fontSize: 30,
+                    fontSize: 16,
                     letterSpacing: 0.1,
-                    fontWeight: FontWeight.w800,
+                    fontWeight: FontWeight.w700,
                   ),
                 ),
               ],
