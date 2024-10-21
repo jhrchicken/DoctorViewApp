@@ -284,12 +284,14 @@ class _HospitalDetailWidgetState extends State<HospitalDetailWidget> {
                 const SizedBox(
                   width: 5,
                 ),
-                Text(
-                  hospital.address,
-                  style: TextStyle(
-                    color: Colors.grey[700],
-                    fontSize: 14,
-                    fontWeight: FontWeight.w500,
+                Expanded(
+                  child: Text(
+                    hospital.address,
+                    style: TextStyle(
+                      color: Colors.grey[700],
+                      fontSize: 14,
+                      fontWeight: FontWeight.w500,
+                    ),
                   ),
                 ),
               ],

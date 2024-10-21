@@ -14,7 +14,7 @@ class DreviewProvider extends ChangeNotifier {
     //   score: 5,
     //   content: '최고입니닷',
     //   rewrite: 'F',
-    //   writerRef: 'dayeong',
+    //   writerRef: 'dayeong1209',
     //   docRef: 1,
     // ),
     // Dreview(
@@ -23,7 +23,7 @@ class DreviewProvider extends ChangeNotifier {
     //   score: 3,
     //   content: '그냥 그래요',
     //   rewrite: 'F',
-    //   writerRef: 'leeeehr',
+    //   writerRef: 'leehr0102',
     //   docRef: 1,
     // ),
     // Dreview(
@@ -32,7 +32,7 @@ class DreviewProvider extends ChangeNotifier {
     //   score: 4,
     //   content: '자주 방문할게요',
     //   rewrite: 'F',
-    //   writerRef: 'dayeong',
+    //   writerRef: 'dayeong1209',
     //   docRef: 1,
     // ),
     // Dreview(
@@ -41,7 +41,7 @@ class DreviewProvider extends ChangeNotifier {
     //   score: 1,
     //   content: '이 의사 별로임',
     //   rewrite: 'F',
-    //   writerRef: 'harim',
+    //   writerRef: 'harim1104',
     //   docRef: 1,
     // ),
   ];

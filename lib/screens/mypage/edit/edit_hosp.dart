@@ -26,9 +26,7 @@ class _EditHospState extends State<EditHosp> {
   List<String> selectedDays = [];
 
   String startTime = '00:00', endTime = '00:00', startBreak = '00:00', endBreak = '00:00', deadLine = '00:00';
-  // final List<String> timeSlots = [
-  //   for (int i = 0; i < 24; i++) '${i.toString().padLeft(2, '0')}:00',
-  // ];
+  // 30분 단위로 진료시간 출력
   final List<String> timeSlots = [
     for (int i = 0; i < 24; i++) ...[
       '${i.toString().padLeft(2, '0')}:00',
@@ -84,8 +82,6 @@ class _EditHospState extends State<EditHosp> {
         startBreak = firstHour.startBreak;
         endBreak = firstHour.endBreak;
         deadLine = firstHour.deadLine;
-        print(deadLine);
-        print(timeSlots);
       // });
     }
 
