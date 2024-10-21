@@ -2,10 +2,9 @@ import 'package:doctorviewapp/header.dart';
 import 'package:doctorviewapp/models/doctor.dart';
 import 'package:doctorviewapp/providers/doctor_provider.dart';
 import 'package:doctorviewapp/screens/mypage/hosp_mypage/list_doctor.dart';
+import 'package:doctorviewapp/theme/colors.dart';
 import 'package:doctorviewapp/widgets/common/primary_button.dart';
 import 'package:doctorviewapp/widgets/reserve/userInfo_field.dart';
-import 'package:doctorviewapp/theme/colors.dart';
-import 'package:doctorviewapp/widgets/member/edit_button.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -92,13 +91,15 @@ class _EditDoctorState extends State<EditDoctor> {
                               ),
                             ),
                             const SizedBox(width: 20), 
-                            UserInfoField(labelText: '이름', width: 280, controller: nameController, focusNode: nameFocus,
-                              validator: (value) {
-                                if (value == null || value.isEmpty) {
-                                  return '이름을 입력하세요.';
-                                }
-                                return null; 
-                              },
+                            Expanded (
+                              child: UserInfoField(labelText: '이름',controller: nameController, focusNode: nameFocus,
+                                validator: (value) {
+                                  if (value == null || value.isEmpty) {
+                                    return '이름을 입력하세요.';
+                                  }
+                                  return null; 
+                                },
+                              ),
                             )
                           ],
                         ),
@@ -114,13 +115,15 @@ class _EditDoctorState extends State<EditDoctor> {
                               ),
                             ),
                             const SizedBox(width: 20), 
-                            UserInfoField(labelText: '전공', width: 280, controller: majorController, focusNode: majorFocus,
-                              validator: (value) {
-                                if (value == null || value.isEmpty) {
-                                  return '전공을 입력하세요.';
-                                }
-                                return null; 
-                              },
+                            Expanded(
+                              child: UserInfoField(labelText: '전공',controller: majorController, focusNode: majorFocus,
+                                validator: (value) {
+                                  if (value == null || value.isEmpty) {
+                                    return '전공을 입력하세요.';
+                                  }
+                                  return null; 
+                                },
+                              ),
                             )
                           ],
                         ),
@@ -136,13 +139,15 @@ class _EditDoctorState extends State<EditDoctor> {
                               ),
                             ),
                             const SizedBox(width: 20), 
-                            UserInfoField(labelText: '경력', width: 280, controller: careerController, focusNode: careerFocus,
-                              validator: (value) {
-                                if (value == null || value.isEmpty) {
-                                  return '경력을 입력하세요.';
-                                }
-                                return null; 
-                              },
+                            Expanded(
+                              child: UserInfoField(labelText: '경력',controller: careerController, focusNode: careerFocus,
+                                validator: (value) {
+                                  if (value == null || value.isEmpty) {
+                                    return '경력을 입력하세요.';
+                                  }
+                                  return null; 
+                                },
+                              ),
                             )
                           ],
                         ),
@@ -158,13 +163,15 @@ class _EditDoctorState extends State<EditDoctor> {
                               ),
                             ),
                             const SizedBox(width: 20), 
-                            UserInfoField(labelText: '진료시간', width: 250, controller: hoursController, focusNode: hoursFocus, 
-                              validator: (value) {
-                                if (value == null || value.isEmpty) {
-                                  return '진료시간을 입력하세요.';
-                                }
-                                return null; 
-                              },
+                            Expanded(
+                              child: UserInfoField(labelText: '진료시간', controller: hoursController, focusNode: hoursFocus, 
+                                validator: (value) {
+                                  if (value == null || value.isEmpty) {
+                                    return '진료시간을 입력하세요.';
+                                  }
+                                  return null; 
+                                },
+                              ),
                             )
                           ],
                         ),
