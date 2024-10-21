@@ -155,7 +155,6 @@ class _MyHomePageState extends State<MyHomePage> {
                     else if (loginMember.auth == 'ROLE_HOSP') ...[
                       const HospLoginMenuWidget(),
 
-
                       const SizedBox(height: 10),
 
                       Divider(
