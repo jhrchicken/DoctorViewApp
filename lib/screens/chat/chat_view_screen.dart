@@ -111,12 +111,13 @@ class _ChatViewScreenState extends State<ChatViewScreen> {
             color: Colors.red,
             onPressed: () {
               chatProvider.deleteChat(widget.roomId);
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => const ChatListScreen(),
-                ),
-              );
+              Navigator.popUntil(context, (route) => route.isFirst);
+              // Navigator.push(
+              //   context,
+              //   MaterialPageRoute(
+              //     builder: (context) => const ChatListScreen(),
+              //   ),
+              // );
             },
           ),
         ],

@@ -141,7 +141,8 @@ class _LoginState extends State<Login> {
                         );
             
                         if (member != null){
-                          Navigator.pop(context);
+                          Navigator.popUntil(context, (route) => route.isFirst);
+                          // Navigator.pop(context);
                         } else {
                           ScaffoldMessenger.of(context).showSnackBar(
                             const SnackBar(content: Text('아이디 또는 비밀번호가 잘못되었습니다.')),

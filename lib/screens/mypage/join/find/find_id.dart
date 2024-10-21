@@ -82,6 +82,7 @@ class _FindIdState extends State<FindId> {
                 InputField(
                   focusNode: passwordFocus,
                   controller: passwordController,
+                  obscureText: true,
                   labelText: "비밀번호",
                   validator: (value) {
                     if (value == null || value.isEmpty) {
