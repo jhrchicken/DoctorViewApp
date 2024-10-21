@@ -215,6 +215,7 @@ class _BoardViewScreenState extends State<BoardViewScreen> {
                                 writerRef: loginMember.id,
                               ),
                             );
+                            _commentController.clear();
                             setState(() {
                               commentList = commentProvider.listComment(board.boardIdx);
                             });
