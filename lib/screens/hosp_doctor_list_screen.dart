@@ -9,7 +9,9 @@ import 'package:provider/provider.dart';
 
 class HospDoctorListScreen extends StatefulWidget {
   final int tabIndex;
-  final String address;
+  final String city;
+  final String district;
+  final String town;
   final String tag;
 
   const HospDoctorListScreen({

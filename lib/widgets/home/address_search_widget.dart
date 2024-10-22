@@ -40,12 +40,14 @@ class _AddressSearchWidgetState extends State<AddressSearchWidget> {
   // 검색 함수
   void _searchAddress() {
     if (_selectedCity != null && _selectedDistrict != null && _selectedTown != null) {
-      String address = '$_selectedCity $_selectedDistrict $_selectedTown';
+      // String address = '$_selectedCity $_selectedDistrict $_selectedTown';
       Navigator.push(
         context,
         MaterialPageRoute(
           builder: (context) => HospDoctorListScreen(
-            address: address,
+            city: _selectedCity,
+            district: _selectedDistrict,
+            town: _selectedTown,
           ),
         ),
       );
