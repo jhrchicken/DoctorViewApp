@@ -2,9 +2,11 @@ import 'package:doctorviewapp/main.dart';
 import 'package:doctorviewapp/models/hashtag.dart';
 import 'package:doctorviewapp/models/hospital.dart';
 import 'package:doctorviewapp/models/hreview.dart';
+import 'package:doctorviewapp/models/member.dart';
 import 'package:doctorviewapp/providers/hashtag_provider.dart';
 import 'package:doctorviewapp/providers/hospital_provider.dart';
 import 'package:doctorviewapp/providers/hreview_provider.dart';
+import 'package:doctorviewapp/providers/member_provider.dart';
 import 'package:doctorviewapp/theme/colors.dart';
 import 'package:doctorviewapp/widgets/common/content_input_field.dart';
 import 'package:doctorviewapp/widgets/common/grey_button.dart';
@@ -42,6 +44,10 @@ class _HreviewWriteScreenState extends State<HreviewWriteScreen> {
 
   @override
   Widget build(BuildContext context) {
+    Member? loginMember;
+    final memberProvider = Provider.of<MemberProvider>(context, listen: false);
+    loginMember = memberProvider.loginMember;
+
     final hospitalProvider = Provider.of<HospitalProvider>(context);
     final hreviewProvider = Provider.of<HreviewProvider>(context);
     final hashtagProvider = Provider.of<HashtagProvider>(context);
@@ -178,7 +184,8 @@ class _HreviewWriteScreenState extends State<HreviewWriteScreen> {
                                         score: _score,
                                         content: content,
                                         rewrite: 'F',
-                                        writerRef: 'dayeong1209',
+                                        // writerRef: 'dayeong1209',
+                                        writerRef: loginMember!.id,
                                         hospRef: widget.hospRef,
                                       ),
                                     );
