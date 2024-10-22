@@ -30,7 +30,7 @@ class _AddressSearchWidgetState extends State<AddressSearchWidget> {
   Map<String, List<String>> towns = {
     '강남구': ['역삼동', '삼성동', '논현동'],
     '서초구': ['서초동', '반포동', '잠원동'],
-    '종로구': ['부암동', '삼청동'],
+    '종로구': ['부암동', '삼청동', '관철동'],
     '해운대구': ['좌동', '중동', '송정동'],
     '사하구': ['괴정동', '당리동'],
     '수성구': ['수성동', '범어동', '만촌동'],
@@ -40,14 +40,13 @@ class _AddressSearchWidgetState extends State<AddressSearchWidget> {
   // 검색 함수
   void _searchAddress() {
     if (_selectedCity != null && _selectedDistrict != null && _selectedTown != null) {
-      // String address = '$_selectedCity $_selectedDistrict $_selectedTown';
       Navigator.push(
         context,
         MaterialPageRoute(
           builder: (context) => HospDoctorListScreen(
-            city: _selectedCity,
-            district: _selectedDistrict,
-            town: _selectedTown,
+            city: '$_selectedCity',
+            district: '$_selectedDistrict',
+            town: '$_selectedTown',
           ),
         ),
       );

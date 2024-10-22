@@ -20,7 +20,8 @@ import 'package:http/http.dart' as http;
 
 
 // const String baseUrl = "http://192.168.0.48:8586";
-const String baseUrl = "http://192.168.35.199:8586";
+// const String baseUrl = "http://192.168.35.199:8586";
+const String baseUrl = "http://ec2-13-124-42-129.ap-northeast-2.compute.amazonaws.com:8586";
 
 class BoardApi {
   Future<List<Board>> fetchBoard() async {

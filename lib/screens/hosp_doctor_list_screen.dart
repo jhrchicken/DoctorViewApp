@@ -17,7 +17,9 @@ class HospDoctorListScreen extends StatefulWidget {
   const HospDoctorListScreen({
     super.key,
     this.tabIndex = 0,
-    this.address = '',
+    this.city = '',
+    this.district = '',
+    this.town = '',
     this.tag = '',
   });
 
@@ -105,8 +107,10 @@ class _HospDoctorListScreenState extends State<HospDoctorListScreen> {
               child: ListView.builder(
                 itemCount: hospitalProvider.searchHosp(_searchWord).where((hospital) {
                   // address가 빈 문자열이 아닐 경우 필터링
-                  bool addressFilter = widget.address.isNotEmpty 
-                      ? hospital.address == widget.address 
+                  bool addressFilter = (widget.city.isNotEmpty && widget.district.isNotEmpty && widget.town.isNotEmpty)
+                      ? hospital.address.contains(widget.city) &&
+                        hospital.address.contains(widget.district) &&
+                        hospital.address.contains(widget.town)
                       : true;
                   // tag가 빈 문자열이 아닐 경우 필터링
                   bool tagFilter = widget.tag.isNotEmpty 
@@ -118,9 +122,11 @@ class _HospDoctorListScreenState extends State<HospDoctorListScreen> {
                 itemBuilder: (context, index) {
                   final hospital = hospitalProvider.searchHosp(_searchWord).where((hospital) {
                     // address가 빈 문자열이 아닐 경우 필터링
-                    bool addressFilter = widget.address.isNotEmpty 
-                        ? hospital.address == widget.address
-                        : true;
+                    bool addressFilter = (widget.city.isNotEmpty && widget.district.isNotEmpty && widget.town.isNotEmpty)
+                      ? hospital.address.contains(widget.city) &&
+                        hospital.address.contains(widget.district) &&
+                        hospital.address.contains(widget.town)
+                      : true;
                     // tag가 빈 문자열이 아닐 경우 필터링
                     bool tagFilter = widget.tag.isNotEmpty 
                         ? hashtagProvider.listHospHashtag(hospital.id)
@@ -135,9 +141,11 @@ class _HospDoctorListScreenState extends State<HospDoctorListScreen> {
                       ),
                       if (index < hospitalProvider.searchHosp(_searchWord).where((hospital) {
                         // address가 빈 문자열이 아닐 경우 필터링
-                        bool addressFilter = widget.address.isNotEmpty 
-                            ? hospital.address == widget.address
-                            : true;
+                        bool addressFilter = (widget.city.isNotEmpty && widget.district.isNotEmpty && widget.town.isNotEmpty)
+                          ? hospital.address.contains(widget.city) &&
+                            hospital.address.contains(widget.district) &&
+                            hospital.address.contains(widget.town)
+                          : true;
                         // tag가 빈 문자열이 아닐 경우 필터링
                         bool tagFilter = widget.tag.isNotEmpty 
                             ? hashtagProvider.listHospHashtag(hospital.id)
