@@ -31,7 +31,20 @@ class _ReserveNearlistHospState extends State<ReserveNearlistHosp> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
 
-              if (reserveProvider.listReserve(loginMember.id) == null) ...[ const Text('지난예약이 없습니다.')]
+              if (reserveProvider.listReserve(loginMember.id) == null) ...[
+                Center(
+                  child: Padding(
+                    padding: const EdgeInsets.all(20),
+                    child: Text(
+                      '지난 예약이 없습니다',
+                      style: TextStyle(
+                        fontSize: 16,
+                        color: Colors.grey[500],
+                      ),
+                    ),
+                  ),
+                ),
+              ]
               else ...[
                 ListView.builder(
                   shrinkWrap: true,

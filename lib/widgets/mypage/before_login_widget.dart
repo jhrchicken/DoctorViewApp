@@ -1,3 +1,5 @@
+import 'package:doctorviewapp/screens/mypage/join/join.dart';
+import 'package:doctorviewapp/screens/mypage/join/login.dart';
 import 'package:doctorviewapp/theme/colors.dart';
 import 'package:flutter/material.dart';
 
@@ -40,7 +42,12 @@ class _BeforeLoginWidgetState extends State<BeforeLoginWidget> {
                   Expanded(
                     child: ElevatedButton(
                       onPressed: () {
-                        Navigator.of(context).pushNamed("/member/login.do");
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const Login(),
+                          ),
+                        );
                       },
                       style: ElevatedButton.styleFrom(
                         padding: const EdgeInsets.all(15),
@@ -63,7 +70,12 @@ class _BeforeLoginWidgetState extends State<BeforeLoginWidget> {
                   Expanded(
                     child: ElevatedButton(
                       onPressed: () {
-                        Navigator.of(context).pushNamed("/member/join.do");
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const Join(),
+                          ),
+                        );
                       },
                       style: ElevatedButton.styleFrom(
                         padding: const EdgeInsets.all(15),

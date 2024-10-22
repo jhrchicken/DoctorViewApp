@@ -21,11 +21,11 @@ class _ReserveCheckTextHospWidgetState extends State<ReserveCheckTextHospWidget>
     return Row(
       children: [
         SizedBox(
-          width: 50,
+          width: 60,
           child: Text(
             widget.title,
             style: const TextStyle(
-              fontSize: 18,
+              fontSize: 14,
               letterSpacing: 0.1,
               fontWeight: FontWeight.w500,
               color: pointColor2,
@@ -37,7 +37,7 @@ class _ReserveCheckTextHospWidgetState extends State<ReserveCheckTextHospWidget>
       Text(
         widget.content,
         style: const TextStyle(
-          fontSize: 18,
+          fontSize: 14,
           letterSpacing: 0.1,
           fontWeight: FontWeight.w500,
         ),

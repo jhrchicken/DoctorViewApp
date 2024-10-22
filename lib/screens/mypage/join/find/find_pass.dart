@@ -2,6 +2,9 @@ import 'package:doctorviewapp/component/inputfield.dart';
 import 'package:doctorviewapp/component/secondary_outline_button.dart';
 import 'package:doctorviewapp/header.dart';
 import 'package:doctorviewapp/providers/member_provider.dart';
+import 'package:doctorviewapp/screens/mypage/join/find/find_id.dart';
+import 'package:doctorviewapp/screens/mypage/join/find/find_pass_success.dart';
+import 'package:doctorviewapp/screens/mypage/join/join.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -91,10 +94,13 @@ class _FindPassState extends State<FindPass> {
                   onPressed: () {
                       final memberPassword = memberProvider.findPass(idController.text, emailController.text);
                       if (memberPassword != null){
-                        Navigator.of(context).pushNamed(
-                            '/member/findPassSuccess.do',
-                            arguments: memberPassword, 
-                          );
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => FindPassSuccess(memberPassword: memberPassword,),
+                          ),
+                        );
+
                       }
                       else {
                         ScaffoldMessenger.of(context).showSnackBar(
@@ -116,7 +122,13 @@ class _FindPassState extends State<FindPass> {
                   children: [
                     GestureDetector(
                       onTap: () {
-                        Navigator.of(context).pushNamed('/member/findId.do');
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const FindId(),
+                          ),
+                        );
+
                       },
                       child: const Text(
                         '아이디 찾기   |',
@@ -127,7 +139,12 @@ class _FindPassState extends State<FindPass> {
                     
                     GestureDetector(
                       onTap: () {
-                        Navigator.of(context).pushNamed('/member/join.do');
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const Join(),
+                          ),
+                        );
                       },
                       child: const Text(
                         '회원가입',

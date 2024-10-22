@@ -34,9 +34,19 @@ class _ReserveListHospState extends State<ReserveListHosp> {
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              /******** 수정: 디자인 ********/
               if (reserveProvider.listReserve(loginMember.id) == null) ...[
-                const Text('예약내용이 없습니다'),
+                Center(
+                  child: Padding(
+                    padding: const EdgeInsets.all(20),
+                    child: Text(
+                      '예약 내용이 없습니다',
+                      style: TextStyle(
+                        fontSize: 16,
+                        color: Colors.grey[500],
+                      ),
+                    ),
+                  ),
+                ),
               ]
               else ... [
                 // 지난 예약

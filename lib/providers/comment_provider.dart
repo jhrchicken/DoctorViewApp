@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 
 class CommentProvider extends ChangeNotifier {
   // 댓글 일련번호 시퀀스
-  int _seqCommIdx = 6;
+  int _seqCommIdx = 300;
 
   // 댓글 더미데이터
   final List<Comment> _commList = [

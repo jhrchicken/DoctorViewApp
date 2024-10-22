@@ -118,12 +118,14 @@ class _HospitalMapWidgetState extends State<HospitalMapWidget> {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Text(
-              hospital.address,
-              style: TextStyle(
-                color: Colors.grey[700],
-                fontSize: 12,
-                fontWeight: FontWeight.w700,
+            Expanded(
+              child: Text(
+                hospital.address,
+                style: TextStyle(
+                  color: Colors.grey[700],
+                  fontSize: 12,
+                  fontWeight: FontWeight.w700,
+                ),
               ),
             ),
             ElevatedButton(

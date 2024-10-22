@@ -26,9 +26,14 @@ class _EditHospState extends State<EditHosp> {
   List<String> selectedDays = [];
 
   String startTime = '00:00', endTime = '00:00', startBreak = '00:00', endBreak = '00:00', deadLine = '00:00';
+  // 30분 단위로 진료시간 출력
   final List<String> timeSlots = [
-    for (int i = 0; i < 24; i++) '${i.toString().padLeft(2, '0')}:00',
+    for (int i = 0; i < 24; i++) ...[
+      '${i.toString().padLeft(2, '0')}:00',
+      '${i.toString().padLeft(2, '0')}:30',
+    ]
   ];
+
   // *********************
 
   // ***** Detail 라디오버튼 관리 ******  

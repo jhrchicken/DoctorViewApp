@@ -1,9 +1,11 @@
 import 'package:doctorviewapp/component/secondary_outline_button.dart';
 import 'package:doctorviewapp/header.dart';
+import 'package:doctorviewapp/screens/mypage/join/login.dart';
 import 'package:flutter/material.dart';
 
 class FindPassSuccess extends StatefulWidget {
-  const FindPassSuccess({super.key});
+  final String memberPassword;
+  const FindPassSuccess({super.key, required this.memberPassword}); 
 
   @override
   State<FindPassSuccess> createState() => _FindPassSuccessState();
@@ -13,8 +15,6 @@ class _FindPassSuccessState extends State<FindPassSuccess> {
   
   @override
   Widget build(BuildContext context) {
-  final String? memberPass = ModalRoute.of(context)?.settings.arguments as String?;
-
     return Scaffold(
       // 헤더
       appBar: Header('비밀번호 찾기 완료'), 
@@ -49,7 +49,7 @@ class _FindPassSuccessState extends State<FindPassSuccess> {
               SizedBox (
                 width: 300,
                 child: Text(
-                  '임시비밀번호가 발급되었습니다.\n$memberPass\n로그인 후 비밀번호 변경을 진행하세요.',
+                  '임시비밀번호가 발급되었습니다.\n${widget.memberPassword}\n로그인 후 비밀번호 변경을 진행하세요.',
                   textAlign: TextAlign.center,
                   style: const TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
                 ),
@@ -64,7 +64,12 @@ class _FindPassSuccessState extends State<FindPassSuccess> {
                 child: SecondaryOutlineButton(
                   text: '로그인하러가기',
                   onPressed: () {
-                    Navigator.of(context).pushNamed('/member/login.do');
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const Login(),
+                      ),
+                    );
                   },
                   color: Colors.blue, 
                 ),

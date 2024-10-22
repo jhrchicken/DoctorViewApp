@@ -3,6 +3,10 @@ import 'package:doctorviewapp/component/inputfield.dart';
 import 'package:doctorviewapp/component/secondary_outline_button.dart';
 import 'package:doctorviewapp/main.dart';
 import 'package:doctorviewapp/providers/member_provider.dart';
+import 'package:doctorviewapp/screens/home/home_screen.dart';
+import 'package:doctorviewapp/screens/mypage/join/find/find_id.dart';
+import 'package:doctorviewapp/screens/mypage/join/find/find_pass.dart';
+import 'package:doctorviewapp/screens/mypage/join/join.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -137,7 +141,8 @@ class _LoginState extends State<Login> {
                         );
             
                         if (member != null){
-                          Navigator.of(context).pushNamed('/');
+                          Navigator.popUntil(context, (route) => route.isFirst);
+                          // Navigator.pop(context);
                         } else {
                           ScaffoldMessenger.of(context).showSnackBar(
                             const SnackBar(content: Text('아이디 또는 비밀번호가 잘못되었습니다.')),
@@ -159,7 +164,12 @@ class _LoginState extends State<Login> {
                     children: [
                       GestureDetector(
                         onTap: () {
-                          Navigator.of(context).pushNamed('/member/findId.do');
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const FindId(),
+                            ),
+                          );
                         },
                         child: const Text(
                           '아이디 찾기   |',
@@ -171,7 +181,12 @@ class _LoginState extends State<Login> {
           
                       GestureDetector(
                         onTap: () {
-                          Navigator.of(context).pushNamed('/member/findPass.do');
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const FindPass(),
+                            ),
+                          );
                         },
                         child: const Text(
                           '비밀번호 찾기   |',
@@ -183,7 +198,12 @@ class _LoginState extends State<Login> {
           
                       GestureDetector(
                         onTap: () {
-                          Navigator.of(context).pushNamed('/member/join.do');
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const Join(),
+                            ),
+                          );
                         },
                         child: const Text(
                           '회원가입',

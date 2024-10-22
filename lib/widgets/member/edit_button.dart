@@ -27,7 +27,7 @@ class _EditButtonState extends State<EditButton> {
         ),
         elevation: 0,
         padding: const EdgeInsets.all(0), 
-        minimumSize: const Size(40,30),
+        minimumSize: const Size(40,25),
         splashFactory: NoSplash.splashFactory,
       ),
       child: Text(
