@@ -178,7 +178,7 @@ class _HreviewWriteScreenState extends State<HreviewWriteScreen> {
                                         score: _score,
                                         content: content,
                                         rewrite: 'F',
-                                        writerRef: 'harim',
+                                        writerRef: 'dayeong1209',
                                         hospRef: widget.hospRef,
                                       ),
                                     );

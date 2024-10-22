@@ -117,7 +117,6 @@ class _MyHomePageState extends State<MyHomePage> {
     Provider.of<CommentProvider>(context, listen: false).fetchComment(); //댓글
     Provider.of<ReportProvider>(context, listen: false).fetchReport(); //리뷰
     Provider.of<ReserveProvider>(context, listen: false).fetchReserve(); //예약
-    Provider.of<ChatProvider>(context, listen: false).fetchChat(); //채팅
   }
   
   @override
