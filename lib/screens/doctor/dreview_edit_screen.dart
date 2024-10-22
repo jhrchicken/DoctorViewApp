@@ -2,9 +2,11 @@ import 'package:doctorviewapp/main.dart';
 import 'package:doctorviewapp/models/doctor.dart';
 import 'package:doctorviewapp/models/dreview.dart';
 import 'package:doctorviewapp/models/hashtag.dart';
+import 'package:doctorviewapp/models/member.dart';
 import 'package:doctorviewapp/providers/doctor_provider.dart';
 import 'package:doctorviewapp/providers/dreview_provider.dart';
 import 'package:doctorviewapp/providers/hashtag_provider.dart';
+import 'package:doctorviewapp/providers/member_provider.dart';
 import 'package:doctorviewapp/theme/colors.dart';
 import 'package:doctorviewapp/widgets/common/grey_button.dart';
 import 'package:doctorviewapp/widgets/common/content_input_field.dart';
@@ -58,6 +60,11 @@ class _DreviewEditScreenState extends State<DreviewEditScreen> {
 
   @override
   Widget build(BuildContext context) {
+    Member? loginMember;
+    final memberProvider = Provider.of<MemberProvider>(context, listen: false);
+    loginMember = memberProvider.loginMember;
+
+    
     final dreviewProvider = Provider.of<DreviewProvider>(context);
     final hashtagProvider = Provider.of<HashtagProvider>(context);
     final doctorProvider = Provider.of<DoctorProvider>(context);
@@ -198,7 +205,8 @@ class _DreviewEditScreenState extends State<DreviewEditScreen> {
                                         score: _score,
                                         content: content,
                                         rewrite: 'T',
-                                        writerRef: 'harim',
+                                        // writerRef: 'harim',
+                                        writerRef: loginMember!.id,
                                         docRef: dreviewProvider.selectDreview(widget.reviewIdx)!.docRef,
                                       ),
                                     );
