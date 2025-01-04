@@ -164,7 +164,7 @@
 |**프레임워크**|<img src="https://img.shields.io/badge/flutter-%2302569B?style=for-the-badge&logo=flutter"> <img src="https://img.shields.io/badge/android%20studio-%233DDC84?style=for-the-badge&logo=android&logoColor=%23fff">|
 |**데이터베이스**|<img src="https://img.shields.io/badge/Firebase%20realtime%2010.13.2-%23EB844E?style=for-the-badge&logo=firebase"> ++ 그리고 나머지는 API로 가져와서 씀 (오라클 적어야 하나)|
 |**개발 환경 및 도구**|<img src="https://img.shields.io/badge/visual%20studio%20code-%230082FC?style=for-the-badge">|
-|**라이브러리 및 API**|<img src="https://img.shields.io/badge/googlemap-%234285F4?style=for-the-badge&logo=googlemaps&logoColor=%23fff"> ++ 프로바이더 같은것도 다 적어야 하나|
+|**라이브러리 및 API**|<img src="https://img.shields.io/badge/googlemap-%234285F4?style=for-the-badge&logo=googlemaps&logoColor=%23fff"> ++ 프로바이더랑 API 같은것도 다 적어야 하나|
 |**협업**|<img src="https://img.shields.io/badge/github-%23181717?style=for-the-badge&logo=github"> <img src="https://img.shields.io/badge/figma-%23F24E1E?style=for-the-badge&logo=figma&logoColor=%23fff"> <img src="https://img.shields.io/badge/notion-%23000000?style=for-the-badge&logo=notion"> <img src="https://img.shields.io/badge/google%20drive-%234285F4?style=for-the-badge&logo=googledrive&logoColor=%23fff">|
 
 
