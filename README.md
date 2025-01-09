@@ -190,6 +190,8 @@
 
 # <span id="4">04. 주요 기능</span>
 
+<img src="assets/images/ppt1.png">
+
 ### 로그인 및 회원가입
 <ul>
   <li></li>
