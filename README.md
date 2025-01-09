@@ -130,7 +130,7 @@
       <li>병원 기본정보와 추가정보 표시, 병원에 소속된 의료진 정보 표시, 병원 찜 등 모든 <b>병원 상세정보 확인 기능</b></li>
       <li>의사 키워드로 검색, 의사 기본정보와 추가정보 표시, 의사 찜 등 모든 <b>의사 찾기 및 상세정보 확인 기능</b></li>
       <li>별점과 해시태그를 통한 리뷰 작성과 수정과 삭제, 리뷰 답변 작성과 수정과 삭제, 리뷰 수정 여부 표시 등 모든 <b>리뷰 기능</b></li>
-      <li>Firebase 연동, 채팅 목록, 채팅방, 읽음 여부 표시, 안읽은 메세지 개수 표시, 채팅 날짜와 시간 표시 등 <b>모든 채팅 기능</b></li>
+      <li>Firebase 연동, 채팅 목록, 채팅방, 읽음 여부 표시, 안읽은 메세지 개수 표시, 채팅 날짜와 시간 표시 등 모든 <b>채팅 기능</b></li>
       <li>게시글 작성과 수정과 삭제, 댓글 작성과 수정과 삭제, 게시글 좋아요 및 신고, 게시판 활동 내역 확인 등 모든 <b>게시판 기능</b></li>
     </ul>
   </li>
@@ -297,7 +297,9 @@
 
 ## <span id="6-1">아키텍쳐</span>
 
-프로바이더 패턴
+프로바이더 패턴 MVVM 모델 같음
+
+https://nomad-programmer.tistory.com/263
 
 <div align="right">
   
@@ -307,13 +309,49 @@
 
 ## <span id="6-2">프로젝트 구조</span>
 
-<b>닥터뷰 프로젝트는 프로바이더 패턴 어쩌구</b>
-
-Provider 패턴을 도입한 이유는 다음과 같습니다.
-
-1. ㅇ
-2
-3
+```
+DoctorViewApp
+├── README.md
+├── analysis_options.yaml
+├── android
+├── assets
+│   ├── fonts
+│   └── images
+├── build
+├── devtools_options.yaml
+├── doctorviewapp.iml
+├── ios
+├── lib
+│   ├── api
+│   ├── body.dart
+│   ├── component
+│   ├── header.dart
+│   ├── main.dart
+│   ├── models
+│   │   ├── board.dart
+│   │   ├── ...
+│   │   └── reserve.dart
+│   ├── providers
+│   │   ├── board_provider.dart 
+│   │   ├── ...
+│   │   └── reserve_provider.dart
+│   ├── screens
+│   │   ├── board
+│   │   ├── ...
+│   │   └── reserve
+│   ├── theme
+│   └── widgets
+│       ├── board
+│       ├── ...
+│       └── reserve
+├── linux
+├── macos
+├── pubspec.lock
+├── pubspec.yaml
+├── test
+├── web
+└── windows
+```
 
 <div align="right">
   
@@ -377,7 +415,15 @@ Provider 패턴을 도입한 이유는 다음과 같습니다.
 
 ## <span id="7-3">개선 사항</span>
 
-여기에 그 뭐냐 api 연동 그거만 적으면 될듯 restAPI
+<ul>
+  <li>
+    <b>플러터와 REST API 연동 구조 개선</b>
+    <ul>
+      <li>현재 플러터와 API를 연동하는 부분에서 조회 메서드만 구현되어 있음</li>
+      <li>Rest API의 표준 HTTP 메서드(POST, GET, PUT, DELETE)를 사용하여 CRUD 기능을 모두 구현하고 ChangeNotifier를 확장하여 상태 변경 시 UI가 자동으로 업데이트되도록 개선 필요</li>
+    </ul>
+  </li>
+</ul>
 
 <div align="right">
 
