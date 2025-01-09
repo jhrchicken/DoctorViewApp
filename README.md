@@ -94,16 +94,12 @@
 
 닥터뷰 프로젝트는 <b>모바일 앱 개발자 3명</b>으로 구성된 팀이 개발하였습니다.
 
-닥터뷰 프로젝트는 <b>백엔드 개발자 2명과 프론트엔드 개발자 1명</b>으로 구성된 팀이 개발하였습니다.
-
 |정하림|부다영|이회리|
 |:---:|:---:|:---:|
-|<img src="src/main/resources/static/images/jhrchicken.jpeg" width="120" height="120">|<img src="src/main/resources/static/images/budayeong.jpeg" width="120" height="120">|<img src="src/main/resources/static/images/leehr.jpeg" width="120" height="120">|
+|<img src="assets/images/jhrchicken.jpeg" width="120" height="120">|<img src="assets/images/budayeong.jpeg" width="120" height="120">|<img src="assets/images/leehr.jpeg" width="120" height="120">|
 |앱 개발 및 팀장|앱 개발|앱 개발|
 
 #### 닥터뷰 프로젝트에서 정하림([@jhrchicken](https://github.com/jhrchicken))의 주요 역할은 다음과 같습니다.
-
-### 정하림 ([@jhrchicken](https://github.com/jhrchicken))
 
 <ul>
   <li>
@@ -113,6 +109,7 @@
       <li>요구사항 정의서 작성, 앱 기능 정의서 작성, 데이터베이스 정의서 작성, 개발 일정 작성 등 일부 <b>개발 문서 작성</b></li>
     </ul>
   </li>
+  <br/>
   <li>
     <b>UI 구현</b>
     <ul>
@@ -124,6 +121,7 @@
       <li>작성한 리뷰 등 일부 <b>마이페이지 관련 페이지</b></li>
     </ul>
   </li>
+  <br/>
   <li>
     <b>기능 개발</b>
     <ul>
