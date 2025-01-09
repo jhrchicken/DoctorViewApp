@@ -26,22 +26,23 @@
     </li>
     <li><a href="#2">사용 가이드</a></li>
     <li><a href="#3">기술 스택</a></li>
-    <li><a href="#4">주요 기능</a></li>
+    <li><a href="#4">화면 구성</a></li>
+    <li><a href="#5">주요 기능</a></li>
     <li>
-      <a href="#5">아키텍처</a>
+      <a href="#6">아키텍처</a>
       <ul>
-        <li><a href="#5-1">아키텍처</a></li>
-        <li><a href="#5-2">프로젝트 구조</a></li>
+        <li><a href="#6-1">아키텍처</a></li>
+        <li><a href="#6-2">프로젝트 구조</a></li>
       </ul>
     </li>
         <li>
-      <a href="#6">기타</a>
+      <a href="#7">기타</a>
       <ul>
-        <li><a href="#6-1">개발 문서</a></li>
-        <li><a href="#6-2">이슈 및 문제해결</a></li>
-        <li><a href="#6-3">개선 사항</a></li>
-        <li><a href="#6-4">프로젝트에서 배운 점</a></li>
-        <li><a href="#6-5">결과 및 확장성</a></li>
+        <li><a href="#7-1">개발 문서</a></li>
+        <li><a href="#7-2">이슈 및 문제해결</a></li>
+        <li><a href="#7-3">개선 사항</a></li>
+        <li><a href="#7-4">프로젝트에서 배운 점</a></li>
+        <li><a href="#7-5">결과 및 확장성</a></li>
       </ul>
     </li>
   </ol>
@@ -188,9 +189,23 @@
 
 <br/><br/>
 
-# <span id="4">04. 주요 기능</span>
+# <span id="4">04. 화면 구성</span>
 
-<img src="assets/images/ppt1.png">
+<img src="/assets/images/ppt1.png">
+<img src="/assets/images/ppt2.png">
+<img src="/assets/images/ppt3.png">
+<img src="/assets/images/ppt4.png">
+<img src="/assets/images/ppt5.png">
+
+<div align="right">
+  
+[(back to top)](#readme-top)
+
+</div>
+
+<br/><br/>
+
+# <span id="5">05. 주요 기능</span>
 
 ### 로그인 및 회원가입
 <ul>
@@ -278,9 +293,9 @@
 
 <br/><br/>
 
-# <span id="5">05. 아키텍처</span>
+# <span id="6">06. 아키텍처</span>
 
-## <span id="5-1">아키텍쳐</span>
+## <span id="6-1">아키텍쳐</span>
 
 프로바이더 패턴
 
@@ -290,7 +305,7 @@
 
 </div>
 
-## <span id="5-2">프로젝트 구조</span>
+## <span id="6-2">프로젝트 구조</span>
 
 <b>닥터뷰 프로젝트는 프로바이더 패턴 어쩌구</b>
 
@@ -308,16 +323,28 @@ Provider 패턴을 도입한 이유는 다음과 같습니다.
 
 <br/><br/>
 
-# <span id="6">06. 기타</span>
+# <span id="7">07. 기타</span>
 
-## <span id="6-1">개발 문서</span>
+## <span id="7-1">개발 문서</span>
+
+#### 정의서
 
 <ul>
   <li><a href="https://docs.google.com/spreadsheets/d/1-RER7R7QFNXRE4CgOUqKGith9Wt0Z91SCN1672EbLW0/edit?usp=drive_link">요구사항 정의서</a></li>
   <li><a href="https://docs.google.com/spreadsheets/d/11gptX480E9YtpxeUekT7gV6VwarE1xvttBCouKdbzro/edit?usp=drive_link">앱 기능 정의서</a></li>
   <li><a href="https://docs.google.com/spreadsheets/d/1hxAeG9cIlK2gOKKzilhP28s8gkanK2O-k3BdpuAEieQ/edit?usp=drive_link">데이터베이스 정의서</a></li>
-  <li><a href="https://docs.google.com/spreadsheets/d/1zC_YDl9BHkNTQ4XoS8nbUvrYFBoN5bXuEljF49YOYT0/edit?usp=drive_link">개발 일정</a></li>
+</ul>
+
+#### 디자인
+
+<ul>
   <li>피그마 디자인</li>
+</ul>
+
+#### 기타
+
+<ul>
+  <li><a href="https://docs.google.com/spreadsheets/d/1zC_YDl9BHkNTQ4XoS8nbUvrYFBoN5bXuEljF49YOYT0/edit?usp=drive_link">개발 일정</a></li>
 </ul>
 
 <div align="right">
@@ -328,18 +355,17 @@ Provider 패턴을 도입한 이유는 다음과 같습니다.
 
 <br/>
 
-## <span id="6-2">이슈 및 문제해결</span>
+## <span id="7-2">이슈 및 문제해결</span>
 
-#### 1. 내용 입력
+#### 1. 이슈1
 
-내용 입력
+이슈 및 해결방법 1
 
 <br/>
 
-#### 2.--
+#### 2. 이슈2
 
-
-
+이슈 및 해결방법 2
 
 <div align="right">
   
@@ -349,7 +375,7 @@ Provider 패턴을 도입한 이유는 다음과 같습니다.
 
 <br/>
 
-## <span id="6-3">개선 사항</span>
+## <span id="7-3">개선 사항</span>
 
 여기에 그 뭐냐 api 연동 그거만 적으면 될듯 restAPI
 
@@ -361,7 +387,7 @@ Provider 패턴을 도입한 이유는 다음과 같습니다.
 
 <br/>
 
-## <span id="6-4">프로젝트에서 배운 점</span>
+## <span id="7-4">프로젝트에서 배운 점</span>
 
 #### 1. 여정 자체가 보상이다
 
@@ -386,7 +412,7 @@ Provider 패턴을 도입한 이유는 다음과 같습니다.
 
 <br/>
 
-## <span id="6-5">결과 및 확장성</span>
+## <span id="7-5">결과 및 확장성</span>
 
 <b>닥터뷰 프로젝트는 기업초청 발표에서 다음과 같은 총괄 평가를 받았습니다.</b>
 
