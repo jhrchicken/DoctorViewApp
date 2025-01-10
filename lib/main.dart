@@ -25,6 +25,7 @@ import 'widgets/common/bottom_navigation_bar.dart';
 // 예약하기 캘린더 한글처리
 import 'package:intl/date_symbol_data_local.dart';
 
+// apk 파일 빌드 완료
 void main() {
 
   // 캘린더 한글처리를 위한 intl 패키지 초기화 포함
