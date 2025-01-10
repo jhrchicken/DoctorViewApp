@@ -1,5 +1,7 @@
 <a id="readme-top"></a>
 
+[테스트를 해보아요](app-release.apk)
+
 <!-- 프로젝트 로고 -->
 <br />
 <div align="center">
