@@ -392,7 +392,7 @@ DoctorViewApp
 #### 디자인
 
 <ul>
-  <li>피그마 디자인</li>
+  <li><a href="https://www.figma.com/design/6Mbm1w0WRrV5zf4wMPoPpK/app%ED%99%94%EB%A9%B4%ED%9D%90%EB%A6%84%EB%8F%84?node-id=61-2&t=FEw0lzIR5S5qkX9Y-1">피그마 디자인</a></li>
 </ul>
 
 #### 기타
