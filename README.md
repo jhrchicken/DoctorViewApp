@@ -1,8 +1,5 @@
 <a id="readme-top"></a>
 
-[테스트를 해보아요](https://github.com/jhrchicken/DoctorViewApp/raw/main/app-release.apk)
-
-
 <!-- 프로젝트 로고 -->
 <br />
 <div align="center">
@@ -11,7 +8,7 @@
   <p align="center">
     지금 바로 닥터뷰를 시작해보세요!
     <br />
-    <a href=""><strong>모바일 앱 설치하기 »</strong></a>
+    <a href="https://github.com/jhrchicken/DoctorViewApp/raw/main/app-release.apk"><strong>모바일 앱 설치하기 »</strong></a>
   </p>
 </div>
 
@@ -69,7 +66,7 @@
 2. 환자들이 병원 방문 전후에 의료진과 간편하게 소통할 수 있도록 채팅 기능을 제공합니다.
 3. 게시판을 통해 건강 정보를 공유하고 커뮤니티 내에서 자유롭게 상호작용할 수 있습니다.
 
-<b>이제 </b><a href="">여기를 클릭하여</a><b> 지역 기반 의료 시스템 매칭 플랫폼 닥터뷰를 시작해보세요!</b>
+<b>이제 지역 기반 의료 시스템 매칭 플랫폼 닥터뷰를 시작해보세요!</b>
 
 <div align="right">
   
@@ -149,11 +146,21 @@
 
 <br/><br/>
 
-# <span id="2">02. 설치 가이드</span>
+# <span id="2">02. 사용 가이드</span>
 
-### 
+### 설치
 
+다음 단계를 따라 설치하고 사용해보세요.
 
+<ol>
+  <li><a href="https://github.com/jhrchicken/DoctorViewApp/raw/main/app-release.apk">닥터뷰 APK</a>를 클릭하여 다운로드 하세요.</li>
+  <li>안드로이드에서 다운로드한 파일을 실행하여 설치를 완료하세요. (설정에서 알 수 없는 출처 허용을 활성화해야 합니다.)</li>
+  <li>설치 완료 후 앱을 열어 체험해보세요.</li>
+</ol>
+
+더 많은 정보가 필요하다면 어쩌구
+
+<br/>
 
 ### Test ID/PW
 
@@ -177,9 +184,9 @@
 |:---:|---|
 |**언어**|<img src="https://img.shields.io/badge/dart-%230175C2?style=for-the-badge&logo=dart">|
 |**프레임워크**|<img src="https://img.shields.io/badge/flutter-%2302569B?style=for-the-badge&logo=flutter"> <img src="https://img.shields.io/badge/android%20studio-%233DDC84?style=for-the-badge&logo=android&logoColor=%23fff">|
-|**데이터베이스**|<img src="https://img.shields.io/badge/Firebase%20realtime%2010.13.2-%23EB844E?style=for-the-badge&logo=firebase"> ++ 그리고 나머지는 API로 가져와서 씀 (오라클 적어야 하나)|
+|**데이터베이스**|<img src="https://img.shields.io/badge/Firebase%20realtime%2010.13.2-%23EB844E?style=for-the-badge&logo=firebase">|
 |**개발 환경 및 도구**|<img src="https://img.shields.io/badge/visual%20studio%20code-%230082FC?style=for-the-badge">|
-|**라이브러리 및 API**|<img src="https://img.shields.io/badge/googlemap-%234285F4?style=for-the-badge&logo=googlemaps&logoColor=%23fff"> ++ 프로바이더랑 API 같은것도 다 적어야 하나|
+|**라이브러리 및 API**|<img src="https://img.shields.io/badge/googlemap-%234285F4?style=for-the-badge&logo=googlemaps&logoColor=%23fff"> <img src="https://img.shields.io/badge/Provider-%23FFB441?style=for-the-badge"> <img src="https://img.shields.io/badge/REST%20API-%236BA539?style=for-the-badge">|
 |**협업**|<img src="https://img.shields.io/badge/github-%23181717?style=for-the-badge&logo=github"> <img src="https://img.shields.io/badge/figma-%23F24E1E?style=for-the-badge&logo=figma&logoColor=%23fff"> <img src="https://img.shields.io/badge/notion-%23000000?style=for-the-badge&logo=notion"> <img src="https://img.shields.io/badge/google%20drive-%234285F4?style=for-the-badge&logo=googledrive&logoColor=%23fff">|
 
 
@@ -300,15 +307,21 @@
 
 ## <span id="6-1">아키텍쳐</span>
 
-프로바이더 패턴 MVVM 모델 같음
+닥터뷰에서는 프로바이더 패턴을 이용했음
 
-https://nomad-programmer.tistory.com/263
+1. 관심사의 분리?
+2. 하나의 데이터를 여러페이지에서 간현하게 공유하여 Provider 패턴을 이용한 데이터 공유의 원활함
+3. 간결한 코드를 사용하여 Provider 패턴을 사용하면 좀 더 적은 코드로 클래스를 구분하여 사용할 수 있다. (Bloc은 너무 복잡)
+
+그리고 및에 프로바이더 구조 살짝 언급 DTO 만들고 어쩌구 저쩌구 한두줄로
 
 <div align="right">
   
 [(back to top)](#readme-top)
 
 </div>
+
+<br/>
 
 ## <span id="6-2">프로젝트 구조</span>
 
