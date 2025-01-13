@@ -153,9 +153,9 @@
 닥터뷰 앱 설치를 위해 다음 단계를 따릅니다.
 
 <ol>
-  <li>다음 링크를 클릭하여 APK 파일을 다운로드 합니다. (<a href="https://github.com/jhrchicken/DoctorViewApp/raw/main/app-release.apk">닥터뷰 APK 다운로드</a>)</li>
-  <li>안드로이드 기기에서는 보안을 위해 기본적으로 외부 출처의 앱 설치가 차단되어 있습니다. 설정에서 알 수 없는 출처를 활성화하세요.</li>
-  <li>안드로이드에서 다운로드한 APK 파일을 실행하여 설치를 시작합니다.</li>
+  <li>다음 링크를 클릭하여 <b>APK 파일을 다운로드</b> 합니다. (<a href="https://github.com/jhrchicken/DoctorViewApp/raw/main/app-release.apk">닥터뷰 APK 다운로드</a>)</li>
+  <li>안드로이드 기기에서는 보안을 위해 기본적으로 외부 출처의 앱 설치가 차단되어 있습니다. <b>설정에서 알 수 없는 출처를 활성화</b>하세요.</li>
+  <li>안드로이드에서 다운로드한 <b>APK 파일을 실행하여 설치를 시작</b>합니다.</li>
 </ol>
 
 최신 안드로이드 버전에서는 설치 경로 또는 보안 설정이 조금 다를 수 있습니다. 문제가 발생하면 APK 다운로드 경로 및 기기 설정을 다시 확인하세요.
@@ -440,7 +440,7 @@ DoctorViewApp
     <b>플러터와 REST API 연동 구조 개선</b>
     <ul>
       <li>현재 플러터와 API를 연동하는 부분에서 조회 메서드만 구현되어 있음</li>
-      <li>REST API의 표준 HTTP 메서드(POST, GET, PUT, DELETE)를 사용하여 CRUD 기능을 모두 구현</li>
+      <li>REST API의 표준 HTTP 메서드(POST, GET, PUT, DELETE)를 사용하여 CRUD 기능을 모두 구현 필요</li>
     </ul>
   </li>
 </ul>
