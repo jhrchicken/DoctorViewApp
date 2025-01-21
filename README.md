@@ -153,7 +153,7 @@
 닥터뷰 앱 설치를 위해 다음 단계를 따릅니다.
 
 <ol>
-  <li>다음 링크를 클릭하여 <b>APK 파일을 다운로드</b> 합니다. (<a href="https://github.com/jhrchicken/DoctorViewApp/raw/main/app-release.apk">닥터뷰 APK 다운로드</a>)</li>
+  <li>다음 <a href="https://github.com/jhrchicken/DoctorViewApp/raw/main/app-release.apk">닥터뷰 APK 다운로드 링크</a>를 클릭하여 <b>APK 파일을 다운로드</b> 합니다.
   <li>안드로이드 기기에서는 보안을 위해 기본적으로 외부 출처의 앱 설치가 차단되어 있습니다. <b>설정에서 알 수 없는 출처를 활성화</b>하세요.</li>
   <li>안드로이드에서 다운로드한 <b>APK 파일을 실행하여 설치를 시작</b>합니다.</li>
 </ol>
